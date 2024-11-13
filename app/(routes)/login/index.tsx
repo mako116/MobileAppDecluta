@@ -1,10 +1,9 @@
 import { View, Text } from 'react-native'
 import React from 'react'
+import Login from '@/components/Auth/Login/login'
 
-export default function Login() {
+export default function Logins() {
   return (
-    <View>
-      <Text>index</Text>
-    </View>
+ <Login/>
   )
 }

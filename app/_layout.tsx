@@ -30,7 +30,8 @@ export default function RootLayout() {
        <Stack screenOptions={{headerShown:false}}>
         <Stack.Screen name="index"   />
         <Stack.Screen name="(routes)/splashscren/index" />
-        <Stack.Screen name="(routes)/home/index" />
-      </Stack>
+        <Stack.Screen name="(routes)/login/index" />
+      
+       </Stack>
    );
 }
