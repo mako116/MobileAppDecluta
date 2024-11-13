@@ -1,38 +1,36 @@
-import { View, Text, ScrollView, Image, StyleSheet, TouchableOpacity, ActivityIndicator, TextInput } from 'react-native';
-import React, { useState } from 'react';
+import { View, Text, ScrollView, Image, StyleSheet, TouchableOpacity, ActivityIndicator, TextInput, Alert, BackHandler, Modal } from 'react-native';
+import React, { useState, useEffect } from 'react';
 import { router } from 'expo-router';
 import { Entypo, FontAwesome, Ionicons, MaterialIcons, SimpleLineIcons } from '@expo/vector-icons';
 import { commonstyles } from '@/styles/common/common.style';
-// import { useFonts, Nunito_400Regular, Nunito_500Medium, Nunito_700Bold, Nunito_600SemiBold } from '@expo-google-fonts/nunito';
 
 export default function Login() {
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const [buttonSpinner, setButtonSpinner] = useState(false);
   const [userInfo, setUserInfo] = useState({ email: "", password: "" });
   const [required, setRequired] = useState("");
-  const [error, setError] = useState({ password: "" });
+  // const [error, setError] = useState({ password: "" });
   const [focusInput, setFocusInput] = useState({ email: false, password: false });
+  const [showExitModal, setShowExitModal] = useState(false);
 
-  // const handlePasswordValidation = (value) => {
-  //   const passwordSpecialCharacter = /^(?=.*[!@#$&*])/;
-  //   const passwordOneNumber = /^(?=.*[0-9])/;
-  //   const passwordSixvalue = /^(?=.{6,})/;
+  useEffect(() => {
+    const backAction = () => {
+      setShowExitModal(true);
+      return true;
+    };
 
-  //   if (!passwordSpecialCharacter.test(value)) {
-  //     setError({ password: "Password must contain at least one special character." });
-  //     setUserInfo({ ...userInfo, password: "" });
-  //   } else if (!passwordOneNumber.test(value)) {
-  //     setError({ password: "Password must contain at least one number." });
-  //     setUserInfo({ ...userInfo, password: "" });
-  //   } else if (!passwordSixvalue.test(value)) {
-  //     setError({ password: "Password must be at least 6 characters long." });
-  //     setUserInfo({ ...userInfo, password: "" });
-  //   } else {
-  //     setError({ password: "" });
-  //     setUserInfo({ ...userInfo, password: value });
-  //   }
-  // };
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
 
+    return () => backHandler.remove();
+  }, []);
+
+  const handleExit = () => {
+    setShowExitModal(false);
+    router.back();
+  };
   const handleSignIn = () => {
     setButtonSpinner(true);
     setTimeout(() => {
@@ -95,13 +93,6 @@ export default function Login() {
           </View>
         </View>
 
-        {/* {error.password && (
-          <View style={[commonstyles.errorContainer, { top: 145 }]}>
-            <Entypo name="cross" size={18} color="red" />
-            <Text style={{ color: "red", fontSize: 11 }}>{error.password}</Text>
-          </View>
-        )} */}
-
         <TouchableOpacity onPress={() => router.push("/(routes)/forgot-password")}>
           <Text style={styles.forgotSection}>Forgot Password?</Text>
         </TouchableOpacity>
@@ -148,6 +139,49 @@ export default function Login() {
           <Text style={{ color: "#DEBC8E", fontWeight: "700", fontSize: 16, lineHeight: 22.4 }}>Privacy Policy</Text>
         </View>
       </View>
+
+       {/* Custom Exit Modal */}
+       <Modal
+        transparent={true}
+        visible={showExitModal}
+        animationType="slide"
+        onRequestClose={() => setShowExitModal(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            {/* <Ionicons name="alert-circle" size={50} color="#DEBC8E" /> */}
+            {/* <Text style={styles.modalTitle}>Hold on!</Text> */}
+            <Text style={styles.modalMessage}>Enjoy these exclusive features after logging in! Are you sure you want to leave now?</Text>
+            <View style={{flexDirection:"row",gap:40}}>
+              <View style={{alignItems:"center",paddingVertical:5,gap:2}}>
+              <Image source={require("@/assets/images/lockback2.png")}  />
+              <Text style={{fontSize:13,lineHeight:18.2, fontWeight:"700", textAlign:"center"}}>Cheapest items</Text>
+              <Text style={{fontSize:14,lineHeight:19.6, fontWeight:"400", textAlign:"center"}}>Selected for you </Text>
+              </View>
+
+              <View style={{alignItems:"center",paddingVertical:5,gap:2}}>
+              <Image source={require("@/assets/images/lockback.png")}  />
+              <Text style={{fontSize:13,lineHeight:18.2, fontWeight:"700", textAlign:"center"}}>Cheapest items</Text>
+              <Text style={{fontSize:14,lineHeight:19.6, fontWeight:"400", textAlign:"center"}}>To protect you </Text>
+              </View>
+            </View>
+            <View style={styles.modalButtons}>
+              <TouchableOpacity
+                style={[styles.modalButton, styles.continueButton]}
+                onPress={() => setShowExitModal(false)}
+              >
+                 <Text style={styles.buttonText}>Continue</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.modalButton, styles.confirmButton]}
+                onPress={handleExit}
+              >
+                 <Text style={styles.buttonText}>Leave</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </ScrollView>
   );
 }
@@ -245,23 +279,90 @@ const styles = StyleSheet.create({
     lineHeight: 19.6,
   },
   socialButtons: {
-    gap: 10,
-    paddingVertical: 20,
+    gap: 15,
     marginHorizontal: 16,
+    marginVertical: 15,
   },
   socialButton: {
-    backgroundColor: "#FFF",
-    padding: 13,
-    gap: 10,
-    borderRadius: 6,
     flexDirection: "row",
+    padding: 18,
     alignItems: "center",
-    justifyContent:"center"
+    borderWidth: 1,
+    borderColor: "#C4C4C4",
+    backgroundColor: "#FFFFFF",
+    borderRadius: 8,
+    gap: 20,
   },
   separator2: {
-    height: 16,
+    height: "100%",
     width: 2,
-    backgroundColor: "#A4A4A4",
+    backgroundColor: "#D3D3D3",
   },
-});
 
+   // Modal styles
+   modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)"
+  },
+  modalContent: {
+    width: "85%",
+    padding: 10,
+    // paddingVertical:10,
+    backgroundColor: "white",
+    borderRadius: 10,
+    alignItems: "center"
+  },
+  modalTitle: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#DEBC8E",
+    marginVertical: 10
+  },
+  modalMessage: {
+    fontSize: 14,
+    color: "#333",
+    fontWeight:'400',
+    lineHeight:19.6,
+    textAlign: "center",
+    marginBottom: 20
+  },
+  modalButtons: {
+    flexDirection: "column",
+    padding:20,
+     justifyContent: "center",
+    width: "100%",
+    gap:10,
+    marginTop: 10
+  },
+  modalButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",  // Center horizontally
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 5
+  },
+  continueButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    backgroundColor: "#DEBC8E",
+   
+  },
+  confirmButton: {
+    textAlign:"center",
+    alignItems:"center",
+    // margin:"auto",
+    backgroundColor: "#fff",
+    borderWidth:1,
+        
+  },
+  buttonText: {
+    color: "#000",
+    fontWeight:"400",
+    lineHeight:22.4,
+    fontSize: 16,
+    textAlign: "center"  // Center text within the Text component
+  }
+});
