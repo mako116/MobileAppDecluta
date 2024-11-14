@@ -82,7 +82,7 @@ export default function OTPMainEmail() {
         setError(''); // Clear error on success
 
         setOtpVerified(true); // Mark OTP as verified
-        router.push("/(routes)/OTPEmail"); // Navigate to OTPEmail page on success
+        router.push("/(routes)/CreatePassword"); // Navigate to OTPEmail page on success
       } else {
         setError('Invalid Code');
         setSuccessMessage(''); // Clear success message on failure

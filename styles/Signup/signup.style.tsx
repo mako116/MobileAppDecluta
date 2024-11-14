@@ -69,7 +69,7 @@ export const SignUpStyles = StyleSheet.create({
       marginTop: 5,
     },
     loginText: {
-      color: "#000",
+      color: "#212121",
       textAlign: "center",
     },
     signUpRedirect: {

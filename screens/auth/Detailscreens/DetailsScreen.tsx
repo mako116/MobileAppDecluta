@@ -9,6 +9,7 @@ import CountryPicker, { Country, CountryCode } from 'react-native-country-picker
 
 export default function DetailScreen() {
    const [buttonSpinner, setButtonSpinner] = useState(false);
+   const [isButtonEnabled, setIsButtonEnabled] = useState(false); // State for button enabled/disabled
   const [userInfo, setUserInfo] = useState({
     firstName: "",
     LastName: "",
@@ -28,6 +29,17 @@ export default function DetailScreen() {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [countryCode, setCountryCode] = useState<CountryCode>('US'); // Default to 'US'
   const [callingCode, setCallingCode] = useState('1');  // Default calling code for 'US'
+
+  // Check if the required fields are filled
+  useEffect(() => {
+    setIsButtonEnabled(
+      userInfo.firstName.length > 0 &&
+      userInfo.LastName.length > 0 &&
+      userInfo.Gender.length > 0 &&
+      userInfo.email.length > 0 &&
+      phoneNumber.length > 0
+    );
+  }, [userInfo, phoneNumber]);
 
   // Handle phone number change, only numeric values
   const handlePhoneChange = (number: string) => {
@@ -209,32 +221,38 @@ export default function DetailScreen() {
         <View style={{marginTop:15,marginBottom:40}}>
           <Text style={SignUpStyles.label}>Who Referred You?</Text>
           <TextInput
-            style={[
-              SignUpStyles.input,
-              
-            ]}
+            style={[SignUpStyles.input]}
             keyboardType="default"
-             placeholder="Enter referral code"
-                     
-            />
+            placeholder="Enter referral code"
+          />
         </View>
-        {/* Login Button */}
-        <TouchableOpacity onPress={NextPage} style={[{marginVertical:20},SignUpStyles.loginButton]}>
+        
+        {/* Next Button */}
+        <TouchableOpacity
+          onPress={NextPage}
+          style={[
+            { marginVertical: 20 },
+            SignUpStyles.loginButton,
+            !isButtonEnabled && { backgroundColor: "#E9E9E9" } // Gray out if disabled
+          ]}
+          disabled={!isButtonEnabled} // Disable button if not enabled
+        >
           {buttonSpinner ? (
             <ActivityIndicator size="small" color="white" />
           ) : (
-            <Text style={SignUpStyles.loginText}>Next</Text>
+            <Text style={[ !isButtonEnabled && { backgroundColor: "#E9E9E9", color:"#E9E9E9" },SignUpStyles.loginText]}>Next</Text>
           )}
         </TouchableOpacity>
 
         <View style={{flexDirection:"row", justifyContent: "center"}}>
-        <MaterialCommunityIcons name="message-question" size={24} color="black" />
-        <Text>Need help?</Text>
-        <TouchableOpacity>
-          <Text style={{color:"#DEBC8E"}}>Click Here</Text>
-        </TouchableOpacity>
+          <MaterialCommunityIcons name="message-question" size={24} color="black" />
+          <Text>Need help?</Text>
+          <TouchableOpacity>
+            <Text style={{color:"#DEBC8E"}}>Click Here</Text>
+          </TouchableOpacity>
         </View>
       </View>
+      
     </ScrollView>
   );
 }
@@ -309,4 +327,4 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     color: "#a1a1a1",
   },
-});
+}); 
