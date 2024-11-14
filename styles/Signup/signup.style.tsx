@@ -9,6 +9,14 @@ export const SignUpStyles = StyleSheet.create({
       paddingTop: 40,
       paddingBottom: 20,
     },
+    genderOption: {
+      padding: 10,
+      marginHorizontal: 5,
+      borderRadius: 5,
+      borderWidth: 1,
+      borderColor: "#ccc",
+      alignItems: "center",
+    },    
     sigInImage: {
       alignSelf: "center",
       marginTop: 50,
