@@ -1,6 +1,6 @@
 import { View, Text, ScrollView, TextInput, TouchableOpacity, ActivityIndicator, BackHandler, Modal, StyleSheet } from 'react-native';
 import React, { useState, useEffect } from 'react';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
 import { SignUpStyles } from '../../../styles/Signup/signup.style';
 import { router } from 'expo-router';
@@ -80,6 +80,15 @@ export default function DetailScreen() {
     setUserInfo({ ...userInfo, Gender: gender });
     setIsDropdownOpen(false); // Close dropdown after selection
   };
+
+  const NextPage= () =>{
+    setButtonSpinner(true);
+    setTimeout(() => {
+      router.push("/(routes)/OTPPhone")
+      setButtonSpinner(false);
+      // Navigate to dashboard/home after successful login
+    }, 1000);
+  }
 
   return (
     <ScrollView style={{ flex: 1 }} scrollEventThrottle={16}>
@@ -191,19 +200,40 @@ export default function DetailScreen() {
               keyboardType="numeric"
               value={phoneNumber}
               onChangeText={handlePhoneChange}
-              placeholder="Enter phone number"
+              placeholder="Phone number"
             />
           </View>
         </View>
 
+        {/* Referral */}
+        <View style={{marginTop:15,marginBottom:40}}>
+          <Text style={SignUpStyles.label}>Who Referred You?</Text>
+          <TextInput
+            style={[
+              SignUpStyles.input,
+              
+            ]}
+            keyboardType="default"
+             placeholder="Enter referral code"
+                     
+            />
+        </View>
         {/* Login Button */}
-        <TouchableOpacity style={SignUpStyles.loginButton} onPress={handleSignIn}>
+        <TouchableOpacity onPress={NextPage} style={[{marginVertical:20},SignUpStyles.loginButton]}>
           {buttonSpinner ? (
             <ActivityIndicator size="small" color="white" />
           ) : (
-            <Text style={SignUpStyles.loginText}>Login</Text>
+            <Text style={SignUpStyles.loginText}>Next</Text>
           )}
         </TouchableOpacity>
+
+        <View style={{flexDirection:"row", justifyContent: "center"}}>
+        <MaterialCommunityIcons name="message-question" size={24} color="black" />
+        <Text>Need help?</Text>
+        <TouchableOpacity>
+          <Text style={{color:"#DEBC8E"}}>Click Here</Text>
+        </TouchableOpacity>
+        </View>
       </View>
     </ScrollView>
   );
@@ -254,8 +284,12 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   phoneContainer: {
-    flexDirection: 'row',
+     flexDirection: 'row',
     alignItems: 'center',
+    backgroundColor: "white",
+    marginHorizontal: 16,
+    // marginTop: 30,
+    // gap: 10,
   },
   callingCode: {
     marginRight: 10,
@@ -263,16 +297,16 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   flagButton: {
-    marginRight: 8,
+    marginLeft: 8,
   },
   phoneInput: {
-    borderWidth: 1,
-    borderColor: '#E9E9E9',
     height: 55,
-    width: '80%',
-    fontSize: 16,
-    paddingLeft: 10,
-    borderRadius: 3,
-    color: '#333',
+     borderRadius: 3,
+     borderLeftWidth:1,
+    borderColor: "#E9E9E9",
+    paddingLeft: 15,
+    fontSize: 14,
+    backgroundColor: "white",
+    color: "#a1a1a1",
   },
 });
