@@ -17,18 +17,16 @@ export default function Splashs() {
     <View style={styles.background}>
       {/* <Text style={styles.welcomeText}>splashs</Text> */}
       <Image
-      source={require('../../assets/images/decluttaking.png')}
+      source={require('../../../assets/images/decluttaking.png')}
       style={styles.logo}
       />
     <View style={[StyleSheet.absoluteFillObject, styles.container]}>
 
       <Image
       style={{width:280, height:80}}
-      source={require('../../assets/loading/Animation.gif')}/>
+      source={require('../../../assets/loading/Animation.gif')}/>
       </View>
-       {/* <View style={[StyleSheet.absoluteFillObject, styles.container]}>
-     <LottieView source={require('../../assets/loading/Animation.gif')}  />
-    </View> */}
+       
     </View>
   )
 }

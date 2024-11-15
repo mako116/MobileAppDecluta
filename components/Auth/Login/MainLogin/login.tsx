@@ -1,20 +1,20 @@
 import { View, Text, ScrollView, Image, StyleSheet, TouchableOpacity, ActivityIndicator, TextInput, Alert, BackHandler, Modal } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { router } from 'expo-router';
-import { Entypo, FontAwesome, Ionicons, MaterialIcons, SimpleLineIcons } from '@expo/vector-icons';
+import { AntDesign, Entypo, FontAwesome, Ionicons, MaterialIcons, SimpleLineIcons } from '@expo/vector-icons';
 import { commonstyles } from '@/styles/common/common.style';
 import { useFocusEffect } from '@react-navigation/native';
 
 
-import {SignUpStyles} from '../../../styles/Signup/signup.style'
+import {SignUpStyles} from '../../../../styles/Signup/signup.style'
 export default function Login() {
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const [buttonSpinner, setButtonSpinner] = useState(false);
   const [userInfo, setUserInfo] = useState({ email: "", password: "" });
-  const [required, setRequired] = useState("");
-  // const [error, setError] = useState({ password: "" });
   const [focusInput, setFocusInput] = useState({ email: false, password: false });
   const [showExitModal, setShowExitModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState({ email: "", password: "" });
+  const [successMessage, setSuccessMessage] = useState("");
 
   useFocusEffect(
     React.useCallback(() => {
@@ -25,22 +25,55 @@ export default function Login() {
 
       const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
 
-      // Cleanup function to remove the event listener when the component is unfocused
       return () => backHandler.remove();
     }, [])
   );
 
-  const handleExit = () => {
-    setShowExitModal(false);
-    router.back();
+  const validateInputs = () => {
+    let errors = { email: "", password: "" };
+    let isValid = true;
+
+    if (!userInfo.email) {
+      errors.email = "Please enter your email.";
+      isValid = false;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userInfo.email)) {
+      errors.email = "The email you entered doesn’t exist. Please check and try again.";
+      isValid = false;
+    }
+
+    if (!userInfo.password) {
+      errors.password = "Please enter your password.";
+      isValid = false;
+    } else if (userInfo.password.length < 6) {
+      errors.password = "The password you entered is incorrect. Please try again or reset your password.";
+      isValid = false;
+    }
+
+    setErrorMessage(errors);
+    return isValid;
   };
 
   const handleSignIn = () => {
+    if (!validateInputs()) return;
+
     setButtonSpinner(true);
     setTimeout(() => {
       setButtonSpinner(false);
-      // Navigate to the dashboard or home after successful login
+      setErrorMessage({ email: "", password: "" });
+      setSuccessMessage("Login successful! Redirecting...");
+      setTimeout(() => {
+        setSuccessMessage("");
+        router.push("/(routes)/splashscren"); // Navigate to the dashboard or home
+      }, 2000);
     }, 1000);
+  };
+
+  const handlePhonePush =()=>{
+    router.push("/(routes)/PhoneLogin");
+  }
+  const handleExit = () => {
+    setShowExitModal(false);
+    router.back();
   };
 
   return (
@@ -57,7 +90,7 @@ export default function Login() {
             style={[
               SignUpStyles.input,
               focusInput.email && { borderColor: "#DEBC8E" },
-              { paddingHorizontal: 40 }
+              { paddingHorizontal: 40 },
             ]}
             keyboardType="email-address"
             value={userInfo.email}
@@ -66,27 +99,26 @@ export default function Login() {
             onBlur={() => setFocusInput({ ...focusInput, email: false })}
             onChangeText={(value) => setUserInfo({ ...userInfo, email: value })}
           />
-          {required && (
-            <View style={commonstyles.errorContainer}>
-              <Entypo name="cross" size={18} color="red" />
-            </View>
+          {errorMessage.email && (
+            <Text style={{ color: "red", fontSize: 12, marginTop: 5 }}>{errorMessage.email}</Text>
           )}
         </View>
 
         <View style={{ marginTop: 5 }}>
           <Text style={SignUpStyles.label}>Password</Text>
           <View>
-            <TextInput
+          <TextInput
               style={[
                 SignUpStyles.input,
-                focusInput.password && { borderColor: "#DEBC8E" }
+                focusInput.password && { borderColor: "#DEBC8E" },
               ]}
               keyboardType="default"
               secureTextEntry={!isPasswordVisible}
               placeholder="******"
+              value={userInfo.password}
               onFocus={() => setFocusInput({ ...focusInput, password: true })}
               onBlur={() => setFocusInput({ ...focusInput, password: false })}
-              // onChangeText={handlePasswordValidation}
+              onChangeText={(value) => setUserInfo({ ...userInfo, password: value })}
             />
             <TouchableOpacity
               style={SignUpStyles.visibleIcon}
@@ -95,8 +127,13 @@ export default function Login() {
               <Ionicons name={isPasswordVisible ? 'eye-off-outline' : 'eye-outline'} size={20} color="#747474" />
             </TouchableOpacity>
           </View>
+          {errorMessage.password && (
+            <Text style={{ color: "red", fontSize: 12, marginTop: 5 }}>{errorMessage.password}</Text>
+          )}
         </View>
-
+        {successMessage && (
+          <Text style={{ color: "green", fontSize: 14, marginTop: 10, textAlign: "center" }}>{successMessage}</Text>
+        )}
         <TouchableOpacity onPress={() => router.push("/(routes)/forgot-password")}>
           <Text style={SignUpStyles.forgotSection}>Forgot Password?</Text>
         </TouchableOpacity>
@@ -123,13 +160,17 @@ export default function Login() {
         </View>
 
         <View style={SignUpStyles.socialButtons}>
-          <TouchableOpacity style={SignUpStyles.socialButton}>
+          <TouchableOpacity onPress={handlePhonePush} style={SignUpStyles.socialButton}>
             <MaterialIcons name="phone-android" size={24} color="black" />
             <Text style={{ color: "#000000", lineHeight: 19.6, fontSize: 14, fontWeight: '400' }}>Continue with Phone</Text>
           </TouchableOpacity>
           <TouchableOpacity style={SignUpStyles.socialButton}>
             <Image style={{ height: 20, width: 20, resizeMode: "contain" }} source={require("@/assets/images/google.png")} />
             <Text style={{ color: "#000000", lineHeight: 19.6, fontSize: 14, fontWeight: '400' }}>Continue with Google</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={SignUpStyles.socialButton}>
+          <AntDesign name="apple1" size={24} color="black" />
+            <Text style={{ color: "#000000", lineHeight: 19.6, fontSize: 14, fontWeight: '400' }}>Continue with Apple</Text>
           </TouchableOpacity>
         </View>
 

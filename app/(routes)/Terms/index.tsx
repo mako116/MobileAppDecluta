@@ -1,10 +1,8 @@
-import { View, Text } from 'react-native'
 import React from 'react'
+import TermsOfUse from '@/screens/Conditions/Terms'
 
 export default function Terms() {
   return (
-    <View>
-      <Text>index</Text>
-    </View>
+   <TermsOfUse/>
   )
 }

@@ -24,6 +24,9 @@ export default function EmailSetup() {
     router.back();
   };
 
+  const navigateToTerms = () => router.push("/(routes)/Terms");
+  const navigateToPrivacyPolicy = () => router.push("/(routes)/privacyPolicy");
+
   return (
     <SafeAreaView>
       <ScrollView scrollEventThrottle={16}>
@@ -94,7 +97,7 @@ export default function EmailSetup() {
           </View>
 
           <View style={{ paddingTop: 80, flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 5 }}>
-          <TouchableOpacity onPress={() => router.push("/(routes)/Terms")}>
+          <TouchableOpacity onPress={navigateToTerms}>
             <Text style={{ color: "#DEBC8E", fontWeight: "700", fontSize: 16, lineHeight: 22.4 }}>Terms of use</Text>
             </TouchableOpacity>
             <View style={SignUpStyles.separator2} />
@@ -107,7 +110,7 @@ export default function EmailSetup() {
     </SafeAreaView>
   );
 }
-
+ 
 const styles = StyleSheet.create({
   signs: {
     paddingHorizontal: 10,
