@@ -14,14 +14,14 @@ export default function ProfileCreationFlow() {
   return (
     <SafeAreaView style={styles.container}>
       {step === 1 && (
-        <View style={styles.box}>
+        <View style={[styles.box,{height:"80%", margin:"auto"}]}>
           <Image
       source={require('../../../assets/images/createdprofile.png')}
       style={{}}
       />
           <Text style={styles.title}>Profile Created</Text>
           <Text style={{textAlign:"center"}}>Congrats your profile has been created.</Text>
-          <TouchableOpacity style={styles.button} onPress={nextStep}>
+          <TouchableOpacity style={[styles.button,{position:"absolute",bottom:0, width:"100%",}]} onPress={nextStep}>
             <Text style={styles.buttonText}>Continue</Text>
           </TouchableOpacity>
         </View>
@@ -33,13 +33,15 @@ export default function ProfileCreationFlow() {
       source={require('../../../assets/images/bio.png')}
       style={{}}
       />
-          <Text style={styles.title}>Make your login & transaction faster and more secure with biometrics enabled</Text>
-          <View style={{flexDirection: "row", marginTop:80, gap:10}}>
-          <TouchableOpacity style={styles.button} onPress={nextStep}>
-            <Text style={styles.buttonText}>Enable</Text>
-          </TouchableOpacity>
+          <Text style={styles.title}>Enable Biometrics!</Text>
+          <Text style={{fontWeight:"400", textAlign:"center",lineHeight:19.6, fontSize:14,}}>Make your login & transaction faster and more secure with biometrics enabled</Text>
+          <View style={{flexDirection: "row", paddingTop:90, gap:20}}>
+          
           <TouchableOpacity style={styles.secondaryButton} onPress={skipStep}>
-            <Text style={styles.secondaryButtonText}>Not Now</Text>
+            <Text style={[styles.secondaryButtonText,{paddingHorizontal:30}]}>Not Now</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.button]} onPress={nextStep}>
+            <Text style={[styles.buttonText,{paddingHorizontal:35, }]}>Enable</Text>
           </TouchableOpacity>
           </View>
         </View>
@@ -52,8 +54,8 @@ export default function ProfileCreationFlow() {
       style={{}}
       />
           <Text style={styles.title}>Biometric Setup Successful</Text>
-          <View style={{marginTop: 90}}>
-          <TouchableOpacity style={styles.button} onPress={goToHome}>
+          <View style={{marginTop: 90,}}>
+          <TouchableOpacity style={[styles.button,{width:"100%"}]} onPress={goToHome}>
             <Text style={styles.buttonText}>Continue</Text>
           </TouchableOpacity>
           </View>
@@ -65,18 +67,21 @@ export default function ProfileCreationFlow() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
+   
+    // flex: 1,
+    // marginTop:100,
+    // justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5F5F5',
+    margin:"auto",
   },
   
   box: {
-    // width: '80%',
-    height:"100%",
+   
+    
     padding: 24,
     borderRadius: 10,
-    backgroundColor: '#FFFFFF',
+    
     alignItems: 'center',
      
   },
@@ -88,22 +93,30 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: '#DFBD8F',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    paddingVertical: 19,
+    paddingHorizontal: 10,
     borderRadius: 5,
     marginTop: 16,
   },
   buttonText: {
+    textAlign:"center",
     color: '#212121',
-    fontWeight: 'bold',
+    fontWeight: '400',
     fontSize: 16,
+    lineHeight:22.4
   },
   secondaryButton: {
-    marginTop: 10,
-    padding: 10,
+    paddingVertical: 19,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    borderWidth:1,
+    marginTop: 16,
   },
   secondaryButtonText: {
-    color: '#DEBC8E',
+    textAlign:"center",
+    color: '#212121',
+    fontWeight: '400',
     fontSize: 16,
+    lineHeight:22.4
   },
 });

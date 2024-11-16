@@ -11,13 +11,16 @@ export default function OTPMainEmail() {
   const [successMessage, setSuccessMessage] = useState('');
   const [timer, setTimer] = useState(119); // Set timer to 1 minute 59 seconds
   const inputRefs = useRef<Array<React.RefObject<TextInput>>>([]);
-  const timerRef = useRef<NodeJS.Timeout | null>(null); // Ref to store timer interval
-  const [otpVerified, setOtpVerified] = useState(false); // Track OTP verification status
+   const [otpVerified, setOtpVerified] = useState(false); // Track OTP verification status
  
+  const timerRef = useRef<number | null>(null); 
+
   useEffect(() => {
     fetchOtpLengthFromApi();
     startCountdown();
-    return () => clearInterval(timerRef.current); // Clear timer on component unmount
+    return () => {
+      if (timerRef.current !== null) clearInterval(timerRef.current); // Ensure timerRef is not null
+    };
   }, []);
 
   const fetchOtpLengthFromApi = async () => {
@@ -30,12 +33,12 @@ export default function OTPMainEmail() {
   };
 
   const startCountdown = () => {
-    clearInterval(timerRef.current); // Clear any existing timer
+    if (timerRef.current !== null) clearInterval(timerRef.current); // Clear any existing timer
     setTimer(119); // Reset timer to 1 minute 59 seconds
-    timerRef.current = setInterval(() => {
+    timerRef.current = window.setInterval(() => { // Use window.setInterval to get the correct ID
       setTimer(prevTimer => {
         if (prevTimer <= 0) {
-          clearInterval(timerRef.current);
+          if (timerRef.current !== null) clearInterval(timerRef.current);
           return 0;
         }
         return prevTimer - 1;
@@ -78,11 +81,12 @@ export default function OTPMainEmail() {
       setIsLoading(false);
       const enteredOtp = otp.join('');
       if (enteredOtp === '1234') { // Replace with actual OTP verification
-        setSuccessMessage('Phone number verification successful.');
+        setSuccessMessage('Email address verification successful. ');
         setError(''); // Clear error on success
 
         setOtpVerified(true); // Mark OTP as verified
-        router.push("/(routes)/CreatePassword"); // Navigate to OTPEmail page on success
+        router.push("/(routes)/CreatePassword");
+         // Navigate to OTPEmail page on success
       } else {
         setError('Invalid Code');
         setSuccessMessage(''); // Clear success message on failure
@@ -136,8 +140,8 @@ export default function OTPMainEmail() {
         </View>
       ) : null}
       {successMessage && !error ? (
-        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-          <Ionicons name="checkmark-circle-sharp" size={24} style={styles.successText} />
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
+          <Ionicons name="checkmark-circle-sharp" size={14} color={"#009217"} />
           <Text style={styles.successText}>{successMessage}</Text>
         </View>
       ) : null}
@@ -188,9 +192,10 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   successText: {
-    color: 'green',
-    fontSize: 16,
-    marginBottom: 10,
+    color: '#212121',
+    fontWeight:"400",
+    lineHeight:19.6,
+    fontSize: 14,
   },
   timerText: {
     fontSize: 14,

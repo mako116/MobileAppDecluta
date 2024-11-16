@@ -11,13 +11,21 @@ export default function OTPMain() {
   const [successMessage, setSuccessMessage] = useState('');
   const [timer, setTimer] = useState(119); // Set timer to 1 minute 59 seconds
   const inputRefs = useRef<Array<React.RefObject<TextInput>>>([]);
-  const timerRef = useRef<NodeJS.Timeout | null>(null); // Ref to store timer interval
-  const [otpVerified, setOtpVerified] = useState(false); // Track OTP verification status
+   const [otpVerified, setOtpVerified] = useState(false); // Track OTP verification status
  
+  const timerRef = useRef<NodeJS.Timeout | undefined>(undefined); // Ref to store timer interval
+
+
   useEffect(() => {
     fetchOtpLengthFromApi();
     startCountdown();
-    return () => clearInterval(timerRef.current); // Clear timer on component unmount
+  
+    // Cleanup interval on component unmount
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+    };
   }, []);
 
   const fetchOtpLengthFromApi = async () => {
@@ -30,18 +38,24 @@ export default function OTPMain() {
   };
 
   const startCountdown = () => {
-    clearInterval(timerRef.current); // Clear any existing timer
+    if (timerRef.current) {
+      clearInterval(timerRef.current); // Clear any existing timer
+    }
+  
     setTimer(119); // Reset timer to 1 minute 59 seconds
     timerRef.current = setInterval(() => {
       setTimer(prevTimer => {
         if (prevTimer <= 0) {
-          clearInterval(timerRef.current);
+          if (timerRef.current) {
+            clearInterval(timerRef.current);
+          }
           return 0;
         }
         return prevTimer - 1;
       });
     }, 1000);
   };
+
 
   const handleChange = (text: string, index: number) => {
     if (text.length > 1) return;
@@ -136,8 +150,8 @@ export default function OTPMain() {
         </View>
       ) : null}
       {successMessage && !error ? (
-        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-          <Ionicons name="checkmark-circle-sharp" size={24} style={styles.successText} />
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
+          <Ionicons name="checkmark-circle-sharp" color={"#009217"} size={14}  />
           <Text style={styles.successText}>{successMessage}</Text>
         </View>
       ) : null}
@@ -188,10 +202,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   successText: {
-    color: 'green',
-    fontSize: 16,
-    marginBottom: 10,
-  },
+    color: '#212121',
+    fontWeight:"400",
+    lineHeight:19.6,
+    fontSize: 14,
+   },
   timerText: {
     fontSize: 14,
     color: '#333',

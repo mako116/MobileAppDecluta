@@ -32,8 +32,8 @@ export const Creating = StyleSheet.create({
     },
     input: {
       flex: 1,
-      height: 55,
-      borderRadius: 3,
+      height: 50,
+      borderRadius: 4,
       paddingLeft: 15,
       fontSize: 14,
       marginTop: 8,
@@ -91,7 +91,7 @@ export const Creating = StyleSheet.create({
       lineHeight: 16.8,
     },
     buttonText: {
-      color: "#212121",
+       color: "#212121",
       fontSize: 16,
       fontWeight: "700",
     },

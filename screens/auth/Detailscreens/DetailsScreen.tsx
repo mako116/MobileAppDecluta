@@ -66,21 +66,7 @@ export default function DetailScreen() {
       return () => backHandler.remove();
     }, [])
   );
-
-  // Handle exit from modal
-  const handleExit = () => {
-    setShowExitModal(false);
-    router.back();
-  };
-
-  // Handle sign-in button press
-  const handleSignIn = () => {
-    setButtonSpinner(true);
-    setTimeout(() => {
-      setButtonSpinner(false);
-      // Navigate to dashboard/home after successful login
-    }, 1000);
-  };
+ 
 
   // Toggle dropdown for gender selection
   const toggleDropdown = () => {
@@ -102,8 +88,11 @@ export default function DetailScreen() {
     }, 1000);
   }
 
+  const handleHelp = () =>{
+    router.push("/(routes)/need-help")
+  }
   return (
-    <ScrollView style={{ flex: 1 }} scrollEventThrottle={16}>
+    <ScrollView style={{ flex: 1 ,}} scrollEventThrottle={16}>
       <View style={{ padding: 16 }}>
         {/* First Name Input */}
         <View>
@@ -247,7 +236,7 @@ export default function DetailScreen() {
         <View style={{flexDirection:"row", justifyContent: "center"}}>
           <MaterialCommunityIcons name="message-question" size={24} color="black" />
           <Text>Need help?</Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={handleHelp}>
             <Text style={{color:"#DEBC8E"}}>Click Here</Text>
           </TouchableOpacity>
         </View>

@@ -7,7 +7,7 @@ import { View, Text, ScrollView, StyleSheet, SafeAreaView, TextInput, TouchableO
 
 export default function OTPPageEmail() {
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff", paddingTop:20 }}>
       <ScrollView
         contentContainerStyle={{ flexGrow: 1 }}
         style={{ backgroundColor: "#fff" }}

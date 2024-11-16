@@ -11,8 +11,10 @@ export default function SignUp() {
     router.back();
   };
 
+ 
+
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{marginTop: 30,}}>
     <ScrollView scrollEventThrottle={16} >
          <View style={styles.signs}>
           <TouchableOpacity onPress={handleGoBack}>
@@ -23,10 +25,8 @@ export default function SignUp() {
         <View style={styles.section}>
           <Text style={{color:"#212121", fontWeight:"700", fontSize:23, lineHeight:32.2}}>Tell Us About yourself</Text>
         </View>
-        <View>
-          <DetailScreen/>
-        </View>
-         </ScrollView>
+           <DetailScreen/>
+          </ScrollView>
         </SafeAreaView>
   )
 }
@@ -34,7 +34,8 @@ export default function SignUp() {
 const styles = StyleSheet.create({
   signs: {
     paddingHorizontal: 12,
-    paddingTop: 60,
+    // paddingTop: 60,
+    paddingVertical:32,
     paddingBottom: 20,
     flexDirection: "row",
     alignItems: "center",

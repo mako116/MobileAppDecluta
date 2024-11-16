@@ -1,12 +1,11 @@
 import OTPMain from '@/screens/auth/OTPScreen/OTPMain';
-import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
-import { router } from 'expo-router';
-import React from 'react';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+ import React from 'react';
 import { View, Text, ScrollView, StyleSheet, SafeAreaView, TextInput, TouchableOpacity, ActivityIndicator, Image, Alert } from 'react-native';
 
 export default function OTPPage() {
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" ,paddingTop:20}}>
       <ScrollView
         contentContainerStyle={{ flexGrow: 1 }}
         style={{ backgroundColor: "#fff" }}

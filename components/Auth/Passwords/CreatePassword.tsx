@@ -1,4 +1,4 @@
-import { Feather } from '@expo/vector-icons';
+import { Feather, Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import React, { useState } from 'react';
 import {
@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   Alert,
   Image,
+  ActivityIndicator,
 } from 'react-native';
 import { Creating } from '@/styles/createPassword/CreatePassword'; // Ensure this path is correct
 
@@ -21,10 +22,11 @@ interface RequirementProps {
 function RequirementItem({ label, isValid }: RequirementProps) {
   return (
     <View style={Creating.requirementItem}>
-      <Feather
-        name={isValid ? 'check-square' : 'square'}
+      <Ionicons
+        name={isValid ? 'checkmark-circle-sharp' : 'square-outline'}
         size={18}
         color={isValid ? '#DEBC8E' : 'gray'}
+        
       />
       <Text
         style={{
@@ -42,8 +44,11 @@ function RequirementItem({ label, isValid }: RequirementProps) {
     </View>
   );
 }
+ 
 
 export default function CreatePassword(): JSX.Element {
+  const [buttonSpinner, setButtonSpinner] = useState(false);
+
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [requirements, setRequirements] = useState({
@@ -110,7 +115,7 @@ export default function CreatePassword(): JSX.Element {
         </View>
 
         <View style={Creating.container}>
-          <Text style={{ marginVertical: 5 }}>Enter Password</Text>
+          <Text style={{ marginVertical: 5 ,marginLeft:2}}>Enter Password</Text>
           <View
             style={[
               Creating.passwordContainer,
@@ -133,7 +138,7 @@ export default function CreatePassword(): JSX.Element {
             </TouchableOpacity>
           </View>
 
-          <Text style={{ marginVertical: 5 }}>Confirm Password</Text>
+          <Text style={{ marginTop: 15 ,marginLeft:2}}>Confirm Password</Text>
           <View
             style={[
               Creating.passwordContainer,
@@ -187,29 +192,44 @@ export default function CreatePassword(): JSX.Element {
               isValid={requirements.number}
             />
             <RequirementItem
-              label="1 special character, for example (!@#$%^&*-_+)"
+              label="1 special character, for example (!@#$%^&*-).+"
               isValid={requirements.specialChar}
             />
           </View>
-
+          <View>
           <TouchableOpacity
-            style={[
-              Creating.createAccountButton,
-              !allRequirementsMet && Creating.disabledButton,
-            ]}
-            onPress={handleCreateAccount}
-            disabled={!allRequirementsMet}
-          >
-            <Text
-              style={[
-                Creating.buttonText,
-                !allRequirementsMet && Creating.disabledButton,
-              ]}
-            >
-              Create Account
-            </Text>
-          </TouchableOpacity>
-
+  style={[
+    Creating.createAccountButton,
+    (!allRequirementsMet || buttonSpinner) && Creating.disabledButton,
+  ]}
+  onPress={() => {
+    setButtonSpinner(true); // Start spinner
+    setTimeout(() => {
+      try {
+        handleCreateAccount(); // Attempt to create the account after delay
+      } catch (error) {
+      } finally {
+        setButtonSpinner(false); // Stop spinner after 2 seconds
+      }
+    }, 1000); // 2-second delay
+  }}
+  disabled={!allRequirementsMet || buttonSpinner} // Disable when processing
+>
+  {buttonSpinner ? (
+    <ActivityIndicator size="small" color="#000" />
+  ) : (
+    <Text
+      style={[
+        Creating.buttonText,
+        (!allRequirementsMet || buttonSpinner) && Creating.disabledButton,
+      ]}
+    >
+      Create Account
+    </Text>
+  )}
+</TouchableOpacity>
+          </View>
+           
           <View style={Creating.footerTextContainer}>
             <Text style={Creating.footerText}>
               By clicking create profile, you accept our
