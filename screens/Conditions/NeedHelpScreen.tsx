@@ -4,7 +4,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { router } from 'expo-router';
 import { SignUpStyles } from '@/styles/Signup/signup.style';
 import CountryPicker, { Country, CountryCode } from 'react-native-country-picker-modal';
-import { AntDesign, Entypo, Ionicons } from '@expo/vector-icons';
+import { Entypo, Ionicons } from '@expo/vector-icons';
 import { Needs } from '@/styles/needhelp/needhelps.styles';
 
 export default function NeedHelpScreen() {
@@ -80,19 +80,19 @@ export default function NeedHelpScreen() {
     setCallingCode(country.callingCode[0]); // Set the corresponding calling code
   };
 
+ 
+    // Navigate to OTP page and show success modal
+    const NextPage = () => {
+      setButtonSpinner(true);
+      setTimeout(() => {
+        // Navigate to Success Modal Screen
+        router.push('/(routes)/SuccessModalScreen');
+        setButtonSpinner(false);
+      }, 1000);
+    };
+  
 
-  const NextPage= () =>{
-    setButtonSpinner(true);
-    setTimeout(() => {
-      router.push("/(routes)/OTPPhone")
-      setButtonSpinner(false);
-      // Navigate to dashboard/home after successful login
-    }, 1000);
-  }
-
-  const handleHelp = () =>{
-    router.push("/(routes)/need-help")
-  }
+ 
   return (
     <ScrollView  scrollEventThrottle={16}>
         {/* Email Input */}
@@ -205,23 +205,19 @@ export default function NeedHelpScreen() {
         </View>
 
           {/* Next Button */}
-         <View style={{marginTop:40,paddingVertical:20, backgroundColor:"white"}}>
-         <TouchableOpacity
+          <View style={{ marginTop: 40, paddingVertical: 20 }}>
+        <TouchableOpacity
           onPress={NextPage}
-          style={[
-            { marginVertical: 20 },
-            SignUpStyles.loginButton,
-            !isButtonEnabled && { backgroundColor: "#E9E9E9" } // Gray out if disabled
-          ]}
-          disabled={!isButtonEnabled} // Disable button if not enabled
-        >
+          style={SignUpStyles.loginButton
+           }
+         >
           {buttonSpinner ? (
             <ActivityIndicator size="small" color="white" />
           ) : (
-            <Text style={[ !isButtonEnabled && { backgroundColor: "#E9E9E9", color:"#E9E9E9" },SignUpStyles.loginText]}>Next</Text>
+            <Text style={SignUpStyles.loginText}>Submit</Text>
           )}
         </TouchableOpacity>
-         </View>
+      </View>
     </ScrollView>
   )
 }
