@@ -103,4 +103,21 @@ export const Creating = StyleSheet.create({
       backgroundColor: "#E9E9E9",
       color:"#A4A4A4"
     },
+    helpSection: {
+      flexDirection: "row",
+      justifyContent: "center",
+      alignItems: "center",
+      marginTop: 120,
+      paddingHorizontal: 16,
+    },
+    helpText: {
+      color: "#212121",
+      fontSize: 14,
+      marginHorizontal: 5,
+    },
+    helpLink: {
+      color: "#DEBC8E",
+      fontSize: 14,
+      fontWeight: "600",
+    },
   });

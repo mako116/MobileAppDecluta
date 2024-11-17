@@ -1,5 +1,5 @@
  import React from 'react'
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import{
   useFonts,
   Nunito_400Regular,
@@ -10,44 +10,11 @@ import{
  
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
-  export default function ForgotPassword() {
-    let [ fontsLoaded, fontError] = useFonts({
-      Nunito_400Regular,
-      Nunito_500Medium,
-      Nunito_700Bold,
-      Nunito_600SemiBold,
-    });
-  
-    if (!fontsLoaded && !fontError){
-      return null;
-    }
+import ForgotPassword from '@/components/Auth/Passwords/ForgotPasswords/ForgotPassword';
+  export default function ForgotPasswords() {
+    
   return (
-    <LinearGradient
-    colors={["#e5ecf9", "#f6f7f9", "#e8eef9"]} 
-    >
-      <Text style={[styles.headerText,{fontFamily:"Nunito_400Regular"}]}>
-        Reset Email Password
-      </Text>
-
-      <TextInput
-      style={[styles.input]}
-      placeholder='username@gmail.com'
-      keyboardType='email-address'/>
-      <TouchableOpacity>
-        <Text style={[styles.buttonText]}>
-          send
-        </Text>
-
-      </TouchableOpacity>
-      <View >
-        <Text>
-          Back To
-        </Text>
-        <TouchableOpacity onPress={()=> router.back()}>
-          Sign In 
-        </TouchableOpacity>
-      </View>
-    </LinearGradient>
+   <ForgotPassword/>
  
   )
 }

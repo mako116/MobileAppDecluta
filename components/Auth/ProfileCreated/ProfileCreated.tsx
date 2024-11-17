@@ -35,7 +35,7 @@ export default function ProfileCreationFlow() {
       />
           <Text style={styles.title}>Enable Biometrics!</Text>
           <Text style={{fontWeight:"400", textAlign:"center",lineHeight:19.6, fontSize:14,}}>Make your login & transaction faster and more secure with biometrics enabled</Text>
-          <View style={{flexDirection: "row", paddingTop:90, gap:20}}>
+          <View style={{flexDirection: "row", marginTop:"90%", gap:20}}>
           
           <TouchableOpacity style={styles.secondaryButton} onPress={skipStep}>
             <Text style={[styles.secondaryButtonText,{paddingHorizontal:30}]}>Not Now</Text>
@@ -48,15 +48,15 @@ export default function ProfileCreationFlow() {
       )}
 
       {step === 3 && (
-        <View style={styles.box}>
+        <View style={{}}>
              <Image
       source={require('../../../assets/images/sucesshand.png')}
-      style={{}}
+      style={{alignItems:"center", margin:'auto'}}
       />
           <Text style={styles.title}>Biometric Setup Successful</Text>
-          <View style={{marginTop: 90,}}>
-          <TouchableOpacity style={[styles.button,{width:"100%"}]} onPress={goToHome}>
-            <Text style={styles.buttonText}>Continue</Text>
+          <View style={{marginTop: "80%",}}>
+          <TouchableOpacity style={[styles.button,{  }]} onPress={goToHome}>
+            <Text style={[styles.buttonText,{}]}>Continue</Text>
           </TouchableOpacity>
           </View>
         </View>
@@ -67,13 +67,13 @@ export default function ProfileCreationFlow() {
 
 const styles = StyleSheet.create({
   container: {
-   
-    // flex: 1,
-    // marginTop:100,
-    // justifyContent: 'center',
-    alignItems: 'center',
+   paddingHorizontal:20,
+    flex: 1,
+    marginTop:100,
+    justifyContent: 'center',
+    // alignItems: 'center',
     backgroundColor: '#F5F5F5',
-    margin:"auto",
+    // margin:"auto",
   },
   
   box: {
@@ -86,10 +86,12 @@ const styles = StyleSheet.create({
      
   },
   title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#333',
+    fontSize: 23,
+    fontWeight: '700',
+    color: '#212121',
     marginBottom: 16,
+    textAlign:"center",
+    marginTop:4
   },
   button: {
     backgroundColor: '#DFBD8F',

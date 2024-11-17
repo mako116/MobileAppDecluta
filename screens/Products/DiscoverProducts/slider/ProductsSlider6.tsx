@@ -6,7 +6,7 @@ export default function ProductsSlider6() {
   return (
     <View style={{ marginTop: 5 }}>
       <View >
-        <View style={{flexDirection:"row", justifyContent:"space-between"}}>
+        <View style={{flexDirection:"row", justifyContent:"space-between", alignItems:"center"}}>
         <Category
                   imageUrl={require('../../../../assets/images/meduimphone.png')}
                   name="Apple iPhone XR"
@@ -23,7 +23,7 @@ export default function ProductsSlider6() {
                   name="Apple iPhone XR"
                   title="₦250,000" 
                   locations={'Agbowo UI, Ibadan'}         />
-                  <Category
+       <Category
                   imageUrl={require('../../../../assets/images/meduimphone.png')}
                   name="Apple iPhone XR"
                   title="₦250,000" 

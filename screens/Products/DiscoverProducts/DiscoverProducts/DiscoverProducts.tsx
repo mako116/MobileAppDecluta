@@ -6,7 +6,7 @@ import ProductsSlider6 from '../slider/ProductsSlider6'
  
 export default function DiscoverProducts() {
   return (
-    <View style={{backgroundColor:"#f9f9f9",paddingHorizontal:12}}>
+    <View style={{backgroundColor:"#f9f9f9",paddingRight:18,paddingLeft:10}}>
       <View style={{flexDirection:"row", alignItems:"center", justifyContent:"space-between",paddingVertical:10, paddingHorizontal:5}}>
         <Text style={{fontWeight:"700",fontSize:16,lineHeight:22.4}}>Discover great offers</Text>
         <View >
