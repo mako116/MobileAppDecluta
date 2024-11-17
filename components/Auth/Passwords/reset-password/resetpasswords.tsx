@@ -33,7 +33,7 @@ export default function ResetPassword(): JSX.Element {
     
     router.push('/(routes)/login');
   };
-
+ 
   const handleHelp = () =>{
     router.push("/(routes)/need-help")
   }
