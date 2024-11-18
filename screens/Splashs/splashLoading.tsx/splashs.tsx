@@ -9,7 +9,7 @@ export default function Splashs() {
      
     useEffect(()=>{
         setTimeout(() => {
-            router.push("/(tabs)/home")
+            router.push("/(routes)/welcomebackPIn")
         }, 1500);
     },[])
 

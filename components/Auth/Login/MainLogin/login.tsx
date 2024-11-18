@@ -100,7 +100,7 @@ export default function Login() {
             onChangeText={(value) => setUserInfo({ ...userInfo, email: value })}
           />
           {errorMessage.email && (
-            <Text style={{ color: "red", fontSize: 12, marginTop: 5 }}>{errorMessage.email}</Text>
+            <Text style={{ color: "red", fontSize: 12, marginTop: 5 , marginHorizontal:20 }}>{errorMessage.email}</Text>
           )}
         </View>
 
@@ -128,7 +128,7 @@ export default function Login() {
             </TouchableOpacity>
           </View>
           {errorMessage.password && (
-            <Text style={{ color: "red", fontSize: 12, marginTop: 5 }}>{errorMessage.password}</Text>
+            <Text style={{ color: "red", fontSize: 12, marginTop: 5 , marginHorizontal:20}}>{errorMessage.password}</Text>
           )}
         </View>
         {successMessage && (

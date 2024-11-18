@@ -9,8 +9,9 @@ export default function Splashs() {
      
     useEffect(()=>{
         setTimeout(() => {
-            router.push("/(tabs)/home")
-        }, 2000);
+            // router.push("/(tabs)/home")
+            router.push("/(routes)/welcomebackPIn")
+         }, 2000);
     },[])
 
   return (

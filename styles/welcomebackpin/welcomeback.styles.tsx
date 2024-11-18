@@ -3,10 +3,11 @@ import { StyleSheet } from "react-native";
 const welcomePin = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#F9F9F9',
+        width:"100%",
+          backgroundColor: '#fff',
      },
     pinContainer: {
-        marginVertical: 30,
+        paddingTop: 70,
         paddingHorizontal: 20,
     },
     pinText: {
@@ -28,19 +29,33 @@ const welcomePin = StyleSheet.create({
         borderColor: '#DEBC8E', // Highlight filled inputs
     },
     calculatorContainer: {
-        marginTop: 20,
+        marginTop: 60,
     },
     calculatorRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginBottom: 15,
+        paddingHorizontal:10
+    },
+    span:{
+        fontWeight:"400",
+        fontSize:16,
+        lineHeight:22.4,
+        textAlign:"center"
+    },
+    logout:{
+        fontSize:16,
+        color:"#DEBC8E",
+        fontWeight:"700",
+        textDecorationLine:"underline",
+        lineHeight:22.4
     },
     calculatorButton: {
-        width: 60,
-        height: 60,
+        width: 85,
+        height: 50,
         borderWidth: 1,
-        borderColor: '#ddd',
-        borderRadius: 30,
+        borderColor: '#E9E9E9',
+        borderRadius: 3,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#fff',
