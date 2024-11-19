@@ -5,7 +5,7 @@ import ProductsSlider from '../slider/ProductsSlider'
  
 export default function ExploreProducts() {
   return (
-    <View style={{backgroundColor:"#f9f9f9"}}>
+    <View style={{backgroundColor:"#f9f9f9", paddingHorizontal:12}}>
       <View style={{flexDirection:"row", alignItems:"center", justifyContent:"space-between",paddingVertical:10, paddingHorizontal:5}}>
         <Text style={{fontWeight:"700",fontSize:16,lineHeight:22.4}}>Explore new finds</Text>
         <View >

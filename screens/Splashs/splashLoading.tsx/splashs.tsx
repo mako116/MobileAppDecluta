@@ -9,26 +9,24 @@ export default function Splashs() {
      
     useEffect(()=>{
         setTimeout(() => {
-            router.push("/(routes)/home")
-        }, 2000);
+            router.push("/(routes)/welcomebackPIn")
+        }, 1500);
     },[])
 
   return (
     <View style={styles.background}>
       {/* <Text style={styles.welcomeText}>splashs</Text> */}
       <Image
-      source={require('../../assets/images/decluttaking.png')}
+      source={require('../../../assets/images/decluttaking.png')}
       style={styles.logo}
       />
     <View style={[StyleSheet.absoluteFillObject, styles.container]}>
 
       <Image
       style={{width:280, height:80}}
-      source={require('../../assets/loading/Animation.gif')}/>
+      source={require('../../../assets/loading/Animation.gif')}/>
       </View>
-       {/* <View style={[StyleSheet.absoluteFillObject, styles.container]}>
-     <LottieView source={require('../../assets/loading/Animation.gif')}  />
-    </View> */}
+       
     </View>
   )
 }

@@ -6,7 +6,7 @@ import BannerCategory from '../BannerCategory/BannerCategory';
 
 export default function Banner() {
   return (
-   <View >
+   <View style={{paddingHorizontal:12}}>
      <ImageBackground
       source={require('../../../assets/images/bgimage1.jpg')}
       style={styles.background}

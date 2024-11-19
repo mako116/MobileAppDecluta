@@ -9,6 +9,7 @@ import Categories from '@/screens/Products/BrowseCategory/Categories/Categories'
 import ExploreProducts3 from '@/screens/Products/RecommendProducts/Explore3/ExploreProducts3';
 import ProductBanner from '@/screens/Products/ProductBanner/Banner/banner';
 import DiscoverProducts from '@/screens/Products/DiscoverProducts/DiscoverProducts/DiscoverProducts';
+import Loginbanner from '@/screens/BoxBanner/Loginbanner/Loginbanner';
  
 export default function HomeScreen() {
   return (
@@ -56,6 +57,9 @@ export default function HomeScreen() {
       <View>
         <DiscoverProducts/>
       </View>
+      <View>
+        <Loginbanner/>
+      </View>
          </View>
          
          
@@ -69,14 +73,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 30,
-    paddingBottom: 20,
+    // paddingBottom: 20,
     backgroundColor: '#F9F9F9',
     borderColor: '#000',
     borderTopWidth: 2,
   },
   content: {
     flex: 1,
-    paddingHorizontal: 10,
+    
     paddingVertical:5
   },
   rowContainer: {
@@ -85,7 +89,8 @@ const styles = StyleSheet.create({
     alignItems: 'center', // Center vertically
     width: '100%', // Full width
     paddingHorizontal: 10,
-    paddingVertical:20
+    paddingVertical:20,
+    
   },
   leftItem: {
     flexDirection: 'column', // Stack the image and text vertically
