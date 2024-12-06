@@ -10,6 +10,7 @@ import ExploreProducts3 from '@/screens/Products/RecommendProducts/Explore3/Expl
 import ProductBanner from '@/screens/Products/ProductBanner/Banner/banner';
 import DiscoverProducts from '@/screens/Products/DiscoverProducts/DiscoverProducts/DiscoverProducts';
 import Loginbanner from '@/screens/BoxBanner/Loginbanner/Loginbanner';
+import ProfileKYc from '@/screens/Kyc/BannerH/ProfileKYc';
  
 export default function HomeScreen() {
   return (
@@ -35,11 +36,17 @@ export default function HomeScreen() {
               <NotificationsAlert/>
             </View>
           </View>
-          
+
+      {/* Complete KYC */}
+      <View>
+        <ProfileKYc/>
+      </View>
 
       <View>
         <Banner/>
       </View>
+
+      
 
       {/* Products */}
       <View>
@@ -89,7 +96,7 @@ const styles = StyleSheet.create({
     alignItems: 'center', // Center vertically
     width: '100%', // Full width
     paddingHorizontal: 10,
-    paddingVertical:20,
+    paddingVertical:10,
     
   },
   leftItem: {

@@ -13,7 +13,7 @@ export default function Splashs() {
             router.push("/(routes)/welcomebackPIn")
          }, 2000);
     },[])
-
+ 
   return (
     <View style={styles.background}>
       {/* <Text style={styles.welcomeText}>splashs</Text> */}
