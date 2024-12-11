@@ -1,0 +1,46 @@
+import { SignUpStyles } from "@/styles/Signup/signup.style"
+import { Image, Text, TouchableOpacity } from "react-native"
+import * as Google from 'expo-auth-session/providers/google';
+import * as WebBrowser from 'expo-web-browser';
+import { useEffect } from "react";
+import axios from "axios";
+
+const GoolgSignUp:React.FC = () => {
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    clientId: '850314571191-0jpd0vab9srsve44370p7tc875tftqee.apps.googleusercontent.com',
+    redirectUri: 'https://auth.expo.io/@dev.david/decluttaking-mobileapp',
+    scopes: ['profile', 'email'],
+  });
+
+  // Handle Response
+  useEffect(() => {
+    if (response?.type === 'success') {
+      const { access_token } = response.params;
+      console.log('access token', access_token)
+
+      // Post to Backend
+      axios.post('http://localhost:3000/api/v1/auth/google-register', { token: access_token })
+        .then((res) => {
+          console.log('User Registered:', res.data);
+        })
+        .catch((error) => {
+          console.error('Signup Error:', error);
+        });
+    }
+  }, [response]);
+
+    return(
+        <TouchableOpacity 
+            style={SignUpStyles.socialButton}
+            disabled={!request}    
+            onPress={() => {
+            promptAsync();
+            }}
+        >
+            <Image style={{ height: 20, width: 20, resizeMode: "contain" }} source={require("@/assets/images/google.png")} />
+            <Text style={{ color: "#000000", lineHeight: 19.6, fontSize: 14, fontWeight: '400' }}>Continue with Google</Text>
+        </TouchableOpacity>
+    )
+}
+
+export default GoolgSignUp;  // Change this to GoogleSignUp

@@ -1,94 +1,64 @@
-import { View, Text, StyleSheet, Image, useWindowDimensions } from 'react-native'
-import React, { useEffect } from 'react'
-import { useRouter } from 'expo-router'
-import LottieView from 'lottie-react-native';
+import { View, StyleSheet, Image } from 'react-native';
+import React, { useEffect } from 'react';
+import { useRouter } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function Splashs() {
+export default function SplashScreen() {
+  const router = useRouter();
 
-    const router = useRouter();
-     
-    useEffect(()=>{
-        setTimeout(() => {
-            router.push("/(routes)/welcomebackPIn")
-        }, 1500);
-    },[])
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        // Simulate a brief delay for the splash screen
+        await new Promise((resolve) => setTimeout(resolve, 1500));
+
+        const email = await AsyncStorage.getItem('email');
+        if (email) {
+          console.log('Authenticated user found. Navigating to home.');
+          router.replace('/(routes)/login'); // Navigate to the home screen for authenticated users
+        } else {
+          console.log('No user found. Navigating to login.');
+          router.replace('/(tabs)/home'); // Navigate to login for unauthenticated users
+        }
+      } catch (error) {
+        console.error('Error checking authentication:', error);
+      }
+    };
+
+    checkAuth();
+  }, [router]);
 
   return (
     <View style={styles.background}>
-      {/* <Text style={styles.welcomeText}>splashs</Text> */}
       <Image
-      source={require('../../../assets/images/decluttaking.png')}
-      style={styles.logo}
+        source={require('../../../assets/images/decluttaking.png')}
+        style={styles.logo}
       />
-    <View style={[StyleSheet.absoluteFillObject, styles.container]}>
-
-      <Image
-      style={{width:280, height:80}}
-      source={require('../../../assets/loading/Animation.gif')}/>
+      <View style={[StyleSheet.absoluteFillObject, styles.container]}>
+        <Image
+          style={{ width: 280, height: 80 }}
+          source={require('../../../assets/loading/Animation.gif')}
+        />
       </View>
-       
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
-    background:{
-      flex:1,
-      backgroundColor:"#463e31",
-      justifyContent: "center",
-      alignContent:"center"
-    },
-    welcomeText:{
-      textAlign:"center",
-      fontSize:40,
-      color:"#fff",
-      fontWeight:"600"
-    },
-    container:{
-        display:"flex",
-        marginTop:60,
-        paddingTop:10,
-        marginLeft:8,
-        justifyContent: "center",
-        alignItems:"center",
-        // zIndex:1,
-       },
-    logo:{
-      margin:"auto",
-      display:"flex",
-      justifyContent:"center"
-    },
-    input:{
-      height:55,
-      marginHorizontal:16,
-      borderRadius:8,
-      paddingLeft:35,
-      fontSize:14,
-      backgroundColor:"white",
-      color:"#a1a1a1"
-    },
-    visibleicon:{
-      position:"absolute",
-      right:30,
-      top:15
-    },
-    icon2:{
-      position:"absolute",
-      left:24,
-      top:17.8,
-      marginTop:-2,
-    },
-    forgotsection:{
-      marginHorizontal:16,
-      textAlign:"right",
-      fontSize:16,
-      marginTop:-20,
-    },
-    signupRedirect:{
-      flexDirection:"row",
-      marginHorizontal:16,
-      justifyContent:"center",
-      marginBottom:20,
-      marginTop:20
-    }
-  })
+  background: {
+    flex: 1,
+    backgroundColor: '#463e31',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  container: {
+    marginTop: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  logo: {
+    width: 200,
+    height: 200,
+    resizeMode: 'contain',
+  },
+});

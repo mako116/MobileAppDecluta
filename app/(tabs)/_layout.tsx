@@ -9,7 +9,7 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarStyle: styles.container,
-        tabBarItemStyle: styles.tabItem,
+        // tabBarItemStyle: styles.tabItem,
         tabBarActiveTintColor: Colors['light'].tint, 
         tabBarInactiveTintColor: "#A4A4A4",
         tabBarLabelStyle: styles.label,
@@ -75,22 +75,20 @@ export default function TabLayout() {
 
 const styles = StyleSheet.create({
   tabItem: {
-    paddingVertical: 12,
+    paddingVertical: 1,
   },
   container: {
-    height: 80,
     backgroundColor: "white",
     borderRadius: 12,
+    paddingVertical:10
   },
   label: {
     textTransform: 'capitalize',
     fontSize: 12,
-    marginBottom: 7,
   },
   featherIcon: {
     borderWidth: 1.7,   // Adjust border width if necessary
-     textAlign:"center",
-     paddingTop:1.4,
-    borderRadius: 9,    // Adjust border radius if needed
+    textAlign:"center",
+    paddingVertical:1.4,   // Adjust border radius if needed
   }
 });

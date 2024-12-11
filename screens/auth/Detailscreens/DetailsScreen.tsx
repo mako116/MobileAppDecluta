@@ -6,8 +6,10 @@ import { SignUpStyles } from '../../../styles/Signup/signup.style';
 import { router } from 'expo-router';
 import PhoneInput from 'react-native-phone-input';
 import CountryPicker, { Country, CountryCode } from 'react-native-country-picker-modal';
+import { useAuth } from '@/context/AuthContext';
 
 export default function DetailScreen() {
+  const { email, register} = useAuth();
    const [buttonSpinner, setButtonSpinner] = useState(false);
    const [isButtonEnabled, setIsButtonEnabled] = useState(false); // State for button enabled/disabled
   const [userInfo, setUserInfo] = useState({
@@ -26,6 +28,9 @@ export default function DetailScreen() {
   });
   const [showExitModal, setShowExitModal] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false); // Toggle for custom dropdown
+  const [firstName, setFirstName] = useState<string>('')
+  const [lastName, setLastName] = useState<string>('')
+  const [gender, setGender] = useState<string>('')
   const [phoneNumber, setPhoneNumber] = useState('');
   const [countryCode, setCountryCode] = useState<CountryCode>('US'); // Default to 'US'
   const [callingCode, setCallingCode] = useState('1');  // Default calling code for 'US'
@@ -87,13 +92,35 @@ export default function DetailScreen() {
       // Navigate to dashboard/home after successful login
     }, 1000);
   }
+  const handleSignUp = async () => {
+    try {
+      setButtonSpinner(true);
+      if (!email) {
+        alert('Email is required');
+        return;
+      }
+      await register(firstName, lastName, email, gender, phoneNumber);
+    } catch (err) {
+    } finally {
+      setButtonSpinner(true);
+      setTimeout(() => {
+        setButtonSpinner(false);
+        // setTimeout(() => {
+        //   setSuccessMessage("");
+        //   router.push("/(routes)/splashscren"); // Navigate to the dashboard or home
+        // }, 2000);
+      }, 1000);
+    }
+
+    
+  };
 
   const handleHelp = () =>{
     router.push("/(routes)/need-help")
   }
   return (
-    <ScrollView style={{ flex: 1 ,}} scrollEventThrottle={16}>
-      <View style={{ padding: 16 }}>
+    <ScrollView style={{ flex: 1 ,}} scrollEventThrottle={1}>
+      <View style={{ marginTop: 15 }}>
         {/* First Name Input */}
         <View>
           <Text style={SignUpStyles.label}>First name</Text>
@@ -106,6 +133,7 @@ export default function DetailScreen() {
             keyboardType="default"
             value={userInfo.firstName}
             placeholder="Enter your legal first name"
+            placeholderTextColor='gray'
             onFocus={() => setFocusInput({ ...focusInput, firstName: true })}
             onBlur={() => setFocusInput({ ...focusInput, firstName: false })}
             onChangeText={(value) => setUserInfo({ ...userInfo, firstName: value })}
@@ -124,6 +152,7 @@ export default function DetailScreen() {
             keyboardType="default"
             value={userInfo.LastName}
             placeholder="Enter your legal last name"
+            placeholderTextColor='gray'
             onFocus={() => setFocusInput({ ...focusInput, LastName: true })}
             onBlur={() => setFocusInput({ ...focusInput, LastName: false })}
             onChangeText={(value) => setUserInfo({ ...userInfo, LastName: value })}
@@ -176,6 +205,7 @@ export default function DetailScreen() {
             keyboardType="email-address"
             value={userInfo.email}
             placeholder="matthewc@email.com"
+            placeholderTextColor='gray'
             onFocus={() => setFocusInput({ ...focusInput, email: true })}
             onBlur={() => setFocusInput({ ...focusInput, email: false })}
             onChangeText={(value) => setUserInfo({ ...userInfo, email: value })}
@@ -202,6 +232,7 @@ export default function DetailScreen() {
               value={phoneNumber}
               onChangeText={handlePhoneChange}
               placeholder="Phone number"
+              placeholderTextColor='gray'
             />
           </View>
         </View>
@@ -213,12 +244,13 @@ export default function DetailScreen() {
             style={[SignUpStyles.input]}
             keyboardType="default"
             placeholder="Enter referral code"
+            placeholderTextColor='gray'
           />
         </View>
         
         {/* Next Button */}
         <TouchableOpacity
-          onPress={NextPage}
+          onPress={handleSignUp}
           style={[
             { marginVertical: 20 },
             SignUpStyles.loginButton,
