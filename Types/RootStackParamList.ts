@@ -1,4 +1,4 @@
-// export type RootStackParamList = {
-//   HomeScreen: undefined;
-//   ChangeLocationScreen: undefined;
-// };
+export type RootStackParamList = {
+  HomeScreen: undefined;
+  ChangeLocationScreen: undefined;
+};
