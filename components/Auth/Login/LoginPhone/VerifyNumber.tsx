@@ -3,8 +3,12 @@
 import { View, Text, ScrollView, StyleSheet, SafeAreaView, TextInput, TouchableOpacity, ActivityIndicator, Image, Alert } from 'react-native';
 import PincodeLogin from './welcomebkPin';
 import OTPPhoneLogin from '@/screens/auth/OTPScreen/OTPPhoneLogin';
+import { router } from 'expo-router';
 
 export default function VerifyOTP() {
+  const handlehelp =()=>{
+    router.push("/(routes)/need-help")
+  }
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       <ScrollView
@@ -38,7 +42,7 @@ export default function VerifyOTP() {
           <MaterialCommunityIcons name="message-question" size={24} color="#DEBC8E" />
           <Text style={styles.helpText}>Need help?</Text>
           <TouchableOpacity>
-            <Text style={styles.helpLink}>Click Here</Text>
+            <Text onPress={handlehelp} style={styles.helpLink}>Click Here</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

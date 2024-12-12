@@ -4,8 +4,11 @@ import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import React from 'react';
 import { View, Text, ScrollView, StyleSheet, SafeAreaView, TextInput, TouchableOpacity, ActivityIndicator, Image, Alert } from 'react-native';
-
+ 
 export default function OTPPageEmail() {
+  const handlehelp =()=>{
+    router.push("/(routes)/need-help")
+  }
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff", paddingTop:20 }}>
       <ScrollView
@@ -38,7 +41,7 @@ export default function OTPPageEmail() {
         <View style={styles.helpSection}>
           <MaterialCommunityIcons name="message-question" size={24} color="#DEBC8E" />
           <Text style={styles.helpText}>Need help?</Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={handlehelp}>
             <Text style={styles.helpLink}>Click Here</Text>
           </TouchableOpacity>
         </View>

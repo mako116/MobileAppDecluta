@@ -14,6 +14,13 @@ export default function RootLayout() {
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    HelveticaNeueLTPro: require('../assets/fonts/helvetica/HelveticaNeueLTProMd.otf'),
+    HelveticaNeueLT: require('../assets/fonts/helvetica/HelveticaNeueLTProUltLt.otf'),  
+    ProximaNova: require('../assets/fonts/proxima-nova/ProximaNova-RegularIt.ttf'),
+    ProximaNovaSemi: require('../assets/fonts/proxima-nova/ProximaNova-SemiboldIt.ttf'),
+    ProximaNovaBold: require('../assets/fonts/proxima-nova/ProximaNova-Bold.ttf'),
+    PoppinsBold: require('../assets/fonts/poppins/Poppins-Bold.ttf'),
+    Poppins: require('../assets/fonts/poppins/Poppins-Medium.ttf'),
   });
 
   useEffect(() => {

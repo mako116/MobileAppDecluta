@@ -43,6 +43,10 @@ export default function PhoneLogin() {
       setButtonSpinner(false);
       // Navigate to dashboard/home after successful login
     }, 1000);
+  } 
+
+  const goBackEmail = () =>{
+    router.push("/(routes)/login")
   }
   return (
     <ScrollView style={{ flex: 1 }} scrollEventThrottle={16}>
@@ -104,7 +108,7 @@ export default function PhoneLogin() {
           </View>
 
           <View style={SignUpStyles.socialButtons}>
-            <TouchableOpacity style={SignUpStyles.socialButton}>
+            <TouchableOpacity onPress={goBackEmail} style={SignUpStyles.socialButton}>
             <MaterialIcons name="email" size={24} color="black" />
              <Text style={{ color: "#000000", lineHeight: 19.6, fontSize: 14, fontWeight: '400' }}>Continue with Email</Text>
             </TouchableOpacity>

@@ -3,8 +3,10 @@ import React from 'react';
 import BuyndSellItems from '../BuyndSell/BuyndSellITems';
 import Searchbox from '../SearchBox/Searchbox';
 import BannerCategory from '../BannerCategory/BannerCategory';
+import { router } from 'expo-router';
 
 export default function Banner() {
+ 
   return (
    <View style={{paddingHorizontal:12}}>
      <ImageBackground

@@ -1,8 +1,17 @@
-import NotificationsAlert from '@/screens/alerts/NotificationsAlert';
-import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView, Image, StatusBar, ImageBackground, TouchableOpacity, ScrollView } from 'react-native';
-import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  Image,
+  StatusBar,
+  TouchableOpacity,
+  ScrollView,
+  Modal,
+  RefreshControl,
+} from 'react-native';
 import LocationIcons from '@/screens/icons';
+import NotificationsAlert from '@/screens/alerts/NotificationsAlert';
 import Banner from '@/screens/BoxBanner/banner/Banner';
 import ExploreProducts from '@/screens/Products/ExploreNewFinds/Explore/ExploreProducts';
 import Categories from '@/screens/Products/BrowseCategory/Categories/Categories';
@@ -11,106 +20,119 @@ import ProductBanner from '@/screens/Products/ProductBanner/Banner/banner';
 import DiscoverProducts from '@/screens/Products/DiscoverProducts/DiscoverProducts/DiscoverProducts';
 import Loginbanner from '@/screens/BoxBanner/Loginbanner/Loginbanner';
 import ProfileKYc from '@/screens/Kyc/BannerH/ProfileKYc';
- 
+import Button from '../Button/button';
+import { Picker } from '@react-native-picker/picker';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
+import LocationModal from '@/screens/ChangeLocation/changelocationScreen';
+import Homes from '@/styles/Homes/Home.styles';
+import { router } from 'expo-router';
+
 export default function HomeScreen() {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [currentPopup, setCurrentPopup] = useState(1);
+  const [selectedState, setSelectedState] = useState('oyo');
+  const [refreshing, setRefreshing] = useState(false);
+  const [cartCount, setCartCount] = useState(3); // Example cart count
+
+  const openModal = () => {
+    setModalVisible(true);
+    setCurrentPopup(1);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+    setCurrentPopup(1);
+  };
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000); // 2-second delay
+  };
+
+
   return (
     <>
       <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
-      <SafeAreaView style={styles.container}>
-       <ScrollView scrollEventThrottle={16}>
-        <View style={styles.content}>
-          <View style={styles.rowContainer}>
-            <View style={styles.leftItem}>
-              <Image
-                 source={require('../../assets/images/bolddelclutta.png')}
-              />
-              <View >
-              <TouchableOpacity style={{flexDirection:"row", alignItems:"center"}}>
-                <LocationIcons/>
-                <Text>oyo <Text style={{color:"gray"}}>(change)</Text></Text>
+      <SafeAreaView style={Homes.container}>
+        <ScrollView
+          scrollEventThrottle={16}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        >
+          <View style={Homes.content}>
+            <View style={Homes.rowContainer}>
+              <View style={Homes.leftItem}>
+                <Image source={require('../../assets/images/bolddelclutta.png')} />
+                <TouchableOpacity onPress={openModal} style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <LocationIcons />
+                  <Text>
+                    {selectedState} <Text style={{ color: 'gray' }}>(change)</Text>
+                  </Text>
                 </TouchableOpacity>
               </View>
-              
+              <View style={Homes.rightItems}>
+                <NotificationsAlert />
+              </View>
             </View>
-            <View style={styles.rightItems}>
-              <NotificationsAlert/>
+
+            {/* Complete KYC */}
+            <View>
+              <ProfileKYc />
+            </View>
+
+            <View>
+              <Banner />
+            </View>
+
+            {/* Products */}
+            <View>
+              <ExploreProducts />
+            </View>
+            <View>
+              <Categories />
+            </View>
+            <View>
+              <ExploreProducts3 />
+            </View>
+            <View>
+              <ProductBanner />
+            </View>
+            <View>
+              <DiscoverProducts />
+            </View>
+            <View>
+              <Loginbanner />
             </View>
           </View>
 
-      {/* Complete KYC */}
-      <View>
-        <ProfileKYc/>
-      </View>
 
-      <View>
-        <Banner/>
-      </View>
+          {/* Popup Modals */}
 
-      
-
-      {/* Products */}
-      <View>
-       <ExploreProducts/>
-      </View>
-      <View>
-       <Categories/>
-      </View>
-      <View>
-       <ExploreProducts3/>
-      </View>
-      <View>
-        <ProductBanner/>
-      </View>
-      <View>
-        <DiscoverProducts/>
-      </View>
-      <View>
-        <Loginbanner/>
-      </View>
-         </View>
-         
-         
-         </ScrollView>
+          
+           {/* Use the modal component */}
+      <LocationModal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        selectedState={selectedState}
+        setSelectedState={setSelectedState}
+        currentPopup={currentPopup}
+        setCurrentPopup={setCurrentPopup}
+      />
+        </ScrollView>
       </SafeAreaView>
+
+      {/* Cart Icon Fixed at Bottom */}
+      <TouchableOpacity style={Homes.cartIcon}>
+      <Ionicons name="cart-outline" size={24} color="#212121"/>
+         <View style={Homes.cartBadge}>
+          <Text style={Homes.cartBadgeText}>{cartCount}</Text>
+        </View>
+      </TouchableOpacity>
     </>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 30,
-    // paddingBottom: 20,
-    backgroundColor: '#F9F9F9',
-    borderColor: '#000',
-    borderTopWidth: 2,
-  },
-  content: {
-    flex: 1,
-    
-    paddingVertical:5
-  },
-  rowContainer: {
-    flexDirection: 'row', // Horizontal alignment
-    justifyContent: 'space-between', // Space between items
-    alignItems: 'center', // Center vertically
-    width: '100%', // Full width
-    paddingHorizontal: 10,
-    paddingVertical:10,
-    
-  },
-  leftItem: {
-    flexDirection: 'column', // Stack the image and text vertically
-    alignItems: 'flex-start', // Align to start of the view
-  },
-    
-  text: {
-    fontSize: 24,
-    color: '#ffffff',
-  },
-  rightItems: {
- 
-    flexDirection: 'row', // Stack the texts vertically
-    alignItems: 'flex-end', // Align texts to the end of the right container
-  },
-});
+

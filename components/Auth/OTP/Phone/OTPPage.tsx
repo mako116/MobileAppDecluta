@@ -2,8 +2,12 @@ import OTPMain from '@/screens/auth/OTPScreen/OTPMain';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
  import React from 'react';
 import { View, Text, ScrollView, StyleSheet, SafeAreaView, TextInput, TouchableOpacity, ActivityIndicator, Image, Alert } from 'react-native';
+import { router } from 'expo-router';
 
 export default function OTPPage() {
+  const handlehelp =()=>{
+    router.push("/(routes)/need-help")
+  }
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" ,paddingTop:20}}>
       <ScrollView
@@ -37,7 +41,7 @@ export default function OTPPage() {
           <MaterialCommunityIcons name="message-question" size={24} color="#DEBC8E" />
           <Text style={styles.helpText}>Need help?</Text>
           <TouchableOpacity>
-            <Text style={styles.helpLink}>Click Here</Text>
+            <Text onPress={handlehelp} style={styles.helpLink}>Click Here</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
