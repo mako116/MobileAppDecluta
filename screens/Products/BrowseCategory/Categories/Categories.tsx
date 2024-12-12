@@ -2,6 +2,7 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { MaterialIcons } from '@expo/vector-icons'
 import ProductsSlider2 from '../ProductCategories2/ProductCategories2'
+import { router } from 'expo-router'
 
 export default function Categories() {
   return (
@@ -9,7 +10,7 @@ export default function Categories() {
     <View style={{flexDirection:"row", alignItems:"center", justifyContent:"space-between",paddingVertical:10, paddingHorizontal:5}}>
       <Text style={{fontWeight:"700",fontSize:16,lineHeight:22.4}}>Browse our Category</Text>
       <View >
-         <TouchableOpacity style={{width:100,flexDirection:"row",alignItems:"center", justifyContent:"flex-end"}}>
+         <TouchableOpacity onPress={()=> router.push("/(routes)/HomesectionViewAll/Browse")} style={{width:100,flexDirection:"row",alignItems:"center", justifyContent:"flex-end"}}>
 
         
           <Text style={{fontWeight:"400",fontSize:13.4,lineHeight:15.4}}>View all</Text>

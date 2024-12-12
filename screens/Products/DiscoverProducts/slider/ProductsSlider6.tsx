@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, FlatList } from 'react-native';
+import { View, ScrollView, TouchableOpacity } from 'react-native';
 import Category from '../Category/category6';
 import LottieView from 'lottie-react-native';
 
@@ -30,40 +30,39 @@ export default function ProductsSlider6() {
     }, 3000); // Simulate 3 seconds of loading
   };
 
-  const renderFooter = () => {
-    if (!isLoading) return null;
-    return (
-      <View style={{ alignItems: 'center', marginVertical: 20 }}>
-         <LottieView
-        source={{ uri: 'https://lottie.host/21a8a60c-9138-4223-bd08-116521b66149/6WwzwgIlXf.lottie' }}
-        autoPlay
-        loop
-        style={{ width: 50, height: 50 ,}}
-       />
-      </View>
-    );
-  };
-
   return (
-    <FlatList
-      data={categories.slice(0, visibleCategories)}
-      keyExtractor={(item) => item.id.toString()}
-      renderItem={({ item }) => (
-        <View style={{ }}>
-          <Category
-            imageUrl={item.imageUrl}
-            name={item.name}
-            title={item.title}
-            locations={item.locations}
+    <ScrollView 
+      contentContainerStyle={{ padding: 10 }}
+      onScroll={({ nativeEvent }) => {
+        const isCloseToBottom = nativeEvent.layoutMeasurement.height + nativeEvent.contentOffset.y >= nativeEvent.contentSize.height - 20;
+        if (isCloseToBottom) {
+          loadMoreCategories();
+        }
+      }}
+      scrollEventThrottle={400}
+    >
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
+        {categories.slice(0, visibleCategories).map((item) => (
+          <View key={item.id} style={{ flexBasis: '48%', marginVertical: 10 }}>
+            <Category
+              imageUrl={item.imageUrl}
+              name={item.name}
+              title={item.title}
+              locations={item.locations}
+            />
+          </View>
+        ))}
+      </View>
+      {isLoading && (
+        <View style={{ alignItems: 'center', marginVertical: 20 }}>
+          <LottieView
+            source={{ uri: 'https://lottie.host/21a8a60c-9138-4223-bd08-116521b66149/6WwzwgIlXf.lottie' }}
+            autoPlay
+            loop
+            style={{ width: 50, height: 50 }}
           />
         </View>
       )}
-      onEndReached={loadMoreCategories}
-      onEndReachedThreshold={0.5}
-      ListFooterComponent={renderFooter}
-      numColumns={2} // Automatically handle two-column layout
-      columnWrapperStyle={{ justifyContent: 'space-between',  }} // Add spacing between rows
-      contentContainerStyle={{ padding: 10, gap: 10 ,}}
-    />
+    </ScrollView>
   );
 }

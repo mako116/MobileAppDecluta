@@ -1,8 +1,9 @@
 import { AntDesign, Feather, SimpleLineIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import React from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import All from './Sections/All';
+import NotificationBoard from './NotificationBoard';
  
 const HeaderNotification = () => {
     return (
@@ -21,9 +22,9 @@ const HeaderNotification = () => {
             </TouchableOpacity>
           </View>
             </View>
-          <View style={{backgroundColor:"#F9F9F9", height:"100%"}}>
-            <All/>
-          </View>
+          <ScrollView style={{ marginBottom:"10%"  }}>
+            <NotificationBoard/>
+          </ScrollView>
         </View>
     );
 }
