@@ -2,16 +2,15 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { MaterialIcons } from '@expo/vector-icons'
 import ProductsSlider from '../slider/ProductsSlider'
+import { router } from 'expo-router'
  
 export default function ExploreProducts() {
   return (
-    <View style={{backgroundColor:"#f9f9f9"}}>
+    <View style={{backgroundColor:"#f9f9f9", paddingHorizontal:12}}>
       <View style={{flexDirection:"row", alignItems:"center", justifyContent:"space-between",paddingVertical:10, paddingHorizontal:5}}>
         <Text style={{fontWeight:"700",fontSize:16,lineHeight:22.4}}>Explore new finds</Text>
         <View >
-           <TouchableOpacity style={{width:100,flexDirection:"row",alignItems:"center", justifyContent:"flex-end"}}>
-
-          
+           <TouchableOpacity onPress={()=> router.push("/(routes)/HomesectionViewAll/Explore")} style={{width:100,flexDirection:"row",alignItems:"center", justifyContent:"flex-end"}}>
             <Text style={{fontWeight:"400",fontSize:13.4,lineHeight:15.4}}>View all</Text>
             {/* <View style={{ alignItems:"flex-end",}}> */}
            <MaterialIcons name="arrow-forward-ios" size={14} color="black" style={{fontWeight:"bold"}}/>

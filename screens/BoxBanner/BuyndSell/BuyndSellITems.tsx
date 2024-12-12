@@ -1,14 +1,18 @@
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import { router } from 'expo-router';
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
  
 export default function BuyndSellItems() {
+  const searchScreen = () =>{
+    router.push("/(routes)/SearchPages/SearchBoard")
+  }
   return (
     <View >
       <View style={styles.row}>
         {/* First Box */}
         <View>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={searchScreen}>
         <View style={styles.box}>
         
         <View style={{ backgroundColor: '#F5EADC' , height: '100%',justifyContent:"center",borderRadius:4,padding:8}}>

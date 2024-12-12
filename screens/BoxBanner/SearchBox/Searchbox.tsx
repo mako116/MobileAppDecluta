@@ -1,12 +1,17 @@
 import { Feather } from '@expo/vector-icons';
+import { router } from 'expo-router';
 import React from 'react';
 import { View, TextInput, Text, StyleSheet, TouchableOpacity } from 'react-native';
  
 export default function Searchbox() {
+  const searchScreen = () =>{
+    router.push("/(routes)/SearchPages/SearchBoard")
+  }
   return (
     <View style={styles.container}>
       <View style={styles.searchBox}>
         <TextInput
+        onPress={searchScreen}
           style={styles.input}
           placeholder="I'm looking for...."
           placeholderTextColor="#888"

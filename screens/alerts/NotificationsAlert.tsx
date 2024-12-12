@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
  import Octicons from '@expo/vector-icons/Octicons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { router } from 'expo-router';
  
  export default function NotificationsAlert() {
   return (
@@ -21,7 +22,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
       <Octicons name="bell" size={24} color="black" style={styles.icon}/>
       </TouchableOpacity>
       {/* Cart Icon */}
-      <TouchableOpacity>
+      <TouchableOpacity onPress={()=>router.push("/(routes)/Notifications")}>
       <MaterialCommunityIcons name="cart-outline" size={24} color="black" style={styles.icon} />
       </TouchableOpacity>
      </View>

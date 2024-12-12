@@ -1,4 +1,4 @@
-import { View, Text, Image, StyleSheet, ImageSourcePropType } from 'react-native';
+import { View, Text, Image, StyleSheet, ImageSourcePropType, TouchableOpacity } from 'react-native';
 import React from 'react';
 import LocationIcons from '../../../icons';
 
@@ -11,8 +11,8 @@ interface CategoryProps {
 
 export default function Category6({ imageUrl, name, title, locations }: CategoryProps) {
   return (
-    <View style={styles.container}>
-      <View style={styles.imageContainer}>
+      <TouchableOpacity style={styles.container}>
+     <View style={styles.imageContainer}>
         <Image
           source={imageUrl}
           style={styles.image}
@@ -28,21 +28,22 @@ export default function Category6({ imageUrl, name, title, locations }: Category
           </Text>
         </View>
       </View>
-    </View>
-  );
+     </TouchableOpacity>
+   );
 }
 
 const styles = StyleSheet.create({
   container: {
     height: 220,
-    width: 138,
+    width: 148,
     marginLeft: 10,
+    marginRight:10,
     padding: 7,
     borderWidth: 1,
     borderColor: '#E9E9E9',  
     borderRadius: 8, // Slightly rounded corners
     overflow: 'hidden',
-
+     backgroundColor:"#fff",
     // Shadow properties for iOS
     shadowColor: '#E9E9E9',
     shadowOffset: { width: 0, height: 2 },

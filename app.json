@@ -13,9 +13,21 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundlerIdentifier": "com.decluttaking.app",
+      "infoPlist": {
+        "CFBundleURLTypes": [
+          {
+            "CFBundleURLSchemes": [
+              "com.googleusercontent.apps.850314571191-tba9n0iea4el6d7o4ic6v4u93gnpudh7"
+            ]
+          }
+        ]
+      },
+      "bundleIdentifier": "com.decluttaking.app"
     },
     "android": {
+      "package": "com.decluttaking.app",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -31,6 +43,11 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "3b0f2f9d-d04e-4487-9dd0-40d7dbf42bb5"
+      }
     }
   }
 }

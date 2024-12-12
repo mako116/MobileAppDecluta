@@ -35,14 +35,15 @@ export default function Category({ imageUrl, name, title, locations }: CategoryP
 const styles = StyleSheet.create({
   container: {
     height: 220,
-    width: 138,
+    width: 140,
     marginLeft: 10,
+    marginRight: 10,
     padding: 7,
     borderWidth: 1,
     borderColor: '#E9E9E9',  
     borderRadius: 8, // Slightly rounded corners
     overflow: 'hidden',
-
+    backgroundColor:"#fff",
     // Shadow properties for iOS
     shadowColor: '#E9E9E9',
     shadowOffset: { width: 0, height: 2 },
@@ -61,7 +62,7 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
   textContainer: {
-    paddingLeft: 5,
+    // paddingLeft: 5,
     paddingTop: 10,
   },
   title: {
@@ -75,12 +76,12 @@ const styles = StyleSheet.create({
     lineHeight:16.8,
     fontWeight:"400",
     color: '#474747',
-    marginTop: 4,
+    // marginTop: 4,
   },
   locations: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 4,
+    // marginTop: 4,
   },
   locationsText: {
     fontSize: 12,
