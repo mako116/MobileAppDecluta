@@ -3,7 +3,8 @@ import { SignUpStyles } from '@/styles/Signup/signup.style';
 import { Feather } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import React from 'react'
-import { View, Text, ScrollView, StyleSheet, SafeAreaView, TextInput, TouchableOpacity, ActivityIndicator, Image, Alert } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, TextInput, TouchableOpacity, ActivityIndicator, Image, Alert } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 export default function SignUp() {
@@ -14,9 +15,9 @@ export default function SignUp() {
  
 
   return (
-    <SafeAreaView style={{marginTop: 30,}}>
-    <ScrollView scrollEventThrottle={16} >
-         <View style={styles.signs}>
+    <SafeAreaView edges={['bottom']}>
+      <ScrollView scrollEventThrottle={16} >
+        <View style={styles.signs}>
           <TouchableOpacity onPress={handleGoBack}>
             <Feather name="arrow-left" size={24} color="black" />
           </TouchableOpacity>
@@ -25,9 +26,9 @@ export default function SignUp() {
         <View style={styles.section}>
           <Text style={{color:"#212121", fontWeight:"700", fontSize:23, lineHeight:32.2}}>Tell Us About yourself</Text>
         </View>
-           <DetailScreen/>
-          </ScrollView>
-        </SafeAreaView>
+        <DetailScreen/>
+      </ScrollView>
+    </SafeAreaView>
   )
 }
 
@@ -36,6 +37,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     // paddingTop: 60,
     paddingVertical:32,
+    paddingTop: 70,
     paddingBottom: 20,
     flexDirection: "row",
     alignItems: "center",

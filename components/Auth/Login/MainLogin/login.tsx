@@ -7,7 +7,11 @@ import { useFocusEffect } from '@react-navigation/native';
 
 
 import {SignUpStyles} from '../../../../styles/Signup/signup.style'
+import { useAuth } from '@/context/AuthContext';
+
 export default function Login() {
+  const [userEmail, setUserEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const [buttonSpinner, setButtonSpinner] = useState(false);
   const [userInfo, setUserInfo] = useState({ email: "", password: "" });
@@ -15,6 +19,8 @@ export default function Login() {
   const [showExitModal, setShowExitModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState({ email: "", password: "" });
   const [successMessage, setSuccessMessage] = useState("");
+  const { login, setEmail } = useAuth(); // Destructure onLogin from useAuth
+
 
   useFocusEffect(
     React.useCallback(() => {
@@ -53,19 +59,28 @@ export default function Login() {
     return isValid;
   };
 
-  const handleSignIn = () => {
+  const handleSignIn = async () => {
     if (!validateInputs()) return;
-
-    setButtonSpinner(true);
-    setTimeout(() => {
-      setButtonSpinner(false);
-      setErrorMessage({ email: "", password: "" });
-      setSuccessMessage("Login successful! Redirecting...");
+    setEmail(userEmail)
+    try {
+      await login(userEmail, password);
+    } catch (err) {
+      Alert.alert('Login Failed');
+      setSuccessMessage("Login failed!");
+    } finally {
+      setButtonSpinner(true);
       setTimeout(() => {
-        setSuccessMessage("");
-        router.push("/(routes)/splashscren"); // Navigate to the dashboard or home
-      }, 2000);
-    }, 1000);
+        setButtonSpinner(false);
+        setErrorMessage({ email: "", password: "" });
+        setSuccessMessage("Login successful! Redirecting...");
+        // setTimeout(() => {
+        //   setSuccessMessage("");
+        //   router.push("/(routes)/splashscren"); // Navigate to the dashboard or home
+        // }, 2000);
+      }, 1000);
+    }
+
+    
   };
 
   const handlePhonePush =()=>{
@@ -95,9 +110,13 @@ export default function Login() {
             keyboardType="email-address"
             value={userInfo.email}
             placeholder="Enter email"
+            placeholderTextColor='gray'
             onFocus={() => setFocusInput({ ...focusInput, email: true })}
             onBlur={() => setFocusInput({ ...focusInput, email: false })}
-            onChangeText={(value) => setUserInfo({ ...userInfo, email: value })}
+            onChangeText={(value) => {
+              setUserInfo({ ...userInfo, email: value });
+              setUserEmail(value); // Update `userEmail` in sync
+            }}
           />
           {errorMessage.email && (
             <Text style={{ color: "red", fontSize: 12, marginTop: 5 , marginHorizontal:20 }}>{errorMessage.email}</Text>
@@ -108,18 +127,22 @@ export default function Login() {
           <Text style={SignUpStyles.label}>Password</Text>
           <View>
           <TextInput
-              style={[
-                SignUpStyles.input,
-                focusInput.password && { borderColor: "#DEBC8E" },
-              ]}
-              keyboardType="default"
-              secureTextEntry={!isPasswordVisible}
-              placeholder="******"
-              value={userInfo.password}
-              onFocus={() => setFocusInput({ ...focusInput, password: true })}
-              onBlur={() => setFocusInput({ ...focusInput, password: false })}
-              onChangeText={(value) => setUserInfo({ ...userInfo, password: value })}
-            />
+            style={[
+              SignUpStyles.input,
+              focusInput.password && { borderColor: "#DEBC8E" },
+            ]}
+            keyboardType="default"
+            secureTextEntry={!isPasswordVisible}
+            placeholder="Enter password"
+            placeholderTextColor='gray'
+            value={userInfo.password}
+            onFocus={() => setFocusInput({ ...focusInput, password: true })}
+            onBlur={() => setFocusInput({ ...focusInput, password: false })}
+            onChangeText={(value) => {setUserInfo({ ...userInfo, password: value });
+            setPassword(value); // Update `userEmail` in sync
+
+            }}
+          />
             <TouchableOpacity
               style={SignUpStyles.visibleIcon}
               onPress={() => setPasswordVisible(!isPasswordVisible)}

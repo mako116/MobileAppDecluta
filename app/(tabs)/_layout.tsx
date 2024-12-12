@@ -138,29 +138,26 @@ export default function TabLayout() {
     {isModalVisible && <MoreModal isModalVisible={isModalVisible} toggleModal={toggleModal} />}
 
     </>
+     
   );
 }
 
 const styles = StyleSheet.create({
   tabItem: {
-    paddingVertical: 12,
+    paddingVertical: 1,
   },
   container: {
-    height: 80,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 12,
+    paddingVertical:10
   },
   label: {
     textTransform: 'capitalize',
     fontSize: 12,
-    marginBottom: 7,
   },
   featherIcon: {
-    borderWidth: 1.7,
-    textAlign: 'center',
-    paddingTop: 1.4,
-    borderRadius: 5,
-  },
-
- 
+    borderWidth: 1.7,   // Adjust border width if necessary
+    textAlign:"center",
+    paddingVertical:1.4,   // Adjust border radius if needed
+  }
 });
