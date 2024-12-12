@@ -38,7 +38,7 @@ export default function TabLayout() {
      <Tabs
   screenOptions={({ route }) => ({
     tabBarStyle: styles.container,
-    tabBarItemStyle: styles.tabItem,
+    // tabBarItemStyle: styles.tabItem,
     tabBarActiveTintColor:
       moreActive && route.name !== 'more/index'
         ? '#A4A4A4'
