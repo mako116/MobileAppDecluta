@@ -8,7 +8,7 @@ export default function Categories() {
   return (
     <View style={{backgroundColor:"#f9f9f9",paddingHorizontal:12}}>
     <View style={{flexDirection:"row", alignItems:"center", justifyContent:"space-between",paddingVertical:10, paddingHorizontal:5}}>
-      <Text style={{fontWeight:"700",fontSize:16,lineHeight:22.4}}>Browse our Category</Text>
+      <Text style={{fontWeight:"700",fontSize:16,lineHeight:22.4, fontFamily:"HelveticaNeueLTPro"}}>Browse our Category</Text>
       <View >
          <TouchableOpacity onPress={()=> router.push("/(routes)/HomesectionViewAll/Browse")} style={{width:100,flexDirection:"row",alignItems:"center", justifyContent:"flex-end"}}>
 

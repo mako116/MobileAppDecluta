@@ -205,7 +205,8 @@ type Point = {
       fontSize: 16,
       lineHeight: 22.4,
       color: '#212121',
-      marginLeft: 10,
+      marginLeft: 10
+      , fontFamily:"ProximaNovaR"
     },
     contentContainer: {
       paddingHorizontal: 16,
@@ -215,13 +216,15 @@ type Point = {
     boldS: {
       fontWeight: '700',
       fontSize: 13,
-      lineHeight: 18.2,
+      lineHeight: 18.2
+      , fontFamily:"ProximaNovaR"
     },
     middleText: {
       fontWeight: '400',
       fontSize: 14,
       lineHeight: 19.6,
-      color: '#212121',
+      color: '#212121'
+      , fontFamily:"ProximaNovaR"
     },
   });
   

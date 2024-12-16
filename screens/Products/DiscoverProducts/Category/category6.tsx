@@ -35,10 +35,10 @@ export default function Category6({ imageUrl, name, title, locations }: Category
 const styles = StyleSheet.create({
   container: {
     height: 220,
-    width: 148,
-    marginLeft: 10,
-    marginRight:10,
-    padding: 7,
+    width: 160,
+    marginLeft: 5,
+    marginRight:0,
+    padding: 10,
     borderWidth: 1,
     borderColor: '#E9E9E9',  
     borderRadius: 8, // Slightly rounded corners

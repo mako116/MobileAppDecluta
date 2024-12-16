@@ -73,16 +73,20 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontSize: 19,
     lineHeight: 26.6,
+      fontFamily:"HelveticaNeueLTPro"
   },
   subtitle: {
     color: "#212121",
     fontWeight: "400",
     fontSize: 14,
     lineHeight: 19.6,
+    fontFamily:"ProximaNovaR",
     marginRight: 10,
   },
   phoneNumber: {
     fontWeight: "700",
+    fontFamily:"HelveticaNeueLTPro"
+
   },
   otpSection: {
      marginBottom: 140,

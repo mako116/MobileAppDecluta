@@ -17,7 +17,7 @@ export default function Searchbox() {
           placeholderTextColor="#888"
         />
         <TouchableOpacity>
-<Feather name="search" size={24} color="black" /> 
+<Feather name="search" size={24} color="#A4A4A4" /> 
 </TouchableOpacity>     
 </View>
     </View>

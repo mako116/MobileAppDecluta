@@ -13,7 +13,7 @@ import { StyleSheet } from "react-native";
     content: {
       flex: 1,
       paddingVertical: 5,
-    },
+     },
     rowContainer: {
       flexDirection: 'row',
       justifyContent: 'space-between',
@@ -21,6 +21,7 @@ import { StyleSheet } from "react-native";
       width: '100%',
       paddingHorizontal: 10,
       paddingVertical: 10,
+ 
     },
     leftItem: {
       flexDirection: 'column',

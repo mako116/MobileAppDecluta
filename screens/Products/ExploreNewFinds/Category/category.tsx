@@ -35,10 +35,10 @@ export default function Category({ imageUrl, name, title, locations }: CategoryP
 const styles = StyleSheet.create({
   container: {
     height: 220,
-    width: 140,
-    marginLeft: 10,
-    marginRight: 10,
-    padding: 7,
+    width: 155,
+    marginLeft: 5,
+    marginRight: 5,
+    padding: 10,
     borderWidth: 1,
     borderColor: '#E9E9E9',  
     borderRadius: 8, // Slightly rounded corners
@@ -70,12 +70,14 @@ const styles = StyleSheet.create({
     lineHeight:22.4,
     fontWeight: '700',
     color: '#212121',
+    fontFamily:"HelveticaNeueLTPro"
   },
   name: {
     fontSize: 12,
     lineHeight:16.8,
     fontWeight:"400",
     color: '#474747',
+    fontFamily:"ProximaNovaR"
     // marginTop: 4,
   },
   locations: {
@@ -89,5 +91,7 @@ const styles = StyleSheet.create({
     fontWeight:"400",
     color: '#474747',
     marginLeft: 4,
+    fontFamily:"ProximaNovaR"
+
   },
 });

@@ -23,9 +23,10 @@ export default function RootLayout() {
 export const Layout = () => {
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-    HelveticaNeueLTPro: require('../assets/fonts/helvetica/HelveticaNeueLTProMd.otf'),
+    HelveticaNeueLTPro: require('../assets/fonts/helvetica/HelveticaNeueLTProBdEx.otf'),
     HelveticaNeueLT: require('../assets/fonts/helvetica/HelveticaNeueLTProUltLt.otf'),  
-    ProximaNova: require('../assets/fonts/proxima-nova/ProximaNova-RegularIt.ttf'),
+    ProximaNova: require('../assets/fonts/Fonts/Proxima Nova/ProximaNova-Light.otf'),
+    ProximaNovaR: require('../assets/fonts/Fonts/Proxima Nova/ProximaNova-Regular.otf'),
     ProximaNovaSemi: require('../assets/fonts/proxima-nova/ProximaNova-SemiboldIt.ttf'),
     ProximaNovaBold: require('../assets/fonts/proxima-nova/ProximaNova-Bold.ttf'),
     PoppinsBold: require('../assets/fonts/poppins/Poppins-Bold.ttf'),

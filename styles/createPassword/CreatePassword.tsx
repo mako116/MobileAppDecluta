@@ -82,6 +82,7 @@ export const Creating = StyleSheet.create({
       fontSize: 12,
       lineHeight: 16.8,
       color: '#212121',
+      fontFamily:"ProximaNovaR",
     },
     linkText: {
       textDecorationLine: 'underline',
@@ -89,11 +90,13 @@ export const Creating = StyleSheet.create({
       fontWeight: '400',
       fontSize: 12,
       lineHeight: 16.8,
+      fontFamily:"ProximaNovaR",
     },
     buttonText: {
        color: "#212121",
       fontSize: 16,
       fontWeight: "700",
+      fontFamily:"ProximaNovaR",
     },
     section: {
       paddingTop: 13,

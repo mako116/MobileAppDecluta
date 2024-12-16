@@ -10,8 +10,9 @@ export default function Banner() {
   return (
    <View style={{paddingHorizontal:12}}>
      <ImageBackground
-      source={require('../../../assets/images/bgimage1.jpg')}
+      source={require('../../../assets/images/newimages/image 41.jpg')}
       style={styles.background}
+      
     >
       {/* Overlay with semi-transparent background color */}
       <View style={styles.overlay} />
@@ -41,14 +42,16 @@ export default function Banner() {
 const styles = StyleSheet.create({
   background: {
     padding: 10,
-    borderRadius: 10, // Rounded corners for the image
+    borderRadius: 10,  
     overflow: 'hidden', 
+ 
+    // borderRadius:10,
   },
   overlay: {
-    ...StyleSheet.absoluteFillObject,  
-    backgroundColor: '#DEBC8E', // Your background color
-    opacity: 0.5,  
-    borderRadius:10, // Rounded corners for the overlay
+    backgroundColor: '#DEBC8E',
+    // opacity: 0.9, 
+     ...StyleSheet.absoluteFillObject, 
+ // Rounded corners for the overlay
   },
   container: {
     borderRadius: 10,

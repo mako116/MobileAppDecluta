@@ -30,7 +30,7 @@ import { router } from 'expo-router';
 export default function HomeScreen() {
   const [modalVisible, setModalVisible] = useState(false);
   const [currentPopup, setCurrentPopup] = useState(1);
-  const [selectedState, setSelectedState] = useState('oyo');
+  const [selectedState, setSelectedState] = useState('Oyo');
   const [refreshing, setRefreshing] = useState(false);
   const [cartCount, setCartCount] = useState(3); // Example cart count
 
@@ -56,16 +56,9 @@ export default function HomeScreen() {
     <>
       <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
       <SafeAreaView style={Homes.container}>
-        <ScrollView
-          scrollEventThrottle={16}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-        >
-          <View style={Homes.content}>
-            <View style={Homes.rowContainer}>
+      <View style={Homes.rowContainer}>
               <View style={Homes.leftItem}>
-                <Image source={require('../../assets/images/bolddelclutta.png')} />
+                <Image source={require('../../assets/images/newimages/Main Logo.png')} style={{width:150,height:30}} />
                 <TouchableOpacity onPress={openModal} style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <LocationIcons />
                   <Text>
@@ -77,6 +70,14 @@ export default function HomeScreen() {
                 <NotificationsAlert />
               </View>
             </View>
+        <ScrollView
+          scrollEventThrottle={16}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        >
+          <View style={Homes.content}>
+            
 
             {/* Complete KYC */}
             <View>
@@ -103,9 +104,7 @@ export default function HomeScreen() {
             <View>
               <DiscoverProducts />
             </View>
-            <View>
-              <Loginbanner />
-            </View>
+           
           </View>
 
 
@@ -131,6 +130,10 @@ export default function HomeScreen() {
           <Text style={Homes.cartBadgeText}>{cartCount}</Text>
         </View>
       </TouchableOpacity>
+
+      <View>
+              <Loginbanner />
+            </View>
     </>
   );
 }

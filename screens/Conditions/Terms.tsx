@@ -195,12 +195,15 @@ const styles = StyleSheet.create({
   boldS: {
     fontWeight: '700',
     fontSize: 13,
-    lineHeight: 18.2,
+    lineHeight: 18.2
+    , fontFamily:"ProximaNovaR"
+    
   },
   middleText: {
     fontWeight: '400',
     fontSize: 14,
     lineHeight: 19.6,
-    color: '#212121',
+    color: '#212121'
+    , fontFamily:"ProximaNovaR"
   },
 });

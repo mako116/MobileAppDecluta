@@ -37,6 +37,7 @@ function RequirementItem({ label, isValid }: RequirementProps) {
           lineHeight: 19.6,
           width: 230,
           alignItems: 'center',
+          fontFamily:"ProximaNovaR",
         }}
       >
         {label}
@@ -108,6 +109,8 @@ export default function CreatePassword(): JSX.Element {
               fontWeight: '700',
               fontSize: 23,
               lineHeight: 32.2,
+              fontFamily:"HelveticaNeueLTPro"
+
             }}
           >
             Create Password
@@ -115,7 +118,7 @@ export default function CreatePassword(): JSX.Element {
         </View>
 
         <View style={Creating.container}>
-          <Text style={{ marginVertical: 5 ,marginLeft:2}}>Enter Password</Text>
+          <Text style={{ marginVertical: 5 ,marginLeft:2, fontFamily:"ProximaNovaR"}}>Enter Password</Text>
           <View
             style={[
               Creating.passwordContainer,
@@ -138,7 +141,7 @@ export default function CreatePassword(): JSX.Element {
             </TouchableOpacity>
           </View>
 
-          <Text style={{ marginTop: 15 ,marginLeft:2}}>Confirm Password</Text>
+          <Text style={{ marginTop: 15 ,marginLeft:2, fontFamily:"ProximaNovaR"}}>Confirm Password</Text>
           <View
             style={[
               Creating.passwordContainer,
@@ -170,6 +173,7 @@ export default function CreatePassword(): JSX.Element {
               fontWeight: '700',
               lineHeight: 19.6,
               color: '#212121',
+               fontFamily:"HelveticaNeueLTPro"
             }}
           >
             PASSWORD REQUIREMENTS

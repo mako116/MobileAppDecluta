@@ -6,7 +6,7 @@ import { StyleSheet } from "react-native";
 export const SignUpStyles = StyleSheet.create({
     header: {
       backgroundColor: "#fff",
-      paddingTop: 40,
+      paddingTop: 10,
       paddingBottom: 20,
     },
     genderOption: {
@@ -30,13 +30,14 @@ export const SignUpStyles = StyleSheet.create({
       color: "#212121",
     },
     inputContainer: {
-      marginHorizontal: 16,
+      marginHorizontal: 2,
       marginTop: 30,
       gap: 10,
     },
     label: {
       marginLeft: 18,
       marginBottom: 5,
+      fontFamily:"ProximaNovaR"
     },
     input: {
       height: 55,
@@ -48,6 +49,7 @@ export const SignUpStyles = StyleSheet.create({
       fontSize: 14,
       backgroundColor: "white",
       color: "#a1a1a1",
+      fontFamily:"ProximaNovaR"
     },
     visibleIcon: {
       position: "absolute",
@@ -75,7 +77,8 @@ export const SignUpStyles = StyleSheet.create({
     signUpRedirect: {
       flexDirection: "row",
       marginHorizontal: 16,
-      paddingVertical: 14,
+      paddingVertical: 5,
+      justifyContent:"center"
     },
     signUpText: {
       color: "#7E7E7E",
@@ -84,6 +87,7 @@ export const SignUpStyles = StyleSheet.create({
       color: "#DEBC8E",
       fontWeight: "bold",
       paddingLeft: 5,
+      fontFamily:"ProximaNovaR"
     },
     separatorContainer: {
       flexDirection: "row",
@@ -93,15 +97,16 @@ export const SignUpStyles = StyleSheet.create({
     separator: {
       flex: 1,
       height: 1,
-      backgroundColor: "#C4C4C4",
+      backgroundColor: "#A4A4A4",
     },
     separatorText: {
       width: 40,
       textAlign: "center",
-      fontSize: 16,
-      color: "#7E7E7E",
+      fontSize: 19,
+      color: "#463E31",
       fontWeight: "600",
       lineHeight: 19.6,
+      fontFamily:"ProximaNovaR"
     },
     socialButtons: {
       gap: 15,

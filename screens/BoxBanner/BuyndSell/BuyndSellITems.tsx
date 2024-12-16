@@ -1,7 +1,7 @@
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
  
 export default function BuyndSellItems() {
   const searchScreen = () =>{
@@ -16,13 +16,13 @@ export default function BuyndSellItems() {
         <View style={styles.box}>
         
         <View style={{ backgroundColor: '#F5EADC' , height: '100%',justifyContent:"center",borderRadius:4,padding:8}}>
-            <MaterialCommunityIcons name="cart-outline" size={24} color="black"  />
+          <Image source={require('../../../assets/images/newimages/cart.png')}  style={{width:22,height:22}}  />
             </View>
 
            <View style={styles.textContainer}>
-            <Text style={styles.title}>Buy Items</Text>
+            <Text style={styles.title}>Buy an Items</Text>
            </View>
-           <View style={{width:25, alignItems:"flex-end",}}>
+           <View style={{width:16, alignItems:"flex-end",}}>
            <MaterialIcons name="arrow-forward-ios" size={14} color="black" />
            </View>
            
@@ -34,12 +34,12 @@ export default function BuyndSellItems() {
         <TouchableOpacity>
         <View style={styles.box}>
             <View style={{ backgroundColor: '#F5EADC' , height: '100%',justifyContent:"center",borderRadius:4,padding:8}}>
-            <MaterialCommunityIcons name="wallet-outline" size={24} color="black" />            
+            <Image source={require('../../../assets/images/newimages/wallet-3.png')}  style={{width:22,height:22}}  />
             </View>
            <View style={styles.textContainer}>
-            <Text style={styles.title}>Sell Items</Text>
+            <Text style={styles.title}>Sell an Items</Text>
            </View>
-           <View style={{width:25, alignItems:"flex-end",}}>
+           <View style={{width:16, alignItems:"flex-end",}}>
            <MaterialIcons name="arrow-forward-ios" size={14} color="black" />
            </View>
         </View>
@@ -77,6 +77,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     lineHeight:19.6,
     color: '#212121',
+    fontFamily:'HelveticaNeueLTPro'
   },
   description: {
     fontSize: 14,
