@@ -13,7 +13,7 @@ export default function BannerCategory() {
         <View style={styles.box}>
         
            <View style={styles.textContainer}>
-           <TouchableOpacity>
+           <TouchableOpacity style={{paddingLeft:13,paddingTop:1}}>
             <Text style={styles.title}>iPhone</Text>
             </TouchableOpacity>
            </View>
@@ -24,7 +24,7 @@ export default function BannerCategory() {
         <View style={styles.box}>
             
            <View style={styles.textContainer}>
-           <TouchableOpacity>
+           <TouchableOpacity  style={{paddingLeft:5}}>
             <Text style={styles.title}>HP Laptop</Text>
             </TouchableOpacity>
            </View>
@@ -34,7 +34,7 @@ export default function BannerCategory() {
         <View style={styles.box}>
         
            <View style={styles.textContainer}>
-           <TouchableOpacity> 
+           <TouchableOpacity  style={{paddingLeft:5}}> 
             <Text style={styles.title}>Generator</Text>
             </TouchableOpacity>
            </View>
@@ -43,12 +43,12 @@ export default function BannerCategory() {
         </View>
 
         <View >
-           <TouchableOpacity style={{width:100,flexDirection:"row",alignItems:"center", justifyContent:"flex-end",paddingRight:14}}>
+           <TouchableOpacity style={{width:100,flexDirection:"row",alignItems:"center", justifyContent:"flex-end",paddingRight:26,}}>
 
           
-            <Text style={{fontWeight:"bold",fontSize:10.4,lineHeight:15.4}}>View all</Text>
+            <Text style={{fontWeight:"700",fontSize:12,lineHeight:15.4, fontFamily:"HelveticaNeueLTPro"}}>View All</Text>
             {/* <View style={{ alignItems:"flex-end",}}> */}
-           <MaterialIcons name="arrow-forward-ios" size={14} color="black" style={{fontWeight:"bold"}}/>
+           <MaterialIcons name="arrow-forward-ios" size={9} color="black" style={{fontWeight:"800", marginLeft:3}}/>
             </TouchableOpacity>
         </View>
       </View>
@@ -61,13 +61,14 @@ const styles = StyleSheet.create({
     row: {
         paddingVertical:5,
       flexDirection: 'row',
-      gap:5
-    //   justifyContent: 'space-around',
+      gap:5,
+        alignItems: "center",
+      // justifyContent: 'space-around',
      },
     box: {
       flexDirection: 'row',
       justifyContent:"flex-start",
-    //   alignItems: "flex-start",
+    
       backgroundColor: '#f8f9fa',
       borderRadius: 4,
       // padding: 16,
@@ -76,20 +77,24 @@ const styles = StyleSheet.create({
       shadowOpacity: 0.2,
       shadowOffset: { width: 1, height: 2 },
       shadowRadius: 4,
-      width: 65,  
+      width: 67,  
       height:21
     },
     icon: {
       marginRight: 16,
     },
     textContainer: {
-        margin:"auto",
+       
+        // paddingLeft:10,
+        height:21,
+        width:74
     },
     title: {
       fontSize: 12,
       fontWeight: "400",
-       lineHeight:16.6,
+       lineHeight:16.8,
       color: '#463E31',
+      // fontFamily:"ProximaNova"
     },
      
   });

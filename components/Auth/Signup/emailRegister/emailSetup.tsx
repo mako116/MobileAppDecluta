@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, ActivityIndicator, Image, Alert } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { Entypo, Feather, MaterialIcons, SimpleLineIcons } from '@expo/vector-icons';
+import { AntDesign, Entypo, Feather, MaterialIcons, SimpleLineIcons } from '@expo/vector-icons';
 import { SignUpStyles } from '@/styles/Signup/signup.style';
 import { commonstyles } from '@/styles/common/common.style';
 import { router } from 'expo-router';
@@ -56,6 +56,17 @@ export default function EmailSetup() {
 
   const navigateToTerms = () => router.push("/(routes)/Terms");
 
+  
+    const [showMore, setShowMore] = useState(false);
+  
+    const handleShowMore = () => {
+      setShowMore(prevState => !prevState);
+    };
+
+    
+      const handlePhonePush =()=>{
+        router.push("/(routes)/PhoneLogin");
+      }
   return (
     <SafeAreaView edges={['bottom']} style = {{ flex: 1 }} >
       <View>
@@ -100,8 +111,8 @@ export default function EmailSetup() {
             )}
           </TouchableOpacity>
 
-          <View style={[SignUpStyles.signUpRedirect,{justifyContent:"center"}]}>
-            <Text >Already have an account?</Text>
+          <View style={[SignUpStyles.signUpRedirect,{justifyContent:"center", paddingVertical:15, alignItems:"center"}]}>
+            <Text style={{fontFamily:"ProximaNovaR"}}>Already have an account?</Text>
             <TouchableOpacity onPress={() => router.push("/(routes)/login")}>
               <Text style={SignUpStyles.signUpLink}>Log in</Text>
             </TouchableOpacity>
@@ -113,25 +124,55 @@ export default function EmailSetup() {
             <View style={SignUpStyles.separator} />
           </View>
 
-          <View style={SignUpStyles.socialButtons}>
+          {/* <View style={SignUpStyles.socialButtons}>
             <TouchableOpacity style={SignUpStyles.socialButton}>
               <MaterialIcons name="phone-android" size={24} color="black" />
               <Text style={{ color: "#000000", lineHeight: 19.6, fontSize: 14, fontWeight: '400' }}>Continue with Phone</Text>
             </TouchableOpacity>
 
-            <GoolgSignUp />
+           
 
-            {/* <TouchableOpacity style={SignUpStyles.socialButton} onPress={() => {
+            <TouchableOpacity style={SignUpStyles.socialButton} onPress={() => {
             promptAsync();
             }}>
               <Image style={{ height: 20, width: 20, resizeMode: "contain" }} source={require("@/assets/images/google.png")} />
               <Text style={{ color: "#000000", lineHeight: 19.6, fontSize: 14, fontWeight: '400' }}>Continue with Google</Text>
-            </TouchableOpacity> */}
-          </View>
+            </TouchableOpacity>
+          </View> */}
 
-          <View style={{ margin: "auto", paddingVertical: 14 }}>
-            <SimpleLineIcons name="arrow-down" size={22} color="#A4A4A4" />
-          </View>
+          <View style={SignUpStyles.socialButtons}>
+      <TouchableOpacity onPress={handlePhonePush} style={SignUpStyles.socialButton}>
+        <MaterialIcons name="phone-android" size={24} color="black" />
+        <Text style={{ color: "#000000", lineHeight: 19.6, fontSize: 14, fontWeight: '400' , fontFamily:"ProximaNovaR"}}>Continue with Phone</Text>
+      </TouchableOpacity>
+      
+       <GoolgSignUp />
+ 
+      {/* Conditionally render the other buttons */}
+      {showMore && (
+        <>
+          <TouchableOpacity style={SignUpStyles.socialButton}>
+            <AntDesign name="apple1" size={24} color="black" />
+            <Text style={{ color: "#000000", lineHeight: 19.6, fontSize: 14, fontWeight: '400' , fontFamily:"ProximaNovaR"}}>Continue with Apple</Text>
+          </TouchableOpacity>
+
+           
+        </>
+      )}
+
+      {/* Arrow icon to toggle showing more buttons */}
+      <View style={{ margin: "auto", paddingVertical: 14 }}>
+        <TouchableOpacity onPress={handleShowMore}>
+          <SimpleLineIcons
+            name={showMore ? "arrow-up" : "arrow-down"}
+            size={22}
+            color="#A4A4A4"
+          />
+        </TouchableOpacity>
+      </View>
+    </View>
+
+       
 
           <View style={{ paddingTop: 80, flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 5 }}>
           <TouchableOpacity onPress={navigateToTerms}>
@@ -150,7 +191,7 @@ export default function EmailSetup() {
 const styles = StyleSheet.create({
   signs: {
     paddingHorizontal: 10,
-    paddingTop: 80,
+    paddingTop: 50,
     paddingBottom: 20,
     flexDirection: "row",
     alignItems: "center",

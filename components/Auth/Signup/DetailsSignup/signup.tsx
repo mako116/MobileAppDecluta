@@ -24,7 +24,7 @@ export default function SignUp() {
           <Image source={require("@/assets/images/Group 2.png")} style={{justifyContent:"center", margin:"auto"}} />
         </View>
         <View style={styles.section}>
-          <Text style={{color:"#212121", fontWeight:"700", fontSize:23, lineHeight:32.2}}>Tell Us About yourself</Text>
+          <Text style={{color:"#212121", fontWeight:"700", fontSize:23, lineHeight:32.2, fontFamily:"HelveticaNeueLTPro"}}>Tell Us About yourself</Text>
         </View>
         <DetailScreen/>
       </ScrollView>

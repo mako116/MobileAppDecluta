@@ -86,6 +86,7 @@ export const Needs = StyleSheet.create({
       paddingHorizontal: 15,
       paddingTop: 10,
       fontSize: 14,
+           fontFamily:"ProximaNovaR",
       color: "#333",
       textAlignVertical: "top", // Ensures text starts at the top-left
     },

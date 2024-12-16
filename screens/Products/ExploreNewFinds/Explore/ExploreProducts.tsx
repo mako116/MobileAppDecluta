@@ -8,12 +8,12 @@ export default function ExploreProducts() {
   return (
     <View style={{backgroundColor:"#f9f9f9", paddingHorizontal:12}}>
       <View style={{flexDirection:"row", alignItems:"center", justifyContent:"space-between",paddingVertical:10, paddingHorizontal:5}}>
-        <Text style={{fontWeight:"700",fontSize:16,lineHeight:22.4}}>Explore new finds</Text>
+        <Text style={{fontWeight:"700",fontSize:17,lineHeight:22.4, fontFamily:"HelveticaNeueLTPro"}}>Explore new finds</Text>
         <View >
-           <TouchableOpacity onPress={()=> router.push("/(routes)/HomesectionViewAll/Explore")} style={{width:100,flexDirection:"row",alignItems:"center", justifyContent:"flex-end"}}>
-            <Text style={{fontWeight:"400",fontSize:13.4,lineHeight:15.4}}>View all</Text>
+           <TouchableOpacity onPress={()=> router.push("/(routes)/HomesectionViewAll/Explore")} style={{width:100,flexDirection:"row",justifyContent:"flex-end"}}>
+            <Text style={{fontWeight:"400",fontSize:16,lineHeight:15.4, fontFamily:"ProximaNova"}}>View All</Text>
             {/* <View style={{ alignItems:"flex-end",}}> */}
-           <MaterialIcons name="arrow-forward-ios" size={14} color="black" style={{fontWeight:"bold"}}/>
+           <MaterialIcons name="arrow-forward-ios" size={12} color="#212121" style={{fontWeight:"bold"}}/>
             </TouchableOpacity>
         </View>
       </View>

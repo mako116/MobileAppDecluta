@@ -2,6 +2,7 @@ import { View, StyleSheet, Image } from 'react-native';
 import React, { useEffect } from 'react';
 import { useRouter } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Lottie from 'lottie-react-native';
 
 export default function SplashScreen() {
   const router = useRouter();
@@ -35,10 +36,12 @@ export default function SplashScreen() {
         style={styles.logo}
       />
       <View style={[StyleSheet.absoluteFillObject, styles.container]}>
-        <Image
-          style={{ width: 280, height: 80 }}
-          source={require('../../../assets/loading/Animation.gif')}
-        />
+        <Lottie
+        source={require('../../../assets/loading/msplachit.json')}  
+        autoPlay
+        
+         style={styles.lottie}
+       />
       </View>
     </View>
   );
@@ -47,18 +50,23 @@ export default function SplashScreen() {
 const styles = StyleSheet.create({
   background: {
     flex: 1,
-    backgroundColor: '#463e31',
-    justifyContent: 'center',
+    backgroundColor: '#483a2d',
+     justifyContent: 'center',
     alignItems: 'center',
   },
   container: {
-    marginTop: 60,
+    marginTop: 67,
     justifyContent: 'center',
     alignItems: 'center',
+    borderRadius:50
   },
   logo: {
-    width: 200,
+    width: "70%",
     height: 200,
     resizeMode: 'contain',
+  },
+  lottie: {
+    width: "70%",
+    height:"100%",
   },
 });

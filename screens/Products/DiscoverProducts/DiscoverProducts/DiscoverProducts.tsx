@@ -10,10 +10,10 @@ export default function DiscoverProducts() {
       <View style={{flexDirection:"row", alignItems:"center", justifyContent:"space-between",paddingVertical:10,paddingRight:10,paddingLeft:20}}>
         <Text style={{fontWeight:"700",fontSize:16,lineHeight:22.4}}>Discover great offers</Text>
         <View >
-           <TouchableOpacity onPress={()=> router.push("/(routes)/HomesectionViewAll/Discover")}  style={{width:100,flexDirection:"row",alignItems:"center", justifyContent:"flex-end"}}>
-            <Text style={{fontWeight:"400",fontSize:13.4,lineHeight:15.4}}>View all</Text>
+           <TouchableOpacity onPress={()=> router.push("/(routes)/HomesectionViewAll/Discover")}  style={{width:100,flexDirection:"row",gap:5,justifyContent:"flex-end"}}>
+            <Text style={{fontWeight:"400",fontSize:16,lineHeight:15.4, fontFamily:"ProximaNovaR"}}>View all</Text>
             {/* <View style={{ alignItems:"flex-end",}}> */}
-           <MaterialIcons name="arrow-forward-ios" size={14} color="black" style={{fontWeight:"bold"}}/>
+           <MaterialIcons name="arrow-forward-ios" size={11} color="black" style={{fontWeight:"bold"}}/>
             </TouchableOpacity>
         </View>
       </View>

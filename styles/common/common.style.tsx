@@ -65,7 +65,7 @@ errorContainer:{
     alignItems:"center",
     marginHorizontal:16,
     marginVertical:4,
-    position:"absolute",
-    top:60,
+    // position:"absolute",
+    // top:60,
 }
 })
