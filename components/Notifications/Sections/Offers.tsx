@@ -39,7 +39,7 @@ const Offers = () => {
         ) : (
           notifications.map((item) => (
             <View key={item.id} style={NotificationStyles.main}>
-              <View style={NotificationStyles.notificationContent}>
+              <View style={NotificationStyles.notificationContents}>
                 <Image source={item.image}   />
                 <View style={NotificationStyles.textContainer}>
                   <Text style={NotificationStyles.title}>{item.title}</Text>
@@ -54,7 +54,7 @@ const Offers = () => {
                 {item.action && (
                   <View style={NotificationStyles.footerRight}>
                     <Text style={NotificationStyles.actionText}>{item.action}</Text>
-                    <SimpleLineIcons name="arrow-right" size={10} color="black" />
+                <Image source={require('../../../assets/images/newimages/Vector.png')} style={{width:6,height:10,marginTop:3}} />
                   </View>
                 )}
               </View>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import LottieView from 'lottie-react-native';
-import Category from '@/screens/Products/ExploreNewFinds/Category/category';
+import Category from '@/screens/Products/Rending/category';
 import Browser from './BrowserBoard';
 
 // Define the type for the category item

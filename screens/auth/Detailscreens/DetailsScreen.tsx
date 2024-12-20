@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, TextInput, TouchableOpacity, ActivityIndicator, BackHandler, Modal, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, TextInput, TouchableOpacity, ActivityIndicator, BackHandler, Modal, StyleSheet, Image } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
@@ -32,8 +32,8 @@ export default function DetailScreen() {
   const [lastName, setLastName] = useState<string>('')
   const [gender, setGender] = useState<string>('')
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [countryCode, setCountryCode] = useState<CountryCode>('US'); // Default to 'US'
-  const [callingCode, setCallingCode] = useState('1');  // Default calling code for 'US'
+  // const [countryCode, setCountryCode] = useState<CountryCode>('US'); // Default to 'US'
+  const [callingCode, setCallingCode] = useState('234');  // Default calling code for 'US'
 
   // Check if the required fields are filled
   useEffect(() => {
@@ -53,10 +53,10 @@ export default function DetailScreen() {
   };
 
   // Handle country selection from CountryPicker
-  const onSelectCountry = (country: Country) => {
-    setCountryCode(country.cca2 as CountryCode); // Set the selected country code
-    setCallingCode(country.callingCode[0]); // Set the corresponding calling code
-  };
+  // const onSelectCountry = (country: Country) => {
+  //   setCountryCode(country.cca2 as CountryCode); // Set the selected country code
+  //   setCallingCode(country.callingCode[0]); // Set the corresponding calling code
+  // };
 
   // Handle hardware back press
   useFocusEffect(
@@ -216,15 +216,10 @@ export default function DetailScreen() {
         <View style={styles.container}>
           <Text style={SignUpStyles.label}>Phone Number</Text>
           <View style={styles.phoneContainer}>
-            <CountryPicker
-              countryCode={countryCode}
-              withFilter
-              withFlag
-              withCallingCode
-              withCountryNameButton={false}
-              onSelect={onSelectCountry}
-              containerButtonStyle={styles.flagButton}
-            />
+             <Image
+              source={require("../../../assets/images/newimages/twemoji_flag-nigeria.png")} 
+                style={styles.customLogo}
+                 />
             <Text style={styles.callingCode}>+{callingCode}</Text>
             <TextInput
               style={styles.phoneInput}
@@ -292,6 +287,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     backgroundColor: "white",
     color: "#a1a1a1",
+    fontFamily:"Proxima Nova",
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -300,7 +296,14 @@ const styles = StyleSheet.create({
   },
   dropdownButtonText: {
     color: '#333',
+    fontFamily:"Proxima Nova",
   },
+  customLogo: {
+    marginLeft:15,
+     height: 18,
+     width: 18, // Adjust size of the custom logo
+     resizeMode: "contain",
+   },
   dropdownMenu: {
     marginTop: 5,
     borderWidth: 1,
@@ -315,6 +318,7 @@ const styles = StyleSheet.create({
   },
   dropdownItemText: {
     color: '#333',
+    fontFamily:"Proxima Nova",
   },
   selectedBackground: {
     backgroundColor: '#F5EADC', // Highlight background color for selected item
@@ -331,21 +335,30 @@ const styles = StyleSheet.create({
     // gap: 10,
   },
   callingCode: {
-    marginRight: 10,
-    fontSize: 16,
-    color: '#333',
+    marginHorizontal: 10,
+    fontSize: 13,
+    color: '#212121',
+    borderRightWidth: 1,
+    height:20,
+    borderColor: "#212121",
+    paddingRight: 15,
+    fontFamily:"Helvetica Neue",
+    lineHeight:18.2,
+    fontWeight:"500"
   },
   flagButton: {
     marginLeft: 8,
   },
   phoneInput: {
     height: 55,
-     borderRadius: 3,
-     borderLeftWidth:1,
-    borderColor: "#E9E9E9",
-    paddingLeft: 15,
+    borderRadius: 3,
+    
     fontSize: 14,
     backgroundColor: "white",
-    color: "#a1a1a1",
+     color: '#212121',
+    paddingRight: 15,
+    fontFamily:"Proxima Nova",
+    lineHeight:14,
+    fontWeight:"500"
   },
 }); 

@@ -178,6 +178,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     fontSize: 18,
     color: '#333',
+    fontFamily:"Proxima Nova",
     marginHorizontal: 5,
   },
   inputError: {
@@ -190,22 +191,26 @@ const styles = StyleSheet.create({
     color: 'red',
     fontSize: 14,
     marginBottom: 10,
+    fontFamily:"Proxima Nova",
   },
   successText: {
     color: '#212121',
     fontWeight:"400",
     lineHeight:19.6,
+    fontFamily:"Proxima Nova",
     fontSize: 14,
   },
   timerText: {
     fontSize: 14,
     color: '#333',
+    fontFamily:"Proxima Nova",
     marginTop: 10,
   },
   
   resendText: {
     fontSize: 14,
     color: '#DEBC8E',
+    fontFamily:"Proxima Nova",
     fontWeight: 'bold',
   },
 });

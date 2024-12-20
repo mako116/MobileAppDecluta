@@ -1,8 +1,34 @@
+import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import React from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MaterialIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 export default function ProfileKYc() {
+  const [hasToken, setHasToken] = useState(false);
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    const checkToken = async () => {
+      try {
+        const token = await AsyncStorage.getItem('token');
+        if (token) {
+          setHasToken(true); 
+        } else {
+          return null;
+         }
+      } catch (error) {
+        console.error('Error reading token:', error);
+      }
+    };
+
+    checkToken();
+  }, [navigation]);
+
+  if (!hasToken) {
+    return null;
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.card}>
@@ -15,7 +41,6 @@ export default function ProfileKYc() {
     </View>
   );
 }
-
 const styles = StyleSheet.create (
     {
   container: {

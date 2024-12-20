@@ -6,7 +6,7 @@ interface CategoryProps {
   imageUrl: ImageSourcePropType;
 }
 
-export default function Category4({ imageUrl }: CategoryProps) {
+export default function BannerCat({ imageUrl }: CategoryProps) {
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
@@ -22,29 +22,26 @@ export default function Category4({ imageUrl }: CategoryProps) {
 
 const styles = StyleSheet.create({
   container: {
-    height: 126,
-    width: 300,
-    marginLeft: 10,
+    // height: 126,
+    // width: 300,
+    // marginLeft: 10,
      borderColor: '#E9E9E9',  
     borderRadius: 3, // Slightly rounded corners
-    overflow: 'hidden',
+    // overflow: 'hidden',
 
-    // Shadow properties for iOS
-    shadowColor: '#E9E9E9',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.5,
-    shadowRadius: 4,
-
-    // Shadow property for Android
-    elevation: 5,
+    
   },
   imageContainer: {
-    flex: 2,
+    // flex: 2,
+    paddingLeft: 10,
+    
   },
   image: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'cover',
+    width: 300,
+    height: 126,
+    objectFit: "fill",
+     paddingLeft: 10,
+     borderRadius:4
   },
   textContainer: {
     paddingLeft: 5,

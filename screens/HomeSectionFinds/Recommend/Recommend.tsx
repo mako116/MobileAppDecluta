@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import LottieView from 'lottie-react-native';
-import Category from '@/screens/Products/ExploreNewFinds/Category/category';
+import Category from '@/screens/Products/Rending/category';
 
 // Define the type for the category item
 interface CategoryItem {
@@ -15,7 +15,7 @@ interface CategoryItem {
 const Recommend: React.FC = () => {
   // Define categories as an array of CategoryItem
   const categories: CategoryItem[] = [
-    { id: 1, imageUrl: require('../../../assets/images/meduimphone.png'), name: 'Apple iPhone XR', title: '₦250,000', locations: 'Agbowo UI, Ibadan' },
+    { id: 1, imageUrl: require('../../../assets/images/meduimphone.png'), name: 'Apple iPhone XR', title: '₦250dd,000', locations: 'Agbowo UI, Ibadan' },
     { id: 2, imageUrl: require('../../../assets/images/speaker.png'), name: 'Category 2', title: '₦755,000', locations: 'HP Spectre 360' },
     { id: 3, imageUrl: require('../../../assets/images/meduimphone.png'), name: 'Apple iPhone XR', title: '₦250,000', locations: 'Agbowo UI, Ibadan' },
     { id: 4, imageUrl: require('../../../assets/images/meduimphone.png'), name: 'Apple iPhone XR', title: '₦250,000', locations: 'Agbowo UI, Ibadan' },
@@ -64,8 +64,8 @@ const Recommend: React.FC = () => {
             imageUrl={item.imageUrl}
             name={item.name}
             title={item.title}
-            locations={item.locations}
-          />
+            locations={item.locations} 
+            timeAgo={''}          />
         </View>
       )}
       onEndReached={loadMoreCategories} // Trigger load more when scrolled to the end

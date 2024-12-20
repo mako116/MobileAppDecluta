@@ -91,8 +91,8 @@ const Alling: React.FC = () => {
               {item.action && (
                 <View style={styles.footerRight}>
                   <Text style={styles.actionText}>{item.action}</Text>
-                  <SimpleLineIcons name="arrow-right" size={10} color="black" />
-                </View>
+               <Image source={require('../../../assets/images/newimages/Vector.png')} style={{width:6,height:10,marginTop:3}} />               
+              </View>
               )}
             </View>
           </View>
@@ -115,11 +115,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderRadius: 10,
     padding: 10,
-    elevation: 3,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
+     borderWidth:1,
+     borderColor:"#E9E9E9"
   },
   notificationContent: {
     flexDirection: 'row',
@@ -147,7 +144,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: '2%',
+    paddingTop: '2%',
     borderTopWidth: 1,
     borderColor: '#E9E9E9',
   },

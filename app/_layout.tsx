@@ -18,7 +18,7 @@ export default function RootLayout() {
       </AuthProvider>
     </GestureHandlerRootView>
   );
-}
+} 
 
 export const Layout = () => {
   const [loaded] = useFonts({

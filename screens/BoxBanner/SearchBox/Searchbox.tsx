@@ -43,9 +43,10 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    fontSize: 16,
-    color: '#333',
-    
+    fontSize: 14,
+    color: '#A4A4A4',
+    fontFamily:"ProximaNovaR",
+    lineHeight:19.6
   },
   icon: {
     marginLeft: 10,

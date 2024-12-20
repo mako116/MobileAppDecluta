@@ -1,20 +1,19 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
 import { MaterialIcons } from '@expo/vector-icons'
  import ProductsSlider6 from '../slider/ProductsSlider6'
-import { router } from 'expo-router'
+import { router } from 'expo-router' 
  
 export default function DiscoverProducts() {
   return (
-    <View style={{backgroundColor:"#f9f9f9",paddingRight:10}}>
-      <View style={{flexDirection:"row", alignItems:"center", justifyContent:"space-between",paddingVertical:10,paddingRight:10,paddingLeft:20}}>
-        <Text style={{fontWeight:"700",fontSize:16,lineHeight:22.4}}>Discover great offers</Text>
+    <View style={{backgroundColor:"#f9f9f9",}}>
+      <View style={{flexDirection:"row", alignItems:"center", justifyContent:"space-between",paddingBottom:7,paddingLeft:20}}>
+        <Text style={{fontWeight:"700",fontSize:16,lineHeight:22.4,fontFamily:"Helvetica Neue",color:"#212121"}}>Discover great offers</Text>
         <View >
-           <TouchableOpacity onPress={()=> router.push("/(routes)/HomesectionViewAll/Discover")}  style={{width:100,flexDirection:"row",gap:5,justifyContent:"flex-end"}}>
-            <Text style={{fontWeight:"400",fontSize:16,lineHeight:15.4, fontFamily:"ProximaNovaR"}}>View all</Text>
-            {/* <View style={{ alignItems:"flex-end",}}> */}
-           <MaterialIcons name="arrow-forward-ios" size={11} color="black" style={{fontWeight:"bold"}}/>
-            </TouchableOpacity>
+           <TouchableOpacity onPress={()=> router.push("/(routes)/HomesectionViewAll/Discover")}  style={{width:100,flexDirection:"row",gap:5,justifyContent:"flex-end", alignItems:"center", paddingRight:10}}>
+            <Text style={{fontWeight:"400",fontSize:16,lineHeight:22.4, fontFamily:"Proxima Nova", color:"#212121"}}>View All</Text>
+               <Image source={require('../../../../assets/images/newimages/Vector.png')} style={{width:6,height:11}} />
+           </TouchableOpacity>
         </View>
       </View>
       <View>

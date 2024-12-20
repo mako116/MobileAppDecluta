@@ -6,14 +6,16 @@ const Mores = StyleSheet.create({
       backgroundColor: 'rgba(0, 0, 0, 0.5)',
       justifyContent: 'center',
       alignItems: 'center',
+      
     },
-    modalContent: {
-      width: '80%',
-      padding: 20,
-      backgroundColor: 'white',
-      borderRadius: 10,
-      alignItems: 'center',
-    },
+    // modalContent: {
+     
+     
+    //   padding: 20,
+    //   backgroundColor: 'white',
+    //   borderRadius: 10,
+    //   alignItems: 'center',
+    // },
     modalBackground: {
       flex: 1,
     },
@@ -23,32 +25,34 @@ const Mores = StyleSheet.create({
       marginBottom: 20,
     },
     modalContainer: {
+      width: 182,
+      height:232,
       position: 'absolute',
-      bottom: '11%',
-      right: '0%',
+      bottom: '9%',
+      right: '3%',
       backgroundColor: 'white',
-      borderTopLeftRadius: 10,
-      borderTopRightRadius: 10,
-      borderBottomLeftRadius: 10,
-      borderBottomRightRadius: 10,
+      borderTopLeftRadius: 8,
+      borderTopRightRadius: 8,
+      borderBottomLeftRadius: 8,
+      borderBottomRightRadius: 8,
       padding: 10,
       elevation: 10,
+     
     },
     modalOption: {
       flexDirection: 'row',
       alignItems: 'center',
-      paddingVertical: 10,
-      borderRadius:10
+      paddingVertical: 8,
+      borderRadius:10,
+      gap:6,
     },
     modalText: {
-      // fontFamily: 'HelveticaNeueLT',
-      
-      marginLeft: 10,
-      fontSize: 16,
+      fontFamily: 'Proxima Nova',
+      marginLeft:6,
+       fontSize: 14,
       lineHeight:19.6,
-      // color: '#212121',
-      // fontWeight:"400"
-    },
+      color: '#212121',
+      },
   });
 
 export  default Mores

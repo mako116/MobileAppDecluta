@@ -7,24 +7,24 @@ export default function ProductsSlider2() {
     <View style={{ marginTop: 5 }}>
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
         <Category2
-                  imageUrl={require('../../../../assets/images/ele.png')}
+                  imageUrl={require('../../../../assets/images/newimages/compu.png')}
                   name="Electronics"
                       
                    />
         <Category2
-                  imageUrl={require('../../../../assets/images/smallphone.png')}
+                  imageUrl={require('../../../../assets/images/newimages/phone.png')}
                   name="Smartphones"
                      />
         <Category2
-                  imageUrl={require('../../../../assets/images/lap.png')}
+                  imageUrl={require('../../../../assets/images/newimages/lap.png')}
                   name="Laptops"
                            />
                             <Category2
-                  imageUrl={require('../../../../assets/images/lap.png')}
+                  imageUrl={require('../../../../assets/images/newimages/compu.png')}
                   name="Laptops"
                            />
                             <Category2
-                  imageUrl={require('../../../../assets/images/ele.png')}
+                  imageUrl={require('../../../../assets/images/newimages/compu.png')}
                   name="Electronics"
                       
                    />
