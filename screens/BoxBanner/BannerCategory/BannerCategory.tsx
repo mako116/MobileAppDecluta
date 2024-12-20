@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
       fontWeight: "400",
        lineHeight:16.8,
       color: '#463E31',
-      fontFamily:"ProximaNova"
+      fontFamily:"Proxima Nova"
     },
      
   });
