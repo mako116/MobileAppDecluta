@@ -8,7 +8,7 @@ export default function BannerCategory() {
       <View style={styles.row}>
         {/* First Box */}
         <View style={{justifyContent:"center",}}>
-        <Image source={require('../../../assets/images/noto_fire.png')} />
+        <Image source={require('../../../assets/images/newimages/noto_fire.png')} style={{width:18, height:18}} />
         </View>
         <View style={styles.box}>
         
@@ -21,7 +21,7 @@ export default function BannerCategory() {
         </View>
 
         {/* Second Box */}
-        <View style={styles.box}>
+        <View style={styles.boxs}>
             
            <View style={styles.textContainer}>
            <TouchableOpacity  style={{paddingLeft:5}}>
@@ -31,7 +31,7 @@ export default function BannerCategory() {
            
            
         </View>
-        <View style={styles.box}>
+        <View style={styles.boxs}>
         
            <View style={styles.textContainer}>
            <TouchableOpacity  style={{paddingLeft:5}}> 
@@ -71,13 +71,18 @@ const styles = StyleSheet.create({
     
       backgroundColor: '#f8f9fa',
       borderRadius: 4,
-      // padding: 16,
-      elevation: 3, // Adds shadow for Android
-      shadowColor: '#000', // Adds shadow for iOS
-      shadowOpacity: 0.2,
-      shadowOffset: { width: 1, height: 2 },
-      shadowRadius: 4,
-      width: 67,  
+      
+      width: 57,  
+      height:21
+    },
+    boxs: {
+      flexDirection: 'row',
+      justifyContent:"flex-start",
+    
+      backgroundColor: '#f8f9fa',
+      borderRadius: 4,
+      alignItems:"center",
+      width: 75,  
       height:21
     },
     icon: {
@@ -86,15 +91,15 @@ const styles = StyleSheet.create({
     textContainer: {
        
         // paddingLeft:10,
-        height:21,
-        width:74
+        // height:21,
+        // width:74
     },
     title: {
       fontSize: 12,
       fontWeight: "400",
        lineHeight:16.8,
       color: '#463E31',
-      // fontFamily:"ProximaNova"
+      fontFamily:"Proxima Nova"
     },
      
   });

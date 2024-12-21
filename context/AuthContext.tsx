@@ -80,7 +80,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (storedUserId) {
         setUserId(storedUserId);
       }
-    };
+    }; 
 
     initializeAuth();
   }, []);

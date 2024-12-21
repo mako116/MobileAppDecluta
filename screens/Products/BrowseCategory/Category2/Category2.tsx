@@ -26,37 +26,36 @@ export default function Category2({ imageUrl, name }: CategoryProps) {
 
 const styles = StyleSheet.create({
   container: {
-     width: 100,
+     width: 102,
+     height:99,
     marginLeft: 10,
     padding: 4,
     borderWidth: 1,
     borderColor: '#E9E9E9',  
     borderRadius: 8, // Slightly rounded corners
     overflow: 'hidden',
-
-    // Shadow properties for iOS
-    shadowColor: '#E9E9E9',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.5,
-    shadowRadius: 4,
-
-    // Shadow property for Android
-    elevation: 5,
-  },
+   },
   imageContainer: {
-    flex: 2,
+    // flex: 2,
+    
+    backgroundColor:"#F5EADC",
+    width:94,
+    height:57,
+    borderRadius:4
   },
   image: {
-    width: '100%',
-    height: 56,
-    resizeMode: 'cover',
+    width: 44,
+    height: 44,
+    objectFit: 'contain',
+    margin:"auto",
+    
   },
   textContainer: {
     paddingLeft: 5,
-    paddingTop: 10,
+    paddingVertical: 5,
   },
   title: {
-    fontSize: 16,
+    // fontSize: 12,
     lineHeight:22.4,
     fontWeight: '700',
     color: '#212121',
@@ -64,10 +63,11 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 12,
     lineHeight:16.8,
-    fontWeight:"400",
+    fontWeight:"700",
     color: '#474747',
     textAlign:"center",
-    marginTop: 4,
+    fontFamily:"Helvetica Neue"
+    // marginTop: 4,
   },
   locations: {
     flexDirection: 'row',
@@ -80,5 +80,6 @@ const styles = StyleSheet.create({
     fontWeight:"400",
     color: '#474747',
     marginLeft: 4,
+    fontFamily:"Proxima Nova",
   },
 });

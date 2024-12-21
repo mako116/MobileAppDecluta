@@ -20,8 +20,8 @@ export default function Banner() {
       {/* Content */}
       <View style={styles.container}>
         <View style={{ flexDirection: 'row', gap: 4 }}>
-          <Image source={require('../../../assets/images/heroiconssparkles.png')} />
-          <Text style={styles.headingText}>Hello, Mathew</Text>
+          <Image source={require('../../../assets/images/heroicons_sp.png')}  style={{ objectFit:"contain", width:20, height:20}} />
+          <Text style={styles.headingText}>Hello, There!</Text>
         </View>
         <Text style={styles.subText}>How can we help you today?</Text>
       </View>

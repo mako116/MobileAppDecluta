@@ -74,8 +74,8 @@ const Transactions = () => {
                   {item.action && (
                     <View style={NotificationStyles.footerRight}>
                       <Text style={NotificationStyles.actionText}>{item.action}</Text>
-                      <SimpleLineIcons name="arrow-right" size={10} color="black" />
-                    </View>
+ <Image source={require('../../../assets/images/newimages/Vector.png')} style={{width:6,height:10,marginTop:3}} />                    
+ </View>
                   )}
                 </View>
               </View>

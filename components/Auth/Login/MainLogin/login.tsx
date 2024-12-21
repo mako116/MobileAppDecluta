@@ -94,12 +94,14 @@ export default function Login() {
   const [showMore, setShowMore] = useState(false);
 
   const handleShowMore = () => {
-    setShowMore(prevState => !prevState);
+    // Set showMore to true when the image is clicked
+    setShowMore(true);
   };
+
   return (
-    <ScrollView style={{ flex: 1 }} scrollEventThrottle={16}>
+    <ScrollView style={{ flex: 1 ,}} scrollEventThrottle={16}>
       <View style={SignUpStyles.header}>
-        <Image source={require("@/assets/images/king.png")} style={SignUpStyles.sigInImage} />
+        <Image source={require("../../../../assets/images/newimages/9 1.png")} style={SignUpStyles.sigInImage} />
         <Text style={SignUpStyles.welcomeText}>Log in with email</Text>
       </View>
 
@@ -190,12 +192,12 @@ export default function Login() {
         <View style={SignUpStyles.socialButtons}>
       <TouchableOpacity onPress={handlePhonePush} style={SignUpStyles.socialButton}>
         <MaterialIcons name="phone-android" size={24} color="black" />
-        <Text style={{ color: "#000000", lineHeight: 19.6, fontSize: 14, fontWeight: '400' , fontFamily:"ProximaNovaR"}}>Continue with Phone</Text>
+        <Text style={{ color: "#000000", lineHeight: 19.6, fontSize: 14, fontWeight: '400' , fontFamily:"Proxima Nova"}}>Continue with Phone</Text>
       </TouchableOpacity>
       
       <TouchableOpacity style={SignUpStyles.socialButton}>
         <Image style={{ height: 20, width: 20, resizeMode: "contain" }} source={require("@/assets/images/google.png")} />
-        <Text style={{ color: "#000000", lineHeight: 19.6, fontSize: 14, fontWeight: '400' , fontFamily:"ProximaNovaR"}}>Continue with Google</Text>
+        <Text style={{ color: "#000000", lineHeight: 19.6, fontSize: 14, fontWeight: '400' , fontFamily:"Proxima Nova"}}>Continue with Google</Text>
       </TouchableOpacity>
 
       {/* Conditionally render the other buttons */}
@@ -203,7 +205,7 @@ export default function Login() {
         <>
           <TouchableOpacity style={SignUpStyles.socialButton}>
             <AntDesign name="apple1" size={24} color="black" />
-            <Text style={{ color: "#000000", lineHeight: 19.6, fontSize: 14, fontWeight: '400' , fontFamily:"ProximaNovaR"}}>Continue with Apple</Text>
+            <Text style={{ color: "#000000", lineHeight: 19.6, fontSize: 14, fontWeight: '400' , fontFamily:"Proxima Nova"}}>Continue with Apple</Text>
           </TouchableOpacity>
 
            
@@ -212,29 +214,32 @@ export default function Login() {
 
       {/* Arrow icon to toggle showing more buttons */}
       <View style={{ margin: "auto", paddingVertical: 14 }}>
+          {!showMore && (
         <TouchableOpacity onPress={handleShowMore}>
-          <SimpleLineIcons
-            name={showMore ? "arrow-up" : "arrow-down"}
-            size={22}
-            color="#A4A4A4"
+          <Image
+            style={{ height: 20, width: 20, resizeMode: "contain" }}
+            source={require("../../../../assets/images/newimages/Down 2.png")} // Image path
           />
         </TouchableOpacity>
-      </View>
+      )}
+
+
+       </View>
     </View>
 
 
        
 
-        <View style={{ paddingVertical: 20, flexDirection: "row", alignItems: "center", margin: "auto", gap: 5 }}>
+        <View style={{ paddingVertical: 20, flexDirection: "row", alignItems: "center", margin: "auto", gap: 10 }}>
         <TouchableOpacity onPress={() => router.push("/(routes)/Terms")}>
           <Text
-           style={{ color: "#DEBC8E", fontWeight: "700", fontSize: 16, lineHeight: 22.4 }}>
+           style={{ color: "#DEBC8E", fontWeight: "700", fontSize: 16, lineHeight: 22.4 ,fontFamily:'Helvetica Neue'}}>
             Terms of use
             </Text>
             </TouchableOpacity>
           <View style={SignUpStyles.separator2} />
           <TouchableOpacity onPress={() => router.push("/(routes)/privacyPolicy")}>
-          <Text style={{ color: "#DEBC8E", fontWeight: "700", fontSize: 16, lineHeight: 22.4 }}>Privacy Policy</Text>
+          <Text style={{ color: "#DEBC8E", fontWeight: "700", fontSize: 16, lineHeight: 22.4 ,fontFamily:'Helvetica Neue'}}>Privacy Policy</Text>
           </TouchableOpacity>
         </View>
       </View>

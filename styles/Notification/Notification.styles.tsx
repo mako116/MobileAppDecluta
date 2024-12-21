@@ -27,13 +27,14 @@ const NotificationStyles = StyleSheet.create({
       backgroundColor: '#FFFFFF',
       borderRadius: 10,
       padding: 10,
-      elevation: 3,
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.1,
-      shadowRadius: 4,
+      borderWidth:1,
+     borderColor:"#E9E9E9"
     },
     notificationContent: {
+      flexDirection: 'row',
+      paddingVertical: 4,
+    },
+    notificationContents: {
       // flexDirection: 'row',
       paddingVertical: 4,
     },
@@ -47,7 +48,7 @@ const NotificationStyles = StyleSheet.create({
       paddingVertical: '3%',
     },
     title: {
-      fontFamily: 'Poppins',
+      fontFamily: 'Helvetica Neue',
       fontWeight: '700',
       marginBottom:5
     },
@@ -55,12 +56,13 @@ const NotificationStyles = StyleSheet.create({
       paddingRight: '10%',
       lineHeight: 19.6,
       fontSize: 14,
+      fontFamily:"Proxima Nova"
     },
     footer: {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      paddingVertical: '2%',
+      paddingTop: '2%',
       borderTopWidth: 1,
       borderColor: '#E9E9E9',
     },
@@ -72,13 +74,18 @@ const NotificationStyles = StyleSheet.create({
     time: {
       color: '#474747',
       fontSize: 12,
+      fontFamily:"Proxima Nova"
     },
     tag: {
+      width:69,
+      height:22,
       backgroundColor: '#F5EADC',
       color: '#212121',
-      padding: 5,
+      padding: 2,
+      textAlign:"center",
       fontSize: 12,
-      borderRadius: 5,
+      borderRadius: 4,
+      fontFamily:"Proxima Nova"
     },
     footerRight: {
       flexDirection: 'row',
@@ -89,6 +96,8 @@ const NotificationStyles = StyleSheet.create({
       color: '#212121',
       fontSize: 12,
       fontWeight: '400',
+      fontFamily:"Proxima Nova",
+      lineHeight:16.8
     },
   });
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { FlatList, Image, StyleSheet, Text, View } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
-import Category from '@/screens/Products/ExploreNewFinds/Category/category';
+import Category from '@/screens/Products/Rending/category';
 
 // Define the type for items
 type Item = {

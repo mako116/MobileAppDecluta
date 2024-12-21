@@ -1,7 +1,7 @@
 import { AntDesign, Feather, SimpleLineIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import React from 'react';
-import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import All from './Sections/All';
 import NotificationBoard from './NotificationBoard';
  
@@ -11,14 +11,15 @@ const HeaderNotification = () => {
             <View style={{paddingTop:40,backgroundColor:"#fff"}}>
             <View style={styles.searchBox}>
            <View style={{flexDirection:"row",alignItems:"center", gap:20}}>
-           <AntDesign onPress={router.back} name="arrowleft" size={24} color="black" />
-            <Text style={{fontFamily:"HelveticaNeueLTPro", fontWeight:"700", fontSize:16}}>
-              Notification
+           <TouchableOpacity onPress={router.back}>
+           <Image  source={require('../../assets/images/newimages/Left.png')} style={{width:20,height:20}} />         
+           </TouchableOpacity>
+             <Text style={{fontFamily:"HelveticaNeueLTPro", fontWeight:"700", fontSize:16}}>
+              Notifications
             </Text>
            </View>
             <TouchableOpacity>
-            <SimpleLineIcons name="settings" size={24} color="black" />
-              {/* <Feather name="search" size={24} color="#A4A4A4" /> */}
+                <Image source={require('../../assets/images/newimages/setting-2.png')} style={{width:24,height:24}} />            
             </TouchableOpacity>
           </View>
             </View>

@@ -20,7 +20,7 @@ export default function BuyndSellItems() {
             </View>
 
            <View style={styles.textContainer}>
-            <Text style={styles.title}>Buy an Items</Text>
+            <Text style={styles.title}>Buy an Item</Text>
            </View>
            <View style={{width:16, alignItems:"flex-end",}}>
            <MaterialIcons name="arrow-forward-ios" size={14} color="black" />
@@ -37,7 +37,7 @@ export default function BuyndSellItems() {
             <Image source={require('../../../assets/images/newimages/wallet-3.png')}  style={{width:22,height:22}}  />
             </View>
            <View style={styles.textContainer}>
-            <Text style={styles.title}>Sell an Items</Text>
+            <Text style={styles.title}>Sell an Item</Text>
            </View>
            <View style={{width:16, alignItems:"flex-end",}}>
            <MaterialIcons name="arrow-forward-ios" size={14} color="black" />
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     lineHeight:19.6,
     color: '#212121',
-    fontFamily:'HelveticaNeueLTPro'
+    fontFamily:'SpaceMono'
   },
   description: {
     fontSize: 14,

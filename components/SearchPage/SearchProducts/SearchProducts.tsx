@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, FlatList } from 'react-native';
  import LottieView from 'lottie-react-native';
-import Category from '@/screens/Products/ExploreNewFinds/Category/category';
+import Category from '@/screens/Products/Rending/category';
 
 const categories = [
   { id: 1, imageUrl: require('../../../assets/images/meduimphone.png'), name: 'Apple iPhone XR', title: '₦250,000', locations: 'Agbowo UI, Ibadan' },
