@@ -54,8 +54,8 @@ export default function SearchProduct() {
             imageUrl={item.imageUrl}
             name={item.name}
             title={item.title}
-            locations={item.locations}
-          />
+            locations={item.locations} 
+            timeAgo={'12d ago'}          />
         </View>
       )}
       onEndReached={loadMoreCategories}

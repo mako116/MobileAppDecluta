@@ -32,8 +32,12 @@ export default function Category({
            </View>
         )}
       </View>
-      <View style={styles.textContainer}>
-        <Text style={styles.title}>{title}</Text>
+      
+      <View>
+        <View style={styles.row} >
+          <Image source={require("../../../assets/images/naira.png")} style={styles.nairaIconStyle} />
+          <Text style={styles.title}>{title}</Text>
+        </View>
         <Text style={styles.name}>{name}</Text>
         <View style={styles.locations}>
           <LocationIcons />
@@ -45,8 +49,13 @@ export default function Category({
 }
 
 const styles = StyleSheet.create({
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   container: {
-    width: 155,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
     borderWidth: 1,
     borderColor: '#E9E9E9',
     borderRadius: 10,
@@ -58,7 +67,7 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   image: {
-    width: 144,
+    width: 150,
     height: 144,
     borderRadius: 4,
   },
@@ -98,12 +107,18 @@ const styles = StyleSheet.create({
     paddingLeft: 12,
     paddingBottom: 10,
   },
+  nairaIconStyle: {
+    width: 15,
+    height: 15,
+    marginRight: 3,
+  },
   title: {
     fontSize: 16,
     lineHeight: 22.4,
     fontWeight: '700',
     color: '#212121',
     fontFamily: 'Helvetica Neue',
+    paddingVertical: 5,
   },
   name: {
     fontSize: 12,
@@ -123,6 +138,7 @@ const styles = StyleSheet.create({
     color: '#474747',
     marginLeft: 4,
     fontFamily: 'Proxima Nova',
+    marginTop: 5,
   },
 
 });

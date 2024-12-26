@@ -6,28 +6,28 @@ import All from './Sections/All';
 import NotificationBoard from './NotificationBoard';
  
 const HeaderNotification = () => {
-    return (
-        <View>
-            <View style={{paddingTop:40,backgroundColor:"#fff"}}>
-            <View style={styles.searchBox}>
-           <View style={{flexDirection:"row",alignItems:"center", gap:20}}>
+  return (
+    <View>
+      <View style={{paddingTop:40,backgroundColor:"#fff"}}>
+        <View style={styles.searchBox}>
+          <View style={{flexDirection:"row",alignItems:"center", gap:20}}>
            <TouchableOpacity onPress={router.back}>
-           <Image  source={require('../../assets/images/newimages/Left.png')} style={{width:20,height:20}} />         
+           <Image  source={require('../../assets/images/leftArrow.png')} style={{width:30,height:20}} />         
            </TouchableOpacity>
-             <Text style={{fontFamily:"HelveticaNeueLTPro", fontWeight:"700", fontSize:16}}>
+             <Text style={{fontFamily:"Helvetica Neue", fontWeight:"700", fontSize:16}}>
               Notifications
             </Text>
-           </View>
-            <TouchableOpacity>
-                <Image source={require('../../assets/images/newimages/setting-2.png')} style={{width:24,height:24}} />            
-            </TouchableOpacity>
           </View>
-            </View>
-          <ScrollView style={{ marginBottom:"10%"  }}>
-            <NotificationBoard/>
-          </ScrollView>
+          <TouchableOpacity>
+            <Image source={require('../../assets/images/newimages/setting-2.png')} style={{width:24,height:24}} />            
+          </TouchableOpacity>
         </View>
-    );
+      </View>
+      <ScrollView style={{ marginBottom:"10%"  }}>
+        <NotificationBoard/>
+      </ScrollView>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

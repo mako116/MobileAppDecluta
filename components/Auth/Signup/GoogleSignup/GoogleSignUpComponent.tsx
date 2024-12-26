@@ -37,8 +37,8 @@ const GoolgSignUp:React.FC = () => {
             promptAsync();
             }}
         >
-            <Image style={{ height: 20, width: 20, resizeMode: "contain" }} source={require("@/assets/images/google.png")} />
-            <Text style={{ color: "#000000", lineHeight: 19.6, fontSize: 14, fontWeight: '400' }}>Continue with Google</Text>
+            <Image style={{ height: 26, width: 26 }} source={require("../../../../assets/images/googleIcon.png")} />
+            <Text style={{ color: "#000000", lineHeight: 19.6, fontSize: 14, fontWeight: '400', fontFamily: "Proxima Nova" }}>Continue with Google</Text>
         </TouchableOpacity>
     )
 }

@@ -4,7 +4,7 @@ import BannerCat from '../Category/BannerCat';
  
 export default function ProductsSlider4() {
   return (
-    <View style={{ marginTop: 5 }}>
+    <View style={{ marginTop: 10 }}>
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
         <BannerCat
                   imageUrl={require('../../../../assets/images/newimages/Homepage banner 1.jpg')}
