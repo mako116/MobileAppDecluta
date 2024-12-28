@@ -11,7 +11,7 @@ export default function ProductsSlider() {
           name="Apple iPhone XR"
           title="₦250,000"
           locations={'Agbowo UI, Ibadan'} 
-          timeAgo={'2 weeks ago'}        />
+          timeAgo={'2 weeks ago'}        /> 
         <SlidLingCategory
           imageUrl={require('../../../../assets/images/newimages/Group 390.png')}
           name="Category 2"

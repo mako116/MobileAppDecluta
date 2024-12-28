@@ -1,12 +1,10 @@
-import { View, Text, ScrollView, TextInput, TouchableOpacity, ActivityIndicator, BackHandler, Modal, StyleSheet, Image } from 'react-native';
+import { View, Text, ScrollView, TextInput, TouchableOpacity, ActivityIndicator, BackHandler, StyleSheet, Image } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
 import { SignUpStyles } from '../../../styles/Signup/signup.style';
 import { router } from 'expo-router';
-import PhoneInput from 'react-native-phone-input';
-import CountryPicker, { Country, CountryCode } from 'react-native-country-picker-modal';
-import { useAuth } from '@/context/AuthContext';
+  import { useAuth } from '@/context/AuthContext';
 
 export default function DetailScreen() {
   const { email, register} = useAuth();

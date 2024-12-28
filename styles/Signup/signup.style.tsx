@@ -42,6 +42,9 @@ export const SignUpStyles = StyleSheet.create({
       marginBottom: 5,
       fontFamily:"Proxima Nova"
     },
+    Kyclabel: {
+       fontFamily:"Proxima Nova"
+    },
     input: {
       height: 55,
       marginHorizontal: 16,
@@ -71,6 +74,13 @@ export const SignUpStyles = StyleSheet.create({
       padding: 16,
       borderRadius: 8,
       marginHorizontal: 16,
+      backgroundColor: "#DEBC8E",
+      marginTop: 5,
+    },
+    KycButton: {
+      padding: 16,
+      borderRadius: 8,
+      // marginHorizontal: 16,
       backgroundColor: "#DEBC8E",
       marginTop: 5,
     },

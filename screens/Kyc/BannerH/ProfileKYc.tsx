@@ -3,41 +3,45 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { router } from 'expo-router';
 
 export default function ProfileKYc() {
-  const [hasToken, setHasToken] = useState(false);
-  const navigation = useNavigation();
+  // const [hasToken, setHasToken] = useState(false);
+  // const navigation = useNavigation();
 
-  useEffect(() => {
-    const checkToken = async () => {
-      try {
-        const token = await AsyncStorage.getItem('token');
-        if (token) {
-          setHasToken(true); 
-        } else {
-          return null;
-         }
-      } catch (error) {
-        console.error('Error reading token:', error);
-      }
-    };
+  // useEffect(() => {
+  //   const checkToken = async () => {
+  //     try {
+  //       const token = await AsyncStorage.getItem('token');
+  //       if (token) {
+  //         setHasToken(true); 
+  //       } else {
+  //         return null;
+  //        }
+  //     } catch (error) {
+  //       console.error('Error reading token:', error);
+  //     }
+  //   };
 
-    checkToken();
-  }, [navigation]);
+  //   checkToken();
+  // }, [navigation]);
 
-  if (!hasToken) {
-    return null;
+  // if (!hasToken) {
+  //   return null;
+  // }
+
+  const  Navigate =() =>{
+    router.push("/(routes)/kyc/Signup")
   }
-
   return (
     <View style={styles.container}>
-      <View style={styles.card}>
+      <TouchableOpacity onPress={Navigate} style={styles.card}>
         <Text style={styles.progressText}>Your profile is 60% complete</Text>
-        <TouchableOpacity style={styles.kycButton}>
+        <View  style={styles.kycButton}>
           <Text style={styles.kycText}>Complete KYC</Text>
           <MaterialIcons name="keyboard-arrow-right" size={20} color="#212121" />
-        </TouchableOpacity>
-      </View>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 }
