@@ -1,13 +1,9 @@
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { AuthProvider } from '@/context/AuthContext';
-import AuthGuard from '@/components/Auth/AuthGuard';
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   return (
@@ -31,12 +27,6 @@ export const Layout = () => {
     PoppinsBold: require('../assets/fonts/poppins/Poppins-Bold.ttf'),
     Poppins: require('../assets/fonts/poppins/Poppins-Medium.ttf'),
   });
-
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
 
   if (!loaded) {
     return null;

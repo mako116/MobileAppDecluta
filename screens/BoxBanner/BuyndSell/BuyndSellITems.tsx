@@ -8,40 +8,34 @@ export default function BuyndSellItems() {
     router.push("/(routes)/SearchPages/SearchBoard")
   }
   return (
-    <View >
-      <View style={styles.row}>
-        <View>
-          <TouchableOpacity style={styles.box} onPress={searchScreen}>
-            <View style={{ backgroundColor: '#F5EADC' ,justifyContent:"center", paddingHorizontal:12, paddingVertical:20}}>
-              <Image source={require('../../../assets/images/newimages/cart.png')}  style={{width:25,height:25}}  />
-            </View>
-
-            <View>
-              <Text style={styles.title}>Buy an Item</Text>
-            </View>
-            <View style={{paddingRight:10}}>
-              <MaterialIcons name="arrow-forward-ios" size={14} color="black" />
-            </View>
-          </TouchableOpacity>
+    <View style={styles.row}>
+      <TouchableOpacity style={styles.box} onPress={searchScreen}>
+        <View style={{ backgroundColor: '#F5EADC' ,justifyContent:"center", paddingHorizontal:12, paddingVertical:20}}>
+          <Image source={require('../../../assets/images/newimages/cart.png')}  style={{width:25,height:25}}  />
         </View>
 
-        {/* Second Box */}
         <View>
-        <TouchableOpacity>
+          <Text style={styles.title}>Buy an Item</Text>
+        </View>
+        <View style={{paddingRight:10}}>
+          <MaterialIcons name="arrow-forward-ios" size={14} color="black" />
+        </View>
+      </TouchableOpacity>
+
+      {/* Second Box */}
+      <TouchableOpacity>
         <View style={styles.box}>
-            <View style={{ backgroundColor: '#F5EADC',justifyContent:"center", paddingHorizontal:12, paddingVertical:20}}>
+          <View style={{ backgroundColor: '#F5EADC',justifyContent:"center", paddingHorizontal:12, paddingVertical:20}}>
             <Image source={require('../../../assets/images/newimages/wallet.png')}  style={{width:25,height:25}}  />
-            </View>
-           <View>
+          </View>
+          <View>
             <Text style={styles.title}>Sell an Item</Text>
-           </View>
-           <View style={{paddingRight:10}}>
-           <MaterialIcons name="arrow-forward-ios" size={14} color="black" />
-           </View>
+          </View>
+          <View style={{paddingRight:10}}>
+            <MaterialIcons name="arrow-forward-ios" size={14} color="black" />
+          </View>
         </View>
-        </TouchableOpacity>
-        </View>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -51,9 +45,10 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginBottom: 7,
    },
   box: {
-    gap:6,
+    gap:3,
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#f8f9fa',

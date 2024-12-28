@@ -23,7 +23,7 @@ import { router } from 'expo-router';
       </TouchableOpacity>
       {/* Cart Icon */}
       <TouchableOpacity  style={{marginTop:7}}>
-      <Image source={require('../../assets/images/newimages/cart.png')} style={{width:23.16,height:19, objectFit:"contain"}} />
+      <Image source={require('../../assets/images/newimages/cart.png')} style={{width: 24, height:24, objectFit:"contain"}} />
       <View style={styles.redDots} >
       <Text style={{ fontSize:8,textAlign:"center",color:"#fff"}}>1</Text>
     </View>

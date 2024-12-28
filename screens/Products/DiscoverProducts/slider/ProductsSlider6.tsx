@@ -13,9 +13,8 @@ interface CategoryItem {
     specific?: any;
   }
 export default function ProductsSlider6() {
- 
-   // Define categories as an array of CategoryItem
-   const categories: CategoryItem[] = [
+// Define categories as an array of CategoryItem
+  const categories: CategoryItem[] = [
     { id: 1, imageUrl: require('../../../../assets/images/phones.png'), name: 'Apple iPhone XR', title: '250,000', locations: 'Agbowo UI, Ibadan' ,timeAgo:"2 wks ago",specific: require('../../../../assets/images/newimages/play.png'),},
     { id: 2, imageUrl: require('../../../../assets/images/speakks.png'), name: 'Category 2', title: '755,000', locations: 'HP Spectre 360' ,timeAgo:"2 wks ago",},
     { id: 3, imageUrl: require('../../../../assets/images/phones.png'), name: 'Apple iPhone XR', title: '250,000', locations: 'Agbowo UI, Ibadan' ,timeAgo:"2 hrs ago",specific: require('../../../../assets/images/newimages/play.png'),},
@@ -26,7 +25,7 @@ export default function ProductsSlider6() {
     { id: 8, imageUrl: require('../../../../assets/images/phones.png'), name: 'Apple iPhone XR', title: '250,000', locations: 'Agbowo UI, Ibadan' ,timeAgo:"2 wks ago",specific: require('../../../../assets/images/newimages/play.png'),},
     { id: 9, imageUrl: require('../../../../assets/images/phones.png'), name: 'Apple iPhone XR', title: '250,000', locations: 'Agbowo UI, Ibadan' ,timeAgo:"2 wks ago"},
     { id: 10, imageUrl: require('../../../../assets/images/phones.png'), name: 'Apple iPhone XRs', title: '250,000', locations: 'Agbowo UI, Ibadan' ,timeAgo:"2 wks ago"},
-    ];
+  ];
 
   const [visibleCategories, setVisibleCategories] = useState<number>(4); // Initially display 4 items
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -69,7 +68,8 @@ export default function ProductsSlider6() {
             title={item.title}
             locations={item.locations}
             timeAgo={item.timeAgo}  
-            specific={item.specific}        />
+            specific={item.specific}       
+           />
         </View>
       )}
       onEndReached={loadMoreCategories} // Trigger load more when scrolled to the end

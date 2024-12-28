@@ -63,15 +63,15 @@ const styles = StyleSheet.create({
     margin:"auto"
   },
   image: {
-    width: 150,
-    height: 150,
+    width: 147,
+    height: 147,
     objectFit: 'contain',
     borderRadius: 5,
  
   },
   nairaIconStyle: {
-    width: 16,
-    height: 16,
+    width: 12.44,
+    height: 12,
     marginRight: 3,
   },
   textContainer: {
