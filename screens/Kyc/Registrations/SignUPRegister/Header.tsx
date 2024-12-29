@@ -30,11 +30,11 @@ const styles = StyleSheet.create({
     iconRow: {
         flexDirection: "row",
         alignItems: "center",
-        paddingHorizontal: 13,
-         paddingBottom:"3%",
+        paddingHorizontal: 5,
+        //  paddingBottom:"3%",
      },
     centerContainer: {
-        flex: 1,  
+        flex: 0.9,  
         alignItems: "center",  
         justifyContent: "center", 
     },

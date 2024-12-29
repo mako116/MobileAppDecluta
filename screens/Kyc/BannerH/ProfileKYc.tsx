@@ -6,29 +6,29 @@ import { useNavigation } from '@react-navigation/native';
 import { router } from 'expo-router';
 
 export default function ProfileKYc() {
-  // const [hasToken, setHasToken] = useState(false);
-  // const navigation = useNavigation();
+  const [hasToken, setHasToken] = useState(false);
+  const navigation = useNavigation();
 
-  // useEffect(() => {
-  //   const checkToken = async () => {
-  //     try {
-  //       const token = await AsyncStorage.getItem('token');
-  //       if (token) {
-  //         setHasToken(true); 
-  //       } else {
-  //         return null;
-  //        }
-  //     } catch (error) {
-  //       console.error('Error reading token:', error);
-  //     }
-  //   };
+  useEffect(() => {
+    const checkToken = async () => {
+      try {
+        const token = await AsyncStorage.getItem('token');
+        if (token) {
+          setHasToken(true); 
+        } else {
+          return null;
+         }
+      } catch (error) {
+        console.error('Error reading token:', error);
+      }
+    };
 
-  //   checkToken();
-  // }, [navigation]);
+    checkToken();
+  }, [navigation]);
 
-  // if (!hasToken) {
-  //   return null;
-  // }
+  if (!hasToken) {
+    return null;
+  }
 
   const  Navigate =() =>{
     router.push("/(routes)/kyc/Signup")

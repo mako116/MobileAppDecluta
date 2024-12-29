@@ -11,18 +11,18 @@ import { router } from 'expo-router';
       <TouchableOpacity>
       <View style={styles.circle}>
       <Image source={require('../../assets/images/newimages/live.png')} style={{width:36.5,height:30, objectFit:"contain"}} />
-
-       {/* Red Dot in the Center */}
-    </View>
+     </View>
     </TouchableOpacity>
+
+    {/* Notifications */}
     <TouchableOpacity onPress={()=>router.push("/(routes)/Notifications")} style={{marginTop:7,marginRight:12}}>
     <Image source={require('../../assets/images/newimages/notification-bing.png')} style={{width:24,height:24, objectFit:"contain"}} />
     <View style={styles.redDot} >
-      {/* <Text style={{ fontSize:8,textAlign:"center",color:"#fff"}}>1</Text> */}
-    </View>
-      </TouchableOpacity>
+     </View>
+    </TouchableOpacity>
+
       {/* Cart Icon */}
-      <TouchableOpacity  style={{marginTop:7}}>
+      <TouchableOpacity onPress={()=> router.push("/(routes)/cart")}  style={{marginTop:7}}>
       <Image source={require('../../assets/images/newimages/cart.png')} style={{width:23.16,height:19, objectFit:"contain"}} />
       <View style={styles.redDots} >
       <Text style={{ fontSize:8,textAlign:"center",color:"#fff"}}>1</Text>
