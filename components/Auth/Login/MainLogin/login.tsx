@@ -8,6 +8,7 @@ import { useFocusEffect } from '@react-navigation/native';
 
 import {SignUpStyles} from '../../../../styles/Signup/signup.style'
 import { useAuth } from '@/context/AuthContext';
+import GoolgSignUp from '../../Signup/GoogleSignup/GoogleSignUpComponent';
 
 export default function Login() {
   const [userEmail, setUserEmail] = useState<string>('');
@@ -95,11 +96,11 @@ export default function Login() {
 
   const handleShowMore = () => {
     // Set showMore to true when the image is clicked
-    setShowMore(true);
+    setShowMore(prevState => !prevState);
   };
 
   return (
-    <ScrollView style={{ flex: 1 ,}} scrollEventThrottle={16}>
+    <ScrollView style={{ flex: 1 , backgroundColor: "#F9F9F9"}} scrollEventThrottle={16}>
       <View style={SignUpStyles.header}>
         <Image source={require("../../../../assets/images/newimages/9 1.png")} style={SignUpStyles.sigInImage} />
         <Text style={SignUpStyles.welcomeText}>Log in with email</Text>
@@ -108,23 +109,25 @@ export default function Login() {
       <View style={SignUpStyles.inputContainer}>
         <View>
           <Text style={SignUpStyles.label}>Email</Text>
-          <TextInput
-            style={[
-              SignUpStyles.input,
-              focusInput.email && { borderColor: "#DEBC8E" },
-              { paddingHorizontal: 40 },
-            ]}
-            keyboardType="email-address"
-            value={userInfo.email}
-            placeholder="Enter email"
-            placeholderTextColor='gray'
-            onFocus={() => setFocusInput({ ...focusInput, email: true })}
-            onBlur={() => setFocusInput({ ...focusInput, email: false })}
-            onChangeText={(value) => {
-              setUserInfo({ ...userInfo, email: value });
-              setUserEmail(value); // Update `userEmail` in sync
-            }}
-          />
+          <View style={[SignUpStyles.row, SignUpStyles.inputContainerStyle]}>
+            <TextInput
+              style={[
+                SignUpStyles.input,
+                focusInput.email && { borderColor: "#DEBC8E" },
+                { paddingHorizontal: 40 },
+              ]}
+              keyboardType="email-address"
+              value={userInfo.email}
+              placeholder="Enter email"
+              placeholderTextColor='gray'
+              onFocus={() => setFocusInput({ ...focusInput, email: true })}
+              onBlur={() => setFocusInput({ ...focusInput, email: false })}
+              onChangeText={(value) => {
+                setUserInfo({ ...userInfo, email: value });
+                setUserEmail(value); // Update `userEmail` in sync
+              }}
+            />
+          </View>
           {errorMessage.email && (
             <Text style={{ color: "red", fontSize: 12, marginTop: 5 , marginHorizontal:20 }}>{errorMessage.email}</Text>
           )}
@@ -132,26 +135,26 @@ export default function Login() {
 
         <View style={{ marginTop: 5 }}>
           <Text style={SignUpStyles.label}>Password</Text>
-          <View>
-          <TextInput
-            style={[
-              SignUpStyles.input,
-              focusInput.password && { borderColor: "#DEBC8E" },
-            ]}
-            keyboardType="default"
-            secureTextEntry={!isPasswordVisible}
-            placeholder="Enter password"
-            placeholderTextColor='gray'
-            value={userInfo.password}
-            onFocus={() => setFocusInput({ ...focusInput, password: true })}
-            onBlur={() => setFocusInput({ ...focusInput, password: false })}
-            onChangeText={(value) => {setUserInfo({ ...userInfo, password: value });
-            setPassword(value); // Update `userEmail` in sync
+          <View style={[SignUpStyles.row, SignUpStyles.inputContainerStyle]}  >
+            <TextInput
+              style={[
+                SignUpStyles.input,
+                focusInput.password && { borderColor: "#DEBC8E" },
+              ]}
+              keyboardType="default"
+              secureTextEntry={!isPasswordVisible}
+              placeholder="Enter password"
+              placeholderTextColor='gray'
+              value={userInfo.password}
+              onFocus={() => setFocusInput({ ...focusInput, password: true })}
+              onBlur={() => setFocusInput({ ...focusInput, password: false })}
+              onChangeText={(value) => {setUserInfo({ ...userInfo, password: value });
+              setPassword(value); // Update `userEmail` in sync
 
-            }}
-          />
+              }}
+            />
             <TouchableOpacity
-              style={SignUpStyles.visibleIcon}
+              style={{ marginRight: 10 }}
               onPress={() => setPasswordVisible(!isPasswordVisible)}
             >
               <Ionicons name={isPasswordVisible ? 'eye-off-outline' : 'eye-outline'} size={20} color="#747474" />
@@ -191,20 +194,17 @@ export default function Login() {
 
         <View style={SignUpStyles.socialButtons}>
       <TouchableOpacity onPress={handlePhonePush} style={SignUpStyles.socialButton}>
-        <MaterialIcons name="phone-android" size={24} color="black" />
+        <MaterialIcons name="phone-android" size={26} color="black" />
         <Text style={{ color: "#000000", lineHeight: 19.6, fontSize: 14, fontWeight: '400' , fontFamily:"Proxima Nova"}}>Continue with Phone</Text>
       </TouchableOpacity>
       
-      <TouchableOpacity style={SignUpStyles.socialButton}>
-        <Image style={{ height: 20, width: 20, resizeMode: "contain" }} source={require("@/assets/images/google.png")} />
-        <Text style={{ color: "#000000", lineHeight: 19.6, fontSize: 14, fontWeight: '400' , fontFamily:"Proxima Nova"}}>Continue with Google</Text>
-      </TouchableOpacity>
+      <GoolgSignUp />
 
       {/* Conditionally render the other buttons */}
       {showMore && (
         <>
           <TouchableOpacity style={SignUpStyles.socialButton}>
-            <AntDesign name="apple1" size={24} color="black" />
+            <AntDesign name="apple1" size={26} color="black" />
             <Text style={{ color: "#000000", lineHeight: 19.6, fontSize: 14, fontWeight: '400' , fontFamily:"Proxima Nova"}}>Continue with Apple</Text>
           </TouchableOpacity>
 
@@ -214,17 +214,14 @@ export default function Login() {
 
       {/* Arrow icon to toggle showing more buttons */}
       <View style={{ margin: "auto", paddingVertical: 14 }}>
-          {!showMore && (
         <TouchableOpacity onPress={handleShowMore}>
-          <Image
-            style={{ height: 20, width: 20, resizeMode: "contain" }}
-            source={require("../../../../assets/images/newimages/Down 2.png")} // Image path
+          <SimpleLineIcons
+            name={showMore ? "arrow-up" : "arrow-down"}
+            size={22}
+            color="#A4A4A4"
           />
         </TouchableOpacity>
-      )}
-
-
-       </View>
+      </View>
     </View>
 
 

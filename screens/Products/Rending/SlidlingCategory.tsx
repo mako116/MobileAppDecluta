@@ -18,12 +18,16 @@ export default function SlidLingCategory({ imageUrl, name, title, locations,time
           source={imageUrl}
           style={styles.image}
         />
-         <View style={{ position:"absolute",bottom:"2%", right:0, backgroundColor:"#21212166" ,width:48, height:20,alignItems:"center", justifyContent:"center",borderBottomEndRadius:4}}>
-                <Text style={{fontWeight:"400", fontSize:8, lineHeight:11.2, color:"#fff", alignItems:"center",fontFamily: "Proxima Nova"}}>{timeAgo}</Text> 
-          </View>
+        <View style={{ position:"absolute",bottom:"2%", right:0, backgroundColor:"#21212166" ,width:48, height:20,alignItems:"center", justifyContent:"center",borderBottomEndRadius:4}}>
+          <Text style={{fontWeight:"400", fontSize:8, lineHeight:11.2, color:"#fff", alignItems:"center",fontFamily: "Proxima Nova"}}>{timeAgo}
+          </Text> 
+        </View>
       </View>
-      <View style={styles.textContainer}>
-        <Text style={styles.title}>{title}</Text>
+      <View>
+        <View style={styles.row} >
+          <Image source={require("../../../assets/images/naira.png")} style={styles.nairaIconStyle} />
+          <Text style={styles.title}>{title}</Text>
+        </View>
         <Text style={styles.name}>{name}</Text>
         <View style={styles.locations}>
           <LocationIcons />
@@ -38,33 +42,37 @@ export default function SlidLingCategory({ imageUrl, name, title, locations,time
 }
 
 const styles = StyleSheet.create({
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   container: {
-    height: 220,
-    width: 155,
-    marginLeft: 5,
-    marginRight: 5,
-    
+    padding: 10,
     borderWidth: 1,
     borderColor: '#E9E9E9',  
     borderRadius: 8, // Slightly rounded corners
     overflow: 'hidden',
     backgroundColor:"#fff",
-    // Shadow properties for iOS
-    // position:"relative"
+    marginRight: 10,
   },
   imageContainer: {
     // flex: 2,
-position:"relative",
-alignItems:"center",
-justifyContent:"center",
-margin:"auto"
+    position:"relative",
+    alignItems:"center",
+    justifyContent:"center",
+    margin:"auto"
   },
   image: {
-    width: 140,
+    width: 147,
     height: 147,
     objectFit: 'contain',
-    borderRadius:4,
+    borderRadius: 5,
  
+  },
+  nairaIconStyle: {
+    width: 12.44,
+    height: 12,
+    marginRight: 3,
   },
   textContainer: {
     paddingLeft:9,
@@ -75,7 +83,8 @@ margin:"auto"
     lineHeight:22.4,
     fontWeight: '700',
     color: '#212121',
-    fontFamily:"Helvetica Neue"
+    fontFamily:"Helvetica Neue",
+    paddingVertical: 5,
   },
   name: {
     fontSize: 12,
@@ -88,7 +97,7 @@ margin:"auto"
   locations: {
     flexDirection: 'row',
     alignItems: 'center',
-    // marginTop: 4,
+    paddingTop: 5,
   },
   locationsText: {
     fontSize: 12,
@@ -96,7 +105,7 @@ margin:"auto"
     fontWeight:"400",
     color: '#474747',
     marginLeft: 4,
-    fontFamily:"ProximaNovaR"
+    fontFamily:"Proxima Nova"
 
   },
 });

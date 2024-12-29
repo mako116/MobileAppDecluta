@@ -5,11 +5,13 @@ export default function HalfButton({
     title,
     backgroundColor,
     borderWidth,
+    borderColor,
     onPress,
 }: {
     title: string;
     backgroundColor: string;
     borderWidth: string;
+    borderColor: string;
     onPress: () => void;
 }) {
     const { width } = Dimensions.get("window");
@@ -29,7 +31,7 @@ export default function HalfButton({
                     borderRadius: 10,
                     backgroundColor: backgroundColor, // Set background color dynamically
                     borderWidth: borderWidth ? 1 : 0, // Add border width if specified
-                    borderColor: borderWidth ? '#E9E9E9' : 'transparent', // Light border if borderWidth is set
+                    borderColor: borderColor, // Light border if borderWidth is set
                 }
             ]}
             onPress={onPress}

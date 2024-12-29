@@ -13,20 +13,19 @@ interface CategoryItem {
     specific?: any;
   }
 export default function ProductsSlider6() {
- 
-   // Define categories as an array of CategoryItem
-   const categories: CategoryItem[] = [
-    { id: 1, imageUrl: require('../../../../assets/images/phones.png'), name: 'Apple iPhone XR', title: '₦250,000', locations: 'Agbowo UI, Ibadan' ,timeAgo:"2 wks ago",specific: require('../../../../assets/images/newimages/play.png'),},
-    { id: 2, imageUrl: require('../../../../assets/images/speakks.png'), name: 'Category 2', title: '₦755,000', locations: 'HP Spectre 360' ,timeAgo:"2 wks ago",},
-    { id: 3, imageUrl: require('../../../../assets/images/phones.png'), name: 'Apple iPhone XR', title: '₦250,000', locations: 'Agbowo UI, Ibadan' ,timeAgo:"2 hrs ago",specific: require('../../../../assets/images/newimages/play.png'),},
-    { id: 4, imageUrl: require('../../../../assets/images/phones.png'), name: 'Apple iPhone XR', title: '₦250,000', locations: 'Agbowo UI, Ibadan' ,timeAgo:"1 hr ago",specific: require('../../../../assets/images/newimages/play.png'),},
-    { id: 5, imageUrl: require('../../../../assets/images/phones.png'), name: 'Apple iPhone XR', title: '₦250,000', locations: 'Agbowo UI, Ibadan' ,timeAgo:"2 wks ago",specific: require('../../../../assets/images/newimages/play.png'),},
-    { id: 6, imageUrl: require('../../../../assets/images/phones.png'), name: 'Apple iPhone XR', title: '₦250,000', locations: 'Agbowo UI, Ibadan' ,timeAgo:"2 wks ago",specific: require('../../../../assets/images/newimages/play.png'),},
-    { id: 7, imageUrl: require('../../../../assets/images/phones.png'), name: 'Apple iPhone XR', title: '₦250,000', locations: 'Agbowo UI, Ibadan' ,timeAgo:"2 wks ago",specific: require('../../../../assets/images/newimages/play.png'),},
-    { id: 8, imageUrl: require('../../../../assets/images/phones.png'), name: 'Apple iPhone XR', title: '₦250,000', locations: 'Agbowo UI, Ibadan' ,timeAgo:"2 wks ago",specific: require('../../../../assets/images/newimages/play.png'),},
-    { id: 9, imageUrl: require('../../../../assets/images/phones.png'), name: 'Apple iPhone XR', title: '₦250,000', locations: 'Agbowo UI, Ibadan' ,timeAgo:"2 wks ago"},
-    { id: 10, imageUrl: require('../../../../assets/images/phones.png'), name: 'Apple iPhone XRs', title: '₦250,000', locations: 'Agbowo UI, Ibadan' ,timeAgo:"2 wks ago"},
-    ];
+// Define categories as an array of CategoryItem
+  const categories: CategoryItem[] = [
+    { id: 1, imageUrl: require('../../../../assets/images/phones.png'), name: 'Apple iPhone XR', title: '250,000', locations: 'Agbowo UI, Ibadan' ,timeAgo:"2 wks ago",specific: require('../../../../assets/images/newimages/play.png'),},
+    { id: 2, imageUrl: require('../../../../assets/images/speakks.png'), name: 'Category 2', title: '755,000', locations: 'HP Spectre 360' ,timeAgo:"2 wks ago",},
+    { id: 3, imageUrl: require('../../../../assets/images/phones.png'), name: 'Apple iPhone XR', title: '250,000', locations: 'Agbowo UI, Ibadan' ,timeAgo:"2 hrs ago",specific: require('../../../../assets/images/newimages/play.png'),},
+    { id: 4, imageUrl: require('../../../../assets/images/phones.png'), name: 'Apple iPhone XR', title: '250,000', locations: 'Agbowo UI, Ibadan' ,timeAgo:"1 hr ago",specific: require('../../../../assets/images/newimages/play.png'),},
+    { id: 5, imageUrl: require('../../../../assets/images/phones.png'), name: 'Apple iPhone XR', title: '250,000', locations: 'Agbowo UI, Ibadan' ,timeAgo:"2 wks ago",specific: require('../../../../assets/images/newimages/play.png'),},
+    { id: 6, imageUrl: require('../../../../assets/images/phones.png'), name: 'Apple iPhone XR', title: '250,000', locations: 'Agbowo UI, Ibadan' ,timeAgo:"2 wks ago",specific: require('../../../../assets/images/newimages/play.png'),},
+    { id: 7, imageUrl: require('../../../../assets/images/phones.png'), name: 'Apple iPhone XR', title: '250,000', locations: 'Agbowo UI, Ibadan' ,timeAgo:"2 wks ago",specific: require('../../../../assets/images/newimages/play.png'),},
+    { id: 8, imageUrl: require('../../../../assets/images/phones.png'), name: 'Apple iPhone XR', title: '250,000', locations: 'Agbowo UI, Ibadan' ,timeAgo:"2 wks ago",specific: require('../../../../assets/images/newimages/play.png'),},
+    { id: 9, imageUrl: require('../../../../assets/images/phones.png'), name: 'Apple iPhone XR', title: '250,000', locations: 'Agbowo UI, Ibadan' ,timeAgo:"2 wks ago"},
+    { id: 10, imageUrl: require('../../../../assets/images/phones.png'), name: 'Apple iPhone XRs', title: '250,000', locations: 'Agbowo UI, Ibadan' ,timeAgo:"2 wks ago"},
+  ];
 
   const [visibleCategories, setVisibleCategories] = useState<number>(4); // Initially display 4 items
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -68,15 +67,16 @@ export default function ProductsSlider6() {
             name={item.name}
             title={item.title}
             locations={item.locations}
-             timeAgo={item.timeAgo}  
-             specific={item.specific}        />
+            timeAgo={item.timeAgo}  
+            specific={item.specific}       
+           />
         </View>
       )}
       onEndReached={loadMoreCategories} // Trigger load more when scrolled to the end
       onEndReachedThreshold={0.5}
       ListFooterComponent={renderFooter} // Footer with loading animation
       numColumns={2} // Automatically handle two-column layout 
-      columnWrapperStyle={{ marginBottom: 10, marginHorizontal:"auto" , gap:15}} // Add spacing between rows
+      columnWrapperStyle={{ marginBottom: 10, marginHorizontal:"auto" , gap:20}} // Add spacing between rows
       contentContainerStyle={{ paddingTop: 1, gap: 5, marginBottom: '10%' }}
     />
   );

@@ -3,7 +3,6 @@ import {
   FlatList,
   Image,
   ScrollView,
-  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
@@ -13,9 +12,10 @@ import { router } from 'expo-router';
 import { AntDesign, Feather } from '@expo/vector-icons';
 import SearchFilter from './SearchFilter';
 import SearchProduct from './SearchProducts/SearchProducts';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import SearchScreeStyles from '@/styles/searchStyles/inputStyles';
 
 type Item = {
-  id: number;
   imageUrl: any; // Use proper image type if known
   name: string;
   title: string;
@@ -25,37 +25,9 @@ type Item = {
 const SearchScreen: React.FC = () => {
   const [searchText, setSearchText] = useState<string>('');
 
-  const items: Item[] = [
-    {
-      id: 1,
-      imageUrl: require('../../assets/images/meduimphone.png'),
-      name: 'Apple iPhone XR',
-      title: '₦250,000',
-      locations: 'Agbowo UI, Ibadan',
-    },
-    {
-      id: 2,
-      imageUrl: require('../../assets/images/smallphone.png'),
-      name: 'iphones XXR',
-      title: '₦200,000',
-      locations: 'Bodija, Ibadan',
-    },
-    {
-      id: 3,
-      imageUrl: require('../../assets/images/meduimphone.png'),
-      name: 'Apple iPhone 12',
-      title: '₦350,000',
-      locations: 'Ring Road, Ibadan',
-    },
-  ];
-
-  const filteredItems = items.filter((item) =>
-    item.name.toLowerCase().includes(searchText.toLowerCase())
-  );
-
-  const iphoneItems = items.filter((item) =>
-    item.name.toLowerCase().includes("iphones")
-  );
+  const handleGoBack = () => {
+    router.back();
+  };
 
   const handleItemClick = (item: Item): void => {
     router.push({
@@ -70,36 +42,57 @@ const SearchScreen: React.FC = () => {
   };
 
   const handleIphonesClick = (): void => {
+    // Assuming you have a way to fetch iPhone items
+    const iphoneItems: Item[] = []; // Replace with actual fetching logic
     router.push({
       pathname: '/multiple-products',
-      params: { iphones: JSON.stringify(iphoneItems) ,
-        // iphone: JSON.stringify(iphoneItems)
-      },
+      params: { iphones: JSON.stringify(iphoneItems) },
     });
   };
 
-  const renderListHeader = (): React.ReactElement | null =>
-    iphoneItems.length > 1 ? (
-      <TouchableOpacity style={styles.resultItem} onPress={handleIphonesClick}>
-        <Text style={styles.resultText}>View All iPhones</Text>
+  const renderListHeader = (): React.ReactElement | null => {
+    // Assuming you have a way to fetch iPhone items
+    const iphoneItems: Item[] = []; // Replace with actual fetching logic
+    return iphoneItems.length > 1 ? (
+      <TouchableOpacity style={SearchScreeStyles.resultItem} onPress={handleIphonesClick}>
+        <Text style={SearchScreeStyles.resultText}>View All iPhones</Text>
         <Feather name="arrow-up-left" size={20} color="#A4A4A4" />
       </TouchableOpacity>
     ) : null;
-    
+  };
+
+  const searchResults = [
+    { text: searchText, category: 'Phones & Tablets' },
+    { text: searchText, category: 'Electronics' },
+    { text: searchText, category: 'Laptops & Computers' },
+  ];
+
+  const clearInput = () => {
+    setSearchText('');
+  };
 
   return (
-    <View>
-      <View style={[styles.container, { backgroundColor: '#fff' }]}>
+    <SafeAreaView edges={['bottom']} style={{ backgroundColor: "#F9F9F9" }}>
+      <View style={[SearchScreeStyles.container]}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <View style={styles.searchBox}>
-            <AntDesign onPress={router.back} name="arrowleft" size={24} color="black" />
-            <TextInput
-              style={styles.input}
-              placeholder="I'm looking for...."
-              placeholderTextColor="#888"
-              value={searchText}
-              onChangeText={(text) => setSearchText(text)}
-            />
+          <View style={SearchScreeStyles.searchBox}>
+            <TouchableOpacity onPress={handleGoBack}>
+              <Image source={require("../../assets/images/leftArrow.png")} style={{ width: 25, height: 20 }} />
+            </TouchableOpacity>
+            <View style={SearchScreeStyles.inputContainer}>
+              <TextInput
+                style={SearchScreeStyles.input}
+                placeholder="I'm looking for...."
+                placeholderTextColor="#888"
+                value={searchText}
+                onChangeText={(text) => setSearchText(text)}
+              />
+              {searchText !== '' && (
+                <TouchableOpacity onPress={clearInput}>
+                  <Image source={require("../../assets/images/closeCircle.png")} style={{ width: 20, height: 20 }} />
+                </TouchableOpacity>
+              )}
+            </View>
             <TouchableOpacity>
               <Feather name="search" size={24} color="#A4A4A4" />
             </TouchableOpacity>
@@ -111,71 +104,50 @@ const SearchScreen: React.FC = () => {
           <SearchFilter />
         </View>
       ) : (
-        <FlatList
-          data={filteredItems}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => handleItemClick(item)}>
-              <View style={styles.resultItem}>
-                <View style={styles.itemDetails}>
-                  {/* <Image source={item.imageUrl} style={styles.itemImage} /> */}
-                  <View>
-                    <Text style={styles.resultText}>{item.name}</Text>
-                    {/* <Text style={styles.resultSubtitle}>{item.title}</Text> */}
-                    {/* <Text style={styles.resultSubtitle}>{item.locations}</Text> */}
+        <View>
+          <TouchableOpacity onPress={() => handleItemClick({ imageUrl: '', name: searchText, title: '', locations: '' })} style={SearchScreeStyles.resultItem}>
+            <Text style={SearchScreeStyles.resultText}>
+              {searchText}
+            </Text>
+          </TouchableOpacity>
+          <FlatList
+            data={searchResults}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({ item }) => (
+              <TouchableOpacity onPress={() => handleItemClick({imageUrl: '', name: searchText, title: '', locations: '' })}>
+                <View style={SearchScreeStyles.resultItem}>
+                  <View style={SearchScreeStyles.itemDetails}>
+                    <View>
+                      <Text style={SearchScreeStyles.resultText}>
+                        {item.text} <Text style={SearchScreeStyles.resultCategoryText}>in {item.category}</Text>
+                      </Text>
+                    </View>
+                  </View>
+                  <Image source={require('../../assets/images/sendArrow.png')} style={{ height: 18, width: 18 }} />
+                </View>
+              </TouchableOpacity>
+            )}
+            ListHeaderComponent={renderListHeader()}
+            ListEmptyComponent={
+              <ScrollView>
+                <View style={{ width: "100%", justifyContent: "center", alignItems: "center", marginBottom: "50%" }}>
+                  <Image source={require('../../assets/images/notsearch.png')} style={{}} />
+                  <Text style={SearchScreeStyles.noResultText}>
+                    Oops, we couldn’t find what you’re looking for.
+                    Explore our recommendations or refine your search!
+                  </Text>
+                  <View style={{ marginTop: "10%" }}>
+                    <Text style={{ marginBottom: "3%", fontWeight: "500" }}>Explore These Instead</Text>
+                    <SearchProduct />
                   </View>
                 </View>
-                <Feather name="arrow-up-left" size={20} color="#A4A4A4" />
-              </View>
-            </TouchableOpacity>
-          )}
-          ListHeaderComponent={renderListHeader()}
-          ListEmptyComponent={
-        <ScrollView>
-       <View style={{width:"100%", justifyContent:"center", alignItems:"center", marginBottom:"50%"}}>
-         <Image source={require('../../assets/images/notsearch.png')} style={{}} />
-             <Text style={styles.noResultText}>
-             Oops, we couldn’t find what you’re looking for.
-             Explore our recommendations of refine your search!
-               {/* "{searchText}" */}
-               </Text>
-
-               <View style={{marginTop:"10%"}}>
-                <Text style={{marginBottom:"3%", fontWeight:"500"}}>Explore These Instead</Text>
-                <SearchProduct/>
-               </View>
-               
-       </View>
-       </ScrollView>
-          }
-        />
+              </ScrollView>
+            }
+          />
+        </View>
       )}
-    </View>
+    </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: { paddingVertical: '2%', paddingTop: 45 },
-  searchBox: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 10 },
-  input: { flex: 1, marginHorizontal: 10, fontSize: 16 },
-  resultItem: { flexDirection: 'row', justifyContent: 'space-between', padding: 14 , borderWidth:1, borderColor:"#EAEAEA"},
-  itemDetails: { flexDirection: 'row', alignItems: 'center' },
-  itemImage: { width: 50, height: 50, marginRight: 10 },
-  resultText: { fontSize: 16, fontWeight: 'bold' },
-  resultSubtitle: { fontSize: 14, color: '#666' },
-  iphonesButton: {
-    padding: 15,
-    // backgroundColor: '#007BFF',
-    borderRadius: 5,
-    margin: 10,
-    alignItems: 'center',
-  },
-  iphonesButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  noResultText: { textAlign: 'center', marginTop: 20, fontSize: 16 },
-});
 
 export default SearchScreen;

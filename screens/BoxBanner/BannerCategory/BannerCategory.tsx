@@ -4,49 +4,33 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
  
 export default function BannerCategory() {
   return (
-    <View >
+    <View style={{ marginVertical: 10 }} >
       <View style={styles.row}>
         {/* First Box */}
-        <View style={{justifyContent:"center",}}>
-        <Image source={require('../../../assets/images/newimages/noto_fire.png')} style={{width:18, height:18}} />
-        </View>
-        <View style={styles.box}>
-        
-           <View style={styles.textContainer}>
-           <TouchableOpacity style={{paddingLeft:13,paddingTop:1}}>
+        <View style={styles.categoryRow} >
+          <View style={{justifyContent:"center",}}>
+            <Image source={require('../../../assets/images/newimages/noto_fire.png')} style={{width:20, height:20}} />
+          </View>
+
+          <TouchableOpacity style={styles.boxs} >
             <Text style={styles.title}>iPhone</Text>
-            </TouchableOpacity>
-           </View>
-            
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.boxs} >
+            <Text style={styles.title}>HP Laptop</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.boxs} >
+            <Text style={styles.title}>Generator</Text>
+          </TouchableOpacity>
         </View>
 
-        {/* Second Box */}
-        <View style={styles.boxs}>
-            
-           <View style={styles.textContainer}>
-           <TouchableOpacity  style={{paddingLeft:5}}>
-            <Text style={styles.title}>HP Laptop</Text>
-            </TouchableOpacity>
-           </View>
-           
-           
-        </View>
-        <View style={styles.boxs}>
-        
-           <View style={styles.textContainer}>
-           <TouchableOpacity  style={{paddingLeft:5}}> 
-            <Text style={styles.title}>Generator</Text>
-            </TouchableOpacity>
-           </View>
-           
-           
-        </View>
 
         <View >
-           <TouchableOpacity style={{width:100,flexDirection:"row",alignItems:"center", justifyContent:"flex-end",paddingRight:26,}}>
+           <TouchableOpacity style={{flexDirection:"row",alignItems:"center",}}>
 
           
-            <Text style={{fontWeight:"700",fontSize:12,lineHeight:15.4, fontFamily:"HelveticaNeueLTPro"}}>View All</Text>
+            <Text style={{fontWeight:"700",fontSize:12,lineHeight:15.4, fontFamily:"Helvetica Neue Lt"}}>View All</Text>
             {/* <View style={{ alignItems:"flex-end",}}> */}
            <MaterialIcons name="arrow-forward-ios" size={9} color="black" style={{fontWeight:"800", marginLeft:3}}/>
             </TouchableOpacity>
@@ -59,11 +43,14 @@ export default function BannerCategory() {
 const styles = StyleSheet.create({
   
     row: {
-        paddingVertical:5,
       flexDirection: 'row',
-      gap:5,
-        alignItems: "center",
-      // justifyContent: 'space-around',
+      alignItems: "center",
+      justifyContent: 'space-between',
+     },
+     categoryRow: {
+      flexDirection: 'row',
+      alignItems: "center",
+      gap: 5,
      },
     box: {
       flexDirection: 'row',
@@ -76,14 +63,11 @@ const styles = StyleSheet.create({
       height:21
     },
     boxs: {
-      flexDirection: 'row',
-      justifyContent:"flex-start",
-    
       backgroundColor: '#f8f9fa',
-      borderRadius: 4,
+      borderRadius: 5,
       alignItems:"center",
-      width: 75,  
-      height:21
+      paddingHorizontal: 10,
+      paddingVertical: 5,
     },
     icon: {
       marginRight: 16,
@@ -95,11 +79,12 @@ const styles = StyleSheet.create({
         // width:74
     },
     title: {
-      fontSize: 12,
+      fontSize: 14,
       fontWeight: "400",
-       lineHeight:16.8,
+      lineHeight:16.8,
       color: '#463E31',
-      fontFamily:"Proxima Nova"
+      fontFamily:"Proxima Nova",
+      textAlign:"center"
     },
      
   });

@@ -56,20 +56,20 @@ export default function HomeScreen() {
     <>
       <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
       <SafeAreaView style={Homes.container}>
-      <View style={Homes.rowContainer}>
-              <View style={Homes.leftItem}>
-                <Image source={require('../../assets/images/newimages/Main Logo.png')} style={{width:150,height:30}} />
-                <TouchableOpacity onPress={openModal} style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <LocationIcons />
-                  <Text>
-                    {selectedState} <Text style={{ color: 'gray' }}>(change)</Text>
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <View style={Homes.rightItems}>
-                <NotificationsAlert />
-              </View>
-            </View>
+        <View style={Homes.rowContainer}>
+          <View style={Homes.leftItem}>
+            <Image source={require('../../assets/images/newimages/Main Logo.png')} style={{width:150,height:30}} />
+            <TouchableOpacity onPress={openModal} style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <LocationIcons />
+              <Text>
+                {selectedState} <Text style={{ color: 'gray' }}>(change)</Text>
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View style={Homes.rightItems}>
+            <NotificationsAlert />
+          </View>
+        </View>
         <ScrollView
           scrollEventThrottle={16}
           refreshControl={
@@ -77,8 +77,6 @@ export default function HomeScreen() {
           }
         >
           <View style={Homes.content}>
-            
-
             {/* Complete KYC */}
             <View>
               <ProfileKYc />
@@ -106,34 +104,30 @@ export default function HomeScreen() {
             </View>
            
           </View>
-
-
           {/* Popup Modals */}
 
           
-           {/* Use the modal component */}
-      <LocationModal
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-        selectedState={selectedState}
-        setSelectedState={setSelectedState}
-        currentPopup={currentPopup}
-        setCurrentPopup={setCurrentPopup}
-      />
+          {/* Use the modal component */}
+          <LocationModal
+            modalVisible={modalVisible}
+            setModalVisible={setModalVisible}
+            selectedState={selectedState}
+            setSelectedState={setSelectedState}
+            currentPopup={currentPopup}
+            setCurrentPopup={setCurrentPopup}
+          />
         </ScrollView>
       </SafeAreaView>
-
       {/* Cart Icon Fixed at Bottom */}
-      <TouchableOpacity style={Homes.cartIcon}>
+      {/* <TouchableOpacity style={Homes.cartIcon}>
       <Ionicons name="cart-outline" size={24} color="#212121"/>
          <View style={Homes.cartBadge}>
           <Text style={Homes.cartBadgeText}>{cartCount}</Text>
         </View>
-      </TouchableOpacity>
-
+      </TouchableOpacity> */}
       <View>
-              <Loginbanner />
-            </View>
+        <Loginbanner />
+      </View>
     </>
   );
 }

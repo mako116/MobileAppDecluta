@@ -4,6 +4,26 @@ import { StyleSheet } from "react-native";
 
 
 export const SignUpStyles = StyleSheet.create({
+  row: {
+    flexDirection: "row",
+    alignItems: "center"
+  },
+  signs: {
+    paddingHorizontal: 15,
+    paddingTop: 70,
+    paddingBottom: 25,
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#fff",
+  },
+  texts: {
+    fontWeight: "700",
+    fontSize: 16,
+    lineHeight: 22.4,
+    color: "#212121",
+    marginLeft: 15,
+    fontFamily: "Helvetica Neue"
+  },
     header: {
       backgroundColor: "#fff",
       paddingTop: 20,
@@ -20,8 +40,9 @@ export const SignUpStyles = StyleSheet.create({
     sigInImage: {
       alignSelf: "center",
       marginTop: 40,
+      marginBottom: 10,
       // borderRadius: 20,
-      width:199,
+      width:215,
       height:44
     },
     welcomeText: {
@@ -39,23 +60,29 @@ export const SignUpStyles = StyleSheet.create({
     },
     label: {
       marginLeft: 18,
-      marginBottom: 5,
-      fontFamily:"Proxima Nova"
+      marginBottom: 10,
+      fontFamily:"Proxima Nova",
+      fontSize: 14,
+      fontWeight: 400
     },
     Kyclabel: {
        fontFamily:"Proxima Nova"
     },
     input: {
-      height: 55,
+      flex: 1,
+      padding: 25,
+      paddingLeft: 5,
+      fontSize: 14,
+      color: "#a1a1a1",
+      fontFamily:"Proxima Nova"
+    },
+    inputContainerStyle: {
       marginHorizontal: 16,
-      borderRadius: 3,
+      borderRadius: 4,
       borderWidth: 1,
       borderColor: "#E9E9E9",
       paddingLeft: 15,
-      fontSize: 14,
       backgroundColor: "white",
-      color: "#a1a1a1",
-      fontFamily:"Proxima Nova"
     },
     visibleIcon: {
       position: "absolute",
@@ -71,7 +98,7 @@ export const SignUpStyles = StyleSheet.create({
       fontFamily:"Proxima Nova"
     },
     loginButton: {
-      padding: 16,
+      padding: 25,
       borderRadius: 8,
       marginHorizontal: 16,
       backgroundColor: "#DEBC8E",
@@ -87,7 +114,9 @@ export const SignUpStyles = StyleSheet.create({
     loginText: {
       color: "#212121",
       textAlign: "center",
-      fontFamily:"Proxima Nova"
+      fontFamily:"Proxima Nova",
+      fontSize: 16,
+      fontWeight: 400
     },
     signUpRedirect: {
       flexDirection: "row",
@@ -99,12 +128,13 @@ export const SignUpStyles = StyleSheet.create({
       color: "#463E31",
       fontFamily:"Proxima Nova",
       fontSize:16,
+      fontWeight: 400
     },
     signUpLink: {
       color: "#DEBC8E",
       fontWeight: "700",
       paddingLeft: 5,
-      fontSize:16,
+      fontSize: 16,
       fontFamily:"Proxima Nova"
     },
     separatorContainer: {
@@ -125,7 +155,7 @@ export const SignUpStyles = StyleSheet.create({
       textAlign: "center",
       fontSize: 19,
       color: "#463E31",
-      fontWeight: "600",
+      fontWeight: "400",
       lineHeight: 19.6,
       fontFamily:"Proxima Nova"
     },

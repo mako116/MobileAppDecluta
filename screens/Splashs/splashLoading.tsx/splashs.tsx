@@ -35,12 +35,11 @@ export default function SplashScreen() {
         source={require('../../../assets/images/decluttaking.png')}
         style={styles.logo}
       />
-      <View style={[StyleSheet.absoluteFillObject, styles.container]}>
+      <View>
         <Lottie
-        source={require('../../../assets/loading/msplachit.json')}  
-        autoPlay
-        
-         style={styles.lottie}
+          source={require('../../../assets/loading/msplachit.json')}  
+          autoPlay
+          style={styles.lottie}
        />
       </View>
     </View>
@@ -51,22 +50,15 @@ const styles = StyleSheet.create({
   background: {
     flex: 1,
     backgroundColor: '#483a2d',
-     justifyContent: 'center',
-    alignItems: 'center',
-  },
-  container: {
-    marginTop: 67,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius:50
   },
   logo: {
-    width: "70%",
-    height: 200,
-    resizeMode: 'contain',
+    width: 226,
+    height: 48,
   },
   lottie: {
-    width: "70%",
-    height:"100%",
+    width: 240,
+    height: 15
   },
 });

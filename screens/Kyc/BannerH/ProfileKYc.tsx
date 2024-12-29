@@ -2,13 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MaterialIcons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
 import { router } from 'expo-router';
+
 
 export default function ProfileKYc() {
   const [hasToken, setHasToken] = useState(false);
-  const navigation = useNavigation();
-
+  
   useEffect(() => {
     const checkToken = async () => {
       try {
@@ -24,7 +23,7 @@ export default function ProfileKYc() {
     };
 
     checkToken();
-  }, [navigation]);
+  }, [router]);
 
   if (!hasToken) {
     return null;

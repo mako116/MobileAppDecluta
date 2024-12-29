@@ -10,7 +10,7 @@ export default function Banner() {
   return (
    <View style={{paddingHorizontal:12}}>
      <ImageBackground
-      source={require('../../../assets/images/newimages/image 41.jpg')}
+      source={require('../../../assets/images/bannerBg.png')}
       style={styles.background}
       
     >
@@ -49,14 +49,13 @@ const styles = StyleSheet.create({
   },
   overlay: {
     backgroundColor: '#DEBC8E',
-    // opacity: 0.9, 
+    opacity: 0.7, 
      ...StyleSheet.absoluteFillObject, 
  // Rounded corners for the overlay
   },
   container: {
     borderRadius: 10,
     paddingTop: 20,
-    paddingHorizontal: 10,
     paddingVertical: 10,
     zIndex: 1, // Place content above overlay
   },
@@ -65,11 +64,13 @@ const styles = StyleSheet.create({
     fontSize: 22,
     lineHeight: 22.4,
     color: '#212121',
+    fontFamily: 'Helvetica Neue',
   },
   subText: {
     fontWeight: '400',
     fontSize: 16,
     lineHeight: 22.4,
     color: '#212121',
+    fontFamily: 'Proxima Nova',
   },
 });

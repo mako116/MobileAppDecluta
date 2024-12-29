@@ -2,8 +2,6 @@ import React, { createContext, useState, useContext, useEffect, ReactNode } from
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { router } from 'expo-router';
-import { useNavigation, NavigationProp } from '@react-navigation/native';
-import { RootStackParamList } from '@/Types/RootStackParamList';
 
 interface AuthContextType {
   user: string | null;
@@ -26,8 +24,6 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [userId, setUserId] = useState('');
   const [user, setUser] = useState<string | null>(null);
-  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-
   const EXPO_PUBLIC_API_KEY = process.env.EXPO_PUBLIC_API_KEY;
   const [email, setEmailState] = useState<string | null>(null);
 

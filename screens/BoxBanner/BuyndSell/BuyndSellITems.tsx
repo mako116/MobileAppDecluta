@@ -8,44 +8,34 @@ export default function BuyndSellItems() {
     router.push("/(routes)/SearchPages/SearchBoard")
   }
   return (
-    <View >
-      <View style={styles.row}>
-        {/* First Box */}
-        <View>
-        <TouchableOpacity onPress={searchScreen}>
-        <View style={styles.box}>
-        
-        <View style={{ backgroundColor: '#F5EADC' , height: '100%',justifyContent:"center",borderRadius:4,padding:8}}>
-          <Image source={require('../../../assets/images/newimages/cart.png')}  style={{width:22,height:22}}  />
-            </View>
+    <View style={styles.row}>
+      <TouchableOpacity style={styles.box} onPress={searchScreen}>
+        <View style={{ backgroundColor: '#F5EADC' ,justifyContent:"center", paddingHorizontal:12, paddingVertical:20}}>
+          <Image source={require('../../../assets/images/newimages/cart.png')}  style={{width:25,height:25}}  />
+        </View>
 
-           <View style={styles.textContainer}>
-            <Text style={styles.title}>Buy an Item</Text>
-           </View>
-           <View style={{width:16, alignItems:"flex-end",}}>
-           <MaterialIcons name="arrow-forward-ios" size={14} color="black" />
-           </View>
-           
-        </View>
-        </TouchableOpacity>
-        </View>
-        {/* Second Box */}
         <View>
-        <TouchableOpacity>
+          <Text style={styles.title}>Buy an Item</Text>
+        </View>
+        <View style={{paddingRight:10}}>
+          <MaterialIcons name="arrow-forward-ios" size={14} color="black" />
+        </View>
+      </TouchableOpacity>
+
+      {/* Second Box */}
+      <TouchableOpacity>
         <View style={styles.box}>
-            <View style={{ backgroundColor: '#F5EADC' , height: '100%',justifyContent:"center",borderRadius:4,padding:8}}>
-            <Image source={require('../../../assets/images/newimages/wallet-3.png')}  style={{width:22,height:22}}  />
-            </View>
-           <View style={styles.textContainer}>
+          <View style={{ backgroundColor: '#F5EADC',justifyContent:"center", paddingHorizontal:12, paddingVertical:20}}>
+            <Image source={require('../../../assets/images/newimages/wallet.png')}  style={{width:25,height:25}}  />
+          </View>
+          <View>
             <Text style={styles.title}>Sell an Item</Text>
-           </View>
-           <View style={{width:16, alignItems:"flex-end",}}>
-           <MaterialIcons name="arrow-forward-ios" size={14} color="black" />
-           </View>
+          </View>
+          <View style={{paddingRight:10}}>
+            <MaterialIcons name="arrow-forward-ios" size={14} color="black" />
+          </View>
         </View>
-        </TouchableOpacity>
-        </View>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -55,29 +45,25 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginBottom: 7,
    },
   box: {
-    gap:6,
+    gap:3,
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#f8f9fa',
     borderRadius: 10,
-    // padding: 16,
-    width: 152,  
-    height:56
+    overflow: 'hidden',
   },
   icon: {
     marginRight: 16,
   },
-  textContainer: {
-    // flex: 1,
-  },
   title: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: "700",
     lineHeight:19.6,
     color: '#212121',
-    fontFamily:'SpaceMono'
+    fontFamily:' Helvetica Neue'
   },
   description: {
     fontSize: 14,

@@ -27,11 +27,10 @@ const MultipleProd: React.FC = () => {
         <View style={styles.itemContainer}>
             <View style={{ marginBottom: 0 }}>
           <Category
-            imageUrl={item.imageUrl}
-            name={item.name}
-            title={item.title}
-            locations={item.locations}
-          />
+              imageUrl={item.imageUrl}
+              name={item.name}
+              title={item.title}
+              locations={item.locations} timeAgo={'1min'}          />
         </View>
          </View>
       )}
