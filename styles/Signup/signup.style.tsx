@@ -63,7 +63,7 @@ export const SignUpStyles = StyleSheet.create({
       marginBottom: 10,
       fontFamily:"Proxima Nova",
       fontSize: 14,
-      fontWeight: 400
+      fontWeight: "400"
     },
     Kyclabel: {
        fontFamily:"Proxima Nova"
@@ -116,7 +116,7 @@ export const SignUpStyles = StyleSheet.create({
       textAlign: "center",
       fontFamily:"Proxima Nova",
       fontSize: 16,
-      fontWeight: 400
+      fontWeight: "400"
     },
     signUpRedirect: {
       flexDirection: "row",
@@ -128,7 +128,7 @@ export const SignUpStyles = StyleSheet.create({
       color: "#463E31",
       fontFamily:"Proxima Nova",
       fontSize:16,
-      fontWeight: 400
+      fontWeight: "400"
     },
     signUpLink: {
       color: "#DEBC8E",

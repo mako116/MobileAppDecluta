@@ -1,9 +1,8 @@
-import { View, Text, ScrollView, Image, StyleSheet, TouchableOpacity, ActivityIndicator, TextInput, Alert, BackHandler, Modal } from 'react-native';
+import { View, Text, ScrollView, Image,  TouchableOpacity, ActivityIndicator, TextInput, Alert, BackHandler, Modal } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { router } from 'expo-router';
-import { AntDesign, Entypo, FontAwesome, Ionicons, MaterialIcons, SimpleLineIcons } from '@expo/vector-icons';
-import { commonstyles } from '@/styles/common/common.style';
-import { useFocusEffect } from '@react-navigation/native';
+import { AntDesign, Ionicons, MaterialIcons, SimpleLineIcons } from '@expo/vector-icons';
+ import { useFocusEffect } from '@react-navigation/native';
 
 
 import {SignUpStyles} from '../../../../styles/Signup/signup.style'
@@ -214,14 +213,17 @@ export default function Login() {
 
       {/* Arrow icon to toggle showing more buttons */}
       <View style={{ margin: "auto", paddingVertical: 14 }}>
+          {!showMore && (
         <TouchableOpacity onPress={handleShowMore}>
-          <SimpleLineIcons
-            name={showMore ? "arrow-up" : "arrow-down"}
-            size={22}
-            color="#A4A4A4"
+          <Image
+            style={{ height: 24, width: 24, resizeMode: "contain" }}
+            source={require("../../../../assets/images/newimages/Down 2.png")} // Image path
           />
         </TouchableOpacity>
-      </View>
+      )}
+
+
+       </View>
     </View>
 
 

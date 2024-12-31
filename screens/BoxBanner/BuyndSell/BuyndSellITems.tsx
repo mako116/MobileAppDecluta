@@ -10,14 +10,14 @@ export default function BuyndSellItems() {
   return (
     <View style={styles.row}>
       <TouchableOpacity style={styles.box} onPress={searchScreen}>
-        <View style={{ backgroundColor: '#F5EADC' ,justifyContent:"center", paddingHorizontal:12, paddingVertical:20}}>
-          <Image source={require('../../../assets/images/newimages/cart.png')}  style={{width:25,height:25}}  />
+        <View style={{ backgroundColor: '#F5EADC' ,justifyContent:"center", paddingHorizontal:"3%", paddingVertical:22}}>
+          <Image source={require('../../../assets/images/newimages/cart.png')}  style={{width:22,height:22,paddingHorizontal:"5%", marginHorizontal:"auto"}}  />
         </View>
 
         <View>
           <Text style={styles.title}>Buy an Item</Text>
         </View>
-        <View style={{paddingRight:10}}>
+        <View style={{marginHorizontal:"auto"}}>
           <MaterialIcons name="arrow-forward-ios" size={14} color="black" />
         </View>
       </TouchableOpacity>
@@ -25,13 +25,13 @@ export default function BuyndSellItems() {
       {/* Second Box */}
       <TouchableOpacity>
         <View style={styles.box}>
-          <View style={{ backgroundColor: '#F5EADC',justifyContent:"center", paddingHorizontal:12, paddingVertical:20}}>
-            <Image source={require('../../../assets/images/newimages/wallet.png')}  style={{width:25,height:25}}  />
+          <View style={{ backgroundColor: '#F5EADC',justifyContent:"center", paddingHorizontal:"3%", paddingVertical:22}}>
+            <Image source={require('../../../assets/images/newimages/wallet.png')}   style={{width:22,height:22,paddingHorizontal:"5%", marginHorizontal:"auto"}}   />
           </View>
           <View>
             <Text style={styles.title}>Sell an Item</Text>
           </View>
-          <View style={{paddingRight:10}}>
+          <View style={{marginHorizontal:"auto"}}>
             <MaterialIcons name="arrow-forward-ios" size={14} color="black" />
           </View>
         </View>
@@ -46,24 +46,26 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 7,
+    // gap:10
    },
   box: {
-    gap:3,
+    gap:1,
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#f8f9fa',
-    borderRadius: 10,
+    borderRadius: 4,
     overflow: 'hidden',
   },
   icon: {
     marginRight: 16,
   },
   title: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: "700",
     lineHeight:19.6,
     color: '#212121',
-    fontFamily:' Helvetica Neue'
+    fontFamily:' HelveticaNeue',
+    marginLeft:5
   },
   description: {
     fontSize: 14,

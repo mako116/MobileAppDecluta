@@ -20,13 +20,9 @@ import ProductBanner from '@/screens/Products/ProductBanner/Banner/banner';
 import DiscoverProducts from '@/screens/Products/DiscoverProducts/DiscoverProducts/DiscoverProducts';
 import Loginbanner from '@/screens/BoxBanner/Loginbanner/Loginbanner';
 import ProfileKYc from '@/screens/Kyc/BannerH/ProfileKYc';
-import Button from '../Button/button';
-import { Picker } from '@react-native-picker/picker';
-import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import LocationModal from '@/screens/ChangeLocation/changelocationScreen';
 import Homes from '@/styles/Homes/Home.styles';
-import { router } from 'expo-router';
-
+ 
 export default function HomeScreen() {
   const [modalVisible, setModalVisible] = useState(false);
   const [currentPopup, setCurrentPopup] = useState(1);
@@ -39,10 +35,10 @@ export default function HomeScreen() {
     setCurrentPopup(1);
   };
 
-  const closeModal = () => {
-    setModalVisible(false);
-    setCurrentPopup(1);
-  };
+  // const closeModal = () => {
+  //   setModalVisible(false);
+  //   setCurrentPopup(1);
+  // };
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -51,14 +47,17 @@ export default function HomeScreen() {
     }, 2000); // 2-second delay
   };
 
-
   return (
     <>
       <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
       <SafeAreaView style={Homes.container}>
+        {/* Header */}
         <View style={Homes.rowContainer}>
           <View style={Homes.leftItem}>
-            <Image source={require('../../assets/images/newimages/Main Logo.png')} style={{width:150,height:30}} />
+            <Image
+              source={require('../../assets/images/newimages/Main Logo.png')}
+              style={{ width: 150, height: 30 }}
+            />
             <TouchableOpacity onPress={openModal} style={{ flexDirection: 'row', alignItems: 'center' }}>
               <LocationIcons />
               <Text>
@@ -70,11 +69,11 @@ export default function HomeScreen() {
             <NotificationsAlert />
           </View>
         </View>
+
+        {/* Content */}
         <ScrollView
           scrollEventThrottle={16}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
+          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         >
           <View style={Homes.content}>
             {/* Complete KYC */}
@@ -82,32 +81,38 @@ export default function HomeScreen() {
               <ProfileKYc />
             </View>
 
+            {/* Banner */}
             <View>
               <Banner />
             </View>
 
-            {/* Products */}
+            {/* Explore Products */}
             <View>
               <ExploreProducts />
             </View>
+
+            {/* Categories */}
             <View>
               <Categories />
             </View>
+
+            {/* Recommended Products */}
             <View>
               <ExploreProducts3 />
             </View>
+
+            {/* Product Banner */}
             <View>
               <ProductBanner />
             </View>
+
+            {/* Discover Products */}
             <View>
               <DiscoverProducts />
             </View>
-           
           </View>
-          {/* Popup Modals */}
 
-          
-          {/* Use the modal component */}
+          {/* Location Modal */}
           <LocationModal
             modalVisible={modalVisible}
             setModalVisible={setModalVisible}
@@ -118,18 +123,19 @@ export default function HomeScreen() {
           />
         </ScrollView>
       </SafeAreaView>
-      {/* Cart Icon Fixed at Bottom */}
-      {/* <TouchableOpacity style={Homes.cartIcon}>
-      <Ionicons name="cart-outline" size={24} color="#212121"/>
-         <View style={Homes.cartBadge}>
-          <Text style={Homes.cartBadgeText}>{cartCount}</Text>
-        </View>
-      </TouchableOpacity> */}
+
+      {/* Login Banner */}
       <View>
         <Loginbanner />
       </View>
+
+      {/* Cart Icon Fixed at Bottom */}
+      {/* <TouchableOpacity style={Homes.cartIcon}>
+        <Ionicons name="cart-outline" size={24} color="#212121" />
+        <View style={Homes.cartBadge}>
+          <Text style={Homes.cartBadgeText}>{cartCount}</Text>
+        </View>
+      </TouchableOpacity> */}
     </>
   );
 }
-
-

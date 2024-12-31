@@ -76,7 +76,7 @@ export default function ProductsSlider6() {
       onEndReachedThreshold={0.5}
       ListFooterComponent={renderFooter} // Footer with loading animation
       numColumns={2} // Automatically handle two-column layout 
-      columnWrapperStyle={{ marginBottom: 10, marginHorizontal:"auto" , gap:20}} // Add spacing between rows
+      columnWrapperStyle={{ marginBottom: 10, marginHorizontal:"auto" , gap:15}} // Add spacing between rows
       contentContainerStyle={{ paddingTop: 1, gap: 5, marginBottom: '10%' }}
     />
   );

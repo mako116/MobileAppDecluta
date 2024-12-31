@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
         // width:74
     },
     title: {
-      fontSize: 14,
+      fontSize: 12,
       fontWeight: "400",
       lineHeight:16.8,
       color: '#463E31',

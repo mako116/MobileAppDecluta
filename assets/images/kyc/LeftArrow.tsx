@@ -8,7 +8,7 @@ function LeftArrow({ width = 24, height = 24, color = "#212121", strokeWidth = 1
         <Svg 
             width={width} 
             height={height} 
-            viewBox="0 0 24 24" 
+             viewBox="0 0 24 24" 
             fill="none"
         >
             <Path 
@@ -37,7 +37,10 @@ export default function BackButton() {
 
 const styles = StyleSheet.create({
     button: {
-        padding: 10,
+        // padding: 10,
+        paddingVertical:10,
+        paddingRight:10,
+        // paddingHorizontal:5,
         alignSelf: 'flex-start', // Adjust alignment as needed
     },
 });

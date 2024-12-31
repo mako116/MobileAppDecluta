@@ -59,22 +59,24 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#E9E9E9',
     borderRadius: 10,
-    overflow: 'hidden',
+    // overflow: 'hidden',
     backgroundColor: '#fff',
   },
   imageContainer: {
     alignItems: 'center',
     position: 'relative',
+    
   },
   image: {
-    width: 150,
+    width: "100%",
     height: 144,
     borderRadius: 4,
+    paddingHorizontal:"21%"
   },
   timeAgoContainer: {
     position: 'absolute',
     bottom: '1.5%',
-    right: 10,
+    right: 0,
     backgroundColor: '#21212166',
     width: 48,
     height: 20,
@@ -130,6 +132,7 @@ const styles = StyleSheet.create({
   locations: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginTop: 5,
   },
   locationsText: {
     fontSize: 12,
@@ -138,7 +141,8 @@ const styles = StyleSheet.create({
     color: '#474747',
     marginLeft: 4,
     fontFamily: 'Proxima Nova',
-    marginTop: 5,
+   
+    
   },
 
 });
