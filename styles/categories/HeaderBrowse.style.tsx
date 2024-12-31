@@ -2,10 +2,10 @@ import { StyleSheet } from "react-native";
 
 const HeadBrowse = StyleSheet.create({
     container: {
-      flex: 1,
+      // flex: 1,
       backgroundColor: '#F9F9F9',
-      // height: '100%',
-      gap:20
+      height: '100%',
+   
     },
     header: {
       flexDirection: 'row',
@@ -14,7 +14,8 @@ const HeadBrowse = StyleSheet.create({
       paddingTop: '13%',
       paddingBottom:"4%",
       alignItems: 'center',
-        marginBottom:"2%"
+      gap:20,
+      marginBottom:20
     },
     searchBar: {
       flex: 1,
@@ -42,7 +43,7 @@ const HeadBrowse = StyleSheet.create({
     categoryScroll: {
       paddingHorizontal: 16,
       
-    
+     marginBottom:"5%"
     },
     categoryBox: {
       justifyContent: 'space-between',

@@ -6,8 +6,6 @@ import {
   TouchableOpacity,
   View,
   Image,
-  KeyboardAvoidingView,
-  Platform,
 } from 'react-native';
 import { Href, router } from 'expo-router';
 import BackButton from '@/assets/images/kyc/LeftArrow';
@@ -114,59 +112,67 @@ const SmartChildCategory = () => {
   }, [searchQuery]);
 
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-    >
-      <View style={HeadBrowse.container}>
-        <View style={HeadBrowse.header}>
-          <BackButton />
-          <View style={HeadBrowse.searchBar}>
-            <TextInput
-              style={HeadBrowse.input}
-              placeholder="Search smartphones"
-              value={searchQuery}
-              onChangeText={setSearchQuery}
-            />
-            <TouchableOpacity onPress={() => { /* Filter logic */ }}>
-              <Search />
-            </TouchableOpacity>
-          </View>
-          <TouchableOpacity style={HeadBrowse.filterButton}>
-            <LetsIconsFilter />
+    <View style={HeadBrowse.container}>
+      {/* Header Section */}
+      <View style={HeadBrowse.header}>
+        <BackButton />
+        <View style={HeadBrowse.searchBar}>
+          <TextInput
+            style={HeadBrowse.input}
+            placeholder="Search smartphones"
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+          />
+          <TouchableOpacity onPress={handleSearch}>
+            <Search />
           </TouchableOpacity>
         </View>
-
-        <ScrollView
-          contentContainerStyle={{ flexGrow: 1 }}
-          showsVerticalScrollIndicator={false}
-          style={HeadBrowse.categoryScroll}
-        >
-          {filteredCategories.length > 0 ? (
-            filteredCategories.map((item) => (
-              <TouchableOpacity
-                key={item.id}
-                style={HeadBrowse.categoryBox}
-                onPress={() => router.push(item.Link)}
-              >
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Image source={item.img} style={HeadBrowse.categoryImage} />
-                  <View>
-                    <Text style={HeadBrowse.categoryText}>{item.name}</Text>
-                    <Text style={HeadBrowse.categoryP}>{item.para}</Text>
-                  </View>
-                </View>
-                <RightArrow />
-              </TouchableOpacity>
-            ))
-          ) : (
-            <Text style={HeadBrowse.noResultsText}>
-              No categories found. Try searching for something else.
-            </Text>
-          )}
-        </ScrollView>
+        <TouchableOpacity style={HeadBrowse.filterButton}>
+          <LetsIconsFilter />
+        </TouchableOpacity>
       </View>
-    </KeyboardAvoidingView>
+
+      {/* Categories Section */}
+      <ScrollView
+      
+      showsVerticalScrollIndicator={false}
+    style={HeadBrowse.categoryScroll}
+    keyboardShouldPersistTaps="handled"
+      >
+        {filteredCategories.length > 0 ? (
+          filteredCategories.map((item) => (
+            <TouchableOpacity
+              key={item.id}
+              style={HeadBrowse.categoryBox}
+              onPress={() => {
+                try {
+                  router.push(item.Link);
+                  console.log('Navigating to:', item.Link);
+                } catch (error) {
+                  console.error('Navigation error:', error);
+                }
+              }}
+            >
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Image
+                  source={item.img}
+                  style={HeadBrowse.categoryImage}
+                />
+                <View>
+                  <Text style={HeadBrowse.categoryText}>{item.name}</Text>
+                  <Text style={HeadBrowse.categoryP}>{item.para}</Text>
+                </View>
+              </View>
+              <RightArrow />
+            </TouchableOpacity>
+          ))
+        ) : (
+          <Text style={HeadBrowse.noResultsText}>
+            No categories found. Try searching for something else.
+          </Text>
+        )}
+      </ScrollView>
+    </View>
   );
 };
 
