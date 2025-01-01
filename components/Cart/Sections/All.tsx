@@ -1,178 +1,342 @@
-import React from 'react';
+import Cube from '@/assets/images/cart/cube';
+import Ionlocate from '@/assets/images/cart/ionlocate';
+import Minus from '@/assets/images/cart/minus';
+import Plus from '@/assets/images/cart/Plus';
+import Down2 from '@/assets/images/kyc/Down 2';
+import React, { useState } from 'react';
+import { BlurView } from '@react-native-community/blur'; // For bare React Native
+
 import {
   Image,
-  SafeAreaView,
-  ScrollView,
+  Modal,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
-import { SimpleLineIcons } from '@expo/vector-icons';
 
 type Notification = {
   id: string;
   title: string;
   description: string;
-  image: any; // Use 'any' for static assets. For dynamic images, consider using ImageSourcePropType.
+  image: any;
   time: string;
   tag: string;
   action: string | null;
+  price: string;
+  count: number;
 };
 
-const notifications: Notification[] = [
+const initialNotifications: Notification[] = [
   {
     id: '1',
-    title: 'Welcome to DecluttaKing!',
-    description: "You’ve successfully signed up. Start buying and selling items today!",
-    image: require('../../../assets/images/imgg.png'),
+    title: 'Samsung Galaxy A0...',
+    description: 'Used',
+    image: require('../../../assets/images/speakks.png'),
     time: 'Today 20:28',
-    tag: 'Updates',
+    tag: 'Challenge, Ibadan, Oyo',
     action: null,
+    price: '₦75,000.00',
+    count: 1,
   },
   {
     id: '2',
-    title: '500 Rewards Points Achieved!',
-    description: "Congrats! You completed your first purchase and have been awarded 500 reward points!",
-    image: require('../../../assets/images/reward.png'),
+    title: 'LG Home Theatre',
+    description: 'Used',
+    image: require('../../../assets/images/speakks.png'),
     time: 'Today 20:28',
-    tag: 'Updates',
-    action: 'View More',
-  },
-  {
-    id: '3',
-    title: 'Complete Your KYC',
-    description:
-      'Verify your identity to access withdrawal, get a verification badge, and enjoy more benefits.',
-    image: require('../../../assets/images/kyc.png'),
-    time: 'Today 20:28',
-    tag: 'Updates',
-    action: 'Complete KYC',
-  },
-  {
-    id: '4',
-    title: 'Complete Your KYC',
-    description:
-      'Verify your identity to access withdrawal, get a verification badge, and enjoy more benefits.',
-    image: require('../../../assets/images/kyc.png'),
-    time: 'Today 20:28',
-    tag: 'Updates',
-    action: 'Complete KYC',
-  },
-  {
-    id: '5',
-    title: 'Complete Your KYC',
-    description:
-      'Verify your identity to access withdrawal, get a verification badge, and enjoy more benefits.',
-    image: require('../../../assets/images/kyc.png'),
-    time: 'Today 20:28',
-    tag: 'Updates',
-    action: 'Complete KYC',
+    tag: 'Challenge, Ibadan, Oyo',
+    action: null,
+    price: '₦75,000.00',
+    count: 1,
   },
 ];
 
 const Alling: React.FC = () => {
+  const [notifications, setNotifications] = useState(initialNotifications);
+  const [showModal, setShowModal] = useState(false);
+  const [itemToRemove, setItemToRemove] = useState<Notification | null>(null);
+
+  const handleIncrease = (id: string) => {
+    setNotifications((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, count: item.count + 1 } : item
+      )
+    );
+  };
+
+  const handleDecrease = (id: string) => {
+    setNotifications((prev) => {
+      const updatedNotifications = prev.map((item) => {
+        if (item.id === id) {
+          if (item.count === 1) {
+            // Show modal for confirmation if count will become zero
+            setItemToRemove(item);
+            setShowModal(true);
+            return item; // Do not update count yet
+          } else {
+            return { ...item, count: item.count - 1 };
+          }
+        }
+        return item;
+      });
+      return updatedNotifications;
+    });
+  };
+  
+  const handleRemove = () => {
+    setNotifications((prev) => prev.filter((item) => item.id !== itemToRemove?.id));
+    setShowModal(false);
+    setItemToRemove(null);
+  };
+
+  const handleCancel = () => {
+    setShowModal(false);
+    setItemToRemove(null);
+  };
+
+  const [isDropdownVisible, setDropdownVisible] = useState(false);
+
+  const toggleDropdown = () => {
+    setDropdownVisible(!isDropdownVisible);
+  };
+
   return (
-    <SafeAreaView>
-      <ScrollView scrollEventThrottle={16}>
-        {notifications.map((item) => (
-          <View key={item.id} style={styles.main}>
-            <View style={styles.notificationContent}>
-              <Image source={item.image} style={styles.image} />
-              <View style={styles.textContainer}>
-                <Text style={styles.title}>{item.title}</Text>
-                <Text style={styles.description}>{item.description}</Text>
+    <View  >
+      {notifications.map((item) => (
+        <View key={item.id} style={styles.main}>
+          <View style={styles.notificationContents}>
+           <View style={styles.notificationContent}>
+           <Image source={item.image} style={styles.image} />
+            <View style={styles.textContainer}>
+              <Text style={styles.title}>
+                {item.title.length > 20 ? `${item.title.substring(0, 10)}...` : item.title}
+              </Text>
+              <View style={{flexDirection:"row",alignItems:"center", gap:2}}>
+                <Cube/>
+              <Text style={styles.description}>{item.description}</Text>
               </View>
+              <View style={{flexDirection:"row",alignItems:"center", gap:2}}>
+                <Ionlocate/>
+             <Text style={styles.description}>
+              {item.tag.length > 30 ? `${item.tag.substring(0, 10)}...` : item.tag}
+               </Text>
+             </View>
+              <Text style={{color:"#A4A4A4", fontSize:12, fontWeight:"400", lineHeight:16.8}}>Remove</Text>
             </View>
-            <View style={styles.footer}>
-              <View style={styles.footerLeft}>
-                <Text style={styles.time}>{item.time}</Text>
-                <Text style={styles.tag}>{item.tag}</Text>
+           </View>
+            <View style={styles.textContainers}>
+              <Text style={styles.title}>{item.price}</Text>
+              <Text style={{color:"#009217",fontWeight:"400",alignItems:"flex-end", fontSize:12,lineHeight:16.8,fontFamily:"Helvetica Neue", textAlign:"right"}}>(Save 15%)</Text>
+              <View style={styles.counterContainer}>
+                <TouchableOpacity
+                  onPress={() => handleDecrease(item.id)}
+                  style={styles.button}
+                >
+                  <Text style={styles.buttonText}>
+                    <Minus/>
+                  </Text>
+                </TouchableOpacity>
+                <Text style={styles.countText}>{item.count}</Text>
+                <TouchableOpacity
+                  onPress={() => handleIncrease(item.id)}
+                  style={styles.button}
+                >
+                  <Text style={styles.buttonText}>
+                    <Plus/>
+                  </Text>
+                </TouchableOpacity>
               </View>
-              {item.action && (
-                <View style={styles.footerRight}>
-                  <Text style={styles.actionText}>{item.action}</Text>
-               <Image source={require('../../../assets/images/newimages/Vector.png')} style={{width:6,height:10,marginTop:3}} />               
-              </View>
-              )}
             </View>
           </View>
-        ))}
-      </ScrollView>
-    </SafeAreaView>
+        </View>
+      ))}
+    <View>
+    <View style={styles.header}>
+        <Text style={styles.headerText}>People also added these to cart</Text>
+        <TouchableOpacity onPress={toggleDropdown}>
+          <Down2 /> {/* Replace with your dropdown icon */}
+        </TouchableOpacity>
+      </View>
+
+      {/* Dropdown Content */}
+      {isDropdownVisible && (
+        <View style={styles.dropdownContent}>
+          <Text style={styles.dropdownItem}>Item 1</Text>
+          <Text style={styles.dropdownItem}>Item 2</Text>
+          <Text style={styles.dropdownItem}>Item 3</Text>
+        </View>
+      )}
+    </View>
+      {/* Modal for Removing Item */}
+      {showModal && (
+        <Modal
+          transparent={true}
+          animationType="slide"
+          visible={showModal}
+          onRequestClose={handleCancel}
+        >
+          <View style={styles.modalOverlay}>
+            <BlurView
+              style={StyleSheet.absoluteFill}
+              blurType="light" // You can change this to "dark" or "xlight"
+              blurAmount={10}
+              reducedTransparencyFallbackColor="white"
+            />
+            <View style={styles.modalContent}>
+              <Text style={styles.modalTitle}>
+                Are you sure you want to remove this item?
+              </Text>
+              <View style={styles.modalActions}>
+                <TouchableOpacity onPress={handleRemove} style={styles.modalButton}>
+                  <Text style={styles.modalButtonText}>Remove</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={handleCancel} style={styles.modalButton}>
+                  <Text style={styles.modalButtonText}>Cancel</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Modal>
+      )}
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F8F9FA',
-  },
-  scrollContent: {
-    padding: 10,
-  },
-  main: {
-    marginTop: 15,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 10,
-    padding: 10,
-     borderWidth:1,
-     borderColor:"#E9E9E9"
-  },
-  notificationContent: {
-    flexDirection: 'row',
-    paddingVertical: 4,
-  },
-  image: {
-    width: 30,
-    height: 30,
-    borderRadius: 5,
-  },
-  textContainer: {
-    paddingHorizontal: 10,
-    paddingBottom: '5%',
-  },
-  title: {
-    fontFamily: 'Poppins',
-    fontWeight: '700',
-  },
-  description: {
-    paddingRight: '10%',
-    lineHeight: 19.6,
-    fontSize: 14,
-  },
-  footer: {
+  header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingTop: '2%',
-    borderTopWidth: 1,
-    borderColor: '#E9E9E9',
+    marginBottom: 10,
   },
-  footerLeft: {
+  headerText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  dropdownContent: {
+    backgroundColor: '#f5f5f5',
+    padding: 10,
+    borderRadius: 5,
+    elevation: 3, // For a subtle shadow on Android
+    shadowColor: '#000', // For shadow on iOS
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 3,
+  },
+  dropdownItem: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+  },
+  counterContainer: {
     flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
-    gap: 10,
+    marginTop: 10,
+    gap: 5,
+     backgroundColor: '#fff',
+     borderWidth:1,
+     borderRadius:4,
+     borderColor:"#E9E9E9"
   },
-  time: {
-    color: '#474747',
-    fontSize: 12,
-  },
-  tag: {
-    backgroundColor: '#F5EADC',
-    color: '#212121',
-    padding: 5,
-    fontSize: 12,
+  button: {
+   
+    padding: 10,
     borderRadius: 5,
   },
-  footerRight: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 5,
-  },
-  actionText: {
-    color: '#212121',
-    fontSize: 12,
+  buttonText: {
+    color:"#212121",
+    fontSize: 14,
+    lineHeight:19.6,
+    fontFamily:"Proxima Nova",
     fontWeight: '400',
+  },
+  countText: {
+     color:"#212121",
+     fontSize: 14,
+     lineHeight:19.6,
+     fontFamily:"Proxima Nova",
+     fontWeight: '400',
+  },
+  main: {
+    marginTop: 15,
+    paddingHorizontal: 13,
+  },
+  notificationContent: {
+    flexDirection: 'row',
+    
+  },
+  notificationContents: {
+    flexDirection: 'row',
+    // paddingVertical: 4,
+   
+    borderBottomWidth:1,
+    justifyContent:"space-between",
+    borderColor:"#E9E9E9"
+  },
+  image: {
+    width: 50,
+    height: 50,
+    borderRadius: 5,
+  },
+  textContainer: {
+    paddingLeft: 10,
+    paddingBottom: '3%',
+    gap:2
+    // alignItems:"center"
+    
+  },
+  textContainers: {
+    paddingLeft: 10,
+    paddingBottom: '3%',
+    alignItems:"flex-end"
+  },
+  title: {
+    fontWeight: '700',
+    fontFamily:"Helvetica Neue",
+    fontSize:14,
+    lineHeight:19.6
+  },
+  description: {
+    lineHeight: 19.6,
+    fontSize: 12,
+    fontWeight:"400",
+    fontFamily:"Proxima Nova",
+
+   },
+  modalOverlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#21212199',
+   },
+  modalContent: {
+    width: 300,
+    padding: 20,
+    backgroundColor: '#FFF',
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    marginBottom: 20,
+  },
+  modalActions: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  modalButton: {
+    padding: 10,
+    borderRadius: 5,
+    backgroundColor: '#E9E9E9',
+    marginHorizontal: 10,
+  },
+  modalButtonText: {
+    fontSize: 16,
+    fontWeight: '600',
   },
 });
 

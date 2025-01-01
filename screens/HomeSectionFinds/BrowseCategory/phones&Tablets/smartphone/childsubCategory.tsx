@@ -29,7 +29,7 @@ const SmartChildCategory = () => {
       name: 'Apple',
       img: require('../../../../../assets/images/categories/sub/child/apple.png'),
       para: 'iPhone 16, iPhone 15, iPhone 14...',
-      Link: '/(routes)/Categories/phone-tablets',
+      Link: '/(routes)/Categories/phone-tablets/Sub-category/smartphones/apple'
     },
     {
       id: '2',

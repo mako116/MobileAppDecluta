@@ -97,8 +97,8 @@ const styles = StyleSheet.create({
     left: 0,
      width: 48,
     height: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
+    // alignItems: 'center',
+    // justifyContent: 'center',
     borderBottomEndRadius: 4,
   },
   specifics:{
