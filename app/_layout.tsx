@@ -3,14 +3,17 @@ import { Stack } from 'expo-router';
 import React from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { AuthProvider } from '@/context/AuthContext';
+import { CartProvider } from '@/context/CartContext';
 
 
 export default function RootLayout() {
   return (
     <GestureHandlerRootView>
+      <CartProvider>
       <AuthProvider>
         <Layout />
       </AuthProvider>
+      </CartProvider>
     </GestureHandlerRootView>
   );
 } 

@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from "react-nati
 import Alling from "./Sections/All";
 import Updates from "./Sections/Updates";
 import Close from "@/assets/images/kyc/close";
+import { CartProvider } from "@/context/CartContext";
 
 // TabHeader Component
 const TabHeader: React.FC<{ activeTab: string; setActiveTab: (tab: string) => void }> = ({ activeTab, setActiveTab }) => {
@@ -88,16 +89,17 @@ const CartBoard: React.FC = () => {
       <TabHeader activeTab={activeTab} setActiveTab={(tab) => setActiveTab(tab as typeof activeTab)} />
 
       {/* Content Section */}
-      <ScrollView
+      {/* <ScrollView
         showsHorizontalScrollIndicator={false} // Hides horizontal scrollbar
         showsVerticalScrollIndicator={false}   // Hides vertical scrollbar
         contentContainerStyle={styles.scrollContainer}
-      > 
-        <View>
+      >  */}
+        {/* <CartProvider
+        >  */}
           {activeTab === "Your Cart" && <AllTab />}
           {activeTab === "Offers" && <UpdatesTab />}
-        </View>
-      </ScrollView>
+        {/* </CartProvider> */}
+      {/* </ScrollView> */}
     </View>
   );
 };
@@ -106,12 +108,13 @@ const styles = StyleSheet.create({
   container: {
     paddingBottom: 10,
     // paddingHorizontal: 10,
-    height: "100%",
+    // flex:1
+     height:"100%"
   },
   scrollContainer: {
     // paddingHorizontal: "5%",
-    paddingTop: 10,
-    
+    // paddingTop: 10,
+    //  height:"100%"
   },
   tabContainer: {
     flexDirection: "row",
@@ -119,7 +122,8 @@ const styles = StyleSheet.create({
     // justifyContent: "center",
     // marginBottom: 10,
     paddingTop: "10%",
-    gap:5
+    gap:5,
+    
   },
   tabButton: {
     
