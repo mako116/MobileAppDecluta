@@ -13,7 +13,9 @@ interface CartItem {
   totalPrice: number;
   rewardPrice: number;
   checkout: number;
+  isAvailable: boolean;  // New property to track availability
 }
+
 
 interface CartContextType {
   cart: CartItem[];

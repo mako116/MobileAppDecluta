@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
- 
+
 type ModalPageProps = {
   isModalVisible: boolean;
   handleCancel: () => void;
@@ -16,13 +16,17 @@ const ModalPage: React.FC<ModalPageProps> = ({ isModalVisible, handleCancel, han
       animationType="fade"
       visible={isModalVisible}
       onRequestClose={handleCancel}
+      
     >
+      {/* Semi-transparent background overlay */}
       <View style={styles.modalOverlay}>
-        
         <View style={styles.modalContent}>
-          <Text style={styles.modalTitle}>Are you sure you want to remove this item?</Text>
+          <Text style={styles.modalTitle}>Remove Item?</Text>
+          <Text style={styles.modalPara}>
+            Are you sure you want to remove Samsung Galaxy A05 from your cart?
+          </Text>
           <View style={styles.modalActions}>
-            <TouchableOpacity onPress={handleRemove} style={[styles.modalButton, { backgroundColor: '#FF6347' }]}>
+            <TouchableOpacity onPress={handleRemove} style={[styles.modalButton, { backgroundColor: '#DEBC8E' }]}>
               <Text style={styles.modalButtonText}>Remove</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={handleCancel} style={[styles.modalButton, { backgroundColor: '#E9E9E9' }]}>
@@ -40,37 +44,50 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Darken the background for better focus on the modal
+    backgroundColor: 'rgba(0, 0, 0, 0.6)', // Darken the background for better focus on the modal
   },
   modalContent: {
-    width: 300,
-    padding: 20,
+ 
+    width: "90%",
+    paddingVertical: 20,
+    paddingHorizontal: 6,
     backgroundColor: '#FFF',
-    borderRadius: 12,  // Slightly rounded corners for better aesthetics
-    alignItems: 'center',
-    elevation: 5, // Add some shadow to give a lifted effect
+    borderRadius: 12,
   },
   modalTitle: {
-    fontSize: 18,
-    fontWeight: '600',
+    fontSize: 16,
+    fontWeight: '700',
+    marginBottom: 10,
+    color: '#212121',
+    lineHeight: 22.4,
+    fontFamily: "Helvetica Neue",
+    paddingHorizontal: 10,
+  },
+  modalPara: {
+    fontSize: 14,
+    fontWeight: '400',
     marginBottom: 20,
-    color: '#333',  // Dark text for better readability
+    color: '#212121',
+    lineHeight: 19.6,
+    fontFamily: "Helvetica Neue",
+    paddingHorizontal: 10,
   },
   modalActions: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
+    gap: 13,
   },
   modalButton: {
-    paddingVertical: 10,
+    paddingVertical: 20,
     paddingHorizontal: 20,
     borderRadius: 5,
     marginHorizontal: 10,
   },
   modalButtonText: {
     fontSize: 16,
-    fontWeight: '600',
-    color: '#FFF',  // White text for buttons to stand out
+    fontWeight: '400',
+    textAlign: 'center',
+    lineHeight: 22.4,
+    fontFamily: "Proxima Nova",
+    color: '#463E31',
   },
 });
 

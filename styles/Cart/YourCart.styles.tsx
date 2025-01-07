@@ -7,7 +7,22 @@ const YourCart = StyleSheet.create({
       alignItems: 'center',
        marginTop:15,
     },
-    
+    overlayText: {
+      fontSize: 16,
+      color: '#fff',
+      fontWeight: '600',
+    },
+    overlay: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 10,
+    },
    
     checkboxContainer: {
       flexDirection: 'row',
@@ -53,7 +68,8 @@ const YourCart = StyleSheet.create({
     container: {
        backgroundColor: '#f9f9f9',
       borderColor: '#000',
-       height:"100%"
+       height:"100%",
+      //  paddingBottom:"20%"
     },
     headerText: {
       fontSize: 16,

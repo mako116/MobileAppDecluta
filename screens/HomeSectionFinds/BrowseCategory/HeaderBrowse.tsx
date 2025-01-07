@@ -19,7 +19,7 @@ interface Category {
   name: string;
   img: any;
   para: string;
-  Link: Href<string | object>;
+  Link: Href;
 }
 
 const HeaderBrowse = () => {
@@ -108,7 +108,7 @@ const HeaderBrowse = () => {
   return (
     <View style={HeadBrowse.container}>
       {/* Header Section */}
-      <View style={HeadBrowse.header}>
+      <View style={[HeadBrowse.header,{gap:0,}]}>
         <BackButton />
         <View style={HeadBrowse.searchBar}>
           <TextInput

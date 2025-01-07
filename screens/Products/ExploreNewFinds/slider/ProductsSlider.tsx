@@ -1,28 +1,49 @@
-import { View, Text, ScrollView, Image } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import React from 'react';
 import SlidLingCategory from '../../Rending/SlidlingCategory';
- 
+
 export default function ProductsSlider() {
+  const products = [
+    {
+      id: '1',
+      imageUrl: require('../../../../assets/images/newimages/image 26.png'),
+      name: 'Applesss iPhone XR',
+      title: '250,000',
+      locations: 'Agbowo UI, Ibadan',
+      timeAgo: '2 weeks ago',
+    },
+    {
+      id: '2',
+      imageUrl: require('../../../../assets/images/newimages/Group 390.png'),
+      name: 'HP Spectre 360',
+      title: '755,000',
+      locations: 'Makola, Ibandan',
+      timeAgo: '1 hr ago',
+    },
+    {
+      id: '3',
+      imageUrl: require('../../../../assets/images/newimages/image 26.png'),
+      name: 'Apple iPhone XR',
+      title: '250,000',
+      locations: 'Agbowo UI, Ibadan',
+      timeAgo: '1 week ago',
+    },
+  ];
+
   return (
     <View style={{ marginTop: 10 }}>
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-        <SlidLingCategory
-          imageUrl={require('../../../../assets/images/newimages/image 26.png')}
-          name="Apple iPhone XR"
-          title="250,000"
-          locations={'Agbowo UI, Ibadan'} 
-          timeAgo={'2 weeks ago'}        /> 
-        <SlidLingCategory
-          imageUrl={require('../../../../assets/images/newimages/Group 390.png')}
-          name="HP Spectre 360"
-          locations={'Makola, Ibandan'} title={'755,000'}
-           timeAgo={'1 hr ago'}        />
-        <SlidLingCategory
-          imageUrl={require('../../../../assets/images/newimages/image 26.png')}
-          name="Apple iPhone XR"
-          title="250,000"
-          locations={'Agbowo UI, Ibadan'} timeAgo={'1 weeks ago'}         />
-       </ScrollView>
+        {products.map((product) => (
+          <SlidLingCategory
+            key={product.id}
+            imageUrl={product.imageUrl}
+            name={product.name}
+            title={product.title}
+            locations={product.locations}
+            timeAgo={product.timeAgo}
+          />
+        ))}
+      </ScrollView>
     </View>
   );
 }

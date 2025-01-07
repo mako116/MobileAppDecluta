@@ -19,7 +19,7 @@ interface Category {
   name: string;
   img: any;
   para: string;
-  Link: Href<string | object>;
+  Link: Href;
 }
 
 const SubCategories = () => {

@@ -21,6 +21,8 @@ import { Ionicons } from '@expo/vector-icons';
 import CloseCircle from '@/assets/svg/close-circle';
  import Lock from '@/assets/svg/Lock';
 import YourCart from '@/styles/Cart/YourCart.styles';
+import Cart from '@/assets/svg/cart';
+import CheckoutFoot from './Footer/CheckoutFoot';
  
  
 
@@ -128,23 +130,33 @@ const applyCoupon = () => {
   // reward welcome bonus 
   const rewardBonus = 4500;
   // Format the rewardBonus using Intl.NumberFormat to include a comma as thousand separator and ensure two decimal places
-  const formattedBonus = new Intl.NumberFormat('en-NG', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(rewardBonus);
+  // const formattedBonus = new Intl.NumberFormat('en-NG', {
+  //   minimumFractionDigits: 2,
+  //   maximumFractionDigits: 2,
+  // }).format(rewardBonus);
 
-  
+  if (cart.length === 0) {
+    return ( 
+      <View style={YourCart.container}>
+        <View style={{ justifyContent: "center", alignItems: "center", paddingVertical: 20 }}>
+          <Cart />
+          <Text style={[YourCart.title, { textAlign: "center",fontSize:19 , marginBottom:3,marginTop:10}]}>
+            Your cart is empty</Text>
+          <Text style={YourCart.rewardText}>Start shopping to add items!</Text>
+        </View>
+      </View>
+    );
+  }
   return (
     <View style={YourCart.container}>
       <ScrollView
        showsHorizontalScrollIndicator={false} // Hides horizontal scrollbar
        showsVerticalScrollIndicator={false}   // Hides vertical scrollbar
-       scrollEventThrottle={16}>
+       scrollEventThrottle={16}
+       >
         <View style={YourCart.main}>
-        {cart.length === 0 ? (
-          <Text>Your cart is empty</Text>
-        ) : (
-          cart.map((item) => (
+        
+          {cart.map((item) => (
             <View key={item.id} style={YourCart.notificationContents} >
                  <View style={YourCart.notificationContent}
                  >
@@ -201,8 +213,8 @@ const applyCoupon = () => {
                   </View>
                 </View>
              </View>
-         ))
-        )}
+         ))}
+        
           <TouchableOpacity onPress={toggleDropdown}>
             <View style={YourCart.header}>
              
@@ -224,111 +236,8 @@ const applyCoupon = () => {
         </View>
       </ScrollView>
    {/* Checkout Button */}
-  <View style={{ backgroundColor: "#fff" ,height:"20%"}}>
-  <View style={YourCart.checkoutSection}>
-    <View style={YourCart.checkoutRow}>
-      <TouchableOpacity
-        style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
-        onPress={toggleDropdowns}
-      >
-        <Text style={[YourCart.title, { fontSize: 15 }]}>
-          Subtotal - {itemCount} items
-        </Text>
-        <Ionicons
-          name={isDropdownVisid ? "chevron-down" : "chevron-up"} // Icon based on state
-          size={17}
-          color="#292D32"
-        />
-      </TouchableOpacity>
-      <Text style={YourCart.title}>{formatPrice(totalAmount)}</Text>
-    </View>
-
-    {isDropdownVisid && (
-      <>
-      {/* coupon toggle */}
-        {!isRewardApplied && (
-          <Text style={[YourCart.title, { fontSize: 16 , marginTop:5}]}>
-            Have a coupon?{" "}
-            <TouchableOpacity style={{ marginTop: 5 }} onPress={toggleDropdows}>
-              <Text style={[YourCart.title, { fontSize: 16 }]}>Click here</Text>
-            </TouchableOpacity>
-          </Text>
-        )}
-        {/* coupon Input */}
-          {isDropdownVisidle && (
-            <View>
-           <Text style={[YourCart.bonusText,{paddingBottom:8, paddingTop:5}]}>
-            If you have a coupon code, please apply it below.
-            </Text>
-            <View style={YourCart.couponInputContainer}>
-            <TextInput
-              style={YourCart.couponInput}
-              placeholder=" coupon code"
-              value={couponCode}
-              onChangeText={setCouponCode}
-            />
-             <TouchableOpacity
-          style={[
-            YourCart.applyButton,
-            { backgroundColor: couponCode.trim() ? "#DEBC8E" : "#E9E9E9" }, // Dynamic background color
-          ]}
-          onPress={applyCoupon}
-          disabled={!couponCode.trim()} // Disable button if input is empty
-        >
-          <Text style={[YourCart.bonusText,{ color: couponCode.trim() ? "#463E31" : "#A4A4A4"} ]}>
-            Apply
-          </Text>
-        </TouchableOpacity>
-          </View>
-          </View>
-        )}
-        {/* Welcome bonus  */}
-        {isRewardApplied && (
-          <View style={YourCart.rewardInfoContainer}>
-            <Text style={YourCart.bonusText}>Bonus to Earn: WELCOME</Text>
-            <View style={YourCart.rewardAmountContainer}>
-              <CloseCircle />
-              <Text style={YourCart.rewardAmount}>+ ₦{formattedBonus}</Text>
-            </View>
-          </View>
-        )}
-        <View style={YourCart.checkboxContainer}>
-          <TouchableOpacity onPress={toggleReward} style={YourCart.checkbox}>
-            <View
-              style={[
-                isRewardApplied && YourCart.checkedBox,  
-              ]}
-            >
-              <Text style={YourCart.checkboxText}>
-                {isRewardApplied ? "✓" : ""}
-              </Text>
-            </View>
-          </TouchableOpacity>
-        
-            <Text style={YourCart.rewardText}>
-              Apply Rewards Bonus (₦500.00)
-            </Text>
-         </View>
-        </>
-      )}
-     <TouchableOpacity
-      style={YourCart.bottomButton}
-      onPress={handleCheckout}
-    >
-      <Lock/>
-      <Text style={YourCart.buttonText}>
-        Checkout {formatPrice(checkoutPrice)}
-      </Text>
-    </TouchableOpacity>
-    </View>
-    </View>
-    <View style={YourCart.secureSection}>
-         <Image
-         source={require('../../../assets/svg/Frame 645480.png')}
-         style={{ width: "55%", height: 30 }}
-         resizeMode='contain'
-         />
-     </View>
+   <CheckoutFoot/>
+   
   </View>
   );
   

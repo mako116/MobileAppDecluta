@@ -4,15 +4,18 @@ import React from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { AuthProvider } from '@/context/AuthContext';
 import { CartProvider } from '@/context/CartContext';
+import { OfferProvider } from '@/context/OfferContext';
 
 
 export default function RootLayout() {
   return (
     <GestureHandlerRootView>
       <CartProvider>
-      <AuthProvider>
+      <OfferProvider>
+       <AuthProvider>
         <Layout />
       </AuthProvider>
+      </OfferProvider>
       </CartProvider>
     </GestureHandlerRootView>
   );

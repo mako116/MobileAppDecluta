@@ -14,8 +14,18 @@ const HeadBrowse = StyleSheet.create({
       paddingTop: '13%',
       paddingBottom:"4%",
       alignItems: 'center',
-      gap:20,
+      gap:2,
       marginBottom:20
+    },
+    headers: {
+      flexDirection: 'row',
+      backgroundColor: '#fff',
+      paddingHorizontal: 16,
+      paddingTop: '13%',
+      paddingBottom:"4%",
+      alignItems: 'center',
+      // gap:20,
+      // marginBottom:20
     },
     filterContainer:{flexDirection:"row",zIndex:1000, alignItems:"center",justifyContent:"space-between", backgroundColor:"#fff", paddingHorizontal:"2%",paddingVertical:"1%", borderTopWidth:1,borderColor:"#E9E9E9", marginTop:-4,},
     texts:{
@@ -48,7 +58,7 @@ const HeadBrowse = StyleSheet.create({
       borderRadius: 4,
       paddingHorizontal: 8,
       // height: 40,
-      paddingVertical:"2%"
+      paddingVertical:"0.5%"
     },
     input: {
         flex: 1,

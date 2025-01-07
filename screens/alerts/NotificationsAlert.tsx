@@ -1,8 +1,23 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
 import { router } from 'expo-router';
+import { useCart } from '@/context/CartContext';
  
  export default function NotificationsAlert() {
+  const { cart} = useCart();
+  
+  const getCartSummary = () => {
+     let itemCount = 0;
+
+    cart.forEach((item) => {
+       itemCount += item.count; // Total items
+    });
+
+    return {itemCount };
+  };
+
+  const { itemCount } = getCartSummary();
+
   return (
     <View style={styles.container}>
       {/* Live Icon */}
@@ -23,7 +38,9 @@ import { router } from 'expo-router';
       <TouchableOpacity onPress={()=>router.push("/(routes)/cart")} style={{marginTop:7}}>
       <Image source={require('../../assets/images/newimages/cart.png')} style={{width: 24, height:24, objectFit:"contain"}} />
       <View style={styles.redDots} >
-      <Text style={{ fontSize:8,textAlign:"center",color:"#fff"}}>1</Text>
+      <Text style={{ fontSize:8,textAlign:"center",color:"#fff"}}>
+      {itemCount}
+      </Text>
     </View>
       </TouchableOpacity>
      </View>

@@ -1,24 +1,26 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from "react-native";
 import Alling from "./Sections/All";
-import Updates from "./Sections/Updates";
-import Close from "@/assets/images/kyc/close";
-import { CartProvider } from "@/context/CartContext";
+ import Close from "@/assets/images/kyc/close";
+import { CartProvider, useCart } from "@/context/CartContext";
+import { router, useNavigation } from "expo-router";
+import BackButton from "@/assets/images/kyc/LeftArrow";
+import Offer from "./Sections/Offer";
 
 // TabHeader Component
 const TabHeader: React.FC<{ activeTab: string; setActiveTab: (tab: string) => void }> = ({ activeTab, setActiveTab }) => {
   const tabs = ["Your Cart", "Offers"];
+  const { cart} = useCart();
+ 
+ const navigation = useNavigation();
+ 
+     const goBack = () => {
+         navigation.goBack();
+     };
 
   return (
-    <View style={{ backgroundColor: "#fff", paddingHorizontal: "3.4%", paddingTop: 10 }}>
-  {/* Close Cross Button */}
-  <TouchableOpacity
-    style={styles.closeButton}
-    // onPress={handleClose}
-  >
-    <Close/>
-  </TouchableOpacity>
-
+    <View style={{ backgroundColor: "#fff", paddingHorizontal: "3.4%", paddingTop: 10 , paddingBottom: 10,}}>
+ 
   <View style={styles.tabContainer}>
     {tabs.map((tab, index) => (
       <React.Fragment key={tab}>
@@ -44,8 +46,18 @@ const TabHeader: React.FC<{ activeTab: string; setActiveTab: (tab: string) => vo
         {index < tabs.length - 1 && <View style={styles.centerBorder} />}
       </React.Fragment>
     ))}
+      {/* Close Cross Button */}
+    <View style={{flexDirection:"row", alignItems:"center", justifyContent:"flex-end", flex:1}}>
+       <TouchableOpacity
+     onPress={goBack}
+  >
+     <Close/>
+  </TouchableOpacity>
   </View>
-
+  </View>
+ 
+ {/* if there is no cart data then dont display */}
+ {/* {cart.length > 0 && ( */}
   <Text
     style={{
       paddingHorizontal: 7,
@@ -54,13 +66,14 @@ const TabHeader: React.FC<{ activeTab: string; setActiveTab: (tab: string) => vo
       fontSize: 12,
       lineHeight: 16.8,
       color: "#212121",
-      paddingTop: 5,
-      paddingBottom: 5,
+      paddingTop:2
     }}
   >
     Your order is reserved for{" "}
     <Text style={{ color: "#E42527", fontWeight: "700" }}>14:34</Text>
   </Text>
+  {/* )}   */}
+
 </View>
 
   );
@@ -76,7 +89,7 @@ const AllTab: React.FC = () => (
 // Offers Component
 const UpdatesTab: React.FC = () => (
   <View>
-    <Updates />
+    <Offer />
   </View>
 );
 
@@ -89,17 +102,9 @@ const CartBoard: React.FC = () => {
       <TabHeader activeTab={activeTab} setActiveTab={(tab) => setActiveTab(tab as typeof activeTab)} />
 
       {/* Content Section */}
-      {/* <ScrollView
-        showsHorizontalScrollIndicator={false} // Hides horizontal scrollbar
-        showsVerticalScrollIndicator={false}   // Hides vertical scrollbar
-        contentContainerStyle={styles.scrollContainer}
-      >  */}
-        {/* <CartProvider
-        >  */}
-          {activeTab === "Your Cart" && <AllTab />}
-          {activeTab === "Offers" && <UpdatesTab />}
-        {/* </CartProvider> */}
-      {/* </ScrollView> */}
+        {activeTab === "Your Cart" && <AllTab />}
+        {activeTab === "Offers" && <UpdatesTab />}
+        
     </View>
   );
 };
@@ -107,43 +112,24 @@ const CartBoard: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     paddingBottom: 10,
-    // paddingHorizontal: 10,
-    // flex:1
+     
      height:"100%"
   },
-  scrollContainer: {
-    // paddingHorizontal: "5%",
-    // paddingTop: 10,
-    //  height:"100%"
-  },
+ 
   tabContainer: {
     flexDirection: "row",
     alignItems: "center",
-    // justifyContent: "center",
-    // marginBottom: 10,
     paddingTop: "10%",
     gap:5,
     
   },
   tabButton: {
-    
     marginHorizontal: 5,
-    // gap:20,
     textAlign: "center",
     alignItems: "center",
     justifyContent: "center",
   },
   activeTab: {
-    // backgroundColor: "#DEBC8E",
-    // gap:20
-  },
-  closeButton: {
-    position: "absolute",
-    top: "45%",
-    right: 10,
-    zIndex: 1000,
-    padding: 8,
-  
   },
   closeButtonText: {
     fontSize: 18,
@@ -160,11 +146,10 @@ const styles = StyleSheet.create({
     lineHeight: 22.4,
   },
   allTabButton: {
-    
   },
   centerBorder: {
-    width: 2,
-    height: '60%',  
+    width: 1.4,
+    height: 15,  
     backgroundColor: '#A4A4A4',
     alignSelf: 'center',
   },

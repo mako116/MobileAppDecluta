@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { FlatList, StyleSheet, TextInput, TouchableOpacity, View, Text, Image, Animated, ScrollView } from 'react-native';
+import { FlatList, StyleSheet, TextInput, TouchableOpacity, View, Text, Animated, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
 import LottieView from 'lottie-react-native';
 
@@ -30,7 +30,7 @@ const Apples = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [filteredCategories, setFilteredCategories] = useState<CategoryItem[]>([]);
-
+ 
   const categories: CategoryItem[] = [
     { id: 1, imageUrl: require('../../../../../../assets/images/categories/sub/child/image 26.png'), name: 'Apple iPhone XR', title: '250,000', locations: 'Agbowo UI, Ibadan', timeAgo: '2 wks ago', specific: require('../../../../../../assets/images/newimages/play.png'), Link: '/(routes)/Categories/phone-tablets/Sub-category/apple' },
     { id: 2, imageUrl: require('../../../../../../assets/images/categories/sub/child/image 26.png'), name: 'HP Spectre 360', title: '755,000', locations: 'Lagos, Nigeria', timeAgo: '1 wk ago', Link: '/(routes)/Categories/phone-tablets/apple' },
@@ -182,18 +182,16 @@ const Apples = () => {
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <TouchableOpacity
-            onPress={() => {
-              try {
-                router.push(item.Link);
-                console.log('Navigating to:', item.Link);
-              } catch (error) {
-                console.error('Navigation error:', error);
-              }
-            }}
+            // onPress={() => {
+            //   try {
+            //     router.push(item.Link);
+            //     console.log('Navigating to:', item.Link);
+            //   } catch (error) {
+            //     console.error('Navigation error:', error);
+            //   }
+            // }}
           >
-
-
-            <View style={{ marginBottom: 20 }}>
+             <View style={{ marginBottom: 20 }}>
                  <Category
                  imageUrl={item.imageUrl}
                   name={item.name}

@@ -10,7 +10,7 @@ const SearchCategoryStyles = StyleSheet.create({
       // justifyContent: 'space-between', 
     },
     gridItem: {
-      backgroundColor: '#f8f9fa',
+      backgroundColor: '#FFFFFF',
       borderRadius: 4,
       borderWidth: 1,
       borderColor: "#E9E9E9",
@@ -40,7 +40,9 @@ const SearchCategoryStyles = StyleSheet.create({
     headerText: {
       marginLeft: 5,
       fontSize: 16,
+      lineHeight: 22.4,
       fontWeight: '600',
+      fontFamily: "Proxima Nova",
     },
   });
 
