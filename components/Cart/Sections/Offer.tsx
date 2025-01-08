@@ -143,7 +143,7 @@ const closeModal = () => {
           ))}
         </View>
       </ScrollView>
-      {/* checkout  */}
+      {/* checkout button */}
       <CheckoutFoot/>
 
        {/* Coupon Applied Modal */}

@@ -105,6 +105,13 @@ const YourCart = StyleSheet.create({
       fontFamily:"Proxima Nova",
       lineHeight:19.6
     },
+    bonusTexts: {
+      fontSize: 20,
+      fontWeight: '400',
+      color: '#212121',
+      fontFamily:"Proxima Nova",
+      lineHeight:26.6
+    },
     rewardAmountContainer: {
       flexDirection: 'row',
       alignItems: 'center',
@@ -164,7 +171,7 @@ const YourCart = StyleSheet.create({
       fontWeight: '700',
       fontFamily:"Helvetica Neue",
       fontSize:14,
-      lineHeight:19.6
+      lineHeight:19.6 
     },
     price: {
       fontWeight: '400',

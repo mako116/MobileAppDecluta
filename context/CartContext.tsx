@@ -50,7 +50,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     return totalCartPrice;
   };
 
-  
+   
 
   const addToCart = (item: CartItem) => {
     setCart((prevCart) => {

@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import { Image, Text, TextInput, TouchableOpacity } from 'react-native';
 import {  View } from 'react-native';
 import CouponRemovedModal from '../Modal/Removed';
+import { router } from 'expo-router';
 
 const CheckoutFoot = () => {
   const { cart, applyRewardsBonus, checkoutPrice } = useCart();
@@ -43,8 +44,11 @@ const CheckoutFoot = () => {
   const { totalAmount, itemCount } = getCartSummary();
 
   const handleCheckout = () => {
-    console.log('Proceeding to checkout with the following cart:', cart);
-  };
+    router.push("/(routes)/checkout")
+     console.log("worked");
+   };
+
+   
 
   const toggleReward = () => {
     setIsRewardApplied((prev) => !prev);
@@ -185,7 +189,7 @@ const CheckoutFoot = () => {
         <TouchableOpacity
           style={YourCart.bottomButton}
           onPress={handleCheckout}
-          disabled={cart.length === 0}
+          // disabled={cart.length === 0}
         >
           <Lock />
           <Text style={YourCart.buttonText}>Checkout {formatPrice(checkoutPrice)}</Text>
