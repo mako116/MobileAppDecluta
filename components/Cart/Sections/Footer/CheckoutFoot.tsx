@@ -11,7 +11,7 @@ import { router } from 'expo-router';
 import ModalProceed from '../Modal/ModalProceed';
 
 const CheckoutFoot = () => {
-  const { cart, applyRewardsBonus, checkoutPrice } = useCart();
+  const { cart,  checkoutPrice } = useCart();
   const [isRewardApplied, setIsRewardApplied] = useState<boolean>(false);
   const [couponCode, setCouponCode] = useState<string>('');
   const [isCouponApplied, setIsCouponApplied] = useState<boolean>(false);
@@ -33,17 +33,17 @@ const CheckoutFoot = () => {
 
   const getCartSummary = () => {
     let totalAmount = 0;
-    let itemCount = 0;
-
+    let uniqueItemCount = cart.length; // Unique items count is the number of items in the cart.
+  
     cart.forEach((item) => {
       totalAmount += item.price * item.count;
-      itemCount += item.count;
     });
-
-    return { totalAmount, itemCount };
+  
+    return { totalAmount, uniqueItemCount };
   };
+  
+  const { totalAmount, uniqueItemCount } = getCartSummary();
 
-  const { totalAmount, itemCount } = getCartSummary();
 
   const handleCheckout = () => {
     router.push("/(routes)/checkout")
@@ -70,13 +70,15 @@ const CheckoutFoot = () => {
       console.log('Invalid coupon code');
     }
   };
-
-  const rewardBonus = 4500;
-  const formattedBonus = new Intl.NumberFormat('en-NG', {
+  const RewardBonus = 500;
+  const WelcomeBonus = 4500;
+  const formattedWelcomeBonus = new Intl.NumberFormat('en-NG', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
-  }).format(rewardBonus);
+  }).format(WelcomeBonus);
 
+  
+   
   const toggleRewardDropdown = () => {
     setIsRewardDropdownVisible((prev) => !prev);
   };
@@ -88,7 +90,7 @@ const CheckoutFoot = () => {
   const handleCloseBonus = () => {
     setModalVisible(true);
     setIsRewardApplied(false);
-    applyRewardsBonus(false);
+    
     setIsCouponApplied(false);
     setCouponCode('');
     setIsDropdownVisible(true);
@@ -114,7 +116,7 @@ const CheckoutFoot = () => {
             onPress={toggleRewardDropdown}
           >
             <Text style={[YourCart.title, { fontSize: 15 }]}>
-              Subtotal - {itemCount} items
+              Subtotal - {uniqueItemCount} items
             </Text>
             <Ionicons
               name={isRewardDropdownVisible ? 'chevron-down' : 'chevron-up'}
@@ -178,7 +180,7 @@ const CheckoutFoot = () => {
                   <TouchableOpacity onPress={handleCloseBonus}>
                     <CloseCircle />
                   </TouchableOpacity>
-                  <Text style={YourCart.rewardAmount}>+ {formattedBonus}</Text>
+                  <Text style={YourCart.rewardAmount}>+ {formattedWelcomeBonus}</Text>
                 </View>
               </View>
             )}
@@ -193,7 +195,7 @@ const CheckoutFoot = () => {
                     </Text>
                   </View>
                 </TouchableOpacity>
-                <Text style={YourCart.rewardText}>Apply Rewards Bonus (₦500.00)</Text>
+                <Text style={YourCart.rewardText}>Apply Rewards Bonus ({formatPrice(RewardBonus)})</Text>
               </View>
             )}
           </>

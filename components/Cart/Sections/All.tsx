@@ -16,10 +16,6 @@ import DropdownContent from './PeopleRequires/Dropdown';
 import Star from '@/assets/images/cart/Star';
 import ArrowDownBlack from '@/assets/images/cart/arrowDownBlack';
 import { useCart } from '@/context/CartContext';
-import { TextInput } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import CloseCircle from '@/assets/svg/close-circle';
- import Lock from '@/assets/svg/Lock';
 import YourCart from '@/styles/Cart/YourCart.styles';
 import Cart from '@/assets/svg/cart';
 import CheckoutFoot from './Footer/CheckoutFoot';
@@ -27,14 +23,11 @@ import CheckoutFoot from './Footer/CheckoutFoot';
  
 
 const Alling: React.FC = () => {
-  const { cart,applyRewardsBonus, increaseCount,checkoutPrice , decreaseCount, removeFromCart } = useCart();
+  const { cart, increaseCount, decreaseCount, removeFromCart } = useCart();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [itemToRemove, setItemToRemove] = useState<any | null>(null);
   const [isDropdownVisible, setDropdownVisible] = useState(false);
-  const [isDropdownVisidle, setIsDropdownVisidle] = useState(false); // For coupon input
-  const [isDropdownVisid, setIsDropdownVisid] = useState(false); // For rewards bonus
-  const [isRewardApplied, setIsRewardApplied] = useState<boolean>(false);
-  const [couponCode, setCouponCode] = useState("");
+ 
 
   const handleIncrease = (id: string) => {
     increaseCount(id);
@@ -97,45 +90,8 @@ const Alling: React.FC = () => {
   };
 
   const { totalAmount, itemCount } = getCartSummary();
-
-  // Handle checkout logic  checkout Price Button
-  const handleCheckout = () => {
-    console.log("Proceeding to checkout with the following cart:", cart);
-    // you can add the functionality here
-  };
-
-  const toggleDropdowns = () => {
-    setIsDropdownVisid((prev) => !prev);
-  };
-
-  const toggleDropdows = () => {
-    setIsDropdownVisidle((prev) => !prev);
-  };
-
-  const toggleReward = () => {
-    setIsRewardApplied((prev) => !prev);
-    applyRewardsBonus(!isRewardApplied);   
-  };
-
-
-  // adding the coupon number
-const applyCoupon = () => {
-  if (couponCode.trim() === "WELCOME") {
-    console.log("Coupon applied!");
-    // Adjust totalAmount with a discount here
-  } else {
-    console.log("Invalid coupon code");
-  }
-};
-  // reward welcome bonus 
-  const rewardBonus = 4500;
-  // Format the rewardBonus using Intl.NumberFormat to include a comma as thousand separator and ensure two decimal places
-  // const formattedBonus = new Intl.NumberFormat('en-NG', {
-  //   minimumFractionDigits: 2,
-  //   maximumFractionDigits: 2,
-  // }).format(rewardBonus);
-
-  if (cart.length === 0) {
+  
+  if (cart.length === 3) {
     return ( 
       <View style={YourCart.container}>
         <View style={{ justifyContent: "center", alignItems: "center", paddingVertical: 20 }}>

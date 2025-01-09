@@ -1,3 +1,5 @@
+import BackButton from '@/assets/images/kyc/LeftArrow';
+import SignupSvg from '@/assets/svg/signupheader';
 import DetailScreen from '@/screens/auth/Detailscreens/DetailsScreen';
 import { SignUpStyles } from '@/styles/Signup/signup.style';
 import { Feather } from '@expo/vector-icons';
@@ -16,13 +18,17 @@ export default function SignUp() {
 
   return (
     <SafeAreaView edges={['bottom']}>
-      <ScrollView scrollEventThrottle={16} >
+     
         <View style={styles.signs}>
           <TouchableOpacity onPress={handleGoBack}>
-            <Feather name="arrow-left" size={24} color="black" />
+           <BackButton/>
           </TouchableOpacity>
-          <Image source={require("@/assets/images/Group 2.png")} style={{justifyContent:"center", margin:"auto"}} />
+          <SignupSvg />
+          {/* <Image source={require("@/assets/images/Group 2.png")}  /> */}
         </View>
+        <ScrollView 
+        
+        scrollEventThrottle={16} >
         <View style={styles.section}>
           <Text style={{color:"#212121", fontWeight:"700", fontSize:23, lineHeight:32.2, fontFamily:"HelveticaNeueLTPro"}}>Tell Us About yourself</Text>
         </View>
@@ -40,6 +46,7 @@ const styles = StyleSheet.create({
     paddingTop: 50,
     paddingBottom: 20,
     flexDirection: "row",
+    justifyContent:"flex-start",
     alignItems: "center",
     backgroundColor: "#fff",
   },

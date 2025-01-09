@@ -38,16 +38,19 @@ export default function HomeScreen() {
   };
 
   const getCartSummary = () => {
-     let itemCount = 0;
-
+    let totalAmount = 0;
+    let uniqueItemCount = cart.length; // Unique items count is the number of items in the cart.
+  
     cart.forEach((item) => {
-       itemCount += item.count; // Total items
+      totalAmount += item.price * item.count;
     });
-
-    return {  itemCount };
+  
+    return { totalAmount, uniqueItemCount };
   };
+  
+  const {   uniqueItemCount } = getCartSummary();
 
-  const { itemCount } = getCartSummary();
+
 
 
   // const closeModal = () => {
@@ -148,7 +151,7 @@ export default function HomeScreen() {
       <TouchableOpacity style={Homes.cartIcon}>
         <Ionicons name="cart-outline" size={24} color="#212121" />
         <View style={Homes.cartBadge}>
-          <Text style={Homes.cartBadgeText}>{itemCount}</Text>
+          <Text style={Homes.cartBadgeText}>{uniqueItemCount}</Text>
         </View>
       </TouchableOpacity>
     </>

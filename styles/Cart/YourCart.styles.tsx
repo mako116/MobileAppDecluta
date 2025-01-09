@@ -187,6 +187,14 @@ const YourCart = StyleSheet.create({
       justifyContent:"space-between",
       borderColor:"#E9E9E9",
     },
+    notificationC: {
+      flexDirection: 'row',
+      paddingTop:14,
+      //  borderBottomWidth:1,
+      justifyContent:"space-between",
+      borderColor:"#E9E9E9",
+      paddingHorizontal:1
+    },
     notificationCont: {
       flexDirection: 'row',
       paddingVertical:8,

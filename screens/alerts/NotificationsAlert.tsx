@@ -7,17 +7,19 @@ import { useCart } from '@/context/CartContext';
   const { cart} = useCart();
   
   const getCartSummary = () => {
-     let itemCount = 0;
-
+    let totalAmount = 0;
+    let uniqueItemCount = cart.length; // Unique items count is the number of items in the cart.
+  
     cart.forEach((item) => {
-       itemCount += item.count; // Total items
+      totalAmount += item.price * item.count;
     });
-
-    return {itemCount };
+  
+    return { totalAmount, uniqueItemCount };
   };
+  
+  const {   uniqueItemCount } = getCartSummary();
 
-  const { itemCount } = getCartSummary();
-
+ 
   return (
     <View style={styles.container}>
       {/* Live Icon */}
@@ -39,7 +41,7 @@ import { useCart } from '@/context/CartContext';
       <Image source={require('../../assets/images/newimages/cart.png')} style={{width: 24, height:24, objectFit:"contain"}} />
       <View style={styles.redDots} >
       <Text style={{ fontSize:8,textAlign:"center",color:"#fff"}}>
-      {itemCount}
+      {uniqueItemCount}
       </Text>
     </View>
       </TouchableOpacity>

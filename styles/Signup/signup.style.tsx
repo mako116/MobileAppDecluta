@@ -59,7 +59,7 @@ export const SignUpStyles = StyleSheet.create({
       gap: 10,
     },
     label: {
-      marginLeft: 18,
+      // marginLeft: 18,
       marginBottom: 10,
       fontFamily:"Proxima Nova",
       fontSize: 14,
@@ -67,6 +67,17 @@ export const SignUpStyles = StyleSheet.create({
     },
     Kyclabel: {
        fontFamily:"Proxima Nova"
+    },
+    TextInput: {
+      flex: 1,
+      padding: 25,
+      paddingLeft: 15,
+      fontSize: 14,
+      borderWidth:1,
+      borderColor:'#E9E9E9',
+      backgroundColor:"#fff",
+      color: "#a1a1a1",
+      fontFamily:"Proxima Nova"
     },
     input: {
       flex: 1,

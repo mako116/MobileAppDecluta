@@ -13,9 +13,8 @@ interface CartItem {
   totalPrice: number;
   rewardPrice: number;
   checkout: number;
-  isAvailable: boolean;  // New property to track availability
+  isAvailable: boolean;
 }
-
 
 interface CartContextType {
   cart: CartItem[];
@@ -23,44 +22,55 @@ interface CartContextType {
   decreaseCount: (id: string) => void;
   removeFromCart: (id: string) => void;
   addToCart: (item: CartItem) => void;
-  applyRewardsBonus: (apply: boolean) => void; 
-  checkoutPrice: number; // Added this to track the checkout price
+  toggleWelcomeBonus: () => void;
+  toggleRewardBonus: () => void;
+  isWelcomeBonusApplied: boolean;
+  isRewardBonusApplied: boolean;
+  totalPriceWithBonuses: number;
+  checkoutPrice: number;
 }
 
 // Create the context
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-// Define CartProvider with children prop
 interface CartProviderProps {
   children: ReactNode;
 }
 
 export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
-  const [isBonusApplied, setIsBonusApplied] = useState<boolean>(false);
+  const [isWelcomeBonusApplied, setIsWelcomeBonusApplied] = useState<boolean>(false);
+  const [isRewardBonusApplied, setIsRewardBonusApplied] = useState<boolean>(false);
 
-  // Calculate total checkout price based on whether reward bonus is applied
+  // Calculate the total checkout price considering both bonuses
   const getCheckoutPrice = () => {
     const totalCartPrice = cart.reduce((total, item) => total + item.totalPrice, 0);
-    if (isBonusApplied) {
-      const bonus = 500; // ₦500.00 rewards bonus
-      const adjustedTotal = Math.max(totalCartPrice - bonus, 0); // Prevent negative total
-      return adjustedTotal;
-    }
-    return totalCartPrice;
-  };
+    let adjustedTotal = totalCartPrice;
 
-   
+    // Apply welcome bonus if it's enabled
+    if (isWelcomeBonusApplied) {
+      const welcomeBonus = 500; // ₦500.00 welcome bonus
+      adjustedTotal = Math.max(adjustedTotal - welcomeBonus, 0); // Prevent negative total
+    }
+
+    // Apply reward bonus if it's enabled
+    if (isRewardBonusApplied) {
+      const rewardBonus = 300; // ₦300.00 reward bonus
+      adjustedTotal = Math.max(adjustedTotal - rewardBonus, 0); // Prevent negative total
+    }
+
+    return adjustedTotal;
+  };
 
   const addToCart = (item: CartItem) => {
     setCart((prevCart) => {
       const itemIndex = prevCart.findIndex((cartItem) => cartItem.id === item.id);
       if (itemIndex === -1) {
-        return [...prevCart, { ...item, count: 1, totalPrice: item.price, checkout: item.price }];
+        return [...prevCart, { ...item, count: 1, totalPrice: item.price }];
       } else {
         const updatedCart = [...prevCart];
         // updatedCart[itemIndex].count += 1;
-        updatedCart[itemIndex].totalPrice = updatedCart[itemIndex].count * item.price;
+        updatedCart[itemIndex].totalPrice = updatedCart[itemIndex].count * updatedCart[itemIndex].price;
         return updatedCart;
       }
     });
@@ -90,23 +100,15 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     setCart((prevCart) => prevCart.filter((item) => item.id !== id));
   };
 
-  const applyRewardsBonus = (apply: boolean) => {
-    setIsBonusApplied(apply);
-    setCart((prevCart) => {
-      const totalCartPrice = prevCart.reduce((total, item) => total + item.totalPrice, 0);
-      const bonus = 500; // ₦500.00 rewards bonus
-      const adjustedTotal = apply ? Math.max(totalCartPrice - bonus, 0) : totalCartPrice;
-      return prevCart.map((item) => ({
-        ...item,
-        rewardPrice: apply ? bonus : 0, // Apply or remove reward price
-        checkout: apply
-          ? (item.totalPrice / totalCartPrice) * adjustedTotal // Adjust checkout price based on reward
-          : item.totalPrice, // Reset to original price if reward is removed
-      }));
-    });
+  // Toggle for applying the welcome bonus
+  const toggleWelcomeBonus = () => {
+    setIsWelcomeBonusApplied((prev) => !prev);
   };
-  
 
+  // Toggle for applying the reward bonus
+  const toggleRewardBonus = () => {
+    setIsRewardBonusApplied((prev) => !prev);
+  };
 
   return (
     <CartContext.Provider
@@ -116,7 +118,11 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
         decreaseCount,
         removeFromCart,
         addToCart,
-        applyRewardsBonus: applyRewardsBonus,
+        toggleWelcomeBonus,
+        toggleRewardBonus,
+        isWelcomeBonusApplied,
+        isRewardBonusApplied,
+        totalPriceWithBonuses: getCheckoutPrice(),
         checkoutPrice: getCheckoutPrice(),
       }}
     >

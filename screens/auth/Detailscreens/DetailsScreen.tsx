@@ -5,6 +5,9 @@ import { useFocusEffect } from '@react-navigation/native';
 import { SignUpStyles } from '../../../styles/Signup/signup.style';
 import { router } from 'expo-router';
   import { useAuth } from '@/context/AuthContext';
+import MessageQuestion from '@/assets/svg/message-question';
+import ArrowUp from '@/assets/svg/arrowUp';
+import ArrowDown from '@/assets/svg/arrowDown';
 
 export default function DetailScreen() {
   const { email, register} = useAuth();
@@ -117,16 +120,17 @@ export default function DetailScreen() {
     router.push("/(routes)/need-help")
   }
   return (
-    <ScrollView style={{ flex: 1 ,}} scrollEventThrottle={1}>
-      <View style={{ marginTop: 15 }}>
+   
+      <View style={{ marginTop: 15 ,paddingHorizontal: 16 ,marginBottom:"40%"}}>
+        
         {/* First Name Input */}
         <View>
           <Text style={SignUpStyles.label}>First name</Text>
           <TextInput
             style={[
-              SignUpStyles.input,
+              SignUpStyles.TextInput,
               focusInput.firstName && { borderColor: "#DEBC8E" },
-              { paddingHorizontal: 40 }
+             
             ]}
             keyboardType="default"
             value={userInfo.firstName}
@@ -140,10 +144,10 @@ export default function DetailScreen() {
 
         {/* Last Name Input */}
         <View>
-          <Text style={SignUpStyles.label}>Last name</Text>
+          <Text style={[SignUpStyles.label,{paddingTop:5}]}>Last name</Text>
           <TextInput
             style={[
-              SignUpStyles.input,
+              SignUpStyles.TextInput,
               focusInput.LastName && { borderColor: "#DEBC8E" },
               { paddingHorizontal: 40 }
             ]}
@@ -167,11 +171,7 @@ export default function DetailScreen() {
             <Text style={styles.dropdownButtonText}>
               {userInfo.Gender || "Select Gender"}
             </Text>
-            <Ionicons
-              name={isDropdownOpen ? 'chevron-up' : 'chevron-down'}
-              size={20}
-              color="#333"
-            />
+            {isDropdownOpen ? <ArrowUp/> :  <ArrowDown/>}
           </TouchableOpacity>
           {isDropdownOpen && (
             <View style={styles.dropdownMenu}>
@@ -196,7 +196,7 @@ export default function DetailScreen() {
           <Text style={SignUpStyles.label}>Email</Text>
           <TextInput
             style={[
-              SignUpStyles.input,
+              SignUpStyles.TextInput,
               focusInput.email && { borderColor: "#DEBC8E" },
               { paddingHorizontal: 40 }
             ]}
@@ -221,7 +221,7 @@ export default function DetailScreen() {
             <Text style={styles.callingCode}>+{callingCode}</Text>
             <TextInput
               style={styles.phoneInput}
-              keyboardType="numeric"
+              keyboardType="number-pad"
               value={phoneNumber}
               onChangeText={handlePhoneChange}
               placeholder="Phone number"
@@ -258,8 +258,8 @@ export default function DetailScreen() {
           )}
         </TouchableOpacity>
 
-        <View style={{flexDirection:"row", justifyContent: "center"}}>
-          <MaterialCommunityIcons name="message-question" size={24} color="black" />
+        <View style={{flexDirection:"row", justifyContent: "center", gap:5}}>
+          <MessageQuestion/>
           <Text>Need help?</Text>
           <TouchableOpacity onPress={handleHelp}>
             <Text style={{color:"#DEBC8E"}}>Click Here</Text>
@@ -267,8 +267,7 @@ export default function DetailScreen() {
         </View>
       </View>
       
-    </ScrollView>
-  );
+   );
 }
 
 const styles = StyleSheet.create({
@@ -278,7 +277,7 @@ const styles = StyleSheet.create({
   dropdownButton: {
     height: 55,
     borderRadius: 3,
-    marginHorizontal: 16,
+    // marginHorizontal: 16,
     borderWidth: 1,
     borderColor: "#E9E9E9",
     paddingLeft: 15,
@@ -290,7 +289,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 10,
-    marginTop: 8,
+    // marginTop: 8,
   },
   dropdownButtonText: {
     color: '#333',
@@ -325,38 +324,40 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   phoneContainer: {
-     flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: "white",
-    marginHorizontal: 16,
-    // marginTop: 30,
-    // gap: 10,
-  },
-  callingCode: {
-    marginHorizontal: 10,
-    fontSize: 13,
-    color: '#212121',
-    borderRightWidth: 1,
-    height:20,
-    borderColor: "#212121",
-    paddingRight: 15,
-    fontFamily:"Helvetica Neue",
-    lineHeight:18.2,
-    fontWeight:"500"
-  },
-  flagButton: {
-    marginLeft: 8,
-  },
-  phoneInput: {
-    height: 55,
-    borderRadius: 3,
-    
+    flexDirection: 'row',
+   alignItems: 'center',
+   backgroundColor: "white",
+   paddingVertical:5,
+   // marginHorizontal: 16,
+   // marginTop: 30,
+   // gap: 10,
+ },
+ callingCode: {
+   marginHorizontal: 10,
+   fontSize: 13,
+   color: '#212121',
+   borderRightWidth: 1,
+   height:20,
+   
+   borderColor: "#212121",
+   paddingRight: 15,
+   fontFamily:"Helvetica Neue",
+   lineHeight:18.2,
+   fontWeight:"500"
+ },
+ flagButton: {
+   marginLeft: 8,
+ },
+ phoneInput: {
+  flex:1,
+   height: 55,
+   borderRadius: 3,
     fontSize: 14,
-    backgroundColor: "white",
-     color: '#212121',
-    paddingRight: 15,
-    fontFamily:"Proxima Nova",
-    lineHeight:14,
-    fontWeight:"500"
-  },
+   backgroundColor: "white",
+    color: '#212121',
+   paddingRight: 15,
+   fontFamily:"Proxima Nova",
+   lineHeight:14,
+   fontWeight:"500"
+ },
 }); 
