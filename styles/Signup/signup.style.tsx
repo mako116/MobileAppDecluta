@@ -76,12 +76,31 @@ export const SignUpStyles = StyleSheet.create({
       color: "#a1a1a1",
       fontFamily:"Proxima Nova"
     },
+    inputs: {
+      width:"100%",
+      flex: 1,
+       // paddingVertical: 25,
+      paddingLeft: 15,
+      fontSize: 15,
+      fontWeight:'700',
+      lineHeight:22.4,
+      color: "#212121",
+      fontFamily:"Helvetica Neue"
+    },
     inputContainerStyle: {
       marginHorizontal: 16,
       borderRadius: 4,
       borderWidth: 1,
       borderColor: "#E9E9E9",
       paddingLeft: 15,
+      backgroundColor: "white",
+    },
+    inputContainerStyles: {
+      paddingVertical: 3,
+       borderRadius: 4,
+      borderWidth: 1,
+      borderColor: "#E9E9E9",
+      // paddingLeft: 15,
       backgroundColor: "white",
     },
     visibleIcon: {

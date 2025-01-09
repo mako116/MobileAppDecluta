@@ -8,6 +8,7 @@ import { Image, Text, TextInput, TouchableOpacity } from 'react-native';
 import {  View } from 'react-native';
 import CouponRemovedModal from '../Modal/Removed';
 import { router } from 'expo-router';
+import ModalProceed from '../Modal/ModalProceed';
 
 const CheckoutFoot = () => {
   const { cart, applyRewardsBonus, checkoutPrice } = useCart();
@@ -17,6 +18,7 @@ const CheckoutFoot = () => {
   const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
   const [isRewardDropdownVisible, setIsRewardDropdownVisible] = useState<boolean>(false);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [modalProceed, setModalProceed] = useState(false);
 
   const formatPrice = (price: number): string => {
     if (price > 900) {
@@ -90,6 +92,17 @@ const CheckoutFoot = () => {
     setIsCouponApplied(false);
     setCouponCode('');
     setIsDropdownVisible(true);
+  };
+
+ 
+  // Function to toggle modal visibility
+  const toggleModal = () => {
+    setModalProceed(!modalProceed);
+  };
+
+  // Function to handle the Proceed button click
+  const Proceed = () => {
+    toggleModal(); // Show modal when Proceed is clicked
   };
 
   return (
@@ -196,13 +209,18 @@ const CheckoutFoot = () => {
         </TouchableOpacity>
       </View>
 
-      <View style={YourCart.secureSection}>
+      <TouchableOpacity
+      onPress={Proceed}
+      style={YourCart.secureSection}>
         <Image
           source={require('../../../../assets/svg/Frame 645480.png')}
           style={{ width: '55%', height: 30 }}
           resizeMode="contain"
         />
-      </View>
+      </TouchableOpacity>
+
+        {/* Pass modalProceed and toggleModal to ModalProceed */}
+       <ModalProceed modalProceed={modalProceed} toggleModal={toggleModal} />
 
       {/* Coupon Applied Modal */}
       <CouponRemovedModal visible={modalVisible} onClose={closeModal} />

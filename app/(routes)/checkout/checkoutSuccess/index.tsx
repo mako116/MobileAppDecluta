@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-const CheckoutWallet = () => {
+const CheckoutSuccess = () => {
     return (
         <View>
             
@@ -11,4 +11,4 @@ const CheckoutWallet = () => {
 
 const styles = StyleSheet.create({})
 
-export default CheckoutWallet;
+export default CheckoutSuccess;

@@ -30,6 +30,31 @@ const YourCart = StyleSheet.create({
       paddingTop:10,
        marginBottom:5,
     },
+    rows:{
+      flexDirection:"row",
+      alignItems:"center",
+      // justifyContent:"flex-start",
+      paddingRight:10,
+      gap:10
+    },
+    rowSed:{
+      flexDirection:"row",
+      alignItems:"center",
+      justifyContent:"space-between",
+      paddingHorizontal:10,
+      paddingVertical:15,
+      gap:10,
+      borderWidth: 1,
+      borderColor: '#E9E9E9',
+      borderRadius: 4,
+    },
+    CardText:{
+      fontSize: 13,
+      fontWeight: '700',
+       fontFamily:"Helvetica Neue",
+      lineHeight:18.2,
+      color: '#000000', // Color for the amount text
+     },
     checkbox: {
       width: 17,
       height: 17,
@@ -98,6 +123,13 @@ const YourCart = StyleSheet.create({
        justifyContent:"space-between",
       marginBottom: 5,
      },
+     bonusT: {
+      fontSize: 12,
+      fontWeight: '400',
+      color: '#212121',
+      fontFamily:"Proxima Nova",
+      lineHeight:16.8
+    },
     bonusText: {
       fontSize: 14,
       fontWeight: '400',
@@ -154,6 +186,16 @@ const YourCart = StyleSheet.create({
        borderBottomWidth:1,
       justifyContent:"space-between",
       borderColor:"#E9E9E9",
+    },
+    notificationCont: {
+      flexDirection: 'row',
+      paddingVertical:8,
+       borderWidth:1,
+      justifyContent:"space-between",
+      alignItems:"center",
+      borderColor:"#E9E9E9",
+      borderRadius:4,
+      // backgroundColor:"#fff"
     },
     image: {
       width: 50,
@@ -241,7 +283,82 @@ const YourCart = StyleSheet.create({
       paddingVertical: 13,
     //  backgroundColor:"#fff"
     },
-     
+    modalContainer: {
+      flex: 1,
+      justifyContent: 'flex-end',
+      alignItems: 'center',
+      backgroundColor: 'rgba(0, 0, 0, 0.2)', // Semi-transparent background
+    },
+    modalContent: {
+      backgroundColor: 'white',
+      padding: 20,
+      borderTopLeftRadius: 26,
+      borderTopRightRadius: 26,
+      width: '100%',
+    },
+    modalTitle: {
+      fontSize: 19,
+      fontWeight: '700',
+      marginBottom: 10,
+      color: '#212121',
+      textAlign: 'center',
+      fontFamily: 'Helvetica Neue',
+      lineHeight: 26.6,
+    },
+    inputGroup: {
+      marginBottom: 15,
+    },
+    bottomButtons: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      borderRadius: 5,
+      paddingVertical: 17,
+      alignItems: 'center',
+      marginTop: 10,
+      gap: 5,
+    },
+    label: {
+      fontSize: 14,
+      fontWeight: '400',
+      marginBottom: 5,
+      lineHeight:19.6,
+      color: '#212121',
+      fontFamily:"Helvetica Neue",
+    },
+    input: {
+      flex:1,
+       paddingLeft: 10,
+      fontSize: 13,
+       color:"#212121",
+      fontFamily:"Proxima Nova",
+      fontWeight:'400',
+      lineHeight:18.2
+    },
+
+    
+    pinInputContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    eyeIcon: {
+      paddingHorizontal: 10,
+    },
+    saveButton: {
+      backgroundColor: '#4CAF50',
+      padding: 10,
+      marginTop: 10,
+      borderRadius: 5,
+      alignItems: 'center',
+    },
+    closeButton: {
+      backgroundColor: '#F44336',
+      padding: 10,
+      marginTop: 10,
+      borderRadius: 5,
+      alignItems: 'center',
+    },
+    
   });
 
 

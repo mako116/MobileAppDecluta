@@ -6,11 +6,11 @@ import {
   StyleSheet,
   Animated,
 } from 'react-native';
-import ArrowDownBlack from '@/assets/images/cart/arrowDownBlack';
-import CartWhite from '@/assets/svg/cartwhite';
+ import CartWhite from '@/assets/svg/cartwhite';
 import { useCart } from '@/context/CartContext';
-import CheckoutBoard from '../Selections/CheckoutBoard';
-import YourCart from '@/styles/Cart/YourCart.styles';
+ import YourCart from '@/styles/Cart/YourCart.styles';
+import ArrowDown from '@/assets/svg/arrowDown';
+import ArrowUp from '@/assets/svg/arrowUp';
  
 const DropdownWithSummary: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -70,10 +70,10 @@ const DropdownWithSummary: React.FC = () => {
     <View >
       {/* Dropdown Button */}
       <TouchableOpacity style={styles.button} onPress={toggleDropdown}>
-        <View style={{flexDirection:"row", gap:15}}>
+        <View style={{flexDirection:"row", gap:10}}>
             <CartWhite/>
         <Text style={YourCart.price}>Show order summary</Text>
-        {isOpen ? <ArrowDownBlack /> : <ArrowDownBlack />}
+        {isOpen ? <ArrowUp /> : <ArrowDown />}
         </View>
         <Text style={YourCart.title}>
         {formatPrice(totalAmount)}
@@ -84,7 +84,8 @@ const DropdownWithSummary: React.FC = () => {
       {/* Dropdown List */}
       <Animated.View style={[styles.dropdown, { transform: [{ scaleY }] }]}>
         {isOpen && (
-          <View style={{position:"absolute", top:0, zIndex:1000,  backgroundColor: '#fff',width:"100%",  borderRadius: 4,
+          <View style={{zIndex:1000,  backgroundColor: '#fff',width:"100%",  borderRadius: 4,
+            borderWidth:1, borderColor:"#E9E9E9",
             }}>
             <TouchableOpacity style={styles.item}>
               <Text style={styles.itemText}>Profile</Text>
@@ -127,7 +128,7 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     zIndex:1000,
-    
+    // borderRadius:40
   
   },
   item: {
