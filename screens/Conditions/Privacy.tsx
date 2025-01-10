@@ -149,7 +149,7 @@ type Point = {
     ];
   
     const renderItem: ListRenderItem<Term> = ({ item }) => (
-      <View style={{ marginTop: 10 }}>
+      <View style={{ marginTop: 0 }}>
         <Text style={[styles.boldS, { paddingVertical: 5 }]}>
           {item.id}. {item.title}
         </Text>
@@ -206,25 +206,26 @@ type Point = {
       lineHeight: 22.4,
       color: '#212121',
       marginLeft: 10
-      , fontFamily:"ProximaNovaR"
+      ,  fontFamily:"Helvetica Neue"
     },
     contentContainer: {
       paddingHorizontal: 16,
-      paddingVertical: 30,
+      paddingVertical: 20,
       backgroundColor:'#f9f9f9'
     },
     boldS: {
       fontWeight: '700',
       fontSize: 13,
-      lineHeight: 18.2
-      , fontFamily:"ProximaNovaR"
-    },
+      lineHeight: 18.2 , 
+      fontFamily:"Helvetica Neue"
+   },
     middleText: {
       fontWeight: '400',
       fontSize: 14,
       lineHeight: 19.6,
       color: '#212121'
-      , fontFamily:"ProximaNovaR"
+      , 
+      fontFamily:"Proxima Nova"
     },
   });
   

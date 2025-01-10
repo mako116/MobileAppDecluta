@@ -10,7 +10,7 @@ export default function Splashs() {
       setTimeout(() => {
           // router.push("/(tabs)/home")
           router.push("/(routes)/welcomebackPIn")
-       }, 2800);
+       }, 1900);
   },[])
 
   return (
