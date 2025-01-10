@@ -9,10 +9,10 @@ import {
   TextInput,
   TouchableOpacity,
   Alert,
-  Image,
   ActivityIndicator,
 } from 'react-native';
 import { Creating } from '@/styles/createPassword/CreatePassword'; // Ensure this path is correct
+import Passwordheadsign from '@/assets/svg/passwordheadsign';
 
 interface RequirementProps {
   label: string;
@@ -26,7 +26,6 @@ function RequirementItem({ label, isValid }: RequirementProps) {
         name={isValid ? 'checkmark-circle-sharp' : 'square-outline'}
         size={18}
         color={isValid ? '#DEBC8E' : 'gray'}
-        
       />
       <Text
         style={{
@@ -37,7 +36,7 @@ function RequirementItem({ label, isValid }: RequirementProps) {
           lineHeight: 19.6,
           width: 230,
           alignItems: 'center',
-          fontFamily:"ProximaNovaR",
+          fontFamily: "Proxima Nova",
         }}
       >
         {label}
@@ -45,11 +44,9 @@ function RequirementItem({ label, isValid }: RequirementProps) {
     </View>
   );
 }
- 
 
 export default function CreatePassword(): JSX.Element {
   const [buttonSpinner, setButtonSpinner] = useState(false);
-
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [requirements, setRequirements] = useState({
@@ -80,7 +77,7 @@ export default function CreatePassword(): JSX.Element {
     if (!allRequirementsMet) {
       Alert.alert(
         'Error',
-        'Password does not meet the required criteria or passwords do not match',
+        'Password does not meet the required criteria or passwords do not match'
       );
       return;
     }
@@ -91,17 +88,12 @@ export default function CreatePassword(): JSX.Element {
   const navigateToPrivacyPolicy = () => router.push('/(routes)/privacyPolicy');
 
   return (
-    <SafeAreaView>
-      <ScrollView scrollEventThrottle={16}>
-        <View style={Creating.signs}>
-          <Image
-            source={require('@/assets/images/Lat.png')}
-            style={{
-              justifyContent: 'center',
-              margin: 'auto',
-            }}
-          />
+    <SafeAreaView style={{height:"100%", flexDirection:"column", justifyContent:"space-between", paddingBottom:20}}>
+      <View>
+       <View style={Creating.signs}>
+          <Passwordheadsign />
         </View>
+        <ScrollView scrollEventThrottle={16}>
         <View style={Creating.section}>
           <Text
             style={{
@@ -109,8 +101,7 @@ export default function CreatePassword(): JSX.Element {
               fontWeight: '700',
               fontSize: 23,
               lineHeight: 32.2,
-              fontFamily:"HelveticaNeueLTPro"
-
+              fontFamily: "Helvetica Neue",
             }}
           >
             Create Password
@@ -118,11 +109,13 @@ export default function CreatePassword(): JSX.Element {
         </View>
 
         <View style={Creating.container}>
-          <Text style={{ marginVertical: 5 ,marginLeft:2, fontFamily:"ProximaNovaR"}}>Enter Password</Text>
+          <Text style={{ marginVertical: 5, marginLeft: 2, fontFamily: "Proxima Nova" }}>
+            Enter Password
+          </Text>
           <View
             style={[
               Creating.passwordContainer,
-              password ? Creating.focusBorder : undefined, // Avoid using an empty string
+              password ? Creating.focusBorder : undefined,
             ]}
           >
             <TextInput
@@ -141,11 +134,13 @@ export default function CreatePassword(): JSX.Element {
             </TouchableOpacity>
           </View>
 
-          <Text style={{ marginTop: 15 ,marginLeft:2, fontFamily:"ProximaNovaR"}}>Confirm Password</Text>
+          <Text style={{ marginTop: 15, marginLeft: 2, fontFamily: "Proxima Nova" }}>
+            Confirm Password
+          </Text>
           <View
             style={[
               Creating.passwordContainer,
-              confirmPassword ? Creating.focusBorder : undefined, // Avoid using an empty string
+              confirmPassword ? Creating.focusBorder : undefined,
             ]}
           >
             <TextInput
@@ -173,11 +168,12 @@ export default function CreatePassword(): JSX.Element {
               fontWeight: '700',
               lineHeight: 19.6,
               color: '#212121',
-               fontFamily:"HelveticaNeueLTPro"
+              fontFamily: "Helvetica Neue",
             }}
           >
             PASSWORD REQUIREMENTS
           </Text>
+
           <View style={Creating.requirementsContainer}>
             <RequirementItem
               label="8 characters including"
@@ -200,41 +196,45 @@ export default function CreatePassword(): JSX.Element {
               isValid={requirements.specialChar}
             />
           </View>
-          <View>
-          <TouchableOpacity
-  style={[
-    Creating.createAccountButton,
-    (!allRequirementsMet || buttonSpinner) && Creating.disabledButton,
-  ]}
-  onPress={() => {
-    setButtonSpinner(true); // Start spinner
-    setTimeout(() => {
-      try {
-        handleCreateAccount(); // Attempt to create the account after delay
-      } catch (error) {
-      } finally {
-        setButtonSpinner(false); // Stop spinner after 2 seconds
-      }
-    }, 1000); // 2-second delay
-  }}
-  disabled={!allRequirementsMet || buttonSpinner} // Disable when processing
->
-  {buttonSpinner ? (
-    <ActivityIndicator size="small" color="#000" />
-  ) : (
-    <Text
-      style={[
-        Creating.buttonText,
-        (!allRequirementsMet || buttonSpinner) && Creating.disabledButton,
-      ]}
-    >
-      Create Account
-    </Text>
-  )}
-</TouchableOpacity>
-          </View>
-           
-          <View style={Creating.footerTextContainer}>
+
+         
+        </View>
+      </ScrollView>
+       </View>
+       <View style={{paddingHorizontal:16}}>
+            <TouchableOpacity
+              style={[
+                Creating.createAccountButton,
+                (!allRequirementsMet || buttonSpinner) && Creating.disabledButton,
+              ]}
+              onPress={() => {
+                setButtonSpinner(true);
+                setTimeout(() => {
+                  try {
+                    handleCreateAccount();
+                  } catch (error) {
+                  } finally {
+                    setButtonSpinner(false);
+                  }
+                }, 1000);
+              }}
+              disabled={!allRequirementsMet || buttonSpinner}
+            >
+              {buttonSpinner ? (
+                <ActivityIndicator size="small" color="#000" />
+              ) : (
+                <Text
+                  style={[
+                    Creating.buttonText,
+                    (!allRequirementsMet || buttonSpinner) && Creating.disabledButton,
+                  ]}
+                >
+                  Create Account
+                </Text>
+              )}
+            </TouchableOpacity>
+
+            <View style={Creating.footerTextContainer}>
             <Text style={Creating.footerText}>
               By clicking create profile, you accept our
             </Text>
@@ -243,11 +243,12 @@ export default function CreatePassword(): JSX.Element {
             </TouchableOpacity>
             <Text style={Creating.footerText}> and </Text>
             <TouchableOpacity onPress={navigateToPrivacyPolicy}>
-              <Text style={Creating.linkText}>Privacy Policy</Text>
+              <Text style={Creating.linkTexts}>Privacy Policy</Text>
             </TouchableOpacity>
           </View>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+      </View>
+
+         
+     </SafeAreaView>
   );
 }

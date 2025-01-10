@@ -14,14 +14,16 @@ export default function ProfileCreationFlow() {
   return (
     <SafeAreaView style={styles.container}>
       {step === 1 && (
-        <View style={[styles.box,{height:"80%", margin:"auto"}]}>
-          <Image
+        <View style={[styles.box,{height:"100%", flexDirection:"column", justifyContent:"space-between", alignItems:"center"}]}>
+        <View style={{marginVertical:"20%", justifyContent:"center", alignItems:"center", paddingHorizontal:"20%"}}>
+        <Image
       source={require('../../../assets/images/createdprofile.png')}
       style={{}}
       />
           <Text style={styles.title}>Profile Created</Text>
-          <Text style={{textAlign:"center",     fontFamily:"ProximaNovaR",}}>Congrats your profile has been created.</Text>
-          <TouchableOpacity style={[styles.button,{position:"absolute",bottom:0, width:"100%",}]} onPress={nextStep}>
+          <Text style={{textAlign:"center",fontFamily:"Proxima Nova",marginTop:-10,lineHeight:19.6, fontSize:14,fontWeight:'400', letterSpacing:0.1}}>Congrats your profile has been created.</Text>
+        </View>
+          <TouchableOpacity style={[styles.button ]} onPress={nextStep}>
             <Text style={styles.buttonText}>Continue</Text>
           </TouchableOpacity>
         </View>
@@ -34,7 +36,7 @@ export default function ProfileCreationFlow() {
       style={{}}
       />
           <Text style={styles.title}>Enable Biometrics!</Text>
-          <Text style={{fontWeight:"400", textAlign:"center",lineHeight:19.6, fontSize:14, fontFamily:"ProximaNovaR"}}>Make your login & transaction faster and more secure with biometrics enabled</Text>
+          <Text style={{fontWeight:"400", textAlign:"center",lineHeight:19.6, fontSize:14, fontFamily:"Proxima Nova"}}>Make your login & transaction faster and more secure with biometrics enabled</Text>
           <View style={{flexDirection: "row", marginTop:"90%", gap:20}}>
           
           <TouchableOpacity style={styles.secondaryButton} onPress={skipStep}>
@@ -88,11 +90,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 23,
     fontWeight: '700',
+    lineHeight:32.2,
     color: '#212121',
     marginBottom: 16,
     textAlign:"center",
     marginTop:4,
-     fontFamily:"HelveticaNeueLTPro"
+     fontFamily:"Helvetica Neue"
   },
   button: {
     backgroundColor: '#DFBD8F',
@@ -107,7 +110,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     fontSize: 16,
     lineHeight:22.4,
-      fontFamily:"ProximaNovaR"
+      fontFamily:"Proxima Nova"
   },
   secondaryButton: {
     paddingVertical: 19,
@@ -122,6 +125,6 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     fontSize: 16,
     lineHeight:22.4,
-      fontFamily:"ProximaNovaR"
+      fontFamily:"Proxima Nova"
   },
 });

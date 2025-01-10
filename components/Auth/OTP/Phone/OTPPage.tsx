@@ -4,24 +4,27 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { View, Text, ScrollView, SafeAreaView, TextInput, TouchableOpacity, ActivityIndicator, Image, Alert } from 'react-native';
 import { router } from 'expo-router';
 import PhoneOtpStyles from '@/styles/Login/phoneOtpStyles';
+import PhoneOtpHead from '@/assets/svg/phoneOtpHead';
+import BackButton from '@/assets/images/kyc/LeftArrow';
 
 export default function OTPPage() {
   const handlehelp =()=>{
     router.push("/(routes)/need-help")
   }
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" ,paddingTop:20}}>
-      <View
-        style={{ backgroundColor: "#fff" }}
-      >
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" ,paddingTop:50}}>
+      <View>
         {/* Header Section with Logo */}
         <View style={PhoneOtpStyles.signs}>
-          <Image
-            source={require('@/assets/images/square.png')}
-           />
+          <BackButton/>
+       <View style={{marginHorizontal:"15%"}}>
+       <PhoneOtpHead/>
+       </View>
         </View>
 
-        {/* Title and Instructions */}
+       <View style={{backgroundColor:"#f9f9f9", height:"100%", justifyContent:"space-between", paddingBottom:"20%"}}>
+        <View>
+          {/* Title and Instructions */}
         <View style={PhoneOtpStyles.instructions}>
           <Text style={PhoneOtpStyles.title}>Verify Your Phone Number</Text>
           <Text style={PhoneOtpStyles.subtitle}>
@@ -34,6 +37,7 @@ export default function OTPPage() {
         <View style={PhoneOtpStyles.otpSection}>
           <OTPMain />
         </View>
+        </View>
 
         {/* Help Section */}
         <View style={PhoneOtpStyles.helpSection}>
@@ -42,6 +46,8 @@ export default function OTPPage() {
           <TouchableOpacity>
             <Text onPress={handlehelp} style={PhoneOtpStyles.helpLink}>Click Here</Text>
           </TouchableOpacity>
+        </View>
+
         </View>
       </View>
     </SafeAreaView>

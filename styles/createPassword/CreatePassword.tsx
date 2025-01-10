@@ -3,8 +3,10 @@ import { StyleSheet } from "react-native";
 
 export const Creating = StyleSheet.create({
     signs: {
+      width:"100%",
       paddingHorizontal: 12,
       paddingTop: 60,
+       justifyContent:"center",
       paddingBottom: 20,
       flexDirection: "row",
       alignItems: "center",
@@ -71,7 +73,7 @@ export const Creating = StyleSheet.create({
     footerTextContainer: {
       flexDirection: 'row',
       flexWrap: 'wrap',
-      marginTop: 30,
+      marginTop: 20,
       textAlign: 'center',
       paddingHorizontal: 40,
       justifyContent: 'center',
@@ -82,7 +84,7 @@ export const Creating = StyleSheet.create({
       fontSize: 12,
       lineHeight: 16.8,
       color: '#212121',
-      fontFamily:"ProximaNovaR",
+      fontFamily:"Proxima Nova",
     },
     linkText: {
       textDecorationLine: 'underline',
@@ -90,13 +92,21 @@ export const Creating = StyleSheet.create({
       fontWeight: '400',
       fontSize: 12,
       lineHeight: 16.8,
-      fontFamily:"ProximaNovaR",
+      fontFamily:"Proxima Nova",
+    },
+    linkTexts: {
+      // textDecorationLine: 'underline',
+      color: '#C8A980',
+      fontWeight: '400',
+      fontSize: 12,
+      lineHeight: 16.8,
+      fontFamily:"Proxima Nova",
     },
     buttonText: {
        color: "#212121",
       fontSize: 16,
       fontWeight: "700",
-      fontFamily:"ProximaNovaR",
+      fontFamily:"Proxima Nova",
     },
     section: {
       paddingTop: 13,

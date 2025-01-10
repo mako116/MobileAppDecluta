@@ -29,6 +29,11 @@ export const SignUpStyles = StyleSheet.create({
       paddingTop: 20,
       paddingBottom: 20,
     },
+    headers: {
+      // backgroundColor: "#fff",
+      paddingTop: 20,
+      paddingBottom: 20,
+    },
     genderOption: {
       padding: 10,
       marginHorizontal: 5,
@@ -70,7 +75,7 @@ export const SignUpStyles = StyleSheet.create({
     },
     TextInput: {
       flex: 1,
-      padding: 25,
+       padding: 25,
       paddingLeft: 15,
       fontSize: 14,
       borderWidth:1,
@@ -131,6 +136,13 @@ export const SignUpStyles = StyleSheet.create({
       padding: 25,
       borderRadius: 8,
       marginHorizontal: 16,
+      backgroundColor: "#DEBC8E",
+      marginTop: 5,
+    },
+    loginButtons: {
+      padding: 25,
+      borderRadius: 8,
+      // marginHorizontal: 16,
       backgroundColor: "#DEBC8E",
       marginTop: 5,
     },

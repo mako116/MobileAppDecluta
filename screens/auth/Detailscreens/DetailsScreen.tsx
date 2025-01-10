@@ -8,6 +8,8 @@ import { router } from 'expo-router';
 import MessageQuestion from '@/assets/svg/message-question';
 import ArrowUp from '@/assets/svg/arrowUp';
 import ArrowDown from '@/assets/svg/arrowDown';
+import ArrowGrayDown from '@/assets/svg/ArrowGrayDown';
+import ArrowUpGray from '@/assets/svg/ArrowUpGray';
 
 export default function DetailScreen() {
   const { email, register} = useAuth();
@@ -112,8 +114,6 @@ export default function DetailScreen() {
         // }, 2000);
       }, 1000);
     }
-
-    
   };
 
   const handleHelp = () =>{
@@ -171,7 +171,7 @@ export default function DetailScreen() {
             <Text style={styles.dropdownButtonText}>
               {userInfo.Gender || "Select Gender"}
             </Text>
-            {isDropdownOpen ? <ArrowUp/> :  <ArrowDown/>}
+            {isDropdownOpen ? <ArrowUpGray/> :  <ArrowGrayDown/>}
           </TouchableOpacity>
           {isDropdownOpen && (
             <View style={styles.dropdownMenu}>
@@ -234,7 +234,7 @@ export default function DetailScreen() {
         <View style={{marginTop:15,marginBottom:40}}>
           <Text style={SignUpStyles.label}>Who Referred You?</Text>
           <TextInput
-            style={[SignUpStyles.input]}
+            style={SignUpStyles.TextInput} 
             keyboardType="default"
             placeholder="Enter referral code"
             placeholderTextColor='gray'
@@ -245,8 +245,8 @@ export default function DetailScreen() {
         <TouchableOpacity
           onPress={handleSignUp}
           style={[
-            { marginVertical: 20 },
-            SignUpStyles.loginButton,
+            
+            SignUpStyles.loginButtons,
             !isButtonEnabled && { backgroundColor: "#E9E9E9" } // Gray out if disabled
           ]}
           disabled={!isButtonEnabled} // Disable button if not enabled
@@ -258,7 +258,7 @@ export default function DetailScreen() {
           )}
         </TouchableOpacity>
 
-        <View style={{flexDirection:"row", justifyContent: "center", gap:5}}>
+        <View style={{flexDirection:"row", justifyContent: "center", gap:5, paddingTop:25}}>
           <MessageQuestion/>
           <Text>Need help?</Text>
           <TouchableOpacity onPress={handleHelp}>
@@ -302,15 +302,16 @@ const styles = StyleSheet.create({
      resizeMode: "contain",
    },
   dropdownMenu: {
+    width:"100%",
     marginTop: 5,
     borderWidth: 1,
     borderColor: '#ddd',
     borderRadius: 8,
-    marginHorizontal: 16,
-    backgroundColor: '#fff',
+     backgroundColor: '#fff',
     overflow: 'hidden',
   },
   dropdownItem: {
+    width:"100%",
     padding: 10,
   },
   dropdownItemText: {

@@ -11,7 +11,7 @@ export default function SplashScreen() {
     const checkAuth = async () => {
       try {
         // Simulate a brief delay for the splash screen
-        await new Promise((resolve) => setTimeout(resolve, 1500));
+        await new Promise((resolve) => setTimeout(resolve, 1800));
 
         const email = await AsyncStorage.getItem('email');
         if (email) {
@@ -31,16 +31,17 @@ export default function SplashScreen() {
 
   return (
     <View style={styles.background}>
-      <Image
-        source={require('../../../assets/images/decluttaking.png')}
-        style={styles.logo}
-      />
-      <View>
+      <View style={[StyleSheet.absoluteFillObject, styles.container]}>
+        <Image
+          source={require('../../../assets/images/decluttaking.png')}
+          style={styles.logo}
+        />
+        {/* loading */}
         <Lottie
-          source={require('../../../assets/loading/msplachit.json')}  
+          source={require('../../../assets/loading/latestsplash.json')}
           autoPlay
           style={styles.lottie}
-       />
+        />
       </View>
     </View>
   );
@@ -49,16 +50,57 @@ export default function SplashScreen() {
 const styles = StyleSheet.create({
   background: {
     flex: 1,
-    backgroundColor: '#483a2d',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "#463e31",
+    justifyContent: "center",
+    alignContent: "center",
+  },
+  welcomeText: {
+    textAlign: "center",
+    fontSize: 40,
+    color: "#fff",
+    fontWeight: "600",
+  },
+  container: {
+    display: "flex",
+    paddingBottom: 10,
+    marginLeft: 8,
+    justifyContent: "center",
+    alignItems: "center",
   },
   logo: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
     width: 226,
     height: 48,
+    marginTop: "-12%",
   },
   lottie: {
-    width: 240,
-    height: 15
+    width: 455,
+    height: "100%",
+    position: "absolute",
+    marginTop: 20,
+  },
+  welcomeContainer: {
+    justifyContent: "center",
+    marginBottom: 90,
+    margin: "auto",
+  },
+  welcomeTitle: {
+    color: "#fff",
+    fontWeight: "700",
+    textAlign: "center",
+    fontSize: 23,
+    lineHeight: 32.2,
+    paddingHorizontal: 50,
+    marginBottom: 10,
+  },
+  welcomeDescription: {
+    fontSize: 14,
+    fontWeight: "400",
+    lineHeight: 19.6,
+    textAlign: "center",
+    paddingHorizontal: 50,
+    color: "#FFFFFF",
   },
 });

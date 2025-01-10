@@ -225,11 +225,7 @@ export default function Login() {
 
        </View>
     </View>
-
-
-       
-
-        <View style={{ paddingVertical: 20, flexDirection: "row", alignItems: "center", margin: "auto", gap: 10 }}>
+      <View style={{ paddingVertical: 20, flexDirection: "row", alignItems: "center", margin: "auto", gap: 10 }}>
         <TouchableOpacity onPress={() => router.push("/(routes)/Terms")}>
           <Text
            style={{ color: "#DEBC8E", fontWeight: "700", fontSize: 16, lineHeight: 22.4 ,fontFamily:'Helvetica Neue'}}>
