@@ -22,35 +22,20 @@ import Loginbanner from '@/screens/BoxBanner/Loginbanner/Loginbanner';
 import ProfileKYc from '@/screens/Kyc/BannerH/ProfileKYc';
 import LocationModal from '@/screens/ChangeLocation/changelocationScreen';
 import Homes from '@/styles/Homes/Home.styles';
-import { Ionicons } from '@expo/vector-icons';
-import { useCart } from '@/context/CartContext';
- 
+import FloatingCart from '@/screens/FloatingCart/FloatingCart';
+
 export default function HomeScreen() {
   const [modalVisible, setModalVisible] = useState(false);
   const [currentPopup, setCurrentPopup] = useState(1);
   const [selectedState, setSelectedState] = useState('Oyo');
   const [refreshing, setRefreshing] = useState(false);
-  const { cart} = useCart();
 
   const openModal = () => {
     setModalVisible(true);
     setCurrentPopup(1);
   };
 
-  const getCartSummary = () => {
-    let totalAmount = 0;
-    let uniqueItemCount = cart.length; // Unique items count is the number of items in the cart.
   
-    cart.forEach((item) => {
-      totalAmount += item.price * item.count;
-    });
-  
-    return { totalAmount, uniqueItemCount };
-  };
-  
-  const {   uniqueItemCount } = getCartSummary();
-
-
 
 
   // const closeModal = () => {
@@ -141,19 +126,13 @@ export default function HomeScreen() {
           />
         </ScrollView>
       </SafeAreaView>
-
-      {/* Login Banner */}
-      <View>
-        <Loginbanner />
-      </View>
-
-      {/* Cart Icon Fixed at Bottom */}
-      <TouchableOpacity style={Homes.cartIcon}>
-        <Ionicons name="cart-outline" size={24} color="#212121" />
-        <View style={Homes.cartBadge}>
-          <Text style={Homes.cartBadgeText}>{uniqueItemCount}</Text>
-        </View>
-      </TouchableOpacity>
+        {/* Cart Icon Fixed at Bottom */}
+        <FloatingCart/>
+        
+       {/* Login Banner */}
+         <Loginbanner />
+ 
+   
     </>
   );
 }

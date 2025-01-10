@@ -63,11 +63,11 @@ import { StyleSheet } from "react-native";
     cartIcon: {
       position: 'absolute', // Keeps the cart icon fixed at the bottom
       bottom: "12%", // Adjust the distance from the bottom
-      right: 20, // Adjust the distance from the right
+      right: 18, // Adjust the distance from the right
       backgroundColor: '#fff', // Customize color
-      width: 50,
-      height: 50,
-      borderRadius: 10,
+      paddingVertical:12,
+      paddingHorizontal:11,
+      borderRadius: 4,
       justifyContent: 'center',
       alignItems: 'center',
       elevation: 5,
@@ -88,6 +88,11 @@ import { StyleSheet } from "react-native";
       fontWeight: 'bold',
       color: '#fff',
     },
+    float:{
+      position:"relative",
+      bottom:30,
+      // paddingBottom:20
+    }
   });
 
   export default Homes

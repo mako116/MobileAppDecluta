@@ -4,14 +4,14 @@ import { useCart } from '@/context/CartContext';
 import YourCart from '@/styles/Cart/YourCart.styles';
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
-import { Image, Text, TextInput, TouchableOpacity } from 'react-native';
-import {  View } from 'react-native';
+import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import CouponRemovedModal from '../Modal/Removed';
 import { router } from 'expo-router';
 import ModalProceed from '../Modal/ModalProceed';
+import GoodCheck from '@/assets/svg/goodCheck';
 
 const CheckoutFoot = () => {
-  const { cart,  checkoutPrice } = useCart();
+  const { cart, checkoutPrice } = useCart();
   const [isRewardApplied, setIsRewardApplied] = useState<boolean>(false);
   const [couponCode, setCouponCode] = useState<string>('');
   const [isCouponApplied, setIsCouponApplied] = useState<boolean>(false);
@@ -21,44 +21,35 @@ const CheckoutFoot = () => {
   const [modalProceed, setModalProceed] = useState(false);
 
   const formatPrice = (price: number): string => {
-    if (price > 900) {
-      return price.toLocaleString('en-NG', {
-        style: 'currency',
-        currency: 'NGN',
-      });
-    } else {
-      return `₦${price.toFixed(2)}`;
-    }
+    return price > 900
+      ? price.toLocaleString('en-NG', { style: 'currency', currency: 'NGN' })
+      : `₦${price.toFixed(2)}`;
   };
 
   const getCartSummary = () => {
     let totalAmount = 0;
-    let uniqueItemCount = cart.length; // Unique items count is the number of items in the cart.
-  
+    let uniqueItemCount = cart.length;
+
     cart.forEach((item) => {
       totalAmount += item.price * item.count;
     });
-  
+
     return { totalAmount, uniqueItemCount };
   };
-  
+
   const { totalAmount, uniqueItemCount } = getCartSummary();
 
-
   const handleCheckout = () => {
-    router.push("/(routes)/checkout")
-     console.log("worked");
-   };
-
-   
-
-  const toggleReward = () => {
-    setIsRewardApplied((prev) => !prev);
-    setIsCouponApplied(true);
+    router.push('/(routes)/checkout');
+    console.log('Checkout initiated');
   };
 
-  const closeModal = () => {
-    setModalVisible(false);
+  const toggleRewardDropdown = () => {
+    setIsRewardDropdownVisible((prev) => !prev);
+  };
+
+  const toggleCouponDropdown = () => {
+    setIsDropdownVisible((prev) => !prev);
   };
 
   const applyCoupon = () => {
@@ -70,42 +61,29 @@ const CheckoutFoot = () => {
       console.log('Invalid coupon code');
     }
   };
+
+  const handleCloseBonus = () => {
+    setModalVisible(true);
+    setIsRewardApplied(false);
+    setIsCouponApplied(false);
+    setCouponCode('');
+    setIsDropdownVisible(true);
+  };
+
+  const toggleReward = () => {
+    setIsRewardApplied((prev) => !prev);
+  };
+
+  const toggleModal = () => {
+    setModalProceed(!modalProceed);
+  };
+
   const RewardBonus = 500;
   const WelcomeBonus = 4500;
   const formattedWelcomeBonus = new Intl.NumberFormat('en-NG', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   }).format(WelcomeBonus);
-
-  
-   
-  const toggleRewardDropdown = () => {
-    setIsRewardDropdownVisible((prev) => !prev);
-  };
-
-  const toggleCouponDropdown = () => {
-    setIsDropdownVisible((prev) => !prev);
-  };
-
-  const handleCloseBonus = () => {
-    setModalVisible(true);
-    setIsRewardApplied(false);
-    
-    setIsCouponApplied(false);
-    setCouponCode('');
-    setIsDropdownVisible(true);
-  };
-
- 
-  // Function to toggle modal visibility
-  const toggleModal = () => {
-    setModalProceed(!modalProceed);
-  };
-
-  // Function to handle the Proceed button click
-  const Proceed = () => {
-    toggleModal(); // Show modal when Proceed is clicked
-  };
 
   return (
     <View style={{ backgroundColor: '#fff', paddingBottom: '22%' }}>
@@ -129,7 +107,8 @@ const CheckoutFoot = () => {
 
         {isRewardDropdownVisible && (
           <>
-            {!isRewardApplied && !isCouponApplied && (
+            {/* Coupon Input */}
+            { !isCouponApplied && (
               <Text style={[YourCart.title, { fontSize: 16, marginTop: 5 }]}>
                 Have a coupon?{' '}
                 <TouchableOpacity style={{ marginTop: 5 }} onPress={toggleCouponDropdown}>
@@ -138,7 +117,6 @@ const CheckoutFoot = () => {
               </Text>
             )}
 
-            {/* Coupon Input */}
             {isDropdownVisible && !isCouponApplied && !isRewardApplied && (
               <View>
                 <Text style={[YourCart.bonusText, { paddingBottom: 8, paddingTop: 5 }]}>
@@ -172,7 +150,7 @@ const CheckoutFoot = () => {
               </View>
             )}
 
-            {/* Show Welcome Bonus after Coupon Applied */}
+            {/* Welcome Bonus */}
             {isCouponApplied && (
               <View style={YourCart.rewardInfoContainer}>
                 <Text style={YourCart.bonusText}>Welcome Bonus Applied</Text>
@@ -185,35 +163,30 @@ const CheckoutFoot = () => {
               </View>
             )}
 
-            {/* Checkbox for Rewards */}
-            {!isCouponApplied && (
-              <View style={YourCart.checkboxContainer}>
-                <TouchableOpacity onPress={toggleReward} style={YourCart.checkbox}>
-                  <View style={[isRewardApplied && YourCart.checkedBox]}>
-                    <Text style={YourCart.checkboxText}>
-                      {isRewardApplied ? '✓' : ''}
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-                <Text style={YourCart.rewardText}>Apply Rewards Bonus ({formatPrice(RewardBonus)})</Text>
-              </View>
-            )}
+            {/* Independent Checkbox for Rewards */}
+            <View style={YourCart.checkboxContainer}>
+              <TouchableOpacity onPress={toggleReward} style={YourCart.checkbox}>
+                <View style={[isRewardApplied && YourCart.checkedBox]}>
+                  {isRewardApplied && <GoodCheck />}
+                </View>
+              </TouchableOpacity>
+              <Text style={YourCart.rewardText}>
+                Apply Rewards Bonus ({formatPrice(RewardBonus)})
+              </Text>
+            </View>
           </>
         )}
 
         <TouchableOpacity
           style={YourCart.bottomButton}
           onPress={handleCheckout}
-          // disabled={cart.length === 0}
         >
           <Lock />
           <Text style={YourCart.buttonText}>Checkout {formatPrice(checkoutPrice)}</Text>
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity
-      onPress={Proceed}
-      style={YourCart.secureSection}>
+      <TouchableOpacity onPress={toggleModal} style={YourCart.secureSection}>
         <Image
           source={require('../../../../assets/svg/Frame 645480.png')}
           style={{ width: '55%', height: 30 }}
@@ -221,14 +194,10 @@ const CheckoutFoot = () => {
         />
       </TouchableOpacity>
 
-        {/* Pass modalProceed and toggleModal to ModalProceed */}
-       <ModalProceed modalProceed={modalProceed} toggleModal={toggleModal} />
-
-      {/* Coupon Applied Modal */}
-      <CouponRemovedModal visible={modalVisible} onClose={closeModal} />
+      <ModalProceed modalProceed={modalProceed} toggleModal={toggleModal} />
+      <CouponRemovedModal visible={modalVisible} onClose={() => setModalVisible(false)} />
     </View>
   );
 };
 
- 
 export default CheckoutFoot;

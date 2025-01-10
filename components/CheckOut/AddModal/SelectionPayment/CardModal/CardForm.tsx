@@ -66,8 +66,8 @@ const CardModal = ({ visible, onClose, onSave }: CardModalProps) => {
     <Modal transparent={true} animationType="slide" visible={visible} onRequestClose={onClose}>
       <View style={YourCart.modalContainer}>
         <View style={YourCart.modalContent}>
-          <View style={{ justifyContent: 'center', flexDirection: 'row', paddingBottom: 13, paddingTop: 5 }}>
-            <Text style={YourCart.modalTitle}>Add Money</Text>
+          <View style={{ justifyContent: 'center', flexDirection: 'row', paddingBottom: 13, paddingTop: 5 , flex:1}}>
+            <Text style={YourCart.modalTitle}>Add Card</Text>
             <TouchableOpacity onPress={onClose}>
               <Close />
             </TouchableOpacity>

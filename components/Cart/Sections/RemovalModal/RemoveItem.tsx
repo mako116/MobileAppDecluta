@@ -29,7 +29,7 @@ const ModalPage: React.FC<ModalPageProps> = ({ isModalVisible, handleCancel, han
             <TouchableOpacity onPress={handleRemove} style={[styles.modalButton, { backgroundColor: '#DEBC8E' }]}>
               <Text style={styles.modalButtonText}>Remove</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={handleCancel} style={[styles.modalButton, { backgroundColor: '#E9E9E9' }]}>
+            <TouchableOpacity onPress={handleCancel} style={[styles.modalButton, { backgroundColor: '#fff', borderWidth:1, borderColor:"#463E31" }]}>
               <Text style={styles.modalButtonText}>Cancel</Text>
             </TouchableOpacity>
           </View>

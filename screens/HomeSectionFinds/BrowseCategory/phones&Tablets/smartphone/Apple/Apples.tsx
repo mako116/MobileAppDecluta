@@ -41,6 +41,8 @@ const Apples = () => {
     { id: 7, imageUrl: require('../../../../../../assets/images/categories/sub/child/image 26.png'), name: 'Apple iPhone XR', title: '250,000', locations: 'Agbowo UI, Ibadan', timeAgo: '2 wks ago', specific: require('../../../../../../assets/images/newimages/play.png'), Link: '/(routes)/Categories/phone-tablets/Sub-category/apple' },
     { id: 8, imageUrl: require('../../../../../../assets/images/categories/sub/child/image 26.png'), name: 'Apple iPhone XR', title: '250,000', locations: 'Agbowo UI, Ibadan', timeAgo: '2 wks ago', specific: require('../../../../../../assets/images/newimages/play.png'), Link: '/(routes)/Categories/phone-tablets/Sub-category/apple' },
     { id: 9, imageUrl: require('../../../../../../assets/images/categories/sub/child/image 26.png'), name: 'Apple iPhone XR', title: '250,000', locations: 'Agbowo UI, Ibadan', timeAgo: '2 wks ago', specific: require('../../../../../../assets/images/newimages/play.png'), Link: '/(routes)/Categories/phone-tablets/Sub-category/apple' },
+    { id: 10, imageUrl: require('../../../../../../assets/images/categories/sub/child/image 26.png'), name: 'Apple iPhone XR', title: '250,000', locations: 'Agbowo UI, Ibadan', timeAgo: '2 wks ago', specific: require('../../../../../../assets/images/newimages/play.png'), Link: '/(routes)/Categories/phone-tablets/Sub-category/apple' },
+    { id: 11, imageUrl: require('../../../../../../assets/images/categories/sub/child/image 26.png'), name: 'Apple iPhone XR', title: '250,000', locations: 'Agbowo UI, Ibadan', timeAgo: '2 wks ago', specific: require('../../../../../../assets/images/newimages/play.png'), Link: '/(routes)/Categories/phone-tablets/Sub-category/apple' },
 
     // Add more items here...
   ];
@@ -55,16 +57,16 @@ const Apples = () => {
 
 
   // Filter categories when the search icon is clicked
-  const handleSearch = () => {
-    if (searchQuery.trim() === '') {
-      setFilteredCategories(categories);
-    } else {
-      const filtered = categories.filter((category) =>
-        category.name.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-      setFilteredCategories(filtered);
-    }
-  };
+  // const handleSearch = () => {
+  //   if (searchQuery.trim() === '') {
+  //     setFilteredCategories(categories);
+  //   } else {
+  //     const filtered = categories.filter((category) =>
+  //       category.name.toLowerCase().includes(searchQuery.toLowerCase())
+  //     );
+  //     setFilteredCategories(filtered);
+  //   }
+  // };
   // Reset categories when the input is cleared
   useEffect(() => {
     if (searchQuery.trim() === '') {
@@ -115,7 +117,7 @@ const Apples = () => {
      <View>
       <View style={[HeadBrowse.header,{marginBottom:0}]}>
         <TouchableOpacity onPress={() => router.back()}>
-          <BackButton2 />
+          <BackButton />
         </TouchableOpacity>
         <View style={HeadBrowse.searchBar}>
           <TextInput
@@ -127,7 +129,9 @@ const Apples = () => {
           />
          
         </View>
-        <TouchableOpacity onPress={handleSearch} accessibilityLabel="Search button">
+        <TouchableOpacity 
+        // onPress={handleSearch}
+        style={{paddingLeft:10}}  accessibilityLabel="Search button">
             <Search />
         </TouchableOpacity>
       </View>
@@ -177,40 +181,30 @@ const Apples = () => {
       <ScrollView>
            <Text style={HeadBrowse.texts}>Apple Smartphones</Text>
               <Text style={HeadBrowse.subTexts}>Shop new & used iPhone 8-16 models on DecluttaKing. Get unbeatable deals from verified sellers, competitive prices, secure transactions & hassle-free pickup.</Text>
-            <FlatList
-        data={filteredCategories.slice(0, visibleCategories)}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            // onPress={() => {
-            //   try {
-            //     router.push(item.Link);
-            //     console.log('Navigating to:', item.Link);
-            //   } catch (error) {
-            //     console.error('Navigation error:', error);
-            //   }
-            // }}
-          >
-             <View style={{ marginBottom: 20 }}>
-                 <Category
-                 imageUrl={item.imageUrl}
-                  name={item.name}
-                  title={item.title}
-                  locations={item.locations}
-                  timeAgo={item.timeAgo}  
-                  specific={item.specific}       
-                 />
-              </View>
-          </TouchableOpacity>
-        )}
-        onEndReached={loadMoreCategories}
-        onEndReachedThreshold={0.5}
-        ListFooterComponent={renderFooter}
-        numColumns={2}
-        columnWrapperStyle={styles.columnWrapper}
-        contentContainerStyle={styles.listContainer}
-        initialNumToRender={4}
-      />
+           <FlatList
+              data={categories.slice(0, visibleCategories)} // Slice the data to display based on visibleCategories
+              keyExtractor={(item) => item.id.toString()}
+              renderItem={({ item }) => (
+                <View style={{ marginBottom: 15 }}>
+                  <Category
+                    imageUrl={item.imageUrl}
+                    name={item.name}
+                    title={item.title}
+                    locations={item.locations} 
+                    timeAgo={item.timeAgo}  
+                    specific={item.specific}          
+                    />
+                </View>
+              )}
+              onEndReached={loadMoreCategories} // Trigger load more when scrolled to the end
+              onEndReachedThreshold={0.5}
+              ListFooterComponent={renderFooter} // Footer with loading animation
+              numColumns={2} // Automatically handle two-column layout
+              contentContainerStyle={styles.listContainer}
+              columnWrapperStyle={styles.columnWrapper}
+              // columnWrapperStyle={{ justifyContent: 'space-between', marginBottom: 0 }} // Add spacing between rows
+              // contentContainerStyle={{ paddingTop: 10, gap: 10, marginBottom: '70%' }}
+            />
        </ScrollView>
     </View>
   );
@@ -228,40 +222,11 @@ const styles = StyleSheet.create({
   listContainer: {
     paddingHorizontal: 10,
     paddingTop: 10,
+    marginBottom:"20%"
   },
-  card: {
-    flex: 1,
-    backgroundColor: '#fff',
-    borderRadius: 8,
-    padding: 10,
-    margin: 5,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    elevation: 3,
-  },
-  image: {
-    width: '100%',
-    height: 120,
-    borderRadius: 8,
-  },
-  name: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginVertical: 5,
-  },
-  title: {
-    fontSize: 14,
-    color: '#555',
-  },
-  locations: {
-    fontSize: 12,
-    color: '#888',
-  },
-  timeAgo: {
-    fontSize: 12,
-    color: '#aaa',
-  },
+ 
+ 
+ 
   columnWrapper: {
     justifyContent: 'space-between',
     gap: 15,

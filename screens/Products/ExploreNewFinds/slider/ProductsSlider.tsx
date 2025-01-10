@@ -10,7 +10,7 @@ export default function ProductsSlider() {
       name: 'Applesss iPhone XR',
       title: '250,000',
       locations: 'Agbowo UI, Ibadan',
-      timeAgo: '2 weeks ago',
+      timeAgo: '2 wks ago',
     },
     {
       id: '2',
@@ -26,7 +26,7 @@ export default function ProductsSlider() {
       name: 'Apple iPhone XR',
       title: '250,000',
       locations: 'Agbowo UI, Ibadan',
-      timeAgo: '1 week ago',
+      timeAgo: '2 wks ago',
     },
   ];
 

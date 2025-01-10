@@ -76,21 +76,6 @@ const Alling: React.FC = () => {
       }
     };
   
-   // Calculate the subtotal (total price of all items) and total number of items
-  const getCartSummary = () => {
-    let totalAmount = 0;
-    let itemCount = 0;
-
-    cart.forEach((item) => {
-      totalAmount += item.price * item.count; // Total price
-      itemCount += item.count; // Total items
-    });
-
-    return { totalAmount, itemCount };
-  };
-
-  const { totalAmount, itemCount } = getCartSummary();
-  
   if (cart.length === 3) {
     return ( 
       <View style={YourCart.container}>

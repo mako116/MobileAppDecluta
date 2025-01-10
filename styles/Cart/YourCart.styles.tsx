@@ -56,7 +56,7 @@ const YourCart = StyleSheet.create({
       color: '#000000', // Color for the amount text
      },
     checkbox: {
-      width: 17,
+      width: 18,
       height: 17,
       borderWidth: 1,
       borderColor: '#89939E',
@@ -66,7 +66,7 @@ const YourCart = StyleSheet.create({
       marginRight: 10,
     },
     checkedBox: {
-      width: 17,
+      width: 18.2,
       height: 17,
       borderRadius: 4,
       justifyContent: 'center',
@@ -75,9 +75,12 @@ const YourCart = StyleSheet.create({
     },
     checkboxText: {
       height:"100%",
-      width:"100%",
+      // width:"100%",
+      flex:1,
       fontSize: 14,
       textAlign:"center",
+      alignItems:"center",
+      marginVertical:"20%",
       color: '#463E31',
       marginBottom:3,
       fontWeight:"100",

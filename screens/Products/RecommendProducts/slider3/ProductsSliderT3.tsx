@@ -9,21 +9,21 @@ export default function ProductsSliderT3() {
       name: "Apple iPhone XR",
       title: "250,000",
       locations: "Agbowo UI, Ibadan",
-      timeAgo: "2 weeks ago",
+      timeAgo: "2 wks ago",
     },
     {
       imageUrl: require('../../../../assets/images/newimages/Group 390.png'),
       name: "HP Spectre 360",
       title: "755,000",
       locations: "HP Spectre 360",
-      timeAgo: "2 weeks ago",
+      timeAgo: "2 wks ago",
     },
     {
       imageUrl: require('../../../../assets/images/newimages/image 26.png'),
       name: "Apple iPhone XR",
       title: "250,000",
       locations: "Agbowo UI, Ibadan",
-      timeAgo: "2 weeks ago",
+      timeAgo: "2 wks ago",
     },
   ];
 

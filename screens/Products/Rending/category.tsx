@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   container: {
-    paddingHorizontal: 15,
+    paddingHorizontal: 10,
     paddingVertical: 10,
     borderWidth: 1,
     borderColor: '#E9E9E9',
@@ -71,18 +71,18 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 144,
     borderRadius: 4,
-    paddingHorizontal:"21%"
+    paddingHorizontal:"22%"
   },
   timeAgoContainer: {
     position: 'absolute',
     bottom: '1.5%',
     right: 0,
     backgroundColor: '#21212166',
-    width: 48,
-    height: 20,
+    paddingVertical:5,
+    paddingHorizontal:4,
     alignItems: 'center',
     justifyContent: 'center',
-    borderBottomEndRadius: 4,
+    borderBottomEndRadius: 7,
   },
   timeAgoText: {
     fontWeight: '400',
