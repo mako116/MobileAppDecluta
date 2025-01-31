@@ -8,7 +8,6 @@ import {
   TextInput,
   TouchableOpacity,
   Alert,
-  Image,
   ActivityIndicator,
 } from 'react-native';
 import { Creating } from '@/styles/createPassword/CreatePassword'; // Ensure this path is correct
@@ -28,7 +27,6 @@ function RequirementItem({ label, isValid }: RequirementProps) {
         name={isValid ? 'checkmark-circle-sharp' : 'square-outline'}
         size={18}
         color={isValid ? '#DEBC8E' : 'gray'}
-        
       />
       <Text
         style={{
@@ -39,7 +37,7 @@ function RequirementItem({ label, isValid }: RequirementProps) {
           lineHeight: 19.6,
           width: 230,
           alignItems: 'center',
-          fontFamily:"ProximaNovaR",
+          fontFamily: "Proxima Nova",
         }}
       >
         {label}
@@ -47,7 +45,6 @@ function RequirementItem({ label, isValid }: RequirementProps) {
     </View>
   );
 }
- 
 
 export default function CreatePassword(): JSX.Element {
   const { addPassword } = useAuth(); // Destructure onLogin from useAuth
@@ -91,7 +88,7 @@ export default function CreatePassword(): JSX.Element {
     if (!allRequirementsMet) {
       Alert.alert(
         'Error',
-        'Password does not meet the required criteria or passwords do not match',
+        'Password does not meet the required criteria or passwords do not match'
       );
       await addPassword( password, confirmPassword )
       return;

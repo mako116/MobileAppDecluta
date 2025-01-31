@@ -4,32 +4,36 @@ const welcomePin = StyleSheet.create({
     container: {
         flex: 1,
         width:"100%",
-          backgroundColor: '#fff',
+          backgroundColor: '#f9f9f9',
+          height:"100%"
      },
     pinContainer: {
         paddingTop: 70,
         paddingHorizontal: 20,
     },
     pinText: {
-        fontSize: 16,
-        fontWeight: '600',
+        fontSize: 15,
+        lineHeight:19.6,
+        fontWeight: '400',
         marginBottom: 10,
+        fontFamily:"Proxima Nova"
     },
     input: {
-        flex: 1,
-        height: '100%',
+        // flex: 1,
+        // height: '100%',
         borderColor: '#ddd',
         borderWidth: 1,
         borderRadius: 8,
         textAlign: 'center',
-        fontSize: 18,
-        fontWeight: '700',
+        fontSize: 15,
+        fontWeight: '400',
+        fontFamily:"Proxima Nova"
     },
     inputFilled: {
         borderColor: '#DEBC8E', // Highlight filled inputs
     },
     calculatorContainer: {
-        marginTop: 60,
+        marginTop: "30%",
     },
     calculatorRow: {
         flexDirection: 'row',
@@ -41,16 +45,20 @@ const welcomePin = StyleSheet.create({
         fontWeight:"400",
         fontSize:16,
         lineHeight:22.4,
-        textAlign:"center"
+        textAlign:"center",
+        fontFamily:"Proxima Nova"
     },
     logout:{
         fontSize:16,
         color:"#DEBC8E",
         fontWeight:"700",
         textDecorationLine:"underline",
-        lineHeight:22.4
+        lineHeight:22.4,
+        fontFamily:"Proxima Nova"
     },
     calculatorButton: {
+        // paddingVertical:10,
+        // paddingHorizontal:"13%",
         width: 85,
         height: 50,
         borderWidth: 1,
@@ -61,8 +69,10 @@ const welcomePin = StyleSheet.create({
         backgroundColor: '#fff',
     },
     buttonText: {
-        fontSize: 24,
-        fontWeight: '600',
+        fontSize: 16,
+        fontWeight: '700',
+        fontFamily:"Helvetica Neue",
+        lineHeight:22.4
     },
       // Modal styles
       modalBackground: {
@@ -86,6 +96,7 @@ const welcomePin = StyleSheet.create({
         fontWeight:"700",
         textAlign: 'center',
         marginBottom: 10,
+        fontFamily:"Helvetica Neue",
     },
     modalMessage: {
         lineHeight:19.6,
@@ -93,6 +104,7 @@ const welcomePin = StyleSheet.create({
         fontWeight:"400",
         textAlign: 'center',
         marginBottom: 20,
+         fontFamily:"Proxima Nova"
     },
     modalButton: {
         width:"100%",
@@ -108,6 +120,7 @@ const welcomePin = StyleSheet.create({
         textAlign:"center",
         fontSize: 16,
         fontWeight: '400',
+         fontFamily:"Proxima Nova"
     },
 });
 export default welcomePin;

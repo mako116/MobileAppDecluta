@@ -2,6 +2,7 @@
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import SearchProduct from './SearchProducts/SearchProducts';
 import SearchCategoryStyles from '@/styles/searchStyles/searchCategoryStyles';
+import Emojione from '@/assets/svg/emojione';
 
 interface Item {
   id: number;
@@ -55,6 +56,13 @@ const SearchFilter: React.FC = () => {
       </View>
 
       {renderItems(discoverItems)}
+
+      <View style={SearchCategoryStyles.header}>
+        <Emojione/>
+         <Text style={SearchCategoryStyles.headerText}>You may also like...</Text>
+      </View>
+
+      {/* {renderItems(discoverItems)} */}
     </View>
    <View>
    <SearchProduct/>

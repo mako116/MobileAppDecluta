@@ -1,31 +1,48 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
- import Octicons from '@expo/vector-icons/Octicons';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import { useCart } from '@/context/CartContext';
  
  export default function NotificationsAlert() {
+  const { cart} = useCart();
+  
+  const getCartSummary = () => {
+    let totalAmount = 0;
+    let uniqueItemCount = cart.length; // Unique items count is the number of items in the cart.
+  
+    cart.forEach((item) => {
+      totalAmount += item.price * item.count;
+    });
+  
+    return { totalAmount, uniqueItemCount };
+  };
+  
+  const {   uniqueItemCount } = getCartSummary();
+
+ 
   return (
     <View style={styles.container}>
       {/* Live Icon */}
       <TouchableOpacity>
       <View style={styles.circle}>
       <Image source={require('../../assets/images/newimages/live.png')} style={{width:36.5,height:30, objectFit:"contain"}} />
-
-       {/* Red Dot in the Center */}
-    </View>
+     </View>
     </TouchableOpacity>
+
+    {/* Notifications */}
     <TouchableOpacity onPress={()=>router.push("/(routes)/Notifications")} style={{marginTop:7,marginRight:12}}>
     <Image source={require('../../assets/images/newimages/notification-bing.png')} style={{width:24,height:24, objectFit:"contain"}} />
     <View style={styles.redDot} >
-      {/* <Text style={{ fontSize:8,textAlign:"center",color:"#fff"}}>1</Text> */}
-    </View>
-      </TouchableOpacity>
+     </View>
+    </TouchableOpacity>
+
       {/* Cart Icon */}
-      <TouchableOpacity  style={{marginTop:7}}>
+      <TouchableOpacity onPress={()=>router.push("/(routes)/cart")} style={{marginTop:7}}>
       <Image source={require('../../assets/images/newimages/cart.png')} style={{width: 24, height:24, objectFit:"contain"}} />
       <View style={styles.redDots} >
-      <Text style={{ fontSize:8,textAlign:"center",color:"#fff"}}>1</Text>
+      <Text style={{ fontSize:8,textAlign:"center",color:"#fff"}}>
+      {uniqueItemCount}
+      </Text>
     </View>
       </TouchableOpacity>
      </View>

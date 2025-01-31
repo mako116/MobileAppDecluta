@@ -1,9 +1,8 @@
-import { View, Text, ScrollView, Image, StyleSheet, TouchableOpacity, ActivityIndicator, TextInput, Alert, BackHandler, Modal } from 'react-native';
+import { View, Text, ScrollView, Image,  TouchableOpacity, ActivityIndicator, TextInput, Alert, BackHandler, Modal } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { router } from 'expo-router';
-import { AntDesign, Entypo, FontAwesome, Ionicons, MaterialIcons, SimpleLineIcons } from '@expo/vector-icons';
-import { commonstyles } from '@/styles/common/common.style';
-import { useFocusEffect } from '@react-navigation/native';
+import { AntDesign, Ionicons, MaterialIcons, SimpleLineIcons } from '@expo/vector-icons';
+ import { useFocusEffect } from '@react-navigation/native';
 
 
 import {SignUpStyles} from '../../../../styles/Signup/signup.style'
@@ -57,7 +56,7 @@ export default function Login() {
     let isValid = true;
 
     if (!userInfo.email) {
-      errors.email = "Please enter your email.";
+      errors.email = "The email you entered doesn’t exist. Please check and try again.";
       isValid = false;
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userInfo.email)) {
       errors.email = "The email you entered doesn’t exist. Please check and try again.";
@@ -65,10 +64,10 @@ export default function Login() {
     }
 
     if (!userInfo.password) {
-      errors.password = "Please enter your password.";
+      errors.password = "The password you entered is incorrect please try again or reset password.";
       isValid = false;
     } else if (userInfo.password.length < 6) {
-      errors.password = "The password you entered is incorrect. Please try again or reset your password.";
+      errors.password = "The password you entered is incorrect please try again or reset password.";
       isValid = false;
     }
 
@@ -109,15 +108,17 @@ export default function Login() {
   };
 
   return (
-    <ScrollView style={{ flex: 1 , backgroundColor: "#F9F9F9"}} scrollEventThrottle={16}>
+    <View style={{ flex: 1 , backgroundColor: "#F9F9F9"}} >
       <View style={SignUpStyles.header}>
         <Image source={require("../../../../assets/images/newimages/9 1.png")} style={SignUpStyles.sigInImage} />
         <Text style={SignUpStyles.welcomeText}>Log in with email</Text>
       </View>
+      <ScrollView scrollEventThrottle={16}>
 
+      
       <View style={SignUpStyles.inputContainer}>
         <View>
-          <Text style={SignUpStyles.label}>Email</Text>
+          <Text style={[SignUpStyles.label,{marginLeft: 20}]}>Email</Text>
           <View style={[SignUpStyles.row, SignUpStyles.inputContainerStyle]}>
             <TextInput
               style={[
@@ -135,12 +136,15 @@ export default function Login() {
             />
           </View>
           {errorMessage.email && (
-            <Text style={{ color: "red", fontSize: 12, marginTop: 5 , marginHorizontal:20 }}>{errorMessage.email}</Text>
+           <View style={{flexDirection:"row",gap:5, marginHorizontal:14, alignItems:"center"}}>
+            <Text style={{ color: "red", fontSize: 12, marginTop: 5 , marginHorizontal:1 }}>{errorMessage.email}</Text>
+
+           </View>          
           )}
         </View>
 
         <View style={{ marginTop: 5 }}>
-          <Text style={SignUpStyles.label}>Password</Text>
+          <Text style={[SignUpStyles.label,{marginLeft: 20}]}>Password</Text>
           <View style={[SignUpStyles.row, SignUpStyles.inputContainerStyle]}  >
             <TextInput
               style={[
@@ -167,7 +171,10 @@ export default function Login() {
             </TouchableOpacity>
           </View>
           {errorMessage.password && (
-            <Text style={{ color: "red", fontSize: 12, marginTop: 5 , marginHorizontal:20}}>{errorMessage.password}</Text>
+            <View style={{flexDirection:"row",gap:5, marginHorizontal:14, alignItems:"center"}}>
+            <Text style={{ color: "red", fontSize: 12, marginTop: 5 ,marginHorizontal:1  }}>{errorMessage.password}</Text>
+
+           </View>          
           )}
         </View>
         {successMessage && (
@@ -220,20 +227,19 @@ export default function Login() {
 
       {/* Arrow icon to toggle showing more buttons */}
       <View style={{ margin: "auto", paddingVertical: 14 }}>
+          {!showMore && (
         <TouchableOpacity onPress={handleShowMore}>
-          <SimpleLineIcons
-            name={showMore ? "arrow-up" : "arrow-down"}
-            size={22}
-            color="#A4A4A4"
+          <Image
+            style={{ height: 24, width: 24, resizeMode: "contain" }}
+            source={require("../../../../assets/images/newimages/Down 2.png")} // Image path
           />
         </TouchableOpacity>
-      </View>
+      )}
+
+
+       </View>
     </View>
-
-
-       
-
-        <View style={{ paddingVertical: 20, flexDirection: "row", alignItems: "center", margin: "auto", gap: 10 }}>
+      <View style={{ paddingVertical: 20, flexDirection: "row", alignItems: "center", margin: "auto", gap: 10 }}>
         <TouchableOpacity onPress={() => router.push("/(routes)/Terms")}>
           <Text
            style={{ color: "#DEBC8E", fontWeight: "700", fontSize: 16, lineHeight: 22.4 ,fontFamily:'Helvetica Neue'}}>
@@ -246,7 +252,7 @@ export default function Login() {
           </TouchableOpacity>
         </View>
       </View>
-
+      </ScrollView>
        {/* Custom Exit Modal */}
        <Modal
         transparent={true}
@@ -287,6 +293,7 @@ export default function Login() {
           </View>
         </View>
       </Modal>
-    </ScrollView>
+
+    </View>
   );
 }

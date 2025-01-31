@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, TextInput, TouchableOpacity, ActivityIndicator, BackHandler, Modal, StyleSheet, Image } from 'react-native';
+import { View, Text, ScrollView, TextInput, TouchableOpacity, ActivityIndicator, BackHandler, StyleSheet, Image } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
@@ -7,6 +7,9 @@ import { router } from 'expo-router';
 import PhoneInput from 'react-native-phone-input';
 import { useAuth } from '@/context/AuthContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import MessageQuestion from '@/assets/svg/message-question';
+import ArrowUpGray from '@/assets/svg/ArrowUpGray';
+import ArrowGrayDown from '@/assets/svg/ArrowGrayDown';
 
 export default function DetailScreen() {
   const { register } = useAuth();
@@ -189,11 +192,7 @@ export default function DetailScreen() {
             <Text style={SignUpStyles.dropdownButtonText}>
               {gender || "Select Gender"}
             </Text>
-            <Ionicons
-              name={isDropdownOpen ? 'chevron-up' : 'chevron-down'}
-              size={20}
-              color="#333"
-            />
+            {isDropdownOpen ? <ArrowUpGray/> :  <ArrowGrayDown/>}
           </TouchableOpacity>
           {isDropdownOpen && (
             <View style={SignUpStyles.dropdownMenu}>
@@ -219,7 +218,7 @@ export default function DetailScreen() {
           <View style={[SignUpStyles.row, SignUpStyles.inputContainerStyle]}>
             <TextInput
             style={[
-              SignUpStyles.input,
+              SignUpStyles.TextInput,
               focusInput.email && { borderColor: "#DEBC8E" },
               { paddingHorizontal: 40 }
             ]}
@@ -273,8 +272,8 @@ export default function DetailScreen() {
         <TouchableOpacity
           onPress={handleSignUp}
           style={[
-            { marginVertical: 20 },
-            SignUpStyles.loginButton,
+            
+            SignUpStyles.loginButtons,
             !isButtonEnabled && { backgroundColor: "#E9E9E9" } // Gray out if disabled
           ]}
           disabled={!isButtonEnabled} // Disable button if not enabled
@@ -286,15 +285,15 @@ export default function DetailScreen() {
           )}
         </TouchableOpacity>
 
-        <View style={{flexDirection:"row", justifyContent: "center"}}>
-          <MaterialCommunityIcons name="message-question" size={24} color="black" />
+        <View style={{flexDirection:"row", justifyContent: "center", gap:5, paddingTop:25}}>
+          <MessageQuestion/>
           <Text>Need help?</Text>
           <TouchableOpacity onPress={handleHelp}>
             <Text style={{color:"#DEBC8E"}}>Click Here</Text>
           </TouchableOpacity>
         </View>
       </View>
-      
     </ScrollView>
-  );
+      
+   );
 }

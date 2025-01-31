@@ -26,6 +26,11 @@ export const SignUpStyles = StyleSheet.create({
       paddingTop: 20,
       paddingBottom: 20,
     },
+    headers: {
+      // backgroundColor: "#fff",
+      paddingTop: 20,
+      paddingBottom: 20,
+    },
     genderOption: {
       padding: 10,
       marginHorizontal: 5,
@@ -56,11 +61,25 @@ export const SignUpStyles = StyleSheet.create({
       gap: 10,
     },
     label: {
-      marginLeft: 18,
+      // marginLeft: 18,
       marginBottom: 10,
       fontFamily:"Proxima Nova",
       fontSize: 14,
-      fontWeight: 400
+      fontWeight: "400"
+    },
+    Kyclabel: {
+       fontFamily:"Proxima Nova"
+    },
+    TextInput: {
+      flex: 1,
+       padding: 25,
+      paddingLeft: 15,
+      fontSize: 14,
+      borderWidth:1,
+      borderColor:'#E9E9E9',
+      backgroundColor:"#fff",
+      color: "#a1a1a1",
+      fontFamily:"Proxima Nova"
     },
     input: {
       flex: 1,
@@ -70,12 +89,31 @@ export const SignUpStyles = StyleSheet.create({
       color: "#a1a1a1",
       fontFamily:"Proxima Nova"
     },
+    inputs: {
+      width:"100%",
+      flex: 1,
+       // paddingVertical: 25,
+      paddingLeft: 15,
+      fontSize: 15,
+      fontWeight:'700',
+      lineHeight:22.4,
+      color: "#212121",
+      fontFamily:"Helvetica Neue"
+    },
     inputContainerStyle: {
       marginHorizontal: 16,
       borderRadius: 4,
       borderWidth: 1,
       borderColor: "#E9E9E9",
       paddingLeft: 15,
+      backgroundColor: "white",
+    },
+    inputContainerStyles: {
+      paddingVertical: 3,
+       borderRadius: 4,
+      borderWidth: 1,
+      borderColor: "#E9E9E9",
+      // paddingLeft: 15,
       backgroundColor: "white",
     },
     visibleIcon: {
@@ -98,12 +136,26 @@ export const SignUpStyles = StyleSheet.create({
       backgroundColor: "#DEBC8E",
       marginTop: 5,
     },
+    loginButtons: {
+      padding: 25,
+      borderRadius: 8,
+      // marginHorizontal: 16,
+      backgroundColor: "#DEBC8E",
+      marginTop: 5,
+    },
+    KycButton: {
+      padding: 16,
+      borderRadius: 8,
+      // marginHorizontal: 16,
+      backgroundColor: "#DEBC8E",
+      marginTop: 5,
+    },
     loginText: {
       color: "#212121",
       textAlign: "center",
       fontFamily:"Proxima Nova",
       fontSize: 16,
-      fontWeight: 400
+      fontWeight: "400"
     },
     signUpRedirect: {
       flexDirection: "row",
@@ -115,7 +167,7 @@ export const SignUpStyles = StyleSheet.create({
       color: "#463E31",
       fontFamily:"Proxima Nova",
       fontSize:16,
-      fontWeight: 400
+      fontWeight: "400"
     },
     signUpLink: {
       color: "#DEBC8E",

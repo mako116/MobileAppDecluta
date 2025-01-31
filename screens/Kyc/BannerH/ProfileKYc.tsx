@@ -29,15 +29,18 @@ export default function ProfileKYc() {
     return null;
   }
 
+  const  Navigate =() =>{
+    router.push("/(routes)/kyc/Signup")
+  }
   return (
     <View style={styles.container}>
-      <View style={styles.card}>
+      <TouchableOpacity onPress={Navigate} style={styles.card}>
         <Text style={styles.progressText}>Your profile is 60% complete</Text>
-        <TouchableOpacity style={styles.kycButton}>
+        <View  style={styles.kycButton}>
           <Text style={styles.kycText}>Complete KYC</Text>
           <MaterialIcons name="keyboard-arrow-right" size={20} color="#212121" />
-        </TouchableOpacity>
-      </View>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 }

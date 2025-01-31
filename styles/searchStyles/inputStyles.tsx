@@ -3,14 +3,14 @@ import { StyleSheet } from "react-native";
 
 const SearchScreeStyles = StyleSheet.create({
     container: { 
-        paddingVertical: 20, 
-        paddingTop: 60 ,
+        paddingVertical: 10, 
+        paddingTop: 45 ,
         backgroundColor: "white"
     },
     searchBox: { 
         flexDirection: 'row', 
         alignItems: 'center', 
-        paddingHorizontal: 10 
+        paddingHorizontal: 13 
     },
     input: { 
         flex: 1, 
@@ -21,9 +21,11 @@ const SearchScreeStyles = StyleSheet.create({
         marginHorizontal: 10, 
         fontSize: 14,
         borderRadius: 5,
+        alignItems:"center",
         borderWidth: 1,
         borderColor: '#E9E9E9',
-        padding: 10,
+         paddingHorizontal:10,
+        paddingVertical:3,
         flexDirection: "row"
     },
     resultItem: { 

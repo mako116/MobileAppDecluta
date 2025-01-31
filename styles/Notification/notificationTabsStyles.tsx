@@ -3,12 +3,30 @@ import {  StyleSheet } from 'react-native';
 const NotificationTabsStyles = StyleSheet.create({
     container: {
       paddingVertical: 10,
-      paddingHorizontal: 15,
+      // paddingHorizontal: 15,
+    },
+    containers: {
+      // height:"100%",
+      // flexDirection:"column",
+      // justifyContent:"space-between",
+      // width:"100%"
+     
+      // height:"50%",
+       // paddingVertical: 10,
+      // paddingHorizontal: 15,
     },
     scrollContainer: {
+     
       paddingHorizontal: 5,
       paddingTop: 10, 
    },
+   scrollContainers: {
+    // flex:1,
+    // justifyContent:"space-between",
+    //  height:"100%"
+    // paddingHorizontal: 5,
+    // paddingTop: 10, 
+ },
     tabContainer: {
       flexDirection: "row",
       alignItems: "center",
@@ -16,8 +34,17 @@ const NotificationTabsStyles = StyleSheet.create({
       marginBottom: 10,
       position: "relative",
     },
+    tabContainers: {
+      flexDirection: "row",
+      // paddingVertical:10,
+      // justifyContent:"space-between",
+      // height:"100%",
+      // alignItems: "center",
+      // justifyContent: "center",
+      marginBottom: 18,
+      // position: "relative",
+    },
     tabButton: {
-     
       // paddingVertical:5,
       paddingHorizontal:10,
       // paddingVertical: 10,
@@ -29,6 +56,19 @@ const NotificationTabsStyles = StyleSheet.create({
       borderColor:"#E9E9E9",
       textAlign:"center",
       alignItems:"center"
+    },
+    tabButtons: {
+      flexDirection:"row",
+       paddingHorizontal:13,
+      gap:5,
+      paddingVertical: 9,
+       borderRadius: 6,
+      backgroundColor: "#E9E9E9",
+      // marginHorizontal: 5,
+      marginRight:10,
+     borderWidth:1,
+      borderColor:"#E9E9E9",
+      
     },
     activeTab: {
       backgroundColor: "#DEBC8E",
@@ -42,6 +82,15 @@ const NotificationTabsStyles = StyleSheet.create({
       textAlign: "center",
       fontFamily:'Proxima Nova',
       margin:"auto",
+      lineHeight:16.8
+    },
+    tabButtonTexts: {
+      fontSize: 14,
+      fontWeight: "400",
+      color: "#212121",
+      textAlign: "center",
+      fontFamily:'Proxima Nova',
+      // margin:"auto",
       lineHeight:16.8
     },
      allTabButton: {

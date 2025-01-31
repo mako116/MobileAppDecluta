@@ -10,19 +10,20 @@ interface CategoryItem {
   name: string;
   title: string;
   locations: string;
+  timeAgo:string;
 }
 
 const Explore: React.FC = () => {
   // Define categories as an array of CategoryItem
   const categories: CategoryItem[] = [
-    { id: 1, imageUrl: require('../../../assets/images/meduimphone.png'), name: 'Apple iPhone XR', title: '₦250,000', locations: 'Agbowo UI, Ibadan' },
-    { id: 2, imageUrl: require('../../../assets/images/speaker.png'), name: 'Category 2', title: '₦755,000', locations: 'HP Spectre 360' },
-    { id: 3, imageUrl: require('../../../assets/images/meduimphone.png'), name: 'Apple iPhone XR', title: '₦250,000', locations: 'Agbowo UI, Ibadan' },
-    { id: 4, imageUrl: require('../../../assets/images/meduimphone.png'), name: 'Apple iPhone XR', title: '₦250,000', locations: 'Agbowo UI, Ibadan' },
-    { id: 5, imageUrl: require('../../../assets/images/meduimphone.png'), name: 'Apple iPhone XR', title: '₦250,000', locations: 'Agbowo UI, Ibadan' },
-    { id: 6, imageUrl: require('../../../assets/images/meduimphone.png'), name: 'Apple iPhone XR', title: '₦250,000', locations: 'Agbowo UI, Ibadan' },
-    { id: 7, imageUrl: require('../../../assets/images/meduimphone.png'), name: 'Apple iPhone XR', title: '₦250,000', locations: 'Agbowo UI, Ibadan' },
-    { id: 8, imageUrl: require('../../../assets/images/meduimphone.png'), name: 'Apple iPhone XR', title: '₦250,000', locations: 'Agbowo UI, Ibadan' },
+    { id: 1, imageUrl: require('../../../assets/images/newimages/gadget.png'), name: 'Apple iPhone XR', title: '₦250,000', locations: 'Agbowo UI, Ibadan', timeAgo: '2 wks ago' },
+    { id: 2, imageUrl: require('../../../assets/images/speaker.png'), name: 'Category 2', title: '₦755,000', locations: 'HP Spectre 360',timeAgo:'2wks ago'  },
+    { id: 3, imageUrl: require('../../../assets/images/newimages/gadget.png'), name: 'Apple iPhone XR', title: '₦250,000', locations: 'Agbowo UI, Ibadan',timeAgo:'2wks ago'  },
+    { id: 4, imageUrl: require('../../../assets/images/newimages/gadget.png'), name: 'Apple iPhone XR', title: '₦250,000', locations: 'Agbowo UI, Ibadan',timeAgo:'2wks ago'  },
+    { id: 5, imageUrl: require('../../../assets/images/newimages/gadget.png'), name: 'Apple iPhone XR', title: '₦250,000', locations: 'Agbowo UI, Ibadan',timeAgo:'2wks ago'  },
+    { id: 6, imageUrl: require('../../../assets/images/newimages/gadget.png'), name: 'Apple iPhone XR', title: '₦250,000', locations: 'Agbowo UI, Ibadan',timeAgo:'2wks ago'  },
+    { id: 7, imageUrl: require('../../../assets/images/newimages/gadget.png'), name: 'Apple iPhone XR', title: '₦250,000', locations: 'Agbowo UI, Ibadan',timeAgo:'2wks ago'  },
+    { id: 8, imageUrl: require('../../../assets/images/newimages/gadget.png'), name: 'Apple iPhone XR', title: '₦250,000', locations: 'Agbowo UI, Ibadan',timeAgo:'2wks ago'  },
     ];
 
   const [visibleCategories, setVisibleCategories] = useState<number>(4); // Initially display 4 items
@@ -43,12 +44,12 @@ const Explore: React.FC = () => {
   const renderFooter = () => {
     if (!isLoading) return null;
     return (
-      <View style={{ alignItems: 'center', marginVertical: 20 }}>
+      <View style={{ alignItems: 'center', marginVertical: 10 }}>
         <LottieView
           source={{ uri: 'https://lottie.host/21a8a60c-9138-4223-bd08-116521b66149/6WwzwgIlXf.lottie' }}
           autoPlay
           loop
-          style={{ width: 30, height: 30 }}
+          style={{ width: 25, height: 25 }}
         />
       </View>
     );
@@ -65,16 +66,15 @@ const Explore: React.FC = () => {
             name={item.name}
             title={item.title}
             locations={item.locations} 
-            timeAgo={'2mins ago'}
-          />
+            timeAgo={item.timeAgo}          />
         </View>
       )}
       onEndReached={loadMoreCategories} // Trigger load more when scrolled to the end
       onEndReachedThreshold={0.5}
       ListFooterComponent={renderFooter} // Footer with loading animation
       numColumns={2} // Automatically handle two-column layout
-      columnWrapperStyle={{ justifyContent: 'space-between' }} // Add spacing between rows
-      contentContainerStyle={{ paddingTop: 10, gap: 10, marginBottom: '100%' }}
+      columnWrapperStyle={{ justifyContent: 'space-between', marginBottom: 0 }} // Add spacing between rows
+      contentContainerStyle={{ paddingTop: 10, gap: 0, marginBottom: '80%' }}
     />
   );
 };

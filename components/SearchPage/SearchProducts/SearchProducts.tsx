@@ -38,7 +38,7 @@ export default function SearchProduct() {
         source={{ uri: 'https://lottie.host/21a8a60c-9138-4223-bd08-116521b66149/6WwzwgIlXf.lottie' }}
         autoPlay
         loop
-        style={{ width: 50, height: 50 ,}}
+        style={{ width: 30, height: 30 ,}}
        />
       </View>
     );
@@ -49,7 +49,7 @@ export default function SearchProduct() {
       data={categories.slice(0, visibleCategories)}
       keyExtractor={(item) => item.id.toString()}
       renderItem={({ item }) => (
-        <View style={{ marginBottom: 20 }}>
+        <View style={{ marginBottom: 0 }}>
           <Category
             imageUrl={item.imageUrl}
             name={item.name}
@@ -62,7 +62,7 @@ export default function SearchProduct() {
       onEndReachedThreshold={0.5}
       ListFooterComponent={renderFooter}
       numColumns={2} // Automatically handle two-column layout
-      columnWrapperStyle={{ justifyContent: 'space-between', marginBottom: 10 ,}} // Add spacing between rows
+      columnWrapperStyle={{ justifyContent: 'space-between', marginBottom: 5 ,}} // Add spacing between rows
       contentContainerStyle={{ padding: 10, gap: 10 , marginBottom: "100%" ,}}
     />
   );

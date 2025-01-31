@@ -11,17 +11,15 @@ export default function NeedHelps() {
     
   return (
     <SafeAreaView style={{paddingTop:30}}>
-         <ScrollView>
          <View style={styles.signs}>
           <TouchableOpacity onPress={handleGoBack}>
             <Feather name="arrow-left" size={24} color="black" />
           </TouchableOpacity>
           <Text style={{color:"#212121", fontWeight:"700", fontSize:23, lineHeight:32.2}}>Need help?</Text>
         </View>
-        <View>
-        <NeedHelpScreen/>
-        </View>
-         </ScrollView>
+        <ScrollView scrollEventThrottle={16}>
+          <NeedHelpScreen/>
+        </ScrollView>
         
          </SafeAreaView>
   )

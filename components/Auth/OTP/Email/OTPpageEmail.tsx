@@ -1,4 +1,7 @@
+import BackButton from '@/assets/images/kyc/LeftArrow';
+import Otpheademail from '@/assets/svg/otpheademail';
 import OTPMainEmail from '@/screens/auth/OTPScreen/OTPEmail';
+import PhoneOtpStyles from '@/styles/Login/phoneOtpStyles';
 import { Entypo, MaterialCommunityIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
@@ -24,12 +27,8 @@ export default function OTPPageEmail() {
   }, []);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff", paddingTop:20 }}>
-      <ScrollView
-        contentContainerStyle={{ flexGrow: 1 }}
-        style={{ backgroundColor: "#fff" }}
-        scrollEventThrottle={16}
-      >
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" ,paddingTop:50}}>
+      <View>
         {/* Header Section with Logo */}
         <View style={styles.signs}>
           <View style= { styles.row } >
@@ -50,7 +49,11 @@ export default function OTPPageEmail() {
             </View>
           </View>
         </View>
-
+        
+       <View style={{backgroundColor:"#f9f9f9", height:"100%", justifyContent:"space-between", paddingBottom:"30%"}}>
+          
+        <View>
+          
         {/* Title and Instructions */}
         <View style={styles.instructions}>
           <Text style={styles.title}>Verify Your Email Address</Text>
@@ -61,8 +64,9 @@ export default function OTPPageEmail() {
         </View>
 
         {/* OTP Input Section */}
-        <View style={styles.otpSection}>
+        <View style={PhoneOtpStyles.otpSection}>
           <OTPMainEmail />
+        </View>
         </View>
 
         {/* Help Section */}
@@ -73,7 +77,8 @@ export default function OTPPageEmail() {
             <Text style={styles.helpLink}>Click Here</Text>
           </TouchableOpacity>
         </View>
-      </ScrollView>
+        </View>
+      </View>
     </SafeAreaView>
   );
 }
@@ -148,7 +153,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 120,
+    // marginTop: 120,
     paddingHorizontal: 16,
   },
   helpText: {

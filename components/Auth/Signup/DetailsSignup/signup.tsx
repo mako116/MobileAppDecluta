@@ -1,3 +1,5 @@
+import BackButton from '@/assets/images/kyc/LeftArrow';
+import SignupSvg from '@/assets/svg/signupheader';
 import DetailScreen from '@/screens/auth/Detailscreens/DetailsScreen';
 import { SignUpStyles } from '@/styles/Signup/signup.style';
 import { Entypo, Feather } from '@expo/vector-icons';
@@ -92,6 +94,7 @@ const styles = StyleSheet.create({
     paddingTop: 50,
     paddingBottom: 20,
     flexDirection: "row",
+    justifyContent:"flex-start",
     alignItems: "center",
     backgroundColor: "#fff",
   },

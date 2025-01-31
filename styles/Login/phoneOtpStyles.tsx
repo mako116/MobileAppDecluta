@@ -3,10 +3,13 @@ import {  StyleSheet } from 'react-native';
 
 const PhoneOtpStyles = StyleSheet.create({
     signs: {
-      paddingTop: 90,
-      paddingBottom: 30,
+      flexDirection:"row",
+      // paddingTop: 90,
+      // paddingBottom: 30,
       alignItems: "center",
       backgroundColor: "#fff",
+      justifyContent:"flex-start",
+      paddingHorizontal:16
     },
     logo: {
       width: 100,
@@ -48,7 +51,7 @@ const PhoneOtpStyles = StyleSheet.create({
       flexDirection: "row",
       justifyContent: "center",
       alignItems: "center",
-      marginTop: 120,
+      marginBottom: "12%",
       paddingHorizontal: 16,
     },
     helpText: {

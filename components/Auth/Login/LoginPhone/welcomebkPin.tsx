@@ -1,75 +1,75 @@
 import {
-    View,
-    Text,
-    ScrollView,
-    Image,
-    SafeAreaView,
-    TextInput,
-    TouchableOpacity,
-    FlatList,
-    Modal,
-    StatusBar,
-  } from "react-native";
-  import React, { useState, useRef } from "react";
-  import { SignUpStyles } from "@/styles/Signup/signup.style";
-  import { Ionicons, MaterialIcons } from "@expo/vector-icons";
-  import { router } from "expo-router";
-  import welcomePin from "@/styles/welcomebackpin/welcomeback.styles";
-  
-  export default function WelcomeBkPin() {
-    const inputRefs = useRef<(TextInput | null)[]>([]); // Fixing the type of the ref
-    const [pin, setPin] = useState(["", "", "", ""]);
-    const [isModalVisible, setModalVisible] = useState(false); // State to control the modal visibility
-  
-    // Function to show the modal when fingerprint button is pressed
-    const handleFingerprint = () => {
-      setModalVisible(true); // Show the modal
-    };
-  
-    // Function to close the modal
-    const handleCloseModal = () => {
-      setModalVisible(false); // Hide the modal
-    };
-  
-    // Validate the PIN and navigate if correct
-    const validatePin = (updatedPin: string[]) => {
-      const enteredPin = updatedPin.join(""); // Combine PIN array into a string
-      if (enteredPin === "1234") {
-        router.push("/(tabs)/home"); // Navigate to the home page
+  View,
+  Text,
+  ScrollView,
+  Image,
+  SafeAreaView,
+  TextInput,
+  TouchableOpacity,
+  FlatList,
+  Modal,
+  StatusBar,
+} from "react-native";
+import React, { useState, useRef } from "react";
+import { SignUpStyles } from "@/styles/Signup/signup.style";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { router } from "expo-router";
+import welcomePin from "@/styles/welcomebackpin/welcomeback.styles";
+
+export default function WelcomeBkPin() {
+  const inputRefs = useRef<(TextInput | null)[]>([]); // Fixing the type of the ref
+  const [pin, setPin] = useState(["", "", "", ""]);
+  const [isModalVisible, setModalVisible] = useState(false); // State to control the modal visibility
+
+  // Function to show the modal when fingerprint button is pressed
+  const handleFingerprint = () => {
+    setModalVisible(true); // Show the modal
+  };
+
+  // Function to close the modal
+  const handleCloseModal = () => {
+    setModalVisible(false); // Hide the modal
+  };
+
+  // Validate the PIN and navigate if correct
+  const validatePin = (updatedPin: string[]) => {
+    const enteredPin = updatedPin.join(""); // Combine PIN array into a string
+    if (enteredPin === "1234") {
+      router.push("/(tabs)/home"); // Navigate to the home page
+    }
+  };
+
+  // Handle input changes for PIN code
+  const handlePinChange = (text: string, index: number) => {
+    const updatedPin = [...pin];
+    updatedPin[index] = text;
+    setPin(updatedPin);
+    validatePin(updatedPin);
+
+    // Move focus to the next input after entering a digit
+    if (text && index < 3) {
+      inputRefs.current[index + 1]?.focus(); // Use optional chaining to avoid accessing undefined
+    }
+  };
+
+  // Handle delete action for the PIN code, starting from right to left
+  const handlePinDelete = () => {
+    const updatedPin = [...pin];
+    for (let i = pin.length - 1; i >= 0; i--) {
+      if (updatedPin[i] !== "") {
+        updatedPin[i] = ""; // Remove the value at the rightmost non-empty index
+        break;
       }
-    };
-  
-    // Handle input changes for PIN code
-    const handlePinChange = (text: string, index: number) => {
-      const updatedPin = [...pin];
-      updatedPin[index] = text;
-      setPin(updatedPin);
-      validatePin(updatedPin);
-  
-      // Move focus to the next input after entering a digit
-      if (text && index < 3) {
-        inputRefs.current[index + 1]?.focus(); // Use optional chaining to avoid accessing undefined
-      }
-    };
-  
-    // Handle delete action for the PIN code, starting from right to left
-    const handlePinDelete = () => {
-      const updatedPin = [...pin];
-      for (let i = pin.length - 1; i >= 0; i--) {
-        if (updatedPin[i] !== "") {
-          updatedPin[i] = ""; // Remove the value at the rightmost non-empty index
-          break;
-        }
-      }
-      setPin(updatedPin);
-    };
-  
-    return (
-        <>
-        <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
+    }
+    setPin(updatedPin);
+  };
+
+  return (
+    <>
+      <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
       <SafeAreaView style={welcomePin.container}>
         <ScrollView style={{ flex: 1 }} scrollEventThrottle={16}>
-          <View style={SignUpStyles.header}>
+          <View style={SignUpStyles.headers}>
             <Image
               source={require("@/assets/images/king.png")}
               style={SignUpStyles.sigInImage}
@@ -82,34 +82,39 @@ import {
             >
               Welcome back, Olabode
             </Text>
-  
+
             {/* Pin Code Input */}
             <View style={welcomePin.pinContainer}>
               <Text style={[welcomePin.pinText, { textAlign: "center" }]}>
                 Enter your Pin
               </Text>
               <View style={{ justifyContent: "center", alignItems: "center" }}>
-              <FlatList
-  horizontal
-  data={pin}
-  keyExtractor={(item, index) => index.toString()}
-  renderItem={({ item, index }) => (
-    <TextInput
-      ref={(el) => (inputRefs.current[index] = el)}
-      style={[
-        welcomePin.input,
-        item ? welcomePin.inputFilled : null,
-        { padding: 13, marginHorizontal: 10 },
-      ]}
-      value={item}
-      editable={false} // Prevent the keyboard from showing up
-      keyboardType="numeric"
-      maxLength={1}
-    />
-  )}
-/>
+                <FlatList
+                  horizontal
+                  data={pin}
+                  keyExtractor={(item, index) => index.toString()}
+                  renderItem={({ item, index }) => (
+                    <TextInput
+                      ref={(el) => (inputRefs.current[index] = el)}
+                      style={[
+                        welcomePin.input,
+                        item ? welcomePin.inputFilled : null,
+                        {
+                          paddingVertical: 17,
+                          paddingHorizontal: 21,
+                          marginHorizontal: 10,
+                          backgroundColor: "#fff",
+                        },
+                      ]}
+                      value={item}
+                      editable={false} // Prevent the keyboard from showing up
+                      keyboardType="number-pad"
+                      maxLength={1}
+                    />
+                  )}
+                />
               </View>
-  
+
               {/* Number Pad */}
               <View style={welcomePin.calculatorContainer}>
                 <View style={welcomePin.calculatorRow}>
@@ -117,9 +122,7 @@ import {
                     <TouchableOpacity
                       key={num}
                       style={welcomePin.calculatorButton}
-                      onPress={() =>
-                        handlePinChange(num.toString(), pin.indexOf(""))
-                      }
+                      onPress={() => handlePinChange(num.toString(), pin.indexOf(""))}
                     >
                       <Text style={welcomePin.buttonText}>{num}</Text>
                     </TouchableOpacity>
@@ -130,9 +133,7 @@ import {
                     <TouchableOpacity
                       key={num}
                       style={welcomePin.calculatorButton}
-                      onPress={() =>
-                        handlePinChange(num.toString(), pin.indexOf(""))
-                      }
+                      onPress={() => handlePinChange(num.toString(), pin.indexOf(""))}
                     >
                       <Text style={welcomePin.buttonText}>{num}</Text>
                     </TouchableOpacity>
@@ -143,9 +144,7 @@ import {
                     <TouchableOpacity
                       key={num}
                       style={welcomePin.calculatorButton}
-                      onPress={() =>
-                        handlePinChange(num.toString(), pin.indexOf(""))
-                      }
+                      onPress={() => handlePinChange(num.toString(), pin.indexOf(""))}
                     >
                       <Text style={welcomePin.buttonText}>{num}</Text>
                     </TouchableOpacity>
@@ -162,9 +161,7 @@ import {
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={welcomePin.calculatorButton}
-                    onPress={() =>
-                      handlePinChange("0", pin.indexOf(""))
-                    }
+                    onPress={() => handlePinChange("0", pin.indexOf(""))}
                   >
                     <Text style={welcomePin.buttonText}>0</Text>
                   </TouchableOpacity>
@@ -183,7 +180,7 @@ import {
                 </View>
               </View>
             </View>
-  
+
             {/* Modal for Error Message */}
             <Modal
               animationType="slide"
@@ -195,7 +192,6 @@ import {
                 <View style={welcomePin.modalContainer}>
                   <Image
                     source={require("@/assets/images/fingerptrint1.png")}
-                    // style={welcomePin.modalImage}
                   />
                   <Text style={welcomePin.modalTitle}>
                     Error! Biometrics Disabled
@@ -214,17 +210,15 @@ import {
                 </View>
               </View>
             </Modal>
-            <View style={{alignItems:"center", flexDirection:"row", justifyContent:"center"}}>
-            <Text style={welcomePin.span}>Not your account?</Text>
-            <TouchableOpacity>
+            <View style={{ alignItems: "center", flexDirection: "row", justifyContent: "center" }}>
+              <Text style={welcomePin.span}>Not your account?</Text>
+              <TouchableOpacity>
                 <Text style={welcomePin.logout}>Log Out</Text>
-            </TouchableOpacity>
+              </TouchableOpacity>
+            </View>
           </View>
-          </View>
-         
         </ScrollView>
       </SafeAreaView>
-      </>
-    );
-  }
-  
+    </>
+  );
+}

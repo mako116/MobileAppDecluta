@@ -9,11 +9,14 @@ import {
   View,
 } from 'react-native';
 import { router } from 'expo-router';
-import { AntDesign, Feather } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import SearchFilter from './SearchFilter';
 import SearchProduct from './SearchProducts/SearchProducts';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import SearchScreeStyles from '@/styles/searchStyles/inputStyles';
+import Search from '@/assets/images/kyc/Search';
+import Closecross from '@/assets/svg/closecross';
+import BackButton2 from '@/assets/images/kyc/LeftArrow2';
 
 type Item = {
   imageUrl: any; // Use proper image type if known
@@ -77,7 +80,8 @@ const SearchScreen: React.FC = () => {
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <View style={SearchScreeStyles.searchBox}>
             <TouchableOpacity onPress={handleGoBack}>
-              <Image source={require("../../assets/images/leftArrow.png")} style={{ width: 25, height: 20 }} />
+            <BackButton2 />
+              {/* <Image source={require("../../assets/images/leftArrow.png")} style={{ width: 25, height: 20 }} /> */}
             </TouchableOpacity>
             <View style={SearchScreeStyles.inputContainer}>
               <TextInput
@@ -89,12 +93,12 @@ const SearchScreen: React.FC = () => {
               />
               {searchText !== '' && (
                 <TouchableOpacity onPress={clearInput}>
-                  <Image source={require("../../assets/images/closeCircle.png")} style={{ width: 20, height: 20 }} />
-                </TouchableOpacity>
+                  <Closecross/>
+                 </TouchableOpacity>
               )}
             </View>
             <TouchableOpacity>
-              <Feather name="search" size={24} color="#A4A4A4" />
+            <Search/>
             </TouchableOpacity>
           </View>
         </View>

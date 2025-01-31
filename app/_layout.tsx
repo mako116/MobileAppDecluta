@@ -3,13 +3,19 @@ import { Stack } from 'expo-router';
 import React from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { AuthProvider } from '@/context/AuthContext';
+import { CartProvider } from '@/context/CartContext';
+import { OfferProvider } from '@/context/OfferContext';
 
 export default function RootLayout() {
   return (
     <GestureHandlerRootView>
-      <AuthProvider>
+      <CartProvider>
+      <OfferProvider>
+       <AuthProvider>
         <Layout />
       </AuthProvider>
+      </OfferProvider>
+      </CartProvider>
     </GestureHandlerRootView>
   );
 } 
@@ -17,7 +23,7 @@ export default function RootLayout() {
 export const Layout = () => {
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-    HelveticaNeueLTPro: require('../assets/fonts/helvetica/HelveticaNeueLTProBdEx.otf'),
+    HelveticaNeue: require('../assets/fonts/helvetica/HelveticaNeueLTProBdEx.otf'),
     HelveticaNeueLT: require('../assets/fonts/helvetica/HelveticaNeueLTProUltLt.otf'),  
     ProximaNova: require('../assets/fonts/Fonts/Proxima Nova/ProximaNova-Light.otf'),
     ProximaNovaR: require('../assets/fonts/Fonts/Proxima Nova/ProximaNova-Regular.otf'),

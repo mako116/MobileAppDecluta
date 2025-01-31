@@ -77,7 +77,7 @@ export default function EmailSetup() {
 
         <View style = {{ flex: 1 }} >
           <View style={{ marginTop: 40, marginBottom: 10 }}>
-            <Text style={SignUpStyles.label}>Email</Text>
+            <Text style={[SignUpStyles.label,{marginLeft: 20}]}>Email</Text>
             <View style={[SignUpStyles.row, SignUpStyles.inputContainerStyle]}>
               <TextInput
                 style={[
@@ -147,15 +147,16 @@ export default function EmailSetup() {
             )}
 
             {/* Arrow icon to toggle showing more buttons */}
-            <View style={{ margin: "auto", paddingVertical: 14 }}>
-              <TouchableOpacity onPress={handleShowMore}>
-                <SimpleLineIcons
-                  name={showMore ? "arrow-up" : "arrow-down"}
-                  size={22}
-                  color="#A4A4A4"
-                />
-              </TouchableOpacity>
-            </View>
+              <View style={{ margin: "auto", paddingVertical: 14 }}>
+                {!showMore && (
+                  <TouchableOpacity onPress={handleShowMore}>
+                     <Image
+                      style={{ height: 24, width: 24, resizeMode: "contain" }}
+                       source={require("../../../../assets/images/newimages/Down 2.png")} // Image path
+                       />
+                  </TouchableOpacity>
+                )}
+              </View>
           </View>
         </View>
 
