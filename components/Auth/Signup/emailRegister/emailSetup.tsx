@@ -8,28 +8,26 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '@/context/AuthContext';
 import * as Google from 'expo-auth-session/providers/google';
 import GoolgSignUp from '../GoogleSignup/GoogleSignUpComponent';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default function EmailSetup() {
-  const { setEmail, googleLogin } = useAuth();
-  const [userInfo, setUserInfo] = useState({ email: "", password: "" });
+  const { googleLogin } = useAuth();
+  const [userInfo, setUserInfo] = useState({ email: ""});
   const [required, setRequired] = useState("");
   const [token] = useState("")
   const [focusInput, setFocusInput] = useState({ email: false, password: false });
   const [buttonSpinner, setButtonSpinner] = useState(false);
 
-  const CLIENTID = process.env.CLIENT_ID
+  // const CLIENTID = process.env.CLIENT_ID
 
-  const handleSignUp = () => {
-    if (!userInfo.email.trim()) {
-      setRequired("Email is required");
-      return;
+  const handleSaveEmail = async (email: string) => {
+    try {
+      await AsyncStorage.setItem('email', email.toLowerCase());
+      console.log('Email saved successfully:', email);
+    } catch (error) {
+      console.error('Error saving email to AsyncStorage:', error);
     }
-
-    setButtonSpinner(true);
-
-    // Store the email in your Auth context
-    setEmail(userInfo.email);
 
     setTimeout(() => {
       setButtonSpinner(false);
@@ -99,6 +97,7 @@ export default function EmailSetup() {
                 }}
               />
             </View>
+            {/* come back to this */}
             {required && (
               <View style={commonstyles.errorContainer}>
                 <Entypo name="cross" size={18} color="red" />
@@ -106,7 +105,7 @@ export default function EmailSetup() {
             )}
           </View>
 
-          <TouchableOpacity style={SignUpStyles.loginButton} onPress={handleSignUp}>
+          <TouchableOpacity style={SignUpStyles.loginButton} onPress={() => handleSaveEmail(userInfo.email)}>
             {buttonSpinner ? (
               <ActivityIndicator size="small" color="white" />
             ) : (

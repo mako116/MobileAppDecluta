@@ -4,7 +4,7 @@ import SlidLingCategory from '../../Rending/SlidlingCategory';
  
 export default function ProductsSlider() {
   return (
-    <View style={{ marginTop: 10 }}>
+    <View style={{ }}>
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
         <SlidLingCategory
           imageUrl={require('../../../../assets/images/newimages/image 26.png')}

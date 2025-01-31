@@ -1,6 +1,6 @@
 import DetailScreen from '@/screens/auth/Detailscreens/DetailsScreen';
 import { SignUpStyles } from '@/styles/Signup/signup.style';
-import { Feather } from '@expo/vector-icons';
+import { Entypo, Feather } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import React from 'react'
 import { View, Text, ScrollView, StyleSheet, TextInput, TouchableOpacity, ActivityIndicator, Image, Alert } from 'react-native';
@@ -17,15 +17,33 @@ export default function SignUp() {
   return (
     <SafeAreaView edges={['bottom']}>
       <ScrollView scrollEventThrottle={16} >
-        <View style={styles.signs}>
-          <TouchableOpacity onPress={handleGoBack}>
-            <Feather name="arrow-left" size={24} color="black" />
-          </TouchableOpacity>
-          <Image source={require("@/assets/images/Group 2.png")} style={{justifyContent:"center", margin:"auto"}} />
+        <View>
+          <View style={[ styles.rowJustified]}>
+            <TouchableOpacity onPress={handleGoBack}>
+              <Feather name="arrow-left" size={24} color="black" />
+            </TouchableOpacity>
+
+            <View style= { styles.row } >
+              <View style = {[ styles.row, styles.passedStageIcon ]} >
+                <Entypo name="check" size={8} color="white" />
+              </View>
+              <View style = { styles.divider } ></View>
+              <View style = {[ styles.row, styles.currentStageIcon ]} >
+                <Entypo name="check" size={8} color="white" />
+              </View>
+            </View>
+
+            {/* leave empty */}
+            <View>
+            </View>
+
+          </View>
         </View>
+        
         <View style={styles.section}>
-          <Text style={{color:"#212121", fontWeight:"700", fontSize:23, lineHeight:32.2, fontFamily:"HelveticaNeueLTPro"}}>Tell Us About yourself</Text>
+          <Text style={{color:"#212121", fontWeight:"700", fontSize:23, lineHeight:32.2, fontFamily:"Helvetica Neue"}}>Tell Us About yourself</Text>
         </View>
+
         <DetailScreen/>
       </ScrollView>
     </SafeAreaView>
@@ -33,6 +51,40 @@ export default function SignUp() {
 }
 
 const styles = StyleSheet.create({
+  row: {
+    display: "flex",
+    flexDirection: 'row',
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  rowJustified: {
+    display: "flex",
+    flexDirection: 'row',
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 12,
+    paddingTop:60,
+    paddingBottom: 20,
+  },
+  divider: {
+    width: 35,
+    height: 2,
+    backgroundColor: "black",
+    marginHorizontal: 7
+  },
+  currentStageIcon: {
+    padding: 4,
+    borderRadius: 20,
+    backgroundColor: "#DEBC8E"
+  },
+  passedStageIcon: {
+    padding: 4,
+    borderRadius: 20,
+    backgroundColor: "black"
+  },
+  nextStageIcon: {
+
+  },
   signs: {
     paddingHorizontal: 12,
     // paddingTop: 60,

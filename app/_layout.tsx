@@ -4,7 +4,6 @@ import React from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { AuthProvider } from '@/context/AuthContext';
 
-
 export default function RootLayout() {
   return (
     <GestureHandlerRootView>
@@ -37,7 +36,6 @@ export const Layout = () => {
         <Stack.Screen name="(routes)/splashscren/index" />
         <Stack.Screen name="(routes)/login/index" />
         <Stack.Screen name="(routes)/SuccessModalScreen/index" />
-        
        </Stack>
    );
 }

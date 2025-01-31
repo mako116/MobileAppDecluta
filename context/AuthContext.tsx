@@ -3,6 +3,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { router } from 'expo-router';
 
+type VerifyOtpResponse = {
+  data: {
+    success: boolean;
+    message: string;
+  };
+};
+
 interface AuthContextType {
   user: string | null;
   email: string | null;
@@ -12,11 +19,13 @@ interface AuthContextType {
   logout: () => void;
   register: (firstName: string, lastName: string, email: string, gender: string, phoneNumber: string) => Promise<void>;
   googleLogin: (token: string) => Promise<void>;
-//   addPassword: (password: string, confirmPassword: string) => Promise<void>;
+  verifyOtp: (otp: number) => Promise<VerifyOtpResponse>;
+  resendOTP: () => Promise<void>;
+  addPassword: (password: string, confirmPassword: string) => Promise<void>;
 //   forgotPassword: (email: string) => Promise<void>;
 //   addResidentInfo: (address: string, country: string, state: string, phoneNumber: string) => Promise<void>;
 //   addBvn: (bvn: string) => Promise<void>;
-//   verifyEmail: (otp: string) => Promise<void>;
+
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -48,7 +57,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  // Load email from AsyncStorage when the app starts
+  // Load email from AsyncStorage when the app 
   useEffect(() => {
     const loadEmail = async () => {
       try {
@@ -83,7 +92,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const login = async (email: string, password: string) => {
     try {
-      const response = await axios.post(`${EXPO_PUBLIC_API_KEY}/api/v1/auth/login`, { email, password });
+      const response = await axios.post(`http://192.168.0.184:8081/api/v1/auth/login`, { email, password });
       console.log('login response', response);
 
       if (response.data && response.data.token) {
@@ -122,7 +131,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const register = async (firstName: string, lastName: string, email: string, gender: string, phoneNumber: string) => {
     try {
-      const response = await axios.post(`${EXPO_PUBLIC_API_KEY}api/v1/individual/auth/register`, { firstName, lastName, email, gender, phoneNumber });
+      const response = await axios.post(`${EXPO_PUBLIC_API_KEY}/api/v1/auth/register`,
+      { 
+        firstName,
+        lastName,
+        email,
+        gender,
+        phoneNumber
+      });
       console.log('register response', response);
 
       if (response.data && response.data.newUser && response.data.newUser._id) {
@@ -130,8 +146,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         const newUserId = response.data.newUser._id;
         await AsyncStorage.setItem('userId', newUserId);  // Set the userId state here
         setUserId(newUserId);
-        router.push("/(routes)/splashscren");
- // Update this with your actual address screen
+        router.push("/(routes)/OTPEmail");
       } else {
         console.error('Registration failed: No user ID in response');
         alert('Registration failed');
@@ -139,6 +154,68 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     } catch (error) {
       console.error('Registration error:', error);
       alert('Registration error');
+    }
+  };
+
+  const resendOTP = async () => {
+    try {
+      if (!userId) {
+        console.error('No user ID found');
+        alert('No user ID found');
+        return;
+        }
+      const response = await axios.post(`${EXPO_PUBLIC_API_KEY}/api/v1/auth/resend-otp/${userId}`
+      );
+      console.log('Sent OTP response', response);
+    } catch (error) {
+      console.error('Sending OTP error:', error);
+      alert('Resend otp error');
+    }
+  }
+  
+  const verifyOtp = async (otp: number): Promise<VerifyOtpResponse> => {
+    try {
+      if (!userId) {
+      console.error('No user ID found');
+      alert('No user ID found');
+      throw new Error('No user ID found');      
+    }
+
+      const response = await axios.post(`${EXPO_PUBLIC_API_KEY}/api/v1/auth/verify-otp/${userId}`, { otp });
+      console.log('verifyOtp response', response);
+
+      if (response.data && response.data.message) {
+        console.log('Response message:', response.data.message);
+      }
+      return response;
+    } catch (error) {
+      console.error('Email verification error:', error);
+      alert('Email verification error');
+      throw error;
+    }
+  };
+
+  const addPassword = async (password: string, confirmPassword: string) => {
+    try {
+      if (!userId) {
+        console.error('No user ID found');
+        alert('No user ID found');
+        return;
+      }
+
+      const response = await axios.put(`${EXPO_PUBLIC_API_KEY}api/v1/auth/password/create/${userId}`, { password, confirmPassword });
+      console.log('setPassword response', response);
+
+      if (response.data && response.data.message) {
+        console.log('Response:', response.data.message);
+        alert('Password set successfully');
+      } else {
+        console.error('Set password failed');
+        alert('Set password failed');
+      }
+    } catch (error) {
+      console.error('Set password error:', error);
+      alert('Set password error');
     }
   };
 
@@ -194,55 +271,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 //     }
 //   };
 
-//   const addPassword = async (password: string, confirmPassword: string) => {
-//     try {
-//       if (!userId) {
-//         console.error('No user ID found');
-//         alert('No user ID found');
-//         return;
-//       }
 
-//       const response = await axios.put(`${API_URL}api/v1/individual/auth/set-password/${userId}`, { password, confirmPassword });
-//       console.log('setPassword response', response);
 
-//       if (response.data && response.data.message) {
-//         console.log('Response:', response.data.message);
-//         alert('Password set successfully');
-//         navigation.navigate('VerificationCode'); // Update this with your actual login screen
-//       } else {
-//         console.error('Set password failed');
-//         alert('Set password failed');
-//       }
-//     } catch (error) {
-//       console.error('Set password error:', error);
-//       alert('Set password error');
-//     }
-//   };
-
-//   const verifyEmail = async (otp: string) => {
-//     try {
-//       if (!userId) {
-//         console.error('No user ID found');
-//         alert('No user ID found');
-//         return;
-//       }
-
-//       const response = await axios.post(`${API_URL}api/v1/individual/auth/verify-email/${userId}`, { otp });
-//       console.log('verifyEmail response', response);
-
-//       if (response.data && response.data.message) {
-//         console.log('Response:', response.data.message);
-//         alert('Email verified successfully');
-//         navigation.navigate('Login'); // Update this with your actual login screen
-//       } else {
-//         console.error('Email verification failed');
-//         alert('Email verification failed');
-//       }
-//     } catch (error) {
-//       console.error('Email verification error:', error);
-//       alert('Email verification error');
-//     }
-//   };
 
 //   const forgotPassword = async (email: string) => {
 //     try {
@@ -269,8 +299,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    // addPassword, forgotPassword, addResidentInfo, addBvn, verifyEmail
-    <AuthContext.Provider value={{ user, email, setEmail, clearEmail, login, logout, register, googleLogin, }}>
+    // addPassword, forgotPassword, addResidentInfo, addBvn, verifyOtp
+    <AuthContext.Provider value={{ user, email, setEmail, clearEmail, login, logout, register, googleLogin, resendOTP, verifyOtp, addPassword }}>
       {children}
     </AuthContext.Provider>
   );

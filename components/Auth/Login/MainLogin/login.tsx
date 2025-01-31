@@ -9,9 +9,9 @@ import { useFocusEffect } from '@react-navigation/native';
 import {SignUpStyles} from '../../../../styles/Signup/signup.style'
 import { useAuth } from '@/context/AuthContext';
 import GoolgSignUp from '../../Signup/GoogleSignup/GoogleSignUpComponent';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login() {
-  const [userEmail, setUserEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const [buttonSpinner, setButtonSpinner] = useState(false);
@@ -20,8 +20,8 @@ export default function Login() {
   const [showExitModal, setShowExitModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState({ email: "", password: "" });
   const [successMessage, setSuccessMessage] = useState("");
-  const { login, setEmail } = useAuth(); // Destructure onLogin from useAuth
-
+  const { login } = useAuth(); // Destructure onLogin from useAuth
+  const [email, setEmail] = useState<string>('');
 
   useFocusEffect(
     React.useCallback(() => {
@@ -35,6 +35,22 @@ export default function Login() {
       return () => backHandler.remove();
     }, [])
   );
+  
+  useEffect(() => {
+    const fetchEmail = async () => {
+      try {
+        const storedEmail = await AsyncStorage.getItem('email');
+        console.log('Stored email:', storedEmail);
+        if (storedEmail) {
+          setEmail(storedEmail); // Set email to the state
+        }
+      } catch (error) {
+        console.error('Error fetching email from AsyncStorage:', error);
+      }
+    };
+
+    fetchEmail();
+  }, []);
 
   const validateInputs = () => {
     let errors = { email: "", password: "" };
@@ -61,27 +77,20 @@ export default function Login() {
   };
 
   const handleSignIn = async () => {
-    if (!validateInputs()) return;
-    setEmail(userEmail)
     try {
-      await login(userEmail, password);
+      setButtonSpinner(true);
+      if (!email) {
+        alert("Please enter your email and password");
+        setButtonSpinner(false);
+        return;
+      }
+      await login(email, password);
     } catch (err) {
       Alert.alert('Login Failed');
       setSuccessMessage("Login failed!");
     } finally {
-      setButtonSpinner(true);
-      setTimeout(() => {
-        setButtonSpinner(false);
-        setErrorMessage({ email: "", password: "" });
-        setSuccessMessage("Login successful! Redirecting...");
-        // setTimeout(() => {
-        //   setSuccessMessage("");
-        //   router.push("/(routes)/splashscren"); // Navigate to the dashboard or home
-        // }, 2000);
-      }, 1000);
-    }
-
-    
+      setButtonSpinner(false);
+    }    
   };
 
   const handlePhonePush =()=>{
@@ -117,15 +126,12 @@ export default function Login() {
                 { paddingHorizontal: 40 },
               ]}
               keyboardType="email-address"
-              value={userInfo.email}
+              value={email}
               placeholder="Enter email"
               placeholderTextColor='gray'
               onFocus={() => setFocusInput({ ...focusInput, email: true })}
               onBlur={() => setFocusInput({ ...focusInput, email: false })}
-              onChangeText={(value) => {
-                setUserInfo({ ...userInfo, email: value });
-                setUserEmail(value); // Update `userEmail` in sync
-              }}
+              onChangeText={(value) => setEmail(value)}
             />
           </View>
           {errorMessage.email && (

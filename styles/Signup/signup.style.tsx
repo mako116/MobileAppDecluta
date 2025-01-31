@@ -1,8 +1,5 @@
 import { StyleSheet } from "react-native";
 
-
-
-
 export const SignUpStyles = StyleSheet.create({
   row: {
     flexDirection: "row",
@@ -67,7 +64,7 @@ export const SignUpStyles = StyleSheet.create({
     },
     input: {
       flex: 1,
-      padding: 25,
+      padding: 20,
       paddingLeft: 5,
       fontSize: 14,
       color: "#a1a1a1",
@@ -95,7 +92,7 @@ export const SignUpStyles = StyleSheet.create({
       fontFamily:"Proxima Nova"
     },
     loginButton: {
-      padding: 25,
+      padding: 17,
       borderRadius: 8,
       marginHorizontal: 16,
       backgroundColor: "#DEBC8E",
@@ -156,7 +153,7 @@ export const SignUpStyles = StyleSheet.create({
     },
     socialButton: {
       flexDirection: "row",
-      padding: 18,
+      padding: 16,
       alignItems: "center",
       justifyContent:"center",
       borderWidth: 1,
@@ -237,6 +234,109 @@ export const SignUpStyles = StyleSheet.create({
       lineHeight:22.4,
       fontSize: 16,
       textAlign: "center"  // Center text within the Text component
-    }
+    },
+    dropdownContainer: {
+      marginVertical: 10,
+    },
+    dropdownButton: {
+      height: 55,
+      borderRadius: 3,
+      marginHorizontal: 16,
+      borderWidth: 1,
+      borderColor: "#E9E9E9",
+      paddingLeft: 15,
+      fontSize: 14,
+      backgroundColor: "white",
+      color: "#a1a1a1",
+      fontFamily:"Proxima Nova",
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      padding: 10,
+      marginTop: 8,
+    },
+    dropdownButtonText: {
+      color: '#333',
+      fontFamily:"Proxima Nova",
+    },
+    customLogo: {
+      marginLeft:15,
+       height: 18,
+       width: 18, // Adjust size of the custom logo
+       resizeMode: "contain",
+     },
+    dropdownMenu: {
+      marginTop: 5,
+      borderWidth: 1,
+      borderColor: '#ddd',
+      borderRadius: 8,
+      marginHorizontal: 16,
+      backgroundColor: '#fff',
+      overflow: 'hidden',
+    },
+    dropdownItem: {
+      padding: 10,
+    },
+    dropdownItemText: {
+      color: '#333',
+      fontFamily:"Proxima Nova",
+    },
+    selectedBackground: {
+      backgroundColor: '#F5EADC', // Highlight background color for selected item
+    },
+    container: {
+      marginTop: 16,
+    },
+    phoneContainer: {
+       flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: "white",
+      marginHorizontal: 16,
+      // marginTop: 30,
+      // gap: 10,
+    },
+    callingCode: {
+      marginHorizontal: 10,
+      fontSize: 13,
+      color: '#212121',
+      borderRightWidth: 1,
+      height:20,
+      borderColor: "#212121",
+      paddingRight: 15,
+      fontFamily:"Helvetica Neue",
+      lineHeight:18.2,
+      fontWeight:"500"
+    },
+    flagButton: {
+      marginLeft: 8,
+    },
+    phoneInput: {
+      height: 55,
+      borderRadius: 3,
+      
+      fontSize: 14,
+      backgroundColor: "white",
+       color: '#212121',
+      paddingRight: 15,
+      fontFamily:"Proxima Nova",
+      lineHeight:14,
+      fontWeight:"500"
+    },
+    divider: {
+      width: 35,
+      height: 2,
+      backgroundColor: "black",
+      marginHorizontal: 7
+    },
+    currentStageIcon: {
+      padding: 4,
+      borderRadius: 20,
+      backgroundColor: "#DEBC8E"
+    },
+    passedStageIcon: {
+      padding: 4,
+      borderRadius: 20,
+      backgroundColor: "black"
+    },
   });
   

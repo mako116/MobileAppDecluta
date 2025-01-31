@@ -7,17 +7,17 @@ export default function ProductsSlider4() {
     <View style={{ marginTop: 10 }}>
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
         <BannerCat
-                  imageUrl={require('../../../../assets/images/newimages/Homepage banner 1.jpg')}
-                      />
+          imageUrl={require('../../../../assets/images/newimages/Homepage banner 1.jpg')}
+        />
         <BannerCat
-                  imageUrl={require('../../../../assets/images/newimages/Homepage banner 2.jpg')}
-                  />
+          imageUrl={require('../../../../assets/images/newimages/Homepage banner 2.jpg')}
+        />
         <BannerCat
-                  imageUrl={require('../../../../assets/images/newimages/Homepage banner 3.jpg')}
-                    />
-                    <BannerCat
-                  imageUrl={require('../../../../assets/images/newimages/offer Notifications Banner.jpg')}
-                    />
+          imageUrl={require('../../../../assets/images/newimages/Homepage banner 3.jpg')}
+        />
+        <BannerCat
+          imageUrl={require('../../../../assets/images/newimages/offer Notifications Banner.jpg')}
+        />
        </ScrollView>
     </View>
   );

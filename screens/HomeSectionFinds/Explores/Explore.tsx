@@ -48,7 +48,7 @@ const Explore: React.FC = () => {
           source={{ uri: 'https://lottie.host/21a8a60c-9138-4223-bd08-116521b66149/6WwzwgIlXf.lottie' }}
           autoPlay
           loop
-          style={{ width: 50, height: 50 }}
+          style={{ width: 30, height: 30 }}
         />
       </View>
     );
@@ -64,7 +64,8 @@ const Explore: React.FC = () => {
             imageUrl={item.imageUrl}
             name={item.name}
             title={item.title}
-            locations={item.locations}
+            locations={item.locations} 
+            timeAgo={'2mins ago'}
           />
         </View>
       )}
@@ -72,7 +73,7 @@ const Explore: React.FC = () => {
       onEndReachedThreshold={0.5}
       ListFooterComponent={renderFooter} // Footer with loading animation
       numColumns={2} // Automatically handle two-column layout
-      columnWrapperStyle={{ justifyContent: 'space-between', marginBottom: 10 }} // Add spacing between rows
+      columnWrapperStyle={{ justifyContent: 'space-between' }} // Add spacing between rows
       contentContainerStyle={{ paddingTop: 10, gap: 10, marginBottom: '100%' }}
     />
   );

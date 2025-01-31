@@ -1,14 +1,15 @@
-import { View, Text, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, Image, TextInput, ActivityIndicator } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput, ActivityIndicator } from 'react-native'
 import React, { useState } from 'react'
-import { Entypo, Feather ,MaterialCommunityIcons} from '@expo/vector-icons';
+import { Entypo, Feather , MaterialCommunityIcons} from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { commonstyles } from '@/styles/common/common.style';
 import { SignUpStyles } from '@/styles/Signup/signup.style';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function ForgotPassword() {
-    const [userInfo, setUserInfo] = useState({ email: "", password: "" });
+    const [userInfo, setUserInfo] = useState({ email: "" });
     const [required, setRequired] = useState("");
-    const [focusInput, setFocusInput] = useState({ email: false, password: false });
+    const [focusInput, setFocusInput] = useState({ email: false });
     const [buttonSpinner, setButtonSpinner] = useState(false);
 
     const handleGoBack = () => {
@@ -22,32 +23,56 @@ export default function ForgotPassword() {
         router.push("/(routes)/reset-password")
       }
   return (
-    <SafeAreaView>
-    <ScrollView scrollEventThrottle={16}>
-     <View style={{height:"100%"}}>
-     <View style={styles.signs}>
+    <SafeAreaView edges={['bottom']} style = {{ flex: 1 }}>
+      <View style={{}}>
+        <View style={[ styles.rowJustified]}>
           <TouchableOpacity onPress={handleGoBack}>
             <Feather name="arrow-left" size={24} color="black" />
           </TouchableOpacity>
-          <Image source={require("@/assets/images/forget.png")} style={{justifyContent:"center", margin:"auto"}} />
+
+          <View style= { styles.row } >
+            <View style = {[ styles.row, styles.passedStageIcon ]} >
+              <Entypo name="check" size={8} color="white" />
+            </View>
+            <View style = { styles.divider } ></View>
+            <View style = {[ styles.row, styles.currentStageIcon ]} >
+              <Entypo name="check" size={8} color="white" />
+            </View>
+          </View>
+
+          {/* leave empty */}
+          <View>
+          </View>
+
         </View>
+
         <View style={{}}>
-            <Text style={[SignUpStyles.label,{fontWeight:"700",fontSize:19, lineHeight:26.6, marginTop:20}]}>Forgot password</Text>
-        <View style={{ marginTop: 20, marginBottom: 10 ,}}>
+          <Text style={[SignUpStyles.label,{fontWeight:"700",fontSize:19, lineHeight:26.6, marginTop:20}]}>Forgot password</Text>
+          <View style={{ marginTop: 20, marginBottom: 10 ,}}>
             <Text style={SignUpStyles.label}>Email</Text>
-            <TextInput
-              style={[
-                SignUpStyles.input,
-                focusInput.email && { borderColor: "#DEBC8E" },
-                { paddingHorizontal: 40 },
-              ]}
-              keyboardType="email-address"
-              value={userInfo.email}
-              placeholder="Enter your email Address"
-              onFocus={() => setFocusInput({ ...focusInput, email: true })}
-              onBlur={() => setFocusInput({ ...focusInput, email: false })}
-              onChangeText={(value) => setUserInfo({ ...userInfo, email: value })}
-            />
+            <View style = {[
+              SignUpStyles.row,
+              SignUpStyles.inputContainerStyle, 
+              focusInput.email && 
+              {  borderColor: "#DEBC8E" },
+              { paddingHorizontal: 40 }, ]}
+            >
+              <TextInput
+                style={[
+                  SignUpStyles.input
+                ]}
+                keyboardType="email-address"
+                value={userInfo.email}
+                placeholder="Enter your email Address"
+                onFocus={() => setFocusInput({ ...focusInput, email: true })}
+                onBlur={() => setFocusInput({ ...focusInput, email: false })}
+                // onChangeText={(value) => setUserInfo({ ...userInfo, email: value })}
+                onChangeText={(value) => {
+                  setUserInfo({ ...userInfo, email: value });
+                  if (required) setRequired("");  // Clear error if user starts typing
+                }}
+              />
+            </View>
             {required && (
               <View style={commonstyles.errorContainer}>
                 <Entypo name="cross" size={18} color="red" />
@@ -71,22 +96,54 @@ export default function ForgotPassword() {
             <Text style={{color:"#DEBC8E"}}> Click Here</Text>
           </TouchableOpacity>
         </View>
-     </View>
-     </ScrollView>
-  </SafeAreaView>
+      </View>
+    </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
-    signs: {
-      paddingHorizontal: 12,
-    //    marginVertical:42,
-       paddingTop:60,
-      paddingBottom: 20,
-      flexDirection: "row",
-      alignItems: "center",
-      backgroundColor: "#fff",
-    },
+  row: {
+    display: "flex",
+    flexDirection: 'row',
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  rowJustified: {
+    display: "flex",
+    flexDirection: 'row',
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 12,
+    paddingTop:60,
+    paddingBottom: 20,
+  },
+  divider: {
+    width: 35,
+    height: 2,
+    backgroundColor: "black",
+    marginHorizontal: 7
+  },
+  currentStageIcon: {
+    padding: 4,
+    borderRadius: 20,
+    backgroundColor: "#DEBC8E"
+  },
+  passedStageIcon: {
+    padding: 4,
+    borderRadius: 20,
+    backgroundColor: "black"
+  },
+  nextStageIcon: {
+
+  },
+  signs: {
+    paddingHorizontal: 12,
+    paddingTop:60,
+    paddingBottom: 20,
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#fff",
+  },
     containers:{
       paddingHorizontal:10
     },

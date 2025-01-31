@@ -125,8 +125,8 @@ export default function TabLayout() {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
-    borderRadius: 12,
-    paddingVertical: 10,
+    borderTopEndRadius: 12,
+    paddingVertical: 20,
   },
   label: {
     textTransform: 'capitalize',

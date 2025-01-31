@@ -16,6 +16,7 @@ export default function SplashScreen() {
         const email = await AsyncStorage.getItem('email');
         if (email) {
           console.log('Authenticated user found. Navigating to home.');
+          console.log('email:', email);
           router.replace('/(routes)/login'); // Navigate to the home screen for authenticated users
         } else {
           console.log('No user found. Navigating to login.');

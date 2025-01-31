@@ -22,7 +22,7 @@ export default function VerifyOTP() {
       </View>
 
       <View
-        style={{ flex: 1, backgroundColor: "#F9F9F9"
+        style={{ backgroundColor: "#F9F9F9"
         }}
       >
         {/* Title and Instructions */}
@@ -32,7 +32,7 @@ export default function VerifyOTP() {
           </Text>
           <Text style={PhoneOtpStyles.subtitle}>
             We sent a 4-digit code to{" "}
-            <Text style={PhoneOtpStyles.phoneNumber}>+23480123456789</Text>. Please enter it below to verify your account.
+            <Text style={PhoneOtpStyles.phoneNumber}>123456789</Text>. Please enter it below to verify your account.
           </Text>
         </View>
 
