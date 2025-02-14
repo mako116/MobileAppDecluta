@@ -4,8 +4,15 @@ import React from 'react';
 import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import All from './Sections/All';
 import NotificationBoard from './NotificationBoard';
+import Setting2 from '@/assets/images/notifi/setting-2';
+import Smallcart from '@/assets/images/notifi/smallcart';
  
 const HeaderNotification = () => {
+    const NextPage = () => {
+      
+        router.push("/(routes)/Notificationsettings");
+       
+    };
   return (
     <View>
       <View style={{paddingTop:40,backgroundColor:"#fff",paddingHorizontal:5}}>
@@ -17,10 +24,13 @@ const HeaderNotification = () => {
              <Text style={{fontFamily:"Helvetica Neue", fontWeight:"700", fontSize:16}}>
               Notifications
             </Text>
-          </View>
-          <TouchableOpacity>
-            <Image source={require('../../assets/images/newimages/setting-2.png')} style={{width:24,height:24}} />            
-          </TouchableOpacity>
+          </View> 
+         <View style={{flexDirection:"row", alignItems:"center", gap:10}}>
+         <TouchableOpacity   onPress={NextPage}>
+          <Setting2/>
+           </TouchableOpacity>
+          <Smallcart/>
+         </View>
         </View>
       </View>
       <ScrollView style={{ marginBottom:"10%"  }}>
