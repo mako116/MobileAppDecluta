@@ -76,7 +76,7 @@ const Alling: React.FC = () => {
       }
     };
   
-  if (cart.length === 3) {
+  if (cart.length === 0) {
     return ( 
       <View style={YourCart.container}>
         <View style={{ justifyContent: "center", alignItems: "center", paddingVertical: 20 }}>

@@ -23,7 +23,7 @@ const NotificationStyles = StyleSheet.create({
       // padding: 10,
     },
     main: {
-      marginTop: 15,
+      marginTop: 10,
       backgroundColor: '#FFFFFF',
       borderRadius: 10,
       padding: 10,
@@ -32,7 +32,7 @@ const NotificationStyles = StyleSheet.create({
     },
     notificationContent: {
       flexDirection: 'row',
-      paddingVertical: 4,
+      paddingVertical: "3%",
     },
     notificationContents: {
       // flexDirection: 'row',
@@ -45,7 +45,7 @@ const NotificationStyles = StyleSheet.create({
     },
     textContainer: {
       paddingHorizontal: 10,
-      paddingVertical: '3%',
+      // paddingVertical: '3%',
     },
     title: {
       fontFamily: 'Helvetica Neue',
@@ -56,13 +56,14 @@ const NotificationStyles = StyleSheet.create({
       paddingRight: '10%',
       lineHeight: 19.6,
       fontSize: 14,
+      color:"#212121",
       fontFamily:"Proxima Nova"
     },
     footer: {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      paddingTop: '2%',
+      paddingTop: '3%',
       borderTopWidth: 1,
       borderColor: '#E9E9E9',
     },
@@ -72,6 +73,8 @@ const NotificationStyles = StyleSheet.create({
       gap: 10,
     },
     time: {
+      fontWeight:"400",
+      lineHeight:16.8,
       color: '#474747',
       fontSize: 12,
       fontFamily:"Proxima Nova"

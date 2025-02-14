@@ -6,6 +6,9 @@ const HeaderCheckoutStyl = StyleSheet.create({
        
        height:"100%"
     },
+    containers: {
+       height:"100%"
+    },
    
     tabContainer: {
       flexDirection: "row",
@@ -38,6 +41,18 @@ const HeaderCheckoutStyl = StyleSheet.create({
     },
     allTabButton: {
     },
+    DKContain:{
+      paddingVertical:"10%",
+      gap:20,
+      paddingHorizontal:"5%"
+    },
+    DKtext:{
+      fontSize: 14,
+      fontWeight: "400",
+      color: "#212121",
+       fontFamily: "Proxima Nova",
+      lineHeight: 19.6,
+    },
     centerBorder: {
       width: 1.4,
       height: 15,  
@@ -54,6 +69,21 @@ const HeaderCheckoutStyl = StyleSheet.create({
       color: "#212121",
       fontFamily:"Helvetica Neue"
     },
+    dkliveBg:{
+      backgroundColor:"#fff",
+      paddingHorizontal:"3%",
+      paddingVertical:"2%",
+      borderRadius:8,
+      borderWidth:1,
+      borderColor:"#E9E9E9",
+      gap:5,
+      marginTop:10,
+    },
+    dklivesection:{
+      flexDirection:"row",
+      alignItems:"center",
+      gap:13
+    }
   })
 
 

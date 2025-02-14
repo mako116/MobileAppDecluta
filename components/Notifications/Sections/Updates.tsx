@@ -17,60 +17,33 @@ type Notification = {
       id: '1',
       title: 'Welcome to DecluttaKing!',
       description: "You’ve successfully signed up. Start buying and selling items today!",
-      image: require('../../../assets/images/imgg.png'),
+      image: require('../../../assets/images/notifi/Frame 646965 (3).png'),
       time: 'Today 20:28',
       tag: 'Updates',
       action: null,
     },
+    
     {
       id: '2',
-      title: '500 Rewards Points Achieved!',
-      description: "Congrats! You completed your first purchase and have been awarded 500 reward points!",
-      image: require('../../../assets/images/reward.png'),
-      time: 'Today 20:28',
-      tag: 'Updates',
-      action: 'View More',
-    },
-    {
-      id: '3',
       title: 'Complete Your KYC',
       description:
         'Verify your identity to access withdrawal, get a verification badge, and enjoy more benefits.',
-      image: require('../../../assets/images/kyc.png'),
-      time: 'Today 20:28',
+        image: require('../../../assets/images/notifi/dot.png'),
+        time: 'Today 20:28',
       tag: 'Updates',
       action: 'Complete KYC',
     },
-    {
-      id: '4',
-      title: 'Complete Your KYC',
-      description:
-        'Verify your identity to access withdrawal, get a verification badge, and enjoy more benefits.',
-      image: require('../../../assets/images/kyc.png'),
-      time: 'Today 20:28',
-      tag: 'Updates',
-      action: 'Complete KYC',
-    },
-    {
-      id: '5',
-      title: 'Complete Your KYC',
-      description:
-        'Verify your identity to access withdrawal, get a verification badge, and enjoy more benefits.',
-      image: require('../../../assets/images/kyc.png'),
-      time: 'Today 20:28',
-      tag: 'Updates',
-      action: 'Complete KYC',
-    },
+     
   ];
 const Updates = () => {
    
       
     return (
-        <SafeAreaView>
-        <ScrollView>
+        <SafeAreaView >
+        <ScrollView  style={{paddingHorizontal:10, paddingBottom:"50%"}}>
           {notifications.length === 0 ? (
             <View style={NotificationStyles.noNotificationContainer}>
-                 <Image source={require('../../../assets/images/None.png')} style={NotificationStyles.image} />
+                 <Image source={require('../../../assets/images/None.png')} style={{height:66, width:"100%", objectFit:"contain"}}  />
               <Text style={NotificationStyles.noNotificationText}>No Updates at the Moment</Text>
               <Text>You’ll be notified here when new features or important updates are available.</Text>
             </View>
@@ -92,8 +65,8 @@ const Updates = () => {
                   {item.action && (
                     <View style={NotificationStyles.footerRight}>
                       <Text style={NotificationStyles.actionText}>{item.action}</Text>
- <Image source={require('../../../assets/images/newimages/Vector.png')} style={{width:6,height:10,marginTop:3}} />                    
- </View>
+                    <Image source={require('../../../assets/images/newimages/Vector.png')} style={{width:6,height:10,marginTop:3}} />                    
+                      </View>
                   )}
                 </View>
               </View>

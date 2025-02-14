@@ -369,7 +369,41 @@ const YourCart = StyleSheet.create({
       borderRadius: 5,
       alignItems: 'center',
     },
-    
+    UssdModal:{
+      paddingVertical:15,
+      paddingHorizontal:20,
+      gap:13
+    },
+    Rounded:{
+      borderWidth:1,
+      paddingVertical:15,
+      paddingHorizontal:10,
+      borderRadius:4,
+      marginVertical:5,
+      borderColor:"#F5EADC"
+      },
+      textcent:{
+        textAlign:"center",
+        fontFamily:"Helvetica Neue",
+        fontWeight:"700",
+        fontSize:23,
+        lineHeight:32.2,
+      },
+      smallTxt:{
+        textAlign:"center",
+        fontFamily:"Proxima Nova",
+        fontWeight:"400",
+        fontSize:12,
+        lineHeight:16.8,
+        paddingHorizontal:20
+      },
+      titles:{
+        fontFamily:"Proxima Nova",
+        fontWeight:"400",
+        fontSize:14,
+        lineHeight:19.6,
+        color:"#212121"
+       }
   });
 
 

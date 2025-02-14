@@ -51,7 +51,7 @@ const PickupTab: React.FC = () => (
     const notificationCounts = { All: 3, Updates: 5, Transactions: 2, Activities: 1, Pickup: 2, Rewards: 4, Offers: 5 };  
   
     return (
-      <View style={NotificationTabsStyles.container}>
+      <View style={[NotificationTabsStyles.container,{paddingHorizontal:5}]}>
         {/* Tabs Section */}
         <ScrollView
           horizontal

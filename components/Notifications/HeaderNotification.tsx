@@ -8,7 +8,7 @@ import NotificationBoard from './NotificationBoard';
 const HeaderNotification = () => {
   return (
     <View>
-      <View style={{paddingTop:40,backgroundColor:"#fff"}}>
+      <View style={{paddingTop:40,backgroundColor:"#fff",paddingHorizontal:5}}>
         <View style={styles.searchBox}>
           <View style={{flexDirection:"row",alignItems:"center", gap:20}}>
            <TouchableOpacity onPress={router.back}>
