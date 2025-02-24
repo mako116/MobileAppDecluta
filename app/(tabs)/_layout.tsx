@@ -55,7 +55,7 @@ export default function TabLayout() {
               <Image
               source={
                 focused
-                  ? require('../../assets/images/newimages/hom.png')  
+                  ? require('../../assets/images/tab/task-square.png')  
                   :  require('../../assets/images/newimages/task-square.png') 
               }               
                style={{
@@ -70,10 +70,14 @@ export default function TabLayout() {
           name="sell/index"
           options={{
             title: 'Sell',
-            tabBarIcon: ({ color }) => (
+            tabBarIcon: ({ focused }) => (
               <Image
-                source={require('../../assets/images/newimages/add-square.png')}
-                style={{
+              source={
+                focused
+                  ? require('../../assets/images/tab/add-square.png')  
+                  :  require('../../assets/images/newimages/add-square.png') 
+              }   
+                 style={{
                   width: 24,
                   height: 24,
                 }}
@@ -85,10 +89,14 @@ export default function TabLayout() {
           name="message/index"
           options={{
             title: 'Messages',
-            tabBarIcon: ({ color }) => (
+            tabBarIcon: ({ focused }) => (
               <Image
-                source={require('../../assets/images/newimages/message.png')}
-                style={{
+              source={
+                focused
+                  ? require('../../assets/images/tab/Group 473.png')  
+                  :  require('../../assets/images/newimages/message.png') 
+              }   
+                 style={{
                   width: 24,
                   height: 24,
                 }}

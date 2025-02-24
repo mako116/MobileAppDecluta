@@ -12,6 +12,7 @@ import Search from "@/assets/images/kyc/Search";
  import LeftButton from "@/assets/images/cart/arrowLeftMain";
 import UssdStyles from "@/styles/UssdStyles/Ussdstyles";
 import YourCart from "@/styles/Cart/YourCart.styles";
+import AddUssdModal from "../../AddModal/SelectionPayment/UssDModal/AddUssdModal";
 
 type Bank = {
     name: string;
@@ -124,7 +125,7 @@ const Ussd = () => {
       {/* <DropdownUssD /> */}
       <Animated.View style={[UssdStyles.dropdowns, { transform: [{ scaleY }] }]}>
       {isOpen && (
-  <View style={UssdStyles.dropdownContainer}>
+      <View style={UssdStyles.dropdownContainer}>
     <ScrollView showsVerticalScrollIndicator={false}>
       {selectedBank && (
         <View style={YourCart.UssdModal}>
@@ -157,60 +158,20 @@ const Ussd = () => {
         </View>
       )}
     </ScrollView>
-  </View>
+     </View>
      )}
 
       </Animated.View>
-      {/* Modal dropdown */}
-      <Modal visible={modalVisible} animationType="slide" transparent>
-        <View style={UssdStyles.modalOverlay}>
-          <View style={UssdStyles.modalContent}>
-             {/* Modal Header */}
-            <View style={[YourCart.rewardInfoContainer,{width:"90%"}]}>
-              <TouchableOpacity >
-               <LeftButton />
-               </TouchableOpacity>
-             {/* Convert totalAmount to string */}
-              <Text style={UssdStyles.headerText}>Select Bank</Text>
-            </View>
-           <View style={UssdStyles.dropdowned}>
-           <TextInput
-              style={UssdStyles.searchInput}
-              placeholder="Search"
-              value={searchQuery}
-              onChangeText={setSearchQuery}
-            />
-            <Search/>
-           </View>
-             <TouchableOpacity
-              style={UssdStyles.dropdown}
-              onPress={() => setDropdownVisible(!dropdownVisible)}
-            >
-             <Text style={[YourCart.bonusText,{color:'#A4A4A4'}]}>
-          {selectedBank ? selectedBank.name : "Select option"}
-          </Text>
-          {dropdownVisible ? <ArrowUpGray /> : <ArrowGrayDown />}
-          </TouchableOpacity>
-
-             {/* Dropdown List */}
-             {dropdownVisible && (
-            <FlatList
-              data={filteredBanks}
-              keyExtractor={(item) => item.name}
-              renderItem={({ item }) => (
-                <TouchableOpacity
-                  style={UssdStyles.bankItem}
-                  onPress={() => handleSelectBank(item)}
-                >
-                  <Text style={[YourCart.rewardText,{fontWeight:"400",color:"#212121s"}]}>{item.name}</Text>
-                 </TouchableOpacity>
-              )}
-            />
-        )}
-          
-          </View>
-        </View>
-      </Modal>
+      {/* Modal Component */}
+      <AddUssdModal
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        banks={banks}
+        selectedBank={selectedBank}
+        onSelectBank={setSelectedBank}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+      />
     </View>
     );
 }
