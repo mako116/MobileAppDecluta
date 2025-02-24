@@ -51,10 +51,14 @@ export default function TabLayout() {
           name="myorders/index"
           options={{
             title: 'My Orders',
-            tabBarIcon: ({ color }) => (
+            tabBarIcon: ({ focused }) => (
               <Image
-                source={require('../../assets/images/newimages/task-square.png')}
-                style={{
+              source={
+                focused
+                  ? require('../../assets/images/newimages/hom.png')  
+                  :  require('../../assets/images/newimages/task-square.png') 
+              }               
+               style={{
                   width: 24,
                   height: 24,
                 }}

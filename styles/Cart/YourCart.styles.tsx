@@ -37,6 +37,13 @@ const YourCart = StyleSheet.create({
       paddingRight:10,
       gap:10
     },
+    rowed:{
+      flexDirection:"row",
+      alignItems:"center",
+      // justifyContent:"flex-start",
+      paddingRight:10,
+      gap:5
+    },
     rowSed:{
       flexDirection:"row",
       alignItems:"center",

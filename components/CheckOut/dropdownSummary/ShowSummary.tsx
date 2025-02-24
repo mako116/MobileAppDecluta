@@ -66,14 +66,14 @@ const DropdownWithSummary: React.FC = () => {
   };
 
   return (
-    <View>
+    <View style={{marginTop:"5%"}}>
       <TouchableOpacity style={styles.button} onPress={toggleDropdown}>
         <View style={styles.buttonRow}>
           <CartWhite />
           <Text style={YourCart.price}>
             {isOpen ? 'Hide order summary' : 'Show order summary'}
           </Text>
-          {isOpen ? <ArrowUp /> : <ArrowDown />}
+          {isOpen ? <ArrowDown /> : <ArrowDown />}
         </View>
         <Text style={YourCart.title}>{formatPrice(totalAmount)}</Text>
       </TouchableOpacity>
@@ -121,6 +121,21 @@ const DropdownWithSummary: React.FC = () => {
                   <Text>Bonus to Earn: WELCOME</Text>
                   <Text>{formatPrice(totalAmount)}</Text>
                 </View>
+                <View style={YourCart.notificationC}>
+                  <Text>Reward bonus</Text>
+                  <Text>-₦500.00</Text>
+                </View>
+                <View style={YourCart.notificationC}>
+                  <Text>Fee</Text>
+                  <Text>₦2,000.00</Text>
+                </View>
+                <View style={YourCart.notificationC}>
+                  <Text style={YourCart.title}>Total</Text>
+                  <Text style={YourCart.title}>₦232,000.00</Text>
+                </View>
+               <TouchableOpacity onPress={toggleDropdown} style={{marginHorizontal:"auto", paddingVertical:5}}>
+               {isOpen ? <ArrowUp /> : <ArrowUp />}
+               </TouchableOpacity>
               </View>
             </ScrollView>
           </View>
