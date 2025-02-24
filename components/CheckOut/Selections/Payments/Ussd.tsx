@@ -15,8 +15,9 @@ import LeftButton from "@/assets/images/cart/arrowLeftMain";
 
 type Bank = {
     name: string;
-    id: number; // Add other properties if needed
-  };
+    ussd: string;
+
+   };
 
 const banks = [
     { name: "Access Bank", ussd: "*901#" },
@@ -41,10 +42,10 @@ const Ussd = () => {
       bank.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
   
-    const handleSelectBank = (bank) => {
-      setSelectedBank(bank);
-      setModalVisible(false);
-    };
+    const handleSelectBank = (bank: Bank) => {
+        setSelectedBank(bank);
+        setModalVisible(false);
+      };
 
       useEffect(() => {
         const timer = setInterval(() => {
