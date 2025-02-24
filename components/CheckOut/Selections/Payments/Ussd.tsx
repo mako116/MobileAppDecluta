@@ -13,6 +13,7 @@ import Search from "@/assets/images/kyc/Search";
 import UssdStyles from "@/styles/UssdStyles/Ussdstyles";
 import YourCart from "@/styles/Cart/YourCart.styles";
 import AddUssdModal from "../../AddModal/SelectionPayment/UssDModal/AddUssdModal";
+import ViewUssdDetail from "../../AddModal/SelectionPayment/UssDModal/ViewUssdDetail";
 
 type Bank = {
     name: string;
@@ -123,7 +124,16 @@ const Ussd = () => {
       </TouchableOpacity>
       </View>
       {/* <DropdownUssD /> */}
-      <Animated.View style={[UssdStyles.dropdowns, { transform: [{ scaleY }] }]}>
+      <ViewUssdDetail
+       isOpen={isOpen}
+      scaleY={scaleY}
+      selectedBank={selectedBank}
+      minutesArray={minutesArray}
+     secondsArray={secondsArray}
+      renderDigitBoxes={renderDigitBoxes}
+      />
+
+      {/* <Animated.View style={[UssdStyles.dropdowns, { transform: [{ scaleY }] }]}>
       {isOpen && (
       <View style={UssdStyles.dropdownContainer}>
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -161,7 +171,7 @@ const Ussd = () => {
      </View>
      )}
 
-      </Animated.View>
+      </Animated.View> */}
       {/* Modal Component */}
       <AddUssdModal
         visible={modalVisible}
