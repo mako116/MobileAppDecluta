@@ -9,9 +9,36 @@ type VerifyOtpResponse = {
     message: string;
   };
 };
+// interface User {
+//   firstName: string;
+//   lastName: string;
+//   email: string;
+//   dateOfBirth: Date;
+//   password: string;
+//   gender: string;
+//   dateCreated?: Date;
+//   // Email verification
+//   isEmailVerified?: boolean;
+//   lastLogin: Date
+//   loginOtp: any
+//   emailVerificationCode?: any;
+//   emailVerificationCodeExpires: Date;
+//   transactionPin: string;
+//   // Reset password
+//   resetPasswordOtp?: number;
+//   resetPasswordToken?: string;
+//   resetPasswordExpires?: Date;
+//   role: string;
+//   // Profile
+//   address: string;
+//   phoneNumber: string;
+//   country: string;
+//   state: string;
+//   city: string,
+//   picture?: string;
+// }
 
 interface AuthContextType {
-  user: string | null;
   email: string | null;
   setEmail: (email: string) => Promise<void>;
   clearEmail: () => Promise<void>;
@@ -19,11 +46,13 @@ interface AuthContextType {
   logout: () => void;
   register: (firstName: string, lastName: string, email: string, gender: string, phoneNumber: string) => Promise<void>;
   googleLogin: (token: string) => Promise<void>;
-  verifyOtp: (otp: number) => Promise<VerifyOtpResponse>;
+  verifyOtp: (otp: string) => Promise<VerifyOtpResponse>;
   resendOTP: () => Promise<void>;
   addPassword: (password: string, confirmPassword: string) => Promise<void>;
+  addTransactionPin: (pin: string, confirmPin: string) => Promise<void>;
 //   forgotPassword: (email: string) => Promise<void>;
-//   addResidentInfo: (address: string, country: string, state: string, phoneNumber: string) => Promise<void>;
+  addResidentInfo: (address: string, country: string, state: string, phoneNumber: string) => Promise<void>;
+  getUser: () => Promise<any>;
 //   addBvn: (bvn: string) => Promise<void>;
 
 }
@@ -32,6 +61,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [userId, setUserId] = useState('');
+  const [userToken, setUserToken] = useState('');
   const [user, setUser] = useState<string | null>(null);
   const EXPO_PUBLIC_API_KEY = process.env.EXPO_PUBLIC_API_KEY;
   const [email, setEmailState] = useState<string | null>(null);
@@ -80,6 +110,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
       if (token) {
         setUser(token);
+        setUserToken(token);
       }
 
       if (storedUserId) {
@@ -92,23 +123,59 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const login = async (email: string, password: string) => {
     try {
-      const response = await axios.post(`http://192.168.0.184:8081/api/v1/auth/login`, { email, password });
+      const response = await axios.post(`${EXPO_PUBLIC_API_KEY}/api/v1/auth/login`, { email, password });
       console.log('login response', response);
-
+  
+      const lastLogin = new Date(response.data.lastLogin); // Assuming lastLogin is provided in the response
+      const twentyDaysAgo = new Date();
+      twentyDaysAgo.setDate(twentyDaysAgo.getDate() - 20);
+  
       if (response.data && response.data.token) {
         console.log('Token received:', response.data.token);
         await AsyncStorage.setItem('token', response.data.token);
+        await AsyncStorage.setItem('userId', response.data.user._id);
         setUser(response.data.token);
-        router.push("/(routes)/LoginOTP"); // Update this with your actual splashscren screen
+        setUserId(response.data.user._id);
+        setEmailState(email);
+  
+        // Check if the last login was 20 days or more ago
+        if (lastLogin <= twentyDaysAgo) {
+          console.log('Last login was 20 days or more ago');
+          router.push("/(routes)/LoginOTP"); // Redirect to the screen for old logins
+        } else {
+          console.log('Last login was less than 20 days ago');
+          router.push("/(tabs)/home"); // Redirect to the normal OTP screen
+        }
       } else {
         console.error('Login failed: No token in response');
-        alert('Login failed');
       }
     } catch (error) {
       console.error('Login error:', error);
-      alert('Login error');
     }
   };
+
+  const getUser = async () => {
+    try {
+      if (!userId) {
+        console.error('No user ID found');
+        return;
+      }
+      const response = await axios.get(`${EXPO_PUBLIC_API_KEY}/api/v1/user/get/${userId}`, {
+        headers: {
+          'Authorization': `Bearer ${user}` // Add the authorization header
+        }
+      });
+      console.log('user details', response);
+      if (response.data) {
+        console.log('Response:', response.data);
+      } else {
+        console.error('Failed to get user');
+      }
+      return response;
+    } catch (error) {
+      console.error('Failed to get user:', error);
+    }
+  }
 
   const googleLogin = async (token: string) => {
     try {
@@ -149,11 +216,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         router.push("/(routes)/OTPEmail");
       } else {
         console.error('Registration failed: No user ID in response');
-        alert('Registration failed');
       }
     } catch (error) {
       console.error('Registration error:', error);
-      alert('Registration error');
     }
   };
 
@@ -161,7 +226,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     try {
       if (!userId) {
         console.error('No user ID found');
-        alert('No user ID found');
         return;
         }
       const response = await axios.post(`${EXPO_PUBLIC_API_KEY}/api/v1/auth/resend-otp/${userId}`
@@ -169,15 +233,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       console.log('Sent OTP response', response);
     } catch (error) {
       console.error('Sending OTP error:', error);
-      alert('Resend otp error');
     }
   }
   
-  const verifyOtp = async (otp: number): Promise<VerifyOtpResponse> => {
+  const verifyOtp = async (otp: string): Promise<VerifyOtpResponse> => {
     try {
       if (!userId) {
       console.error('No user ID found');
-      alert('No user ID found');
       throw new Error('No user ID found');      
     }
 
@@ -190,7 +252,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       return response;
     } catch (error) {
       console.error('Email verification error:', error);
-      alert('Email verification error');
       throw error;
     }
   };
@@ -203,47 +264,63 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         return;
       }
 
-      const response = await axios.put(`${EXPO_PUBLIC_API_KEY}api/v1/auth/password/create/${userId}`, { password, confirmPassword });
+      const response = await axios.put(`${EXPO_PUBLIC_API_KEY}/api/v1/auth/password/create/${userId}`, { password, confirmPassword });
       console.log('setPassword response', response);
 
       if (response.data && response.data.message) {
         console.log('Response:', response.data.message);
-        alert('Password set successfully');
+        router.push('/(routes)/Profile-created');
       } else {
         console.error('Set password failed');
-        alert('Set password failed');
       }
     } catch (error) {
       console.error('Set password error:', error);
-      alert('Set password error');
     }
   };
 
-//   const addResidentInfo = async (address: string, country: string, state: string, phoneNumber: string) => {
-//     try {
-//       const storedUserId = userId || await AsyncStorage.getItem('userId');
+  const addResidentInfo = async (address: string, country: string, state: string, city: string) => {
+    try {
+      const storedUserId = userId || await AsyncStorage.getItem('userId');
     
-//       if (!storedUserId) {
-//         console.error('No user ID found');
-//         alert('No user ID found');
-//         return;
-//       }
+      if (!storedUserId) {
+        console.error('No user ID found');
+        return;
+      }
 
-//       const response = await axios.put(`${API_URL}api/v1/individual/auth/add-address/${userId}`, { address, country, state, phoneNumber });
-//       console.log('resident response', response);
+      const response = await axios.patch(`${EXPO_PUBLIC_API_KEY}/api/v1/auth/add-address/${userId}`, { address, country, state, city });
+      console.log('resident response', response);
 
-//       if (response.data && response.data.message) {
-//         console.log('Response:', response.data.message);
-//         navigation.navigate('splashscren'); // Update this with your actual banks screen
-//       } else {
-//         console.error('Resident details failed: No user ID in response');
-//         alert('Registration failed');
-//       }
-//     } catch (error) {
-//       console.error('Registration error:', error);
-//       alert('Registration error');
-//     }
-//   };
+      if (response.data && response.data.message) {
+        console.log('Response:', response.data.message);
+        router.push('/(routes)/kyc/identityscreen'); // Update this with your actual banks screen
+      } else {
+        console.error('Resident details failed: No user ID in response');
+      }
+    } catch (error) {
+      console.error('Registration error:', error);
+    }
+  };
+
+  const addTransactionPin = async (pin: string, confirmPin: string) => {
+    try {
+      if (!userId) {
+        console.error('No user ID found');
+        return;
+      }
+
+      const response = await axios.put(`${EXPO_PUBLIC_API_KEY}/api/v1/auth/transaction/create/${userId}`, { pin, confirmPin });
+      console.log('set pin response', response);
+
+      if (response.data && response.data.message) {
+        console.log('Response:', response.data.message);
+        router.push('/(routes)/kyc/profilecomplete');
+      } else {
+        console.error('Set pin failed');
+      }
+    } catch (error) {
+      console.error('Set pin error:', error);
+    }
+  };
 
 //   const addBvn = async (bvn: string) => {
 //     try {
@@ -300,7 +377,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     // addPassword, forgotPassword, addResidentInfo, addBvn, verifyOtp
-    <AuthContext.Provider value={{ user, email, setEmail, clearEmail, login, logout, register, googleLogin, resendOTP, verifyOtp, addPassword }}>
+    <AuthContext.Provider value={{ email, setEmail, clearEmail, login, logout, register, googleLogin, resendOTP, verifyOtp, addPassword, addResidentInfo, addTransactionPin, getUser }}>
       {children}
     </AuthContext.Provider>
   );

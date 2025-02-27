@@ -1,6 +1,6 @@
 import { Entypo, Feather, Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -14,6 +14,7 @@ import { Creating } from '@/styles/createPassword/CreatePassword'; // Ensure thi
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { SignUpStyles } from '@/styles/Signup/signup.style';
 import { useAuth } from '@/context/AuthContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface RequirementProps {
   label: string;
@@ -46,12 +47,14 @@ function RequirementItem({ label, isValid }: RequirementProps) {
   );
 }
 
+
+
 export default function CreatePassword(): JSX.Element {
   const { addPassword } = useAuth(); // Destructure onLogin from useAuth
   
   const [buttonSpinner, setButtonSpinner] = useState(false);
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [password, setPassword] = useState<string>('');
+  const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [requirements, setRequirements] = useState({
     length: false,
     lowercase: false,
@@ -73,34 +76,34 @@ export default function CreatePassword(): JSX.Element {
       specialChar: /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]+/.test(text),
     });
   };
-  const handleSetPasswordChange = (text: string) => {
-    setConfirmPassword(text);
-    setRequirements({
-      length: text.length >= 8,
-      lowercase: /[a-z]/.test(text),
-      uppercase: /[A-Z]/.test(text),
-      number: /[0-9]/.test(text),
-      specialChar: /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]+/.test(text),
-    });
-  };
+  useEffect(() => {
+    const fetchEmail = async () => {
+      try {
+        const storedUserId = await AsyncStorage.getItem('userId');
+        console.log('Stored email:', storedUserId);
+      } catch (error) {
+        console.error('Error fetching email from AsyncStorage:', error);
+      }
+    };
+  
+    fetchEmail();
+  }, []);
 
   const handleCreatePassword = async () => {
-    if (!allRequirementsMet) {
-      Alert.alert(
-        'Error',
-        'Password does not meet the required criteria or passwords do not match'
-      );
-      await addPassword( password, confirmPassword )
-      return;
-    }
     try {
       setButtonSpinner(true);
-      
-      router.push('/(routes)/Profile-created');
-
-    } catch (error) {
+      if (!allRequirementsMet) {
+        Alert.alert(
+          'Error',
+          'Password does not meet the required criteria or passwords do not match'
+        );
+        return;
+      }
+      await addPassword( password, confirmPassword )
+      console.log("passwords", password, confirmPassword )
+    } catch (err) {
       setButtonSpinner(false);
-
+      console.error('Error during password creation', err);
     } finally {
       setButtonSpinner(false);
     }
@@ -188,7 +191,7 @@ export default function CreatePassword(): JSX.Element {
             style={Creating.input}
             secureTextEntry={!showConfirmPassword}
             value={confirmPassword}
-            onChangeText={handleSetPasswordChange}
+            onChangeText={setConfirmPassword}
             placeholder="Confirm password"
           />
           <TouchableOpacity
@@ -244,17 +247,7 @@ export default function CreatePassword(): JSX.Element {
               Creating.createAccountButton,
               (!allRequirementsMet || buttonSpinner) && Creating.disabledButton,
             ]}
-            onPress={() => {
-              setButtonSpinner(true); // Start spinner
-              setTimeout(() => {
-                try {
-                  handleCreatePassword(); // Attempt to create the account after delay
-                } catch (error) {
-                } finally {
-                  setButtonSpinner(false); // Stop spinner after 2 seconds
-                }
-              }, 1000); // 2-second delay
-            }}
+            onPress={handleCreatePassword}
             disabled={!allRequirementsMet || buttonSpinner} // Disable when processing
             >
             {buttonSpinner ? (

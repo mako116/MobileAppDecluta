@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -23,12 +23,35 @@ import ProfileKYc from '@/screens/Kyc/BannerH/ProfileKYc';
 import LocationModal from '@/screens/ChangeLocation/changelocationScreen';
 import Homes from '@/styles/Homes/Home.styles';
 import FloatingCart from '@/screens/FloatingCart/FloatingCart';
+import { useAuth } from '@/context/AuthContext';
 
-export default function HomeScreen() {
+const HomeScreen: React.FC =() => {
+  const { getUser } = useAuth();
   const [modalVisible, setModalVisible] = useState(false);
   const [currentPopup, setCurrentPopup] = useState(1);
-  const [selectedState, setSelectedState] = useState('Oyo');
+  const [selectedState, setSelectedState] = useState('');
   const [refreshing, setRefreshing] = useState(false);
+
+
+  useEffect(() => {
+    const getUserData = async () => {
+      try {
+        const user = await getUser();
+        console.log('User data detail:', user?.data);
+        const userState = user?.data?.users?.state;
+
+        if (userState) {
+          setSelectedState(userState);
+        }else(
+          setSelectedState('Oyo')
+        )
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+        
+      }
+    };
+    getUserData();
+  }, [getUser]);
 
   const openModal = () => {
     setModalVisible(true);
@@ -126,13 +149,12 @@ export default function HomeScreen() {
           />
         </ScrollView>
       </SafeAreaView>
-        {/* Cart Icon Fixed at Bottom */}
-        <FloatingCart/>
-        
-       {/* Login Banner */}
-         <Loginbanner />
- 
-   
+      {/* Cart Icon Fixed at Bottom */}
+      <FloatingCart/>
+      
+      {/* Login Banner */}
+      <Loginbanner />
     </>
   );
 }
+export default HomeScreen; 

@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, ActivityIndicator, Image, TextInput } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, ActivityIndicator, Image, TextInput, Alert } from 'react-native';
 import { useRouter } from 'expo-router'; // Corrected router import
 import CountrySelectionModal from './CountryModal/CountrySelect';
 import StateSelectionModal from './StateModal/StateModal';
 import CitySelectionModal from './CityModal/Citymodal';
 import KycSignup from '@/styles/Kyc/signup.styles';
+import { useAuth } from '@/context/AuthContext';
   
 const SignUpRegister = () => {
   const router = useRouter();
+  const { addResidentInfo } = useAuth()
   const [buttonSpinner, setButtonSpinner] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isState, setisState] = useState(false);
@@ -32,12 +34,16 @@ const SignUpRegister = () => {
     setIsButtonEnabled(allFieldsFilled); // Enable/Disable button based on form fields
   }, [Kyc]);
 
-  const handleRegister = () => {
-    setButtonSpinner(true);
-    setTimeout(() => {
+  const handleRegister = async () => {
+    try {
+      setButtonSpinner(true);
+      await addResidentInfo(Kyc.Country, Kyc.State,Kyc.City, Kyc.Address);
+      console.log("KYC details", Kyc.Country, Kyc.State,Kyc.City, Kyc.Address)
+    } catch (error) {
+      Alert.alert('Login Failed');
+    } finally {
       setButtonSpinner(false);
-      router.push('/(routes)/kyc/identityscreen');  
-    }, 1000);
+    }
   };
 
   const toggleModal = () => {
@@ -115,16 +121,16 @@ const SignUpRegister = () => {
 
         {/* select Address */}
         <View style={{marginTop:15,marginBottom:4}}>
-        <Text style={KycSignup.label}>Street Address</Text>
-             <TextInput
-               style={[ KycSignup.input, { paddingHorizontal: 40 } ]}
-              keyboardType="default"
-              value={Kyc.Address}
-              placeholder="Enter your street address"
-              placeholderTextColor='#A4A4A4'
-             onChangeText={(value) => setKyc({ ...Kyc, Address: value })}
-           />
-          </View>
+          <Text style={KycSignup.label}>Street Address</Text>
+          <TextInput
+            style={[ KycSignup.input, { paddingHorizontal: 40 } ]}
+            keyboardType="default"
+            value={Kyc.Address}
+            placeholder="Enter your street address"
+            placeholderTextColor='#A4A4A4'
+            onChangeText={(value) => setKyc({ ...Kyc, Address: value })}
+          />
+        </View>
 
         
  

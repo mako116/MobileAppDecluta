@@ -101,7 +101,7 @@ export const SignUpStyles = StyleSheet.create({
       fontFamily:"Helvetica Neue"
     },
     inputContainerStyle: {
-      marginHorizontal: 16,
+      
       borderRadius: 4,
       borderWidth: 1,
       borderColor: "#E9E9E9",
@@ -137,7 +137,7 @@ export const SignUpStyles = StyleSheet.create({
       marginTop: 5,
     },
     loginButtons: {
-      padding: 25,
+      padding: 20,
       borderRadius: 8,
       // marginHorizontal: 16,
       backgroundColor: "#DEBC8E",
@@ -293,7 +293,6 @@ export const SignUpStyles = StyleSheet.create({
     dropdownButton: {
       height: 55,
       borderRadius: 3,
-      marginHorizontal: 16,
       borderWidth: 1,
       borderColor: "#E9E9E9",
       paddingLeft: 15,
@@ -343,7 +342,6 @@ export const SignUpStyles = StyleSheet.create({
        flexDirection: 'row',
       alignItems: 'center',
       backgroundColor: "white",
-      marginHorizontal: 16,
       // marginTop: 30,
       // gap: 10,
     },
@@ -365,14 +363,12 @@ export const SignUpStyles = StyleSheet.create({
     phoneInput: {
       height: 55,
       borderRadius: 3,
-      
       fontSize: 14,
       backgroundColor: "white",
-       color: '#212121',
+      color: '#212121',
       paddingRight: 15,
       fontFamily:"Proxima Nova",
-      lineHeight:14,
-      fontWeight:"500"
+      fontWeight:"400"
     },
     divider: {
       width: 35,

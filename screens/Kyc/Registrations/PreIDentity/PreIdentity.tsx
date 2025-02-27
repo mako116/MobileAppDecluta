@@ -4,21 +4,21 @@ import KycSignup from '@/styles/Kyc/signup.styles';
 import { router } from 'expo-router';
 import React, { useState } from 'react';
 import { ActivityIndicator, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import FaceVerification from '../../PremblyIdentityPass/FaceVerification';
 
 const PreIdentity = () => {
-     const [buttonSpinner, setButtonSpinner] = useState(false);
+  const [buttonSpinner, setButtonSpinner] = useState(false);
     
-     const handleVerify = () => {
-        setButtonSpinner(true);
-        setTimeout(() => {
-          setButtonSpinner(false);
-          router.push('/(routes)/kyc/sucess');  
-        }, 1000);
-      };
+  const handleVerify = () => {
+    setButtonSpinner(true);
+    setTimeout(() => {
+      setButtonSpinner(false);
+      router.push('/(routes)/kyc/verificationScreen');  
+    }, 1000);
+  };
 
   // Data for "What You Need to Verify" section
   const verifyList = [
-    { icon: <Tik />, text: 'Valid Government-issued ID' },
     { icon: <Tik />, text: 'NIN (National Identification Number)' },
     { icon: <Tik />, text: 'BVN (Bank Verification Number)' },
   ];
@@ -47,18 +47,13 @@ const PreIdentity = () => {
         </View>
 
         <Text style={KycSignup.texts}>
-          To ensure the safety and security of your DecluttaKing account, you
-          need to complete a quick verification process before making
-          withdrawals. Our trusted third-party partner, IdentityPass by Prembly,
-          will handle the verification.
+          To ensure the safety and security of your DecluttaKing account and to comply with CBN’s regulation on account KYC, you need to complete a quick verification process before adding money to your wallet or making withdrawals.
         </Text>
         <Text style={KycSignup.texts}>
-          Your data is securely stored and protected in compliance with industry
-          standards.
+          Our trusted third-party partner, IdentityPass by Monnify, will handle the verification. Your data is securely stored and protected in compliance with industry standards.
         </Text>
         <Text style={KycSignup.texts}>
-          It only takes a few IdentityPass—simply follow the instructions when
-          the Prembly verification screen loads.
+          It only takes a few minutes ({'<2mins'} tops). Simply follow the instructions when the verification screen loads.
         </Text>
 
         <View>
@@ -91,6 +86,7 @@ const PreIdentity = () => {
             </Text>
           )}
         </TouchableOpacity>
+        {/* <FaceVerification /> */}
     </View>
   );
 };

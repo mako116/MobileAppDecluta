@@ -67,7 +67,7 @@ export default function OTPMainEmail() {
     try {
       setIsLoading(true);
       setIsVerifying(true); // Mar
-      const convertOtp = Number(numericOtp.join(''));
+      const convertOtp = numericOtp.join('');
       console.log('Converted OTP:', convertOtp);
   
       const response = await verifyOtp(convertOtp);

@@ -28,7 +28,16 @@ const CitySelectionModal: React.FC<CitySelectionModalProps> = ({
   const [city, setcity] = useState<string>('ibadan');
   const [searchTerm, setSearchTerm] = useState<string>('');
 
-  const cities = ['Ibadan','Ogbomoso','Iseyin',];
+  // const cities = ['Ibadan','Ogbomoso','Iseyin',];
+  const cities = {
+    Lagos: ['Ikeja', 'Epe', 'Ikorodu', 'Badagry', 'Lekki'],
+    Oyo: ['Ibadan', 'Ogbomoso', 'Iseyin', 'Oyo', 'Saki'],
+    Kano: ['Kano', 'Wudil', 'Gaya', 'Rano', 'Bichi'],
+    Rivers: ['Port Harcourt', 'Bonny', 'Opobo', 'Ahoada', 'Omoku'],
+    // Add more states and their cities as needed
+  };
+
+  const allCities = Object.values(cities).flat();
 
   const toggleDropdown = () => setIsDropdownOpen((prev) => !prev);
 
@@ -38,7 +47,7 @@ const CitySelectionModal: React.FC<CitySelectionModalProps> = ({
     setIsDropdownOpen(false);
   };
 
-  const filteredState = cities.filter((citing) =>
+  const filteredState = allCities.filter((citing) =>
     citing.toLowerCase().includes(searchTerm.toLowerCase())
   );
 

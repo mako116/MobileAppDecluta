@@ -9,7 +9,4 @@ const ProfileComp = () => {
         </>
     );
 }
-
-const styles = StyleSheet.create({})
-
 export default ProfileComp;

@@ -7,14 +7,17 @@ import {
   TouchableOpacity,
   ScrollView,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
-import { router } from 'expo-router';
 import KycSignup from '@/styles/Kyc/signup.styles';
 import Eye from '@/assets/images/kyc/Eye';
+import { useAuth } from '@/context/AuthContext';
 
 const SetUpPin = () => {
-  const [pin, setPin] = useState<string[]>(['', '', '', '']);
-  const [confirmPin, setConfirmPin] = useState<string[]>(['', '', '', '']);
+  const { addTransactionPin } = useAuth();
+  const [pin, setPin] = useState<string[]>(Array(4).fill(''));
+  const [confirmPin, setConfirmPin] = useState<string[]>(Array(4).fill(''));
+
   const [isPinVisible, setIsPinVisible] = useState(false);
   const [isConfirmPinVisible, setIsConfirmPinVisible] = useState(false);
 
@@ -26,12 +29,16 @@ const SetUpPin = () => {
   const togglePinVisibility = () => setIsPinVisible(!isPinVisible);
   const toggleConfirmPinVisibility = () => setIsConfirmPinVisible(!isConfirmPinVisible);
 
-  const handleVerify = () => {
-    setButtonSpinner(true);
-    setTimeout(() => {
+  const handleVerify = async () => {
+    try {
+      setButtonSpinner(true);
+      await addTransactionPin( pin.join(''), confirmPin.join('') )
+      console.log( "pin details", pin.join(''), confirmPin.join('') )
+    } catch (err) {
+      Alert.alert('Set Pin Failed');
+    } finally {
       setButtonSpinner(false);
-      router.push('/(routes)/kyc/profilecomplete');
-    }, 1000);
+    }
   };
 
   const handlePinChange = (

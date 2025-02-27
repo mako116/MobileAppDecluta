@@ -84,6 +84,8 @@ export default function Login() {
         return;
       }
       await login(email, password);
+      console.log("login details", email, password )
+
     } catch (err) {
       Alert.alert('Login Failed');
       setSuccessMessage("Login failed!");
@@ -117,8 +119,8 @@ export default function Login() {
 
       
       <View style={SignUpStyles.inputContainer}>
-        <View>
-          <Text style={[SignUpStyles.label,{marginLeft: 20}]}>Email</Text>
+        <View style={{ marginHorizontal: 16 }} >
+          <Text style={[SignUpStyles.label,]}>Email</Text>
           <View style={[SignUpStyles.row, SignUpStyles.inputContainerStyle]}>
             <TextInput
               style={[
@@ -143,8 +145,8 @@ export default function Login() {
           )}
         </View>
 
-        <View style={{ marginTop: 5 }}>
-          <Text style={[SignUpStyles.label,{marginLeft: 20}]}>Password</Text>
+        <View style={{ marginTop: 5, marginHorizontal: 16 }}>
+          <Text style={[SignUpStyles.label]}>Password</Text>
           <View style={[SignUpStyles.row, SignUpStyles.inputContainerStyle]}  >
             <TextInput
               style={[

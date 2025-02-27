@@ -137,7 +137,7 @@ export default function DetailScreen() {
   }
   return (
     <ScrollView style={{ flex: 1}} scrollEventThrottle={1}>
-      <View style={{ marginTop: 15 }}>
+      <View style={{ marginTop: 15, marginHorizontal: 16, }}>
 
         {/* First Name Input */}
         <View>
@@ -161,7 +161,7 @@ export default function DetailScreen() {
         </View>
 
         {/* Last Name Input */}
-        <View>
+        <View  style={{marginTop:10}}>
           <Text style={SignUpStyles.label}>Last name</Text>
           <View style={[SignUpStyles.row, SignUpStyles.inputContainerStyle]}>
             <TextInput
@@ -218,7 +218,7 @@ export default function DetailScreen() {
           <View style={[SignUpStyles.row, SignUpStyles.inputContainerStyle]}>
             <TextInput
             style={[
-              SignUpStyles.TextInput,
+              SignUpStyles.input,
               focusInput.email && { borderColor: "#DEBC8E" },
               { paddingHorizontal: 40 }
             ]}
@@ -238,10 +238,10 @@ export default function DetailScreen() {
         <View style={SignUpStyles.container}>
           <Text style={SignUpStyles.label}>Phone Number</Text>
           <View style={SignUpStyles.phoneContainer}>
-             <Image
+            <Image
               source={require("../../../assets/images/newimages/twemoji_flag-nigeria.png")} 
-                style={SignUpStyles.customLogo}
-                 />
+              style={SignUpStyles.customLogo}
+            />
             <Text style={SignUpStyles.callingCode}>+{callingCode}</Text>
             <TextInput
               style={SignUpStyles.phoneInput}
@@ -249,7 +249,6 @@ export default function DetailScreen() {
               value={phoneNumber}
               onChangeText={handlePhoneChange}
               placeholder="Phone number"
-              placeholderTextColor='gray'
             />
           </View>
         </View>

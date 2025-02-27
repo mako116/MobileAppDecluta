@@ -81,6 +81,7 @@ const stateSty = StyleSheet.create({
       borderColor: '#E9E9E9',
       
       backgroundColor: '#fff',
+      height: "40%"
     },
     dropdownItem: {
       flexDirection: 'row',

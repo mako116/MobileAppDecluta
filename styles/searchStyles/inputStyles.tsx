@@ -3,8 +3,8 @@ import { StyleSheet } from "react-native";
 
 const SearchScreeStyles = StyleSheet.create({
     container: { 
-        paddingVertical: 10, 
-        paddingTop: 45 ,
+        paddingVertical: 20, 
+        paddingTop: 70 ,
         backgroundColor: "white"
     },
     searchBox: { 

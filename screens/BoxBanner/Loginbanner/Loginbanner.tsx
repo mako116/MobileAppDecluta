@@ -1,8 +1,31 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { router } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Loginbanner() {
+  const [hasToken, setHasToken] = useState(false);
+  
+  useEffect(() => {
+    const checkToken = async () => {
+      try {
+        const token = await AsyncStorage.getItem('token');
+        if (token) {
+          setHasToken(true); 
+        } else {
+          return null;
+         }
+      } catch (error) {
+        console.error('Error reading token:', error);
+      }
+    };
+
+    checkToken();
+  }, [router]);
+
+  if (hasToken) {
+    return null;
+  }
   const handleLoginPress = () => {
     // Navigate to the login screen with expo-router
     router.push("/(routes)/login");
