@@ -6,11 +6,9 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
-  TextInput,
-} from 'react-native';
+ } from 'react-native';
 import Close from '@/assets/images/kyc/close';
-import { SignUpStyles } from '@/styles/Signup/signup.style';
-import YourCart from '@/styles/Cart/YourCart.styles';
+ 
 import BackButton2 from '@/assets/images/kyc/LeftArrow2';
 import { useCart } from '@/context/CartContext';
 import PaymentBoard from './PaymentsBoard';

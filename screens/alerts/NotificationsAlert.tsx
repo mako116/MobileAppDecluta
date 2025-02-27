@@ -17,13 +17,13 @@ import { useCart } from '@/context/CartContext';
     return { totalAmount, uniqueItemCount };
   };
   
-  const {   uniqueItemCount } = getCartSummary();
+  const { uniqueItemCount } = getCartSummary();
 
  
   return (
     <View style={styles.container}>
       {/* Live Icon */}
-      <TouchableOpacity>
+      <TouchableOpacity onPress={()=>router.push("/(routes)/DkLive")}>
       <View style={styles.circle}>
       <Image source={require('../../assets/images/newimages/live.png')} style={{width:36.5,height:30, objectFit:"contain"}} />
      </View>
