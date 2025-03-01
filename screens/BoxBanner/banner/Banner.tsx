@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     lineHeight: 22.4,
     color: '#212121',
-    fontFamily: 'HelveticaNeue',
+    fontFamily: 'Helvetica Neue',
   },
   subText: {
     fontWeight: '400',

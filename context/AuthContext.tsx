@@ -308,7 +308,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         return;
       }
 
-      const response = await axios.put(`${EXPO_PUBLIC_API_KEY}/api/v1/auth/transaction/create/${userId}`, { pin, confirmPin });
+      const response = await axios.patch(`${EXPO_PUBLIC_API_KEY}/api/v1/auth/transaction/create/${userId}`, 
+        { pin, confirmPin },
+        {
+          headers: {
+            'Authorization': `Bearer ${user}` // Add the authorization header
+          }
+        }
+      );
       console.log('set pin response', response);
 
       if (response.data && response.data.message) {
@@ -321,32 +328,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       console.error('Set pin error:', error);
     }
   };
-
-//   const addBvn = async (bvn: string) => {
-//     try {
-//       const storedUserId = userId || await AsyncStorage.getItem('userId');
-    
-//       if (!storedUserId) {
-//         console.error('No user ID found');
-//         alert('No user ID found');
-//         return;
-//       }
-
-//       const response = await axios.put(`${API_URL}api/v1/individual/auth/add-bvn/${userId}`, { bvn });
-//       console.log('added Bvn response', response);
-
-//       if (response.data && response.data.message) {
-//         console.log('Response:', response.data.message);
-//         navigation.navigate('splashscren'); // Update this with your actual password screen
-//       } else {
-//         console.error('Resident details failed: No user ID in response');
-//         alert('Registration failed');
-//       }
-//     } catch (error) {
-//       console.error('Registration error:', error);
-//       alert('Registration error');
-//     }
-//   };
 
 
 

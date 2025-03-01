@@ -3,62 +3,75 @@ import KycSignup from "@/styles/Kyc/signup.styles";
 import VerificationStyle from "@/styles/Kyc/VerificationStyles";
 import HeaderProp from "@/UI/Header/HeaderProp";
 import TextInputField from "@/UI/InputFields/TextInputField";
-import { Text, View, Image, TouchableOpacity, ActivityIndicator } from "react-native";
+import { Text, View, Image, TouchableOpacity, StyleSheet, TextInput } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useMonnify } from "@/utils/Monnify/useMonnify";
 import { useAuth } from "@/context/AuthContext";
 import { router } from "expo-router";
-import {Picker} from '@react-native-picker/picker';
+import { Entypo } from "@expo/vector-icons";
+import MonthModal from "@/components/Modals/PickerMonthModal";
 
 const BvnVerification: React.FC = () => {
     const [bvn, setBvn] = useState(""); // Track NIN input
-    const [dateOfBirth, setDateOfBirth] = useState(""); // Track date of birth input
     const [day, setDay] = useState("");
     const [month, setMonth] = useState("");
     const [year, setYear] = useState("");
     const [verifying, setVerifying] = useState(false);
     const [verificationStatus, setVerificationStatus] = useState<"success" | "error" | "pending" | null>(null);
+    const [isMonth, setIsMonth] = useState(false);
     const { verifyNBvnUser } = useMonnify();
     const { getUser } = useAuth()
-    const days = Array.from({ length: 31 }, (_, i) => (i + 1).toString());
-    const months = [
-        "January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"
-    ];
-    const years = Array.from({ length: 100 }, (_, i) => (new Date().getFullYear() - i).toString());
+
+    const toggleModals = () => {
+        setIsMonth(!isMonth)
+    };
 
 
     useEffect(() => {
-        const verify = async () => {
-            const user = getUser();
-            try {
-                setVerifying(true);
-                setVerificationStatus("pending");
-                const user = await getUser();
-                const response = await verifyNBvnUser( {
-                    bvn,
-                    name: user?.name,
-                    dateOfBirth,
-                    mobileNo: user?.phoneNumber
-                }); // Now correctly returns a value
-                console.log('Res data', response);
+        if (bvn.length === 11 && day && month && year) {
+            const dob = `${day}-${month}-${year}`;
+            
     
-                if (response?.responseMessage === "success") { // ✅ Check responseMessage properly
-                    setVerificationStatus("success");
-                } else {
+            const verify = async () => {
+                try {
+                    setVerifying(true);
+                    setVerificationStatus("pending");
+    
+                    // const user = await getUser();
+                    // const response = await verifyNBvnUser({
+                    //     bvn,
+                    //     name: `${user.data.users.lastName} ${user.data.users.firstName}`, // Join first and last name with a space
+                    //     dateOfBirth: dob, // Use local dob instead of state
+                    //     mobileNo: user.data.users.phoneNumber
+                    // });
+    
+                    // console.log('Res data', response);
+    
+                    // if (response?.responseMessage === "success") {
+                    //     setVerificationStatus("success");
+                    // } else {
+                    //     setVerificationStatus("error");
+                    // }
+
+                    setTimeout(() => {
+                        if (bvn === "12345678901") { // Simulate a valid NIN
+                            setVerificationStatus("success");
+                        } else {
+                            setVerificationStatus("error");
+                        }
+                        setVerifying(false);
+                    }, 2000);
+                } catch (error) {
+                    console.error("Error verifying BVN:", error);
                     setVerificationStatus("error");
+                    setVerifying(false);
                 }
-            } catch (error) {
-                console.error("Error verifying NIN:", error);
-                setVerificationStatus("error");
-                setVerifying(false);
-            }
-        };
+            };
     
-        if (bvn.length === 11) {
             verify();
         }
-    }, []);
+    }, [bvn, day, month, year]); // ✅ Depend on day, month, year instead of dateOfBirth
+    
     
     
     
@@ -101,31 +114,43 @@ const BvnVerification: React.FC = () => {
                         Your date of birth is required to verify your BVN and complete your wallet setup. It must match your BVN document.
                     </Text>
                 </View>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <Picker
-                        selectedValue={day}
-                        style={{ flex: 1 }}
-                        onValueChange={(itemValue) => setDay(itemValue)}
-                    >
-                        <Picker.Item label="Day" value="" />
-                        {days.map((d) => <Picker.Item key={d} label={d} value={d} />)}
-                    </Picker>
-                    <Picker
-                        selectedValue={month}
-                        style={{ flex: 1 }}
-                        onValueChange={(itemValue) => setMonth(itemValue)}
-                    >
-                        <Picker.Item label="Month" value="" />
-                        {months.map((m) => <Picker.Item key={m} label={m} value={m} />)}
-                    </Picker>
-                    <Picker
-                        selectedValue={year}
-                        style={{ flex: 1 }}
-                        onValueChange={(itemValue) => setYear(itemValue)}
-                    >
-                        <Picker.Item label="Year" value="" />
-                        {years.map((y) => <Picker.Item key={y} label={y} value={y} />)}
-                    </Picker>
+                <View style={[styles.row, ]} >
+                    <View style={{ alignItems: 'flex-start' }}>
+                        <Text style={styles.label}>Day</Text>
+                        <TextInput
+                            style={styles.inputIOS}
+                            value={day}
+                            onChangeText={setDay}
+                            keyboardType="numeric"
+                            maxLength={2}
+                            placeholder="DD"
+                        />
+                    </View>
+
+                    <View>
+                        <Text style={styles.label} >
+                            Month
+                        </Text>
+                        <TouchableOpacity onPress={toggleModals} style={[styles.row, styles.dropDown, { gap: 15 } ]} >
+                            <Text  style={{ color: "gray", fontFamily: 'Proxima Nova', fontWeight: '400' }}>
+                                {month || "Select"}
+                            </Text>
+                            <Entypo name="chevron-thin-down" size={16} color="gray" />
+                        </TouchableOpacity>
+                    </View>
+
+                    <View>
+                        <Text style={styles.label}>Year</Text>
+                        <TextInput
+                            style={styles.inputIOS}
+                            value={year}
+                            onChangeText={setYear}
+                            keyboardType="numeric"
+                            maxLength={4}
+                            placeholder="YYYY"
+                        />
+                    </View>
+                    
                 </View>
 
                 {/* Status Messages */}
@@ -139,21 +164,21 @@ const BvnVerification: React.FC = () => {
                     <View style={{ marginTop: 5, display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
                         <Image source={require('../../../assets/images/X.png')} style={{ width: 15, height: 15 }}/>
 
-                        <Text style={{ color: "#E42527", fontStyle: 'italic' }}> Unable to process request. Invalid NIN provided</Text>
+                        <Text style={{ color: "#E42527", fontStyle: 'italic' }}> Unable to process request. Invalid BVN provided</Text>
                     </View>
                 )}
                 {verificationStatus === "success" && (
                     <View style={{ marginTop: 5, display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
                         <Image source={require('../../../assets/images/Check.png')} style={{ width: 15, height: 15 }}/>
 
-                        <Text style={{ color: "#009262", fontStyle: 'italic' }}> NIN verified successfully</Text>
+                        <Text style={{ color: "#009262", fontStyle: 'italic' }}> BVN verified successfully</Text>
                     </View>
                 )}
             </View>
             
             {/* Button */}
             <TouchableOpacity
-                onPress={() => router.push("/(routes)/kyc/bvnVerificationScreen")}
+                onPress={() => router.push("/(routes)/kyc/sucess")}
                 disabled={verificationStatus !== "success"} // Only enable if verified
                 style={[
                     KycSignup.button,
@@ -186,8 +211,59 @@ const BvnVerification: React.FC = () => {
                 </Text>
                 <Image source={require('../../../assets/images/monnifyIcon.png')} style={{ width: 90, height: 15 }}/>
             </View>
+            {isMonth && (
+                <MonthModal
+                    isMonth={isMonth}
+                    onSelectMonth={setMonth}
+                    toggleMod={toggleModals}
+                />
+            )}
         </SafeAreaView>
     );
 }
 
 export default BvnVerification;
+
+
+const styles = StyleSheet.create({
+    container: {
+      padding: 20,
+    },
+    row: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between"
+    },
+    label: {
+      fontSize: 16,
+      marginBottom: 5,
+      fontFamily: 'Proxima Nova',
+    fontWeight: '400',
+    },
+    inputIOS: {
+        fontSize: 16,
+        paddingVertical: 20,
+        paddingHorizontal: 10,
+        paddingRight: 60,
+        borderWidth: 2,
+        borderColor: "#E9E9E9",
+        borderRadius: 4,
+        color: "gray",
+        fontFamily: 'Proxima Nova',
+        fontWeight: '400',
+        flex: 1,
+        backgroundColor: "white"
+    },
+    dropDown: {
+        fontSize: 16,
+        paddingVertical: 20,
+        paddingHorizontal: 20,
+        borderWidth: 2,
+        borderColor: "#E9E9E9",
+        borderRadius: 4,
+        color: "black",
+        fontFamily: 'Proxima Nova',
+        fontWeight: '400',
+        backgroundColor: "white"
+    }
+  });

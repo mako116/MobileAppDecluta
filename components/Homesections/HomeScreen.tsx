@@ -24,9 +24,10 @@ import LocationModal from '@/screens/ChangeLocation/changelocationScreen';
 import Homes from '@/styles/Homes/Home.styles';
 import FloatingCart from '@/screens/FloatingCart/FloatingCart';
 import { useAuth } from '@/context/AuthContext';
+import Button from '../Button/button';
 
 const HomeScreen: React.FC =() => {
-  const { getUser } = useAuth();
+  const { getUser, logout } = useAuth();
   const [modalVisible, setModalVisible] = useState(false);
   const [currentPopup, setCurrentPopup] = useState(1);
   const [selectedState, setSelectedState] = useState('');
@@ -72,6 +73,12 @@ const HomeScreen: React.FC =() => {
       setRefreshing(false);
     }, 2000); // 2-second delay
   };
+  
+  {/* Do not remove for testing purpose */}
+  
+  // const handleLogout = async () => {
+  //   await logout();
+  // }
 
   return (
     <>
@@ -102,6 +109,14 @@ const HomeScreen: React.FC =() => {
           refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         >
           <View style={Homes.content}>
+            {/* Do not remove for testing purpose */}
+
+            {/* <Button
+              title="Log Out"
+              onPress={handleLogout}
+              backgroundColor="#DEBC8E"
+              borderWidth="1"
+            /> */}
             {/* Complete KYC */}
             <View>
               <ProfileKYc />
