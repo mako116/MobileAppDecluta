@@ -1,57 +1,42 @@
+ import Arrowleft2 from '@/assets/svg/ArrowLeft2';
 import NotificationStyles from '@/styles/Notification/Notification.styles';
-import { SimpleLineIcons } from '@expo/vector-icons';
-import React from 'react';
+ import React from 'react';
 import { Image, SafeAreaView, ScrollView,  Text, View } from 'react-native';
 
 
 const notifications: Notification[] = [
+  
     {
       id: '1',
-      title: 'Welcome to DecluttaKing!',
-      description: "You’ve successfully signed up. Start buying and selling items today!",
-      image: require('../../../assets/images/imgg.png'),
-      time: 'Today 20:28',
-      tag: 'Updates',
-      action: null,
-    },
-    {
-      id: '2',
       title: '500 Rewards Points Achieved!',
       description: "Congrats! You completed your first purchase and have been awarded 500 reward points!",
-      image: require('../../../assets/images/reward.png'),
+      image: require('../../../assets/images/notifi/Frame 646965 (2).png'),
       time: 'Today 20:28',
-      tag: 'Updates',
+      tag: 'Rewards',
       action: 'View More',
     },
+    
     {
-      id: '3',
-      title: 'Complete Your KYC',
+      id: '2',
+      title: 'Referral Points Earned',
       description:
-        'Verify your identity to access withdrawal, get a verification badge, and enjoy more benefits.',
-      image: require('../../../assets/images/kyc.png'),
+        'You’ve just earned ₦1,000 for referring a friend! More rewards await.',
+      image: require('../../../assets/images/notifi/Frame 646965 (1).png'),
       time: 'Today 20:28',
-      tag: 'Updates',
-      action: 'Complete KYC',
-    },
-    {
-      id: '4',
-      title: 'Complete Your KYC',
-      description:
-        'Verify your identity to access withdrawal, get a verification badge, and enjoy more benefits.',
-      image: require('../../../assets/images/kyc.png'),
-      time: 'Today 20:28',
-      tag: 'Updates',
-      action: 'Complete KYC',
+      tag: 'Rewards',
+      action: 'View More',
+
     },
     {
       id: '5',
-      title: 'Complete Your KYC',
+      title: 'You Referred a Friend!',
       description:
-        'Verify your identity to access withdrawal, get a verification badge, and enjoy more benefits.',
-      image: require('../../../assets/images/kyc.png'),
+        'Great news! Comfort O. has joined via your referral. Track their purchase progress on My Referrals to unlock your reward!',
+      image: require('../../../assets/images/notifi/Frame 646965 (3).png'),
       time: 'Today 20:28',
-      tag: 'Updates',
-      action: 'Complete KYC',
+      tag: 'Rewards',
+      action: 'View More',
+
     },
   ];
   
@@ -67,12 +52,12 @@ const notifications: Notification[] = [
 const Rewards = () => {
     return (
       <SafeAreaView>
-      <ScrollView>
+      <ScrollView  style={{paddingHorizontal:10, paddingBottom:"50%"}}>
         {notifications.length === 0 ? (
           <View style={NotificationStyles.noNotificationContainer}>
-          <Image source={require('../../../assets/images/None.png')}   />
-       <Text style={[NotificationStyles.noNotificationText,{fontFamily:"ProximaNovaBold", fontSize:19}]}>No Updates at the Moment</Text>
-       <Text style={NotificationStyles.noNotificationText}>You’ll be notified here when new features or important updates are available.</Text>
+            <Image source={require('../../../assets/images/notifi/none/Frame 25 (3).png')}  style={{height:66, width:"100%", objectFit:"contain"}}  />
+       <Text style={[NotificationStyles.noNotificationText,{fontFamily:"ProximaNovaBold", fontSize:19}]}>No Rewards Notifications Yet</Text>
+       <Text style={NotificationStyles.noNotificationText}>Earn rewards by completing objectives. You’ll see notifications about your points and milestones here.</Text>
      </View>
         ) : (
           notifications.map((item) => (
@@ -92,8 +77,8 @@ const Rewards = () => {
                 {item.action && (
                   <View style={NotificationStyles.footerRight}>
                     <Text style={NotificationStyles.actionText}>{item.action}</Text>
-                    <SimpleLineIcons name="arrow-right" size={10} color="black" />
-                  </View>
+                    <Arrowleft2/>
+                   </View>
                 )}
               </View>
             </View>

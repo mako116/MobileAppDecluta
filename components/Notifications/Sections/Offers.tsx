@@ -9,7 +9,7 @@ const notifications: Notification[] = [
     id: '1',
     title: 'Check out this discount offer!',
     description: "Enjoy the best deals on any product category with DecluttaKing! Click here",
-    image: require('../../../assets/images/banner.png'),
+    image: require('../../../assets/images/Frame 646973.png'),
      time: 'Today 20:28',
     tag: 'Offers',
     action: 'View More',
@@ -29,19 +29,20 @@ const notifications: Notification[] = [
 const Offers = () => {
     return (
       <SafeAreaView>
-      <ScrollView>
+      <ScrollView style={{paddingHorizontal:10,paddingBottom:"50%"}}>
         {notifications.length === 0 ? (
           <View style={NotificationStyles.noNotificationContainer}>
-          <Image source={require('../../../assets/images/None.png')}   />
-       <Text style={[NotificationStyles.noNotificationText,{fontFamily:"ProximaNovaBold", fontSize:19}]}>No Updates at the Moment</Text>
-       <Text style={NotificationStyles.noNotificationText}>You’ll be notified here when new features or important updates are available.</Text>
+            <Image source={require('../../../assets/images/notifi/none/Frame 25 (4).png')}  style={{height:66, width:"100%", objectFit:"contain"}}  />
+       <Text style={[NotificationStyles.noNotificationText,{fontFamily:"ProximaNovaBold", fontSize:19}]}>No Offers Available Right Now</Text>
+       <Text style={NotificationStyles.noNotificationText}>Keep an eye out for special offers and discounts!
+       We’ll notify you when something exciting comes up.</Text>
      </View>
         ) : (
           notifications.map((item) => (
             <View key={item.id} style={NotificationStyles.main}>
-              <View style={NotificationStyles.notificationContent}>
-                <Image source={item.image}   />
-                <View style={NotificationStyles.textContainer}>
+              <View style={NotificationStyles.notificationContents}>
+                <Image source={item.image} style={{height:87, width:"100%", objectFit:"cover"}}  />
+                <View style={[NotificationStyles.textContainer,{paddingTop:6}]}>
                   <Text style={NotificationStyles.title}>{item.title}</Text>
                   <Text style={NotificationStyles.description}>{item.description}</Text>
                 </View>
@@ -54,7 +55,7 @@ const Offers = () => {
                 {item.action && (
                   <View style={NotificationStyles.footerRight}>
                     <Text style={NotificationStyles.actionText}>{item.action}</Text>
-                    <SimpleLineIcons name="arrow-right" size={10} color="black" />
+                <Image source={require('../../../assets/images/newimages/Vector.png')} style={{width:6,height:10,marginTop:3}} />
                   </View>
                 )}
               </View>

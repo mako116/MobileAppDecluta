@@ -1,9 +1,9 @@
-import React, { Dispatch, SetStateAction } from 'react';
-import { Modal, Text, View, StyleSheet } from 'react-native';
-import Button from '@/components/Button/button';
-import { Picker } from '@react-native-picker/picker';
-import HalfButton from '@/components/Button/halfButton';
+import React, { Dispatch, SetStateAction, useRef, useState } from 'react';
+import { Modal, Text, View, TouchableOpacity, FlatList, Image, PanResponder, Animated } from 'react-native';
 import { AntDesign, Entypo } from '@expo/vector-icons';
+import Button from '@/components/Button/button';
+import HalfButton from '@/components/Button/halfButton';
+import HeaderNotification from '@/styles/Notification/HomeHeaderNotificationTabs';
 
 interface LocationModalProps {
   modalVisible: boolean;
@@ -22,148 +22,246 @@ const LocationModal: React.FC<LocationModalProps> = ({
   currentPopup,
   setCurrentPopup,
 }) => {
+  const [stateModalVisible, setStateModalVisible] = useState(false);
+  const translateY = useRef(new Animated.Value(0)).current;
+
+  const panResponder = useRef(
+    PanResponder.create({
+      onMoveShouldSetPanResponder: (_, gestureState) => gestureState.dy > 0,
+      onPanResponderMove: Animated.event([null, { dy: translateY }], { useNativeDriver: false }),
+      onPanResponderRelease: (_, gestureState) => {
+        if (gestureState.dy > 100) {
+          handleClose();
+        } else {
+          Animated.spring(translateY, {
+            toValue: 0,
+            useNativeDriver: true,
+          }).start();
+        }
+      },
+    })
+  ).current;
+
+  const states = [
+    { label: 'Abia', value: 'abia' },
+    { label: 'Adamawa', value: 'adamawa' },
+    { label: 'Akwa Ibom', value: 'akwa_ibom' },
+    { label: 'Anambra', value: 'anambra' },
+    { label: 'Bauchi', value: 'bauchi' },
+    { label: 'Bayelsa', value: 'bayelsa' },
+    { label: 'Benue', value: 'benue' },
+    { label: 'Borno', value: 'borno' },
+    { label: 'Cross River', value: 'cross_river' },
+    { label: 'Delta', value: 'delta' },
+    { label: 'Ebonyi', value: 'ebonyi' },
+    { label: 'Edo', value: 'edo' },
+    { label: 'Ekiti', value: 'ekiti' },
+    { label: 'Enugu', value: 'enugu' },
+    { label: 'Gombe', value: 'gombe' },
+    { label: 'Imo', value: 'imo' },
+    { label: 'Jigawa', value: 'jigawa' },
+    { label: 'Kaduna', value: 'kaduna' },
+    { label: 'Kano', value: 'kano' },
+    { label: 'Katsina', value: 'katsina' },
+    { label: 'Kebbi', value: 'kebbi' },
+    { label: 'Kogi', value: 'kogi' },
+    { label: 'Kwara', value: 'kwara' },
+    { label: 'Lagos', value: 'lagos' },
+    { label: 'Nasarawa', value: 'nasarawa' },
+    { label: 'Niger', value: 'niger' },
+    { label: 'Ogun', value: 'ogun' },
+    { label: 'Ondo', value: 'ondo' },
+    { label: 'Osun', value: 'osun' },
+    { label: 'Oyo', value: 'oyo' },
+    { label: 'Plateau', value: 'plateau' },
+    { label: 'Rivers', value: 'rivers' },
+    { label: 'Sokoto', value: 'sokoto' },
+    { label: 'Taraba', value: 'taraba' },
+    { label: 'Yobe', value: 'yobe' },
+    { label: 'Zamfara', value: 'zamfara' },
+    { label: 'FCT - Abuja', value: 'fct_abuja' },
+  ];
+
   const handleContinue = () => {
     if (currentPopup < 3) {
       setCurrentPopup(currentPopup + 1);
     } else {
-      setModalVisible(false);
-      setCurrentPopup(1);
+      handleClose();
     }
   };
 
   const handleCancel = () => {
+    handleClose();
+  };
+
+  const handleClose = () => {
     setModalVisible(false);
     setCurrentPopup(1);
   };
 
+  const renderStateItem = ({ item }: { item: { label: string; value: string } }) => (
+    <TouchableOpacity
+      style={HeaderNotification.modalContainer}
+      onPress={() => {
+        setSelectedState(item.value);
+        setStateModalVisible(false);
+      }}
+    >
+      <Text style={HeaderNotification.label}>{item.label}</Text>
+    </TouchableOpacity>
+  );
+
   return (
     <Modal animationType="slide" transparent visible={modalVisible}>
-      <View style={styles.modalContainer}>
-        <View style={styles.modalContent}>
-          {currentPopup === 1 && (
-            <>
-              <View style={{flexDirection:"row",   marginHorizontal:"10%",width:"100%", justifyContent:"space-around"  }}>
-              <Text style={styles.modalTitle}>Change Location</Text>
-              <AntDesign
-              onPress={() => setModalVisible(false)}
-              name="close" size={24} color="black" style={{ }} />
-              </View>
-              <Text style={styles.pg}>
-                Want more options? Browse listings from other states to find the best prices and unique items.
-              </Text>
-              <View style={{ width: '100%', paddingVertical: 10 }}>
-                <Text style={{ textAlign: 'left', paddingVertical: 5 }}>State</Text>
-                <View style={styles.pickerContainer}>
-                  <Picker
-                    selectedValue={selectedState}
-                    onValueChange={(itemValue) => setSelectedState(itemValue)}
-                    style={styles.picker}
-                  >
-                    <Picker.Item label="Oyo" value="oyo" />
-                    <Picker.Item label="Lagos" value="lagos" />
-                    <Picker.Item label="Abuja" value="abuja" />
-                  </Picker>
+      <View style={HeaderNotification.overlay}>
+        <Animated.View
+          style={[HeaderNotification.modalContentContainerOne]}
+          {...panResponder.panHandlers}
+          // { transform: [{ translateY }] }
+        >
+          <TouchableOpacity style={HeaderNotification.draggableBar} />
+            {/* Popup 1: Change Location */}
+            {currentPopup === 1 && (
+              <>
+                <View style={HeaderNotification.modalContent}>
+                  <View style={HeaderNotification.headerRow}>
+                    <View style={{ flex: 1, }} >
+                      <Text style={HeaderNotification.modalTitle}>Change Location</Text>
+                    </View>
+                    <AntDesign
+                      onPress={handleClose}
+                      name="close"
+                      size={24}
+                      color="black"
+                    />
+                  </View>
+                  <Text style={HeaderNotification.pg}>
+                    Want more options? Browse listings from other states to find the best prices and unique items.
+                  </Text>
+                  <View style={HeaderNotification.pickerWrapper}>
+                    <Text style={HeaderNotification.label}>State</Text>
+                    <TouchableOpacity
+                      style={HeaderNotification.pickerContainer}
+                      onPress={() => setStateModalVisible(true)}
+                    >
+                      <Text style={HeaderNotification.modalText}>
+                        {states.find(state => state.value === selectedState)?.label || 'Select a state'}
+                      </Text>
+                      <Image source={require('../../assets/images/iconDown.png')} style={{ height: 20, width: 20 }} />
+
+                    </TouchableOpacity>
+                  </View>
+                  <Button
+                    title="Change Location"
+                    onPress={handleContinue}
+                    backgroundColor="#DEBC8E"
+                    borderWidth="1"
+                  />
                 </View>
-              </View>
-              <Button title="Change Location" onPress={handleContinue} backgroundColor="#DEBC8E" borderWidth="1" />
-            </>
-          )}
-          {currentPopup === 2 && (
-            <>
-              <View style={{flexDirection:"row",   marginHorizontal:"20%",width:"100%", justifyContent:"space-around" , paddingVertical:10 }}>
-              <AntDesign name="warning" style={{fontSize:50}} color="#E42527" />
-                <AntDesign
-              onPress={() => setModalVisible(false)}
-              name="close" size={24} color="black" style={{ }} />
-              </View>
-              <Text style={styles.modalTitle}>Interstate Pickup Warning</Text>
-              <Text style={styles.modalText}>
-                You are about to change your default location. Please be aware that purchasing items from other states
-                can present unique challenges. Interstate pickups may incur:
-              </Text>
-              <View style={{ flexDirection: 'row' }}>
-                <Entypo name="dot-single" size={24} color="black" />
-                <Text>Higher logistics costs</Text>
-              </View>
-              <View style={{ flexDirection: 'row' }}>
-                <Entypo name="dot-single" size={24} color="black" />
-                <Text>Longer delivery times</Text>
-              </View>
-              <Text style={styles.modalText}>
-                We strongly advise exercising caution when buying items from other regions. Only proceed with
-                cross-state transactions if you fully understand and accept the potential complexities.
-              </Text>
-              <View style={styles.modalButtons}>
-                <HalfButton title="Cancel" onPress={handleCancel} backgroundColor="#fff" borderWidth="1" />
-                <HalfButton title="Continue" onPress={handleContinue} backgroundColor="#DEBC8E" borderWidth="1" />
-              </View>
-            </>
-          )}
-          {currentPopup === 3 && (
-            <>
-            <AntDesign name="checkcircle" size={24} color="#009217" style={{margin:"auto",paddingVertical:5}}/>
-              <Text style={styles.modalTitle}>Location Updated Successfully!</Text>
-              <Text style={{margin:"auto",paddingBottom:15}}>You are now browsing from Lagos State.</Text>
-              <Button title="Done" onPress={() => setModalVisible(false)} backgroundColor="#DEBC8E" borderWidth="1" />
-            </>
-          )}
-          {/* <Button title="Close Modal"  backgroundColor="#FF0000" borderWidth="1" /> */}
-        </View>
+              </>
+            )}
+            {/* Popup 2: Interstate Pickup Warning */}
+            {currentPopup === 2 && (
+              <>
+                <View style={HeaderNotification.modalContentTwo}>
+                  <View style={HeaderNotification.headerRow}>
+                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                      <Image source={require('../../assets/images/danger.png')} style={HeaderNotification.warningIcon} />
+                    </View>
+                    <AntDesign
+                      onPress={handleClose}
+                      name="close"
+                      size={20}
+                      color="black"
+                    />
+                  </View>
+                  <Text style={HeaderNotification.modalTitle}>Interstate Pickup Warning</Text>
+                  <Text style={HeaderNotification.modalText}>
+                    You are about to change your default location. Please be aware that purchasing items from other states
+                    can present unique challenges. Interstate pickups may incur:
+                  </Text>
+                  <View style={{ marginVertical: 15 }} >
+                    <View style={HeaderNotification.listItem}>
+                      <Entypo name="dot-single" size={24} color="black" />
+                      <Text style={HeaderNotification.modalText}>Higher logistics costs</Text>
+                    </View>
+                    <View style={HeaderNotification.listItem}>
+                      <Entypo name="dot-single" size={24} color="black" />
+                      <Text style={HeaderNotification.modalText}>Longer delivery times</Text>
+                    </View>
+                  </View>
+                  <Text style={HeaderNotification.modalText}>
+                    We strongly advise exercising caution when buying items from other regions. Only proceed with
+                    cross-state transactions if you fully understand and accept the potential complexities.
+                  </Text>
+                  <View style={HeaderNotification.modalButtons}>
+                    <HalfButton
+                      title="Cancel"
+                      onPress={handleCancel}
+                      backgroundColor="#fff"
+                      borderWidth="1"
+                      borderColor="#463E31"
+                    />
+                    <HalfButton
+                      title="Continue"
+                      onPress={handleContinue}
+                      backgroundColor="#DEBC8E"
+                      borderWidth="1"
+                      borderColor="transparent"
+                    />
+                  </View>
+                </View>
+              </>
+            )}
+            {/* Popup 3: Location Updated */}
+            {currentPopup === 3 && (
+              <>
+                <View style={HeaderNotification.modalContent}>
+                  <AntDesign
+                    name="checkcircle"
+                    size={24}
+                    color="#009217"
+                    style={HeaderNotification.successIcon}
+                  />
+                  <Text style={HeaderNotification.modalTitle}>
+                    Location Updated Successfully!
+                  </Text>
+                  <Text style={HeaderNotification.successMessage}>
+                    You are now browsing from {selectedState} State.
+                  </Text>
+                  <Button
+                    title="Done"
+                    onPress={handleClose}
+                    backgroundColor="#DEBC8E"
+                    borderWidth="1"
+                  />
+                </View>
+              </>
+            )}
+        </Animated.View>
+        
       </View>
+
+      {/* State Selection Modal */}
+      <Modal animationType="slide" transparent visible={stateModalVisible}>
+        <View style={HeaderNotification.overlay}>
+          <View style={HeaderNotification.modalContentStates}>
+            <FlatList
+              data={states}
+              renderItem={renderStateItem}
+              keyExtractor={(item) => item.value}
+            />
+            <Button
+              title="Close"
+              onPress={() => setStateModalVisible(false)}
+              backgroundColor="#DEBC8E"
+              borderWidth="1"
+            />
+          </View>
+        </View>
+      </Modal>
     </Modal>
   );
 };
-
-const styles = StyleSheet.create({
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    paddingHorizontal: 15,
-  },
-  modalContent: {
-    width: '100%',
-    padding: 20,
-    backgroundColor: 'white',
-    borderRadius: 10,
-  },
-  modalTitle: {
-    fontFamily: 'HelveticaNeueLTPro',
-    fontSize: 18,
-    fontWeight: '700',
-    marginBottom: 10,
-    textAlign: 'center',
-  },
-  pg: {
-    fontFamily: 'Poppins',
-    fontSize: 14,
-    fontWeight: '400',
-    lineHeight: 19.6,
-    marginBottom: 10,
-    textAlign: 'left',
-    color: '#333333',
-  },
-  modalText: {
-    fontSize: 14,
-    lineHeight: 19.6,
-    marginBottom: 20,
-    fontWeight: '400',
-  },
-  modalButtons: {
-    flexDirection: 'row',
-    gap: 10,
-    justifyContent: 'space-between',
-  },
-  pickerContainer: {
-    borderWidth: 1,
-    borderColor: '#E9E9E9',
-    borderRadius: 5,
-    marginBottom: 10,
-  },
-  picker: {
-    height: 50,
-  },
-});
 
 export default LocationModal;

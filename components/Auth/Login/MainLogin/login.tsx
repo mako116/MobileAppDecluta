@@ -1,16 +1,16 @@
-import { View, Text, ScrollView, Image, StyleSheet, TouchableOpacity, ActivityIndicator, TextInput, Alert, BackHandler, Modal } from 'react-native';
+import { View, Text, ScrollView, Image,  TouchableOpacity, ActivityIndicator, TextInput, Alert, BackHandler, Modal } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { router } from 'expo-router';
-import { AntDesign, Entypo, FontAwesome, Ionicons, MaterialIcons, SimpleLineIcons } from '@expo/vector-icons';
-import { commonstyles } from '@/styles/common/common.style';
-import { useFocusEffect } from '@react-navigation/native';
+import { AntDesign, Ionicons, MaterialIcons, SimpleLineIcons } from '@expo/vector-icons';
+ import { useFocusEffect } from '@react-navigation/native';
 
 
 import {SignUpStyles} from '../../../../styles/Signup/signup.style'
 import { useAuth } from '@/context/AuthContext';
+import GoolgSignUp from '../../Signup/GoogleSignup/GoogleSignUpComponent';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login() {
-  const [userEmail, setUserEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const [buttonSpinner, setButtonSpinner] = useState(false);
@@ -19,8 +19,8 @@ export default function Login() {
   const [showExitModal, setShowExitModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState({ email: "", password: "" });
   const [successMessage, setSuccessMessage] = useState("");
-  const { login, setEmail } = useAuth(); // Destructure onLogin from useAuth
-
+  const { login } = useAuth(); // Destructure onLogin from useAuth
+  const [email, setEmail] = useState<string>('');
 
   useFocusEffect(
     React.useCallback(() => {
@@ -34,13 +34,29 @@ export default function Login() {
       return () => backHandler.remove();
     }, [])
   );
+  
+  useEffect(() => {
+    const fetchEmail = async () => {
+      try {
+        const storedEmail = await AsyncStorage.getItem('email');
+        console.log('Stored email:', storedEmail);
+        if (storedEmail) {
+          setEmail(storedEmail); // Set email to the state
+        }
+      } catch (error) {
+        console.error('Error fetching email from AsyncStorage:', error);
+      }
+    };
+
+    fetchEmail();
+  }, []);
 
   const validateInputs = () => {
     let errors = { email: "", password: "" };
     let isValid = true;
 
     if (!userInfo.email) {
-      errors.email = "Please enter your email.";
+      errors.email = "The email you entered doesn’t exist. Please check and try again.";
       isValid = false;
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userInfo.email)) {
       errors.email = "The email you entered doesn’t exist. Please check and try again.";
@@ -48,10 +64,10 @@ export default function Login() {
     }
 
     if (!userInfo.password) {
-      errors.password = "Please enter your password.";
+      errors.password = "The password you entered is incorrect please try again or reset password.";
       isValid = false;
     } else if (userInfo.password.length < 6) {
-      errors.password = "The password you entered is incorrect. Please try again or reset your password.";
+      errors.password = "The password you entered is incorrect please try again or reset password.";
       isValid = false;
     }
 
@@ -60,27 +76,22 @@ export default function Login() {
   };
 
   const handleSignIn = async () => {
-    if (!validateInputs()) return;
-    setEmail(userEmail)
     try {
-      await login(userEmail, password);
+      setButtonSpinner(true);
+      if (!email) {
+        alert("Please enter your email and password");
+        setButtonSpinner(false);
+        return;
+      }
+      await login(email, password);
+      console.log("login details", email, password )
+
     } catch (err) {
       Alert.alert('Login Failed');
       setSuccessMessage("Login failed!");
     } finally {
-      setButtonSpinner(true);
-      setTimeout(() => {
-        setButtonSpinner(false);
-        setErrorMessage({ email: "", password: "" });
-        setSuccessMessage("Login successful! Redirecting...");
-        // setTimeout(() => {
-        //   setSuccessMessage("");
-        //   router.push("/(routes)/splashscren"); // Navigate to the dashboard or home
-        // }, 2000);
-      }, 1000);
-    }
-
-    
+      setButtonSpinner(false);
+    }    
   };
 
   const handlePhonePush =()=>{
@@ -91,67 +102,81 @@ export default function Login() {
     router.back();
   };
 
+  const [showMore, setShowMore] = useState(false);
+
+  const handleShowMore = () => {
+    // Set showMore to true when the image is clicked
+    setShowMore(prevState => !prevState);
+  };
+
   return (
-    <ScrollView style={{ flex: 1 }} scrollEventThrottle={16}>
+    <View style={{ flex: 1 , backgroundColor: "#F9F9F9"}} >
       <View style={SignUpStyles.header}>
-        <Image source={require("@/assets/images/king.png")} style={SignUpStyles.sigInImage} />
+        <Image source={require("../../../../assets/images/newimages/9 1.png")} style={SignUpStyles.sigInImage} />
         <Text style={SignUpStyles.welcomeText}>Log in with email</Text>
       </View>
+      <ScrollView scrollEventThrottle={16}>
 
+      
       <View style={SignUpStyles.inputContainer}>
-        <View>
-          <Text style={SignUpStyles.label}>Email</Text>
-          <TextInput
-            style={[
-              SignUpStyles.input,
-              focusInput.email && { borderColor: "#DEBC8E" },
-              { paddingHorizontal: 40 },
-            ]}
-            keyboardType="email-address"
-            value={userInfo.email}
-            placeholder="Enter email"
-            placeholderTextColor='gray'
-            onFocus={() => setFocusInput({ ...focusInput, email: true })}
-            onBlur={() => setFocusInput({ ...focusInput, email: false })}
-            onChangeText={(value) => {
-              setUserInfo({ ...userInfo, email: value });
-              setUserEmail(value); // Update `userEmail` in sync
-            }}
-          />
+        <View style={{ marginHorizontal: 16 }} >
+          <Text style={[SignUpStyles.label,]}>Email</Text>
+          <View style={[SignUpStyles.row, SignUpStyles.inputContainerStyle]}>
+            <TextInput
+              style={[
+                SignUpStyles.input,
+                focusInput.email && { borderColor: "#DEBC8E" },
+                { paddingHorizontal: 40 },
+              ]}
+              keyboardType="email-address"
+              value={email}
+              placeholder="Enter email"
+              placeholderTextColor='gray'
+              onFocus={() => setFocusInput({ ...focusInput, email: true })}
+              onBlur={() => setFocusInput({ ...focusInput, email: false })}
+              onChangeText={(value) => setEmail(value)}
+            />
+          </View>
           {errorMessage.email && (
-            <Text style={{ color: "red", fontSize: 12, marginTop: 5 , marginHorizontal:20 }}>{errorMessage.email}</Text>
+           <View style={{flexDirection:"row",gap:5, marginHorizontal:14, alignItems:"center"}}>
+            <Text style={{ color: "red", fontSize: 12, marginTop: 5 , marginHorizontal:1 }}>{errorMessage.email}</Text>
+
+           </View>          
           )}
         </View>
 
-        <View style={{ marginTop: 5 }}>
-          <Text style={SignUpStyles.label}>Password</Text>
-          <View>
-          <TextInput
-            style={[
-              SignUpStyles.input,
-              focusInput.password && { borderColor: "#DEBC8E" },
-            ]}
-            keyboardType="default"
-            secureTextEntry={!isPasswordVisible}
-            placeholder="Enter password"
-            placeholderTextColor='gray'
-            value={userInfo.password}
-            onFocus={() => setFocusInput({ ...focusInput, password: true })}
-            onBlur={() => setFocusInput({ ...focusInput, password: false })}
-            onChangeText={(value) => {setUserInfo({ ...userInfo, password: value });
-            setPassword(value); // Update `userEmail` in sync
+        <View style={{ marginTop: 5, marginHorizontal: 16 }}>
+          <Text style={[SignUpStyles.label]}>Password</Text>
+          <View style={[SignUpStyles.row, SignUpStyles.inputContainerStyle]}  >
+            <TextInput
+              style={[
+                SignUpStyles.input,
+                focusInput.password && { borderColor: "#DEBC8E" },
+              ]}
+              keyboardType="default"
+              secureTextEntry={!isPasswordVisible}
+              placeholder="Enter password"
+              placeholderTextColor='gray'
+              value={userInfo.password}
+              onFocus={() => setFocusInput({ ...focusInput, password: true })}
+              onBlur={() => setFocusInput({ ...focusInput, password: false })}
+              onChangeText={(value) => {setUserInfo({ ...userInfo, password: value });
+              setPassword(value); // Update `userEmail` in sync
 
-            }}
-          />
+              }}
+            />
             <TouchableOpacity
-              style={SignUpStyles.visibleIcon}
+              style={{ marginRight: 10 }}
               onPress={() => setPasswordVisible(!isPasswordVisible)}
             >
               <Ionicons name={isPasswordVisible ? 'eye-off-outline' : 'eye-outline'} size={20} color="#747474" />
             </TouchableOpacity>
           </View>
           {errorMessage.password && (
-            <Text style={{ color: "red", fontSize: 12, marginTop: 5 , marginHorizontal:20}}>{errorMessage.password}</Text>
+            <View style={{flexDirection:"row",gap:5, marginHorizontal:14, alignItems:"center"}}>
+            <Text style={{ color: "red", fontSize: 12, marginTop: 5 ,marginHorizontal:1  }}>{errorMessage.password}</Text>
+
+           </View>          
           )}
         </View>
         {successMessage && (
@@ -183,38 +208,53 @@ export default function Login() {
         </View>
 
         <View style={SignUpStyles.socialButtons}>
-          <TouchableOpacity onPress={handlePhonePush} style={SignUpStyles.socialButton}>
-            <MaterialIcons name="phone-android" size={24} color="black" />
-            <Text style={{ color: "#000000", lineHeight: 19.6, fontSize: 14, fontWeight: '400' }}>Continue with Phone</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={SignUpStyles.socialButton}>
-            <Image style={{ height: 20, width: 20, resizeMode: "contain" }} source={require("@/assets/images/google.png")} />
-            <Text style={{ color: "#000000", lineHeight: 19.6, fontSize: 14, fontWeight: '400' }}>Continue with Google</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={SignUpStyles.socialButton}>
-          <AntDesign name="apple1" size={24} color="black" />
-            <Text style={{ color: "#000000", lineHeight: 19.6, fontSize: 14, fontWeight: '400' }}>Continue with Apple</Text>
-          </TouchableOpacity>
-        </View>
+      <TouchableOpacity onPress={handlePhonePush} style={SignUpStyles.socialButton}>
+        <MaterialIcons name="phone-android" size={26} color="black" />
+        <Text style={{ color: "#000000", lineHeight: 19.6, fontSize: 14, fontWeight: '400' , fontFamily:"Proxima Nova"}}>Continue with Phone</Text>
+      </TouchableOpacity>
+      
+      <GoolgSignUp />
 
-        <View style={{ margin: "auto", paddingVertical: 14 }}>
-          <SimpleLineIcons name="arrow-down" size={22} color="#A4A4A4" />
-        </View>
+      {/* Conditionally render the other buttons */}
+      {showMore && (
+        <>
+          <TouchableOpacity style={SignUpStyles.socialButton}>
+            <AntDesign name="apple1" size={26} color="black" />
+            <Text style={{ color: "#000000", lineHeight: 19.6, fontSize: 14, fontWeight: '400' , fontFamily:"Proxima Nova"}}>Continue with Apple</Text>
+          </TouchableOpacity>
 
-        <View style={{ paddingVertical: 20, flexDirection: "row", alignItems: "center", margin: "auto", gap: 5 }}>
+           
+        </>
+      )}
+
+      {/* Arrow icon to toggle showing more buttons */}
+      <View style={{ margin: "auto", paddingVertical: 14 }}>
+          {!showMore && (
+        <TouchableOpacity onPress={handleShowMore}>
+          <Image
+            style={{ height: 24, width: 24, resizeMode: "contain" }}
+            source={require("../../../../assets/images/newimages/Down 2.png")} // Image path
+          />
+        </TouchableOpacity>
+      )}
+
+
+       </View>
+    </View>
+      <View style={{ paddingVertical: 20, flexDirection: "row", alignItems: "center", margin: "auto", gap: 10 }}>
         <TouchableOpacity onPress={() => router.push("/(routes)/Terms")}>
           <Text
-           style={{ color: "#DEBC8E", fontWeight: "700", fontSize: 16, lineHeight: 22.4 }}>
+           style={{ color: "#DEBC8E", fontWeight: "700", fontSize: 16, lineHeight: 22.4 ,fontFamily:'Helvetica Neue'}}>
             Terms of use
             </Text>
             </TouchableOpacity>
           <View style={SignUpStyles.separator2} />
           <TouchableOpacity onPress={() => router.push("/(routes)/privacyPolicy")}>
-          <Text style={{ color: "#DEBC8E", fontWeight: "700", fontSize: 16, lineHeight: 22.4 }}>Privacy Policy</Text>
+          <Text style={{ color: "#DEBC8E", fontWeight: "700", fontSize: 16, lineHeight: 22.4 ,fontFamily:'Helvetica Neue'}}>Privacy Policy</Text>
           </TouchableOpacity>
         </View>
       </View>
-
+      </ScrollView>
        {/* Custom Exit Modal */}
        <Modal
         transparent={true}
@@ -255,6 +295,7 @@ export default function Login() {
           </View>
         </View>
       </Modal>
-    </ScrollView>
+
+    </View>
   );
 }

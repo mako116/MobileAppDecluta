@@ -9,7 +9,7 @@ const ProductDetails = () => {
     <ScrollView contentContainerStyle={styles.container}>
       {/* Product Image */}
       <View style={styles.imageContainer}>
-        <Image source={imageUrl } style={styles.productImage} resizeMode="cover" />
+        <Image source={{ uri: Array.isArray(imageUrl) ? imageUrl[0] : imageUrl }} style={styles.productImage} resizeMode="cover" />
       </View>
 
       {/* Product Details */}

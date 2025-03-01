@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, ActivityIndicator, Image, Alert } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { Entypo, Feather, MaterialIcons, SimpleLineIcons } from '@expo/vector-icons';
+import { AntDesign, Entypo, Feather, MaterialIcons, SimpleLineIcons } from '@expo/vector-icons';
 import { SignUpStyles } from '@/styles/Signup/signup.style';
 import { commonstyles } from '@/styles/common/common.style';
 import { router } from 'expo-router';
@@ -8,28 +8,26 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '@/context/AuthContext';
 import * as Google from 'expo-auth-session/providers/google';
 import GoolgSignUp from '../GoogleSignup/GoogleSignUpComponent';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default function EmailSetup() {
-  const { setEmail, googleLogin } = useAuth();
-  const [userInfo, setUserInfo] = useState({ email: "", password: "" });
+  const { googleLogin } = useAuth();
+  const [userInfo, setUserInfo] = useState({ email: ""});
   const [required, setRequired] = useState("");
   const [token] = useState("")
   const [focusInput, setFocusInput] = useState({ email: false, password: false });
   const [buttonSpinner, setButtonSpinner] = useState(false);
 
-  const CLIENTID = process.env.CLIENT_ID
+  // const CLIENTID = process.env.CLIENT_ID
 
-  const handleSignUp = () => {
-    if (!userInfo.email.trim()) {
-      setRequired("Email is required");
-      return;
+  const handleSaveEmail = async (email: string) => {
+    try {
+      await AsyncStorage.setItem('email', email.toLowerCase());
+      console.log('Email saved successfully:', email);
+    } catch (error) {
+      console.error('Error saving email to AsyncStorage:', error);
     }
-
-    setButtonSpinner(true);
-
-    // Store the email in your Auth context
-    setEmail(userInfo.email);
 
     setTimeout(() => {
       setButtonSpinner(false);
@@ -56,35 +54,50 @@ export default function EmailSetup() {
 
   const navigateToTerms = () => router.push("/(routes)/Terms");
 
+  
+    const [showMore, setShowMore] = useState(false);
+  
+    const handleShowMore = () => {
+      setShowMore(prevState => !prevState);
+    };
+
+    
+      const handlePhonePush =()=>{
+        router.push("/(routes)/PhoneLogin");
+      }
   return (
     <SafeAreaView edges={['bottom']} style = {{ flex: 1 }} >
-      <View>
-          <View style={styles.signs}>
-            <TouchableOpacity onPress={handleGoBack}>
-              <Feather name="arrow-left" size={24} color="black" />
-            </TouchableOpacity>
-            <Text style={styles.texts}> Sign Up</Text>
-          </View>
-          
+      <View style = {{ flex: 1, backgroundColor: "#F9F9F9" }}>
+        <View style={SignUpStyles.signs}>
+          <TouchableOpacity onPress={handleGoBack}>
+            <Image source={require("../../../../assets/images/leftArrow.png")} style={{ height: 15, width: 30 }} />
+          </TouchableOpacity>
+          <Text style={SignUpStyles.texts}> Sign Up</Text>
+        </View>
+
+        <View style = {{ flex: 1 }} >
           <View style={{ marginTop: 40, marginBottom: 10 }}>
-            <Text style={SignUpStyles.label}>Email</Text>
-            <TextInput
-              style={[
-                SignUpStyles.input,
-                focusInput.email && { borderColor: "#DEBC8E" },
-                { paddingHorizontal: 40 },
-              ]}
-              keyboardType="email-address"
-              value={userInfo.email}
-              placeholder="Enter email"
-              placeholderTextColor='gray'
-              onFocus={() => setFocusInput({ ...focusInput, email: true })}
-              onBlur={() => setFocusInput({ ...focusInput, email: false })}
-              onChangeText={(value) => {
-                setUserInfo({ ...userInfo, email: value });
-                if (required) setRequired("");  // Clear error if user starts typing
-              }}
-            />
+            <Text style={[SignUpStyles.label,{marginLeft: 20}]}>Email</Text>
+            <View style={[SignUpStyles.row, SignUpStyles.inputContainerStyle]}>
+              <TextInput
+                style={[
+                  SignUpStyles.input,
+                  focusInput.email && { borderColor: "#DEBC8E" },
+                  { paddingHorizontal: 40 },
+                ]}
+                keyboardType="email-address"
+                value={userInfo.email}
+                placeholder="Enter email"
+                placeholderTextColor='gray'
+                onFocus={() => setFocusInput({ ...focusInput, email: true })}
+                onBlur={() => setFocusInput({ ...focusInput, email: false })}
+                onChangeText={(value) => {
+                  setUserInfo({ ...userInfo, email: value });
+                  if (required) setRequired("");  // Clear error if user starts typing
+                }}
+              />
+            </View>
+            {/* come back to this */}
             {required && (
               <View style={commonstyles.errorContainer}>
                 <Entypo name="cross" size={18} color="red" />
@@ -92,7 +105,7 @@ export default function EmailSetup() {
             )}
           </View>
 
-          <TouchableOpacity style={SignUpStyles.loginButton} onPress={handleSignUp}>
+          <TouchableOpacity style={SignUpStyles.loginButton} onPress={() => handleSaveEmail(userInfo.email)}>
             {buttonSpinner ? (
               <ActivityIndicator size="small" color="white" />
             ) : (
@@ -100,8 +113,8 @@ export default function EmailSetup() {
             )}
           </TouchableOpacity>
 
-          <View style={[SignUpStyles.signUpRedirect,{justifyContent:"center"}]}>
-            <Text >Already have an account?</Text>
+          <View style={[SignUpStyles.signUpRedirect,{justifyContent:"center", paddingVertical: 20, alignItems:"center"}]}>
+            <Text style={{fontFamily:"Proxima Nova", fontSize: 16,}}>Already have an account?</Text>
             <TouchableOpacity onPress={() => router.push("/(routes)/login")}>
               <Text style={SignUpStyles.signUpLink}>Log in</Text>
             </TouchableOpacity>
@@ -114,26 +127,40 @@ export default function EmailSetup() {
           </View>
 
           <View style={SignUpStyles.socialButtons}>
-            <TouchableOpacity style={SignUpStyles.socialButton}>
-              <MaterialIcons name="phone-android" size={24} color="black" />
-              <Text style={{ color: "#000000", lineHeight: 19.6, fontSize: 14, fontWeight: '400' }}>Continue with Phone</Text>
+            <TouchableOpacity onPress={handlePhonePush} style={SignUpStyles.socialButton}>
+              <MaterialIcons name="phone-android" size={26} color="black" />
+              <Text style={{ color: "#000000", lineHeight: 19.6, fontSize: 14, fontWeight: '400' , fontFamily:"Proxima Nova"}}>Continue with Phone</Text>
             </TouchableOpacity>
-
+            
             <GoolgSignUp />
+      
+            {/* Conditionally render the other buttons */}
+            {showMore && (
+              <>
+                <TouchableOpacity style={SignUpStyles.socialButton}>
+                  <AntDesign name="apple1" size={26} color="black" />
+                  <Text style={{ color: "#000000", lineHeight: 19.6, fontSize: 14, fontWeight: '400' , fontFamily:"Proxima Nova"}}>Continue with Apple</Text>
+                </TouchableOpacity>
 
-            {/* <TouchableOpacity style={SignUpStyles.socialButton} onPress={() => {
-            promptAsync();
-            }}>
-              <Image style={{ height: 20, width: 20, resizeMode: "contain" }} source={require("@/assets/images/google.png")} />
-              <Text style={{ color: "#000000", lineHeight: 19.6, fontSize: 14, fontWeight: '400' }}>Continue with Google</Text>
-            </TouchableOpacity> */}
+                
+              </>
+            )}
+
+            {/* Arrow icon to toggle showing more buttons */}
+              <View style={{ margin: "auto", paddingVertical: 14 }}>
+                {!showMore && (
+                  <TouchableOpacity onPress={handleShowMore}>
+                     <Image
+                      style={{ height: 24, width: 24, resizeMode: "contain" }}
+                       source={require("../../../../assets/images/newimages/Down 2.png")} // Image path
+                       />
+                  </TouchableOpacity>
+                )}
+              </View>
           </View>
+        </View>
 
-          <View style={{ margin: "auto", paddingVertical: 14 }}>
-            <SimpleLineIcons name="arrow-down" size={22} color="#A4A4A4" />
-          </View>
-
-          <View style={{ paddingTop: 80, flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 5 }}>
+        <View style={{ paddingTop: 80, flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 5 }}>
           <TouchableOpacity onPress={navigateToTerms}>
             <Text style={{ color: "#DEBC8E", fontWeight: "700", fontSize: 16, lineHeight: 22.4 }}>Terms of use</Text>
             </TouchableOpacity>
@@ -141,26 +168,12 @@ export default function EmailSetup() {
             <TouchableOpacity onPress={() => router.push("/(routes)/privacyPolicy")}>
             <Text style={{ color: "#DEBC8E", fontWeight: "700", fontSize: 16, lineHeight: 22.4 }}>Privacy Policy</Text>
             </TouchableOpacity>
-          </View>
         </View>
+      </View>
     </SafeAreaView>
   );
 }
  
 const styles = StyleSheet.create({
-  signs: {
-    paddingHorizontal: 10,
-    paddingTop: 80,
-    paddingBottom: 20,
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#fff",
-  },
-  texts: {
-    fontWeight: "700",
-    fontSize: 16,
-    lineHeight: 22.4,
-    color: "#212121",
-    marginLeft: 10,
-  },
+
 });

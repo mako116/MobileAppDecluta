@@ -1,12 +1,34 @@
 import { StyleSheet } from "react-native";
 
-
-
-
 export const SignUpStyles = StyleSheet.create({
+  row: {
+    flexDirection: "row",
+    alignItems: "center"
+  },
+  signs: {
+    paddingHorizontal: 15,
+    paddingTop: 70,
+    paddingBottom: 25,
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#fff",
+  },
+  texts: {
+    fontWeight: "700",
+    fontSize: 16,
+    lineHeight: 22.4,
+    color: "#212121",
+    marginLeft: 15,
+    fontFamily: "Helvetica Neue"
+  },
     header: {
       backgroundColor: "#fff",
-      paddingTop: 40,
+      paddingTop: 20,
+      paddingBottom: 20,
+    },
+    headers: {
+      // backgroundColor: "#fff",
+      paddingTop: 20,
       paddingBottom: 20,
     },
     genderOption: {
@@ -19,8 +41,11 @@ export const SignUpStyles = StyleSheet.create({
     },    
     sigInImage: {
       alignSelf: "center",
-      marginTop: 50,
-      borderRadius: 20,
+      marginTop: 40,
+      marginBottom: 10,
+      // borderRadius: 20,
+      width:215,
+      height:44
     },
     welcomeText: {
       fontWeight: "700",
@@ -28,26 +53,68 @@ export const SignUpStyles = StyleSheet.create({
       textAlign: "center",
       fontSize: 16,
       color: "#212121",
+      fontFamily:"Helvetica Neue"
     },
     inputContainer: {
-      marginHorizontal: 16,
+      marginHorizontal: 2,
       marginTop: 30,
       gap: 10,
     },
     label: {
-      marginLeft: 18,
-      marginBottom: 5,
+      // marginLeft: 18,
+      marginBottom: 10,
+      fontFamily:"Proxima Nova",
+      fontSize: 14,
+      fontWeight: "400"
+    },
+    Kyclabel: {
+       fontFamily:"Proxima Nova"
+    },
+    TextInput: {
+      flex: 1,
+       padding: 25,
+      paddingLeft: 15,
+      fontSize: 14,
+      borderWidth:1,
+      borderColor:'#E9E9E9',
+      backgroundColor:"#fff",
+      color: "#a1a1a1",
+      fontFamily:"Proxima Nova"
     },
     input: {
-      height: 55,
-      marginHorizontal: 16,
-      borderRadius: 3,
+      flex: 1,
+      padding: 20,
+      paddingLeft: 5,
+      fontSize: 14,
+      color: "#a1a1a1",
+      fontFamily:"Proxima Nova"
+    },
+    inputs: {
+      width:"100%",
+      flex: 1,
+       // paddingVertical: 25,
+      paddingLeft: 15,
+      fontSize: 15,
+      fontWeight:'700',
+      lineHeight:22.4,
+      color: "#212121",
+      fontFamily:"Helvetica Neue"
+    },
+    inputContainerStyle: {
+      
+      borderRadius: 4,
       borderWidth: 1,
       borderColor: "#E9E9E9",
       paddingLeft: 15,
-      fontSize: 14,
       backgroundColor: "white",
-      color: "#a1a1a1",
+    },
+    inputContainerStyles: {
+      paddingVertical: 3,
+       borderRadius: 4,
+      borderWidth: 1,
+      borderColor: "#E9E9E9",
+      // paddingLeft: 15,
+      backgroundColor: "white",
     },
     visibleIcon: {
       position: "absolute",
@@ -60,30 +127,54 @@ export const SignUpStyles = StyleSheet.create({
       textAlign: "right",
       fontSize: 14,
       lineHeight: 19.6,
+      fontFamily:"Proxima Nova"
     },
     loginButton: {
-      padding: 16,
+      padding: 17,
       borderRadius: 8,
       marginHorizontal: 16,
+      backgroundColor: "#DEBC8E",
+      marginTop: 5,
+    },
+    loginButtons: {
+      padding: 20,
+      borderRadius: 8,
+      // marginHorizontal: 16,
+      backgroundColor: "#DEBC8E",
+      marginTop: 5,
+    },
+    KycButton: {
+      padding: 16,
+      borderRadius: 8,
+      // marginHorizontal: 16,
       backgroundColor: "#DEBC8E",
       marginTop: 5,
     },
     loginText: {
       color: "#212121",
       textAlign: "center",
+      fontFamily:"Proxima Nova",
+      fontSize: 16,
+      fontWeight: "400"
     },
     signUpRedirect: {
       flexDirection: "row",
       marginHorizontal: 16,
-      paddingVertical: 14,
+      paddingVertical: 7,
+      justifyContent:"center"
     },
     signUpText: {
-      color: "#7E7E7E",
+      color: "#463E31",
+      fontFamily:"Proxima Nova",
+      fontSize:16,
+      fontWeight: "400"
     },
     signUpLink: {
       color: "#DEBC8E",
-      fontWeight: "bold",
+      fontWeight: "700",
       paddingLeft: 5,
+      fontSize: 16,
+      fontFamily:"Proxima Nova"
     },
     separatorContainer: {
       flexDirection: "row",
@@ -93,15 +184,19 @@ export const SignUpStyles = StyleSheet.create({
     separator: {
       flex: 1,
       height: 1,
-      backgroundColor: "#C4C4C4",
+      // marginHorizontal: 16,
+      borderColor: "#A4A4A4",
+      borderWidth:0.5
     },
     separatorText: {
       width: 40,
+      marginHorizontal: 16,
       textAlign: "center",
-      fontSize: 16,
-      color: "#7E7E7E",
-      fontWeight: "600",
+      fontSize: 19,
+      color: "#463E31",
+      fontWeight: "400",
       lineHeight: 19.6,
+      fontFamily:"Proxima Nova"
     },
     socialButtons: {
       gap: 15,
@@ -110,19 +205,20 @@ export const SignUpStyles = StyleSheet.create({
     },
     socialButton: {
       flexDirection: "row",
-      padding: 18,
+      padding: 16,
       alignItems: "center",
       justifyContent:"center",
       borderWidth: 1,
-      borderColor: "#C4C4C4",
+      borderColor: "#E9E9E9",
       backgroundColor: "#FFFFFF",
       borderRadius: 8,
       gap: 10,
     },
     separator2: {
-      height: "100%",
-      width: 2,
-      backgroundColor: "#D3D3D3",
+      height: 20,
+      // width: 10,
+      borderWidth: 1,
+      borderColor:"#7E7E7E"
     },
   
      // Modal styles
@@ -190,6 +286,105 @@ export const SignUpStyles = StyleSheet.create({
       lineHeight:22.4,
       fontSize: 16,
       textAlign: "center"  // Center text within the Text component
-    }
+    },
+    dropdownContainer: {
+      marginVertical: 10,
+    },
+    dropdownButton: {
+      height: 55,
+      borderRadius: 3,
+      borderWidth: 1,
+      borderColor: "#E9E9E9",
+      paddingLeft: 15,
+      fontSize: 14,
+      backgroundColor: "white",
+      color: "#a1a1a1",
+      fontFamily:"Proxima Nova",
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      padding: 10,
+      marginTop: 8,
+    },
+    dropdownButtonText: {
+      color: '#333',
+      fontFamily:"Proxima Nova",
+    },
+    customLogo: {
+      marginLeft:15,
+       height: 18,
+       width: 18, // Adjust size of the custom logo
+       resizeMode: "contain",
+     },
+    dropdownMenu: {
+      marginTop: 5,
+      borderWidth: 1,
+      borderColor: '#ddd',
+      borderRadius: 8,
+      marginHorizontal: 16,
+      backgroundColor: '#fff',
+      overflow: 'hidden',
+    },
+    dropdownItem: {
+      padding: 10,
+    },
+    dropdownItemText: {
+      color: '#333',
+      fontFamily:"Proxima Nova",
+    },
+    selectedBackground: {
+      backgroundColor: '#F5EADC', // Highlight background color for selected item
+    },
+    container: {
+      marginTop: 16,
+    },
+    phoneContainer: {
+       flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: "white",
+      // marginTop: 30,
+      // gap: 10,
+    },
+    callingCode: {
+      marginHorizontal: 10,
+      fontSize: 13,
+      color: '#212121',
+      borderRightWidth: 1,
+      height:20,
+      borderColor: "#212121",
+      paddingRight: 15,
+      fontFamily:"Helvetica Neue",
+      lineHeight:18.2,
+      fontWeight:"500"
+    },
+    flagButton: {
+      marginLeft: 8,
+    },
+    phoneInput: {
+      height: 55,
+      borderRadius: 3,
+      fontSize: 14,
+      backgroundColor: "white",
+      color: '#212121',
+      paddingRight: 15,
+      fontFamily:"Proxima Nova",
+      fontWeight:"400"
+    },
+    divider: {
+      width: 35,
+      height: 2,
+      backgroundColor: "black",
+      marginHorizontal: 7
+    },
+    currentStageIcon: {
+      padding: 4,
+      borderRadius: 20,
+      backgroundColor: "#DEBC8E"
+    },
+    passedStageIcon: {
+      padding: 4,
+      borderRadius: 20,
+      backgroundColor: "black"
+    },
   });
   

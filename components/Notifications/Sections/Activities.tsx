@@ -7,52 +7,43 @@ import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
 const notifications: Notification[] = [
     {
       id: '1',
-      title: 'Welcome to DecluttaKing!',
-      description: "You’ve successfully signed up. Start buying and selling items today!",
-      image: require('../../../assets/images/imgg.png'),
+      title: 'Comment Approved',
+      description: "Your comment on item: Samsung A05... has been approved.",
+      image: require('../../../assets/images/notifi/Frame 646966.png'),
       time: 'Today 20:28',
-      tag: 'Updates',
-      action: null,
-    },
+      tag: 'Activities',
+      action: 'View More',
+        },
     {
       id: '2',
-      title: '500 Rewards Points Achieved!',
-      description: "Congrats! You completed your first purchase and have been awarded 500 reward points!",
-      image: require('../../../assets/images/reward.png'),
+      title: 'New Reply to Your Comment',
+      description: "Someone replied to your comment on item: Samsung A05... Join the conversation!",
+      image: require('../../../assets/images/Frame 646965 (1).png'),
       time: 'Today 20:28',
-      tag: 'Updates',
+      tag: 'Activities',
       action: 'View More',
     },
     {
       id: '3',
-      title: 'Complete Your KYC',
+      title: 'Seller Answered Your Question',
       description:
-        'Verify your identity to access withdrawal, get a verification badge, and enjoy more benefits.',
-      image: require('../../../assets/images/kyc.png'),
+        'The seller (Segun A.) has answered your question on item: Samsung A05...',
+      image: require('../../../assets/images/Frame 646966 (1).png'),
       time: 'Today 20:28',
-      tag: 'Updates',
-      action: 'Complete KYC',
+      tag: 'Activities',
+       action: 'View More',
     },
     {
       id: '4',
-      title: 'Complete Your KYC',
+      title: 'Seller Replied to Your Comment',
       description:
-        'Verify your identity to access withdrawal, get a verification badge, and enjoy more benefits.',
+        'The seller (Segun A.) has answered your question on item: Samsung A05...',
       image: require('../../../assets/images/kyc.png'),
       time: 'Today 20:28',
-      tag: 'Updates',
-      action: 'Complete KYC',
+      tag: 'Activities',
+       action: 'View More',
     },
-    {
-      id: '5',
-      title: 'Complete Your KYC',
-      description:
-        'Verify your identity to access withdrawal, get a verification badge, and enjoy more benefits.',
-      image: require('../../../assets/images/kyc.png'),
-      time: 'Today 20:28',
-      tag: 'Updates',
-      action: 'Complete KYC',
-    },
+    
   ];
   
   type Notification = {
@@ -67,18 +58,18 @@ const notifications: Notification[] = [
 const Activities = () => {
     return (
         <SafeAreaView>
-        <ScrollView>
+        <ScrollView style={{paddingHorizontal:10, paddingBottom:"50%"}}>
           {notifications.length === 0 ? (
             <View style={NotificationStyles.noNotificationContainer}>
-            <Image source={require('../../../assets/images/None.png')}   />
-         <Text style={[NotificationStyles.noNotificationText,{fontFamily:"ProximaNovaBold", fontSize:19}]}>No Updates at the Moment</Text>
-         <Text style={NotificationStyles.noNotificationText}>You’ll be notified here when new features or important updates are available.</Text>
+            <Image source={require('../../../assets/images/notifi/none/Frame 25 (1).png')}  style={{height:66, width:"100%", objectFit:"contain"}}  />
+         <Text style={[NotificationStyles.noNotificationText,{fontFamily:"ProximaNovaBold", fontSize:19}]}>No New Activities </Text>
+         <Text style={NotificationStyles.noNotificationText}>Stay tuned! Updates on your interactions will appear here once you engage with the community.</Text>
        </View>
           ) : (
             notifications.map((item) => (
               <View key={item.id} style={NotificationStyles.main}>
                 <View style={NotificationStyles.notificationContent}>
-                  <Image source={item.image}   />
+                  <Image source={item.image} style={NotificationStyles.image}  />
                   <View style={NotificationStyles.textContainer}>
                     <Text style={NotificationStyles.title}>{item.title}</Text>
                     <Text style={NotificationStyles.description}>{item.description}</Text>

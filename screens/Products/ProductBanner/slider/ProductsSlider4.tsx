@@ -1,21 +1,22 @@
-import { View, Text, ScrollView, Image } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import React from 'react';
-import Category from '../Category/category4';
+import BannerCat from '../Category/BannerCat';
 
 export default function ProductsSlider4() {
+  const bannerImages = [
+    require('../../../../assets/images/newimages/Homepage banner 1.jpg'),
+    require('../../../../assets/images/newimages/Homepage banner 2.jpg'),
+    require('../../../../assets/images/newimages/Homepage banner 3.jpg'),
+    require('../../../../assets/images/newimages/offer Notifications Banner.jpg'),
+  ];
+
   return (
-    <View style={{ marginTop: 5 }}>
+    <View style={{ marginTop: 8 }}>
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-        <Category
-                  imageUrl={require('../../../../assets/images/banner.png')}
-                      />
-        <Category
-                  imageUrl={require('../../../../assets/images/banner.png')}
-                  />
-        <Category
-                  imageUrl={require('../../../../assets/images/banner.png')}
-                    />
-       </ScrollView>
+        {bannerImages.map((image, index) => (
+          <BannerCat key={index} imageUrl={image} />
+        ))}
+      </ScrollView>
     </View>
   );
 }

@@ -129,7 +129,7 @@ export default function TermsOfUse() {
   ];
 
   const renderItem: ListRenderItem<Term> = ({ item }) => (
-    <View style={{ marginTop: 10 }}>
+    <View style={{ marginTop: 0 }}>
       <Text style={[styles.boldS, { paddingVertical: 5 }]}>
         {item.id}. {item.title}
       </Text>
@@ -138,7 +138,7 @@ export default function TermsOfUse() {
           <View style={{ flexDirection: 'row', paddingRight: 20, marginVertical: 5 }} key={point.id}>
             <Text style={{ paddingHorizontal: 5, fontWeight: '700' }}>•</Text>
             <Text style={styles.middleText}>
-              <Text style={{ fontWeight: '700' }}>{point.label}: </Text>
+              <Text style={{ fontWeight: '700',fontFamily:"Helvetica Neue"}}>{point.label}: </Text>
               {point.content}
             </Text>
           </View>
@@ -189,18 +189,21 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     paddingHorizontal: 16,
-    paddingVertical: 30,
+    paddingVertical: 20,
     backgroundColor:'#f9f9f9'
   },
   boldS: {
     fontWeight: '700',
-    fontSize: 13,
-    lineHeight: 18.2,
+    fontSize: 14,
+    lineHeight: 19.6, 
+    fontFamily:"Helvetica Neue"
+    
   },
   middleText: {
     fontWeight: '400',
-    fontSize: 14,
+    fontSize: 13,
     lineHeight: 19.6,
-    color: '#212121',
+    color: '#212121', 
+    fontFamily:"Proxima Nova"
   },
 });

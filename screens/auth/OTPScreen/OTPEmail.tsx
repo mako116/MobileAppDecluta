@@ -1,19 +1,23 @@
 import { View, Text, TextInput, StyleSheet, ActivityIndicator, FlatList, TouchableOpacity } from 'react-native';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Entypo, Ionicons } from '@expo/vector-icons';
+import { useAuth } from '@/context/AuthContext';
 import { router } from 'expo-router';
 
 export default function OTPMainEmail() {
+  const { verifyOtp, resendOTP } = useAuth();
   const [otp, setOtp] = useState<string[]>([]);
   const [otpLength, setOtpLength] = useState(4); // Default OTP length
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
-  const [timer, setTimer] = useState(119); // Set timer to 1 minute 59 seconds
+  const [timer, setTimer] = useState(60); // Set timer to 1 minute 59 seconds
   const inputRefs = useRef<Array<React.RefObject<TextInput>>>([]);
    const [otpVerified, setOtpVerified] = useState(false); // Track OTP verification status
+   const [isVerifying, setIsVerifying] = useState(false); // Add this state
  
   const timerRef = useRef<number | null>(null); 
+  const hasNavigated = useRef(false);
 
   useEffect(() => {
     fetchOtpLengthFromApi();
@@ -34,7 +38,7 @@ export default function OTPMainEmail() {
 
   const startCountdown = () => {
     if (timerRef.current !== null) clearInterval(timerRef.current); // Clear any existing timer
-    setTimer(119); // Reset timer to 1 minute 59 seconds
+    setTimer(60); // Reset timer to 1 minute 59 seconds
     timerRef.current = window.setInterval(() => { // Use window.setInterval to get the correct ID
       setTimer(prevTimer => {
         if (prevTimer <= 0) {
@@ -46,56 +50,77 @@ export default function OTPMainEmail() {
     }, 1000);
   };
 
-  const handleChange = (text: string, index: number) => {
-    if (text.length > 1) return;
-
-    // Handle clearing OTP
-    if (text === '' && index === 0) {
-      setOtp(Array(otpLength).fill('')); // Clear all OTP fields if the user presses backspace on the first field
-      return;
-    }
-
-    const newOtp = [...otp];
-    newOtp[index] = text;
-    setOtp(newOtp);
-
-    if (text && index < inputRefs.current.length - 1) {
-      inputRefs.current[index + 1].current?.focus();
-    } else if (index === inputRefs.current.length - 1) {
-      handleSignIn(newOtp);
-    }
+  const validateOtp = (otp: number[]) => {
+    return otp.every(digit => digit !== null && digit !== undefined);
   };
 
-  const validateOtp = (otp: string[]) => {
-    return otp.every(digit => digit !== '');
-  };
-
-  const handleSignIn = (otp: string[]) => {
-    if (!validateOtp(otp)) {
+  const handleSignIn = async (otp: string[]) => {
+    if (isVerifying || hasNavigated.current) return; // Prevent duplicate execution
+  
+    const numericOtp = otp.map(digit => Number(digit));
+  
+    if (!validateOtp(numericOtp)) {
       setError('Please enter a valid OTP');
       return;
     }
-
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      const enteredOtp = otp.join('');
-      if (enteredOtp === '1234') { // Replace with actual OTP verification
-        setSuccessMessage('Email address verification successful. ');
-        setError(''); // Clear error on success
-
-        setOtpVerified(true); // Mark OTP as verified
-        router.push("/(routes)/CreatePassword");
-         // Navigate to OTPEmail page on success
-      } else {
-        setError('Invalid Code');
-        setSuccessMessage(''); // Clear success message on failure
-        setOtpVerified(false); // Mark OTP as not verified
+  
+    try {
+      setIsLoading(true);
+      setIsVerifying(true); // Mar
+      const convertOtp = numericOtp.join('');
+      console.log('Converted OTP:', convertOtp);
+  
+      const response = await verifyOtp(convertOtp);
+  
+      if (response?.data?.message && !hasNavigated.current) {
+        hasNavigated.current = true; // Prevent further navigation
+        setSuccessMessage('Email address verification successful.');
+        setOtpVerified(true);
+        router.push('/(routes)/CreatePassword'); // Navigate once
       }
-    }, 3000);
+    } catch (error) {
+      setError('Invalid Code');
+      setOtpVerified(false);
+      setSuccessMessage('');
+    } finally {
+      setIsLoading(false);
+      setIsVerifying(false); // Reset flag
+      setError('');
+    }
   };
+  
+  const handleChange = useCallback((text: string, index: number) => {
+    if (text.length > 1) return;
+  
+    const newOtp = [...otp];
+    newOtp[index] = text;
+    setOtp(newOtp);
+  
+    if (text && index < inputRefs.current.length - 1) {
+      inputRefs.current[index + 1]?.current?.focus(); // Ensure `current` is accessed
+    }
+  
+    // Debounce handleSignIn to prevent multiple calls
+    if (newOtp.every(digit => digit !== '')) {
+      setTimeout(() => handleSignIn(newOtp), 300); // Small delay to ensure only one call
+    }
+  }, [otp, setOtp, handleSignIn, inputRefs]);
+  
+  
 
-  const handleResendCode = () => {
+  const handleResendCode = async () => {
+    try {
+      setIsLoading(true);
+      await resendOTP(); // Call the function here
+      setSuccessMessage('Otp sent successfully');
+    } catch (error) {
+      setError('Unable to send otp');
+      setOtpVerified(false); // Mark OTP as not verified
+      setSuccessMessage(''); // Clear success message on failure
+    } finally {
+      setIsLoading(false);
+      setError(''); // Clear error on success
+    }
     startCountdown(); // Restart timer
     setOtp(Array(otpLength).fill(''));
     setError(''); // Clear error when the code is resent
@@ -145,7 +170,7 @@ export default function OTPMainEmail() {
           <Text style={styles.successText}>{successMessage}</Text>
         </View>
       ) : null}
-      {isLoading && <ActivityIndicator size="small" color="#007bff" />}
+      {isLoading && <ActivityIndicator size="small" color="#DEBC8E" />}
 
       {/* Timer or "Get a new code" button */}
       {timer > 0 ? (
@@ -161,7 +186,7 @@ export default function OTPMainEmail() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     paddingHorizontal: 20,
   },
   otpContainer: {
@@ -178,6 +203,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     fontSize: 18,
     color: '#333',
+    fontFamily:"Proxima Nova",
     marginHorizontal: 5,
   },
   inputError: {
@@ -190,22 +216,26 @@ const styles = StyleSheet.create({
     color: 'red',
     fontSize: 14,
     marginBottom: 10,
+    fontFamily:"Proxima Nova",
   },
   successText: {
     color: '#212121',
     fontWeight:"400",
     lineHeight:19.6,
+    fontFamily:"Proxima Nova",
     fontSize: 14,
   },
   timerText: {
     fontSize: 14,
     color: '#333',
+    fontFamily:"Proxima Nova",
     marginTop: 10,
   },
   
   resendText: {
     fontSize: 14,
     color: '#DEBC8E',
+    fontFamily:"Proxima Nova",
     fontWeight: 'bold',
   },
 });

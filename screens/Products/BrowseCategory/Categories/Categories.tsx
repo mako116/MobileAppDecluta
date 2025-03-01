@@ -1,27 +1,66 @@
-import { View, Text, TouchableOpacity } from 'react-native'
-import React from 'react'
-import { MaterialIcons } from '@expo/vector-icons'
-import ProductsSlider2 from '../ProductCategories2/ProductCategories2'
-import { router } from 'expo-router'
+import { View, Text, TouchableOpacity, Image } from 'react-native';
+import React from 'react';
+import { MaterialIcons } from '@expo/vector-icons';
+import ProductsSlider2 from '../ProductCategories2/ProductCategories2';
+import { router } from 'expo-router';
 
 export default function Categories() {
   return (
-    <View style={{backgroundColor:"#f9f9f9",paddingHorizontal:12}}>
-    <View style={{flexDirection:"row", alignItems:"center", justifyContent:"space-between",paddingVertical:10, paddingHorizontal:5}}>
-      <Text style={{fontWeight:"700",fontSize:16,lineHeight:22.4}}>Browse our Category</Text>
-      <View >
-         <TouchableOpacity onPress={()=> router.push("/(routes)/HomesectionViewAll/Browse")} style={{width:100,flexDirection:"row",alignItems:"center", justifyContent:"flex-end"}}>
-
-        
-          <Text style={{fontWeight:"400",fontSize:13.4,lineHeight:15.4}}>View all</Text>
-          {/* <View style={{ alignItems:"flex-end",}}> */}
-         <MaterialIcons name="arrow-forward-ios" size={14} color="black" style={{fontWeight:"bold"}}/>
+    <View style={{ backgroundColor: "#f9f9f9", paddingHorizontal: 15 }}>
+      {/* Header Section */}
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          paddingVertical: 15,
+        }}
+      >
+        <Text
+          style={{
+            fontWeight: "700",
+            fontSize: 18,
+            lineHeight: 22.4,
+            fontFamily: "Helvetica Neue",
+          }}
+        >
+          Browse our category
+        </Text>
+        <View>
+          <TouchableOpacity
+            onPress={() => router.push("/(routes)/HomesectionViewAll/Browse")}
+            style={{
+              width: 100,
+              flexDirection: "row",
+              gap: 5,
+              justifyContent: "flex-end",
+              alignItems: "center",
+              paddingRight: 0,
+            }}
+          >
+            <Text
+              style={{
+                fontWeight: "400",
+                fontSize: 17,
+                lineHeight: 22.4,
+                fontFamily: "Proxima Nova",
+                color: "#212121",
+              }}
+            >
+              View All
+            </Text>
+            <Image
+              source={require('../../../../assets/images/newimages/Vector.png')}
+              style={{ width: 6, height: 11 }}
+            />
           </TouchableOpacity>
+        </View>
+      </View>
+      
+      {/* Products Slider Section */}
+      <View>
+        <ProductsSlider2 />
       </View>
     </View>
-    <View>
-      <ProductsSlider2/>
-    </View>
-  </View>
-  )
+  );
 }

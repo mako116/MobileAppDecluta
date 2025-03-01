@@ -1,40 +1,72 @@
+import BackButton from '@/assets/images/kyc/LeftArrow';
+import Otpheademail from '@/assets/svg/otpheademail';
 import OTPMainEmail from '@/screens/auth/OTPScreen/OTPEmail';
-import OTPMain from '@/screens/auth/OTPScreen/OTPMain';
-import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
+import PhoneOtpStyles from '@/styles/Login/phoneOtpStyles';
+import { Entypo, MaterialCommunityIcons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
-import React from 'react';
-import { View, Text, ScrollView, StyleSheet, SafeAreaView, TextInput, TouchableOpacity, ActivityIndicator, Image, Alert } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, ScrollView, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
  
 export default function OTPPageEmail() {
   const handlehelp =()=>{
     router.push("/(routes)/need-help")
   }
+  const [storedEmail, setStoredEmail] = useState<string | null>(null);
+  useEffect(() => {
+    const fetchEmail = async () => {
+      try {
+        const email = await AsyncStorage.getItem('email');
+        setStoredEmail(email);
+      } catch (error) {
+        console.error('Error fetching email from AsyncStorage:', error);
+      }
+    };
+
+    fetchEmail();
+  }, []);
+
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff", paddingTop:20 }}>
-      <ScrollView
-        contentContainerStyle={{ flexGrow: 1 }}
-        style={{ backgroundColor: "#fff" }}
-        scrollEventThrottle={16}
-      >
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" ,paddingTop:50}}>
+      <View>
         {/* Header Section with Logo */}
         <View style={styles.signs}>
-          <Image
-            source={require('@/assets/images/OTPEmail.png')}
-           />
+          <View style= { styles.row } >
+            <View style = {[ styles.row, styles.passedStageIcon ]} >
+              <Entypo name="check" size={8} color="white" />
+            </View>
+            <View style = { styles.divider } ></View>
+            <View style = {[ styles.row, styles.passedStageIcon ]} >
+              <Entypo name="check" size={8} color="white" />
+            </View>
+            <View style = { styles.divider } ></View>
+            <View style = {[ styles.row, styles.passedStageIcon ]} >
+              <Entypo name="check" size={8} color="white" />
+            </View>
+            <View style = { styles.divider } ></View>
+            <View style = {[ styles.row, styles.currentStageIcon ]} >
+              <Entypo name="check" size={8} color="white" />
+            </View>
+          </View>
         </View>
-
+        
+       <View style={{backgroundColor:"#f9f9f9", height:"100%", justifyContent:"space-between", paddingBottom:"30%"}}>
+          
+        <View>
+          
         {/* Title and Instructions */}
         <View style={styles.instructions}>
           <Text style={styles.title}>Verify Your Email Address</Text>
           <Text style={styles.subtitle}>
             We sent a 4-digit code to{" "}
-            <Text style={styles.phoneNumber}>matthew.c@gmail.com</Text>. Please enter it below to verify your account.
+            <Text style={styles.phoneNumber}>{storedEmail}</Text>. Please enter it below to verify your account.
           </Text>
         </View>
 
         {/* OTP Input Section */}
-        <View style={styles.otpSection}>
+        <View style={PhoneOtpStyles.otpSection}>
           <OTPMainEmail />
+        </View>
         </View>
 
         {/* Help Section */}
@@ -45,16 +77,26 @@ export default function OTPPageEmail() {
             <Text style={styles.helpLink}>Click Here</Text>
           </TouchableOpacity>
         </View>
-      </ScrollView>
+        </View>
+      </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  row: {
+    display: "flex",
+    flexDirection: 'row',
+    alignItems: "center",
+    justifyContent: "center"
+  },
   signs: {
     paddingTop: 70,
     paddingBottom: 30,
+    display: "flex",
+    flexDirection: 'row',
     alignItems: "center",
+    justifyContent: "center",
     backgroundColor: "#fff",
   },
   logo: {
@@ -73,16 +115,36 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontSize: 19,
     lineHeight: 26.6,
+    fontFamily:"Helvetica Neue"
   },
   subtitle: {
     color: "#212121",
     fontWeight: "400",
     fontSize: 14,
     lineHeight: 19.6,
+    fontFamily:"Proxima Nova",
     marginRight: 10,
   },
   phoneNumber: {
     fontWeight: "700",
+    fontFamily:"Helvetica Neue"
+
+  },
+  divider: {
+    width: 35,
+    height: 2,
+    backgroundColor: "black",
+    marginHorizontal: 7
+  },
+  currentStageIcon: {
+    padding: 4,
+    borderRadius: 20,
+    backgroundColor: "#DEBC8E"
+  },
+  passedStageIcon: {
+    padding: 4,
+    borderRadius: 20,
+    backgroundColor: "black"
   },
   otpSection: {
      marginBottom: 140,
@@ -91,7 +153,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 120,
+    // marginTop: 120,
     paddingHorizontal: 16,
   },
   helpText: {

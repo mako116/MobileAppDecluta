@@ -17,7 +17,7 @@ export default function Searchbox() {
           placeholderTextColor="#888"
         />
         <TouchableOpacity>
-<Feather name="search" size={24} color="black" /> 
+<Feather name="search" size={24} color="#A4A4A4" /> 
 </TouchableOpacity>     
 </View>
     </View>
@@ -43,9 +43,10 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    fontSize: 16,
-    color: '#333',
-    
+    fontSize: 14,
+    color: '#A4A4A4',
+    fontFamily:"ProximaNovaR",
+    lineHeight:19.6
   },
   icon: {
     marginLeft: 10,

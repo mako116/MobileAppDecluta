@@ -4,51 +4,35 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
  
 export default function BannerCategory() {
   return (
-    <View >
+    <View style={{ marginVertical: 10 }} >
       <View style={styles.row}>
         {/* First Box */}
-        <View style={{justifyContent:"center",}}>
-        <Image source={require('../../../assets/images/noto_fire.png')} />
-        </View>
-        <View style={styles.box}>
-        
-           <View style={styles.textContainer}>
-           <TouchableOpacity>
+        <View style={styles.categoryRow} >
+          <View style={{justifyContent:"center",}}>
+            <Image source={require('../../../assets/images/newimages/noto_fire.png')} style={{width:20, height:20}} />
+          </View>
+
+          <TouchableOpacity style={styles.boxs} >
             <Text style={styles.title}>iPhone</Text>
-            </TouchableOpacity>
-           </View>
-            
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.boxs} >
+            <Text style={styles.title}>HP Laptop</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.boxs} >
+            <Text style={styles.title}>Generator</Text>
+          </TouchableOpacity>
         </View>
 
-        {/* Second Box */}
-        <View style={styles.box}>
-            
-           <View style={styles.textContainer}>
-           <TouchableOpacity>
-            <Text style={styles.title}>HP Laptop</Text>
-            </TouchableOpacity>
-           </View>
-           
-           
-        </View>
-        <View style={styles.box}>
-        
-           <View style={styles.textContainer}>
-           <TouchableOpacity> 
-            <Text style={styles.title}>Generator</Text>
-            </TouchableOpacity>
-           </View>
-           
-           
-        </View>
 
         <View >
-           <TouchableOpacity style={{width:100,flexDirection:"row",alignItems:"center", justifyContent:"flex-end",paddingRight:14}}>
+           <TouchableOpacity style={{flexDirection:"row",alignItems:"center",}}>
 
           
-            <Text style={{fontWeight:"bold",fontSize:10.4,lineHeight:15.4}}>View all</Text>
+            <Text style={{fontWeight:"700",fontSize:12,lineHeight:15.4, fontFamily:"Helvetica Neue Lt"}}>View All</Text>
             {/* <View style={{ alignItems:"flex-end",}}> */}
-           <MaterialIcons name="arrow-forward-ios" size={14} color="black" style={{fontWeight:"bold"}}/>
+           <MaterialIcons name="arrow-forward-ios" size={9} color="black" style={{fontWeight:"800", marginLeft:3}}/>
             </TouchableOpacity>
         </View>
       </View>
@@ -59,37 +43,48 @@ export default function BannerCategory() {
 const styles = StyleSheet.create({
   
     row: {
-        paddingVertical:5,
       flexDirection: 'row',
-      gap:5
-    //   justifyContent: 'space-around',
+      alignItems: "center",
+      justifyContent: 'space-between',
+     },
+     categoryRow: {
+      flexDirection: 'row',
+      alignItems: "center",
+      gap: 5,
      },
     box: {
       flexDirection: 'row',
       justifyContent:"flex-start",
-    //   alignItems: "flex-start",
+    
       backgroundColor: '#f8f9fa',
       borderRadius: 4,
-      // padding: 16,
-      elevation: 3, // Adds shadow for Android
-      shadowColor: '#000', // Adds shadow for iOS
-      shadowOpacity: 0.2,
-      shadowOffset: { width: 1, height: 2 },
-      shadowRadius: 4,
-      width: 65,  
+      
+      width: 57,  
       height:21
+    },
+    boxs: {
+      backgroundColor: '#f8f9fa',
+      borderRadius: 5,
+      alignItems:"center",
+      paddingHorizontal: 10,
+      paddingVertical: 5,
     },
     icon: {
       marginRight: 16,
     },
     textContainer: {
-        margin:"auto",
+       
+        // paddingLeft:10,
+        // height:21,
+        // width:74
     },
     title: {
       fontSize: 12,
       fontWeight: "400",
-       lineHeight:16.6,
+      lineHeight:16.8,
       color: '#463E31',
+      fontFamily:"Proxima Nova",
+      textAlign:"center"
     },
      
   });

@@ -1,6 +1,8 @@
  import React from 'react';
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import SearchProduct from './SearchProducts/SearchProducts';
+import SearchCategoryStyles from '@/styles/searchStyles/searchCategoryStyles';
+import Emojione from '@/assets/svg/emojione';
 
 interface Item {
   id: number;
@@ -27,11 +29,11 @@ const SearchFilter: React.FC = () => {
   ];
 
   const renderItems = (items: Item[]) => (
-    <View style={styles.gridContainer}>
+    <View style={SearchCategoryStyles.gridContainer}>
       {items.map((item) => (
-        <View key={item.id} style={styles.gridItem}>
+        <View key={item.id} style={SearchCategoryStyles.gridItem}>
           <TouchableOpacity>
-            <Text style={styles.title}>{item.title}</Text>
+            <Text style={SearchCategoryStyles.title}>{item.title}</Text>
           </TouchableOpacity>
         </View>
       ))}
@@ -40,20 +42,27 @@ const SearchFilter: React.FC = () => {
 
   return (
     <ScrollView  >
-    <View style={{ paddingHorizontal: 25, paddingVertical:3 }}>
-      <View style={styles.header}>
-        <Image source={require('../../assets/images/noto_fire.png')} />
-        <Text style={styles.headerText}>Trending..</Text>
+    <View style={{ paddingHorizontal: 15, paddingVertical:3 }}>
+      <View style={SearchCategoryStyles.header}>
+        <Image source={require('../../assets/images/noto_fire.png')} style={{ height: 16, width: 16 }} />
+        <Text style={SearchCategoryStyles.headerText}>Trending..</Text>
       </View>
 
       {renderItems(trendingItems)}
 
-      <View style={styles.header}>
-        <Image source={require('../../assets/images/cool.png')} />
-        <Text style={styles.headerText}>Discover more</Text>
+      <View style={SearchCategoryStyles.header}>
+        <Image source={require('../../assets/images/cool.png')} style={{ height: 16, width: 16 }} />
+        <Text style={SearchCategoryStyles.headerText}>Discover more</Text>
       </View>
 
       {renderItems(discoverItems)}
+
+      <View style={SearchCategoryStyles.header}>
+        <Emojione/>
+         <Text style={SearchCategoryStyles.headerText}>You may also like...</Text>
+      </View>
+
+      {/* {renderItems(discoverItems)} */}
     </View>
    <View>
    <SearchProduct/>
@@ -62,50 +71,5 @@ const SearchFilter: React.FC = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  gridContainer: {
-    width:"90%",
-     flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap:10,
-    justifyContent:"flex-start"
-    // justifyContent: 'space-between', 
-  },
-  gridItem: {
-    backgroundColor: '#f8f9fa',
-    borderRadius: 4,
-    elevation: 3, // Adds shadow for Android
-    shadowColor: '#000', // Adds shadow for iOS
-    shadowOpacity: 0.2,
-    shadowOffset: { width: 1, height: 2 },
-    shadowRadius: 4,
-     marginBottom: 5, // Add spacing between rows
-    alignItems: "flex-start",
-    paddingVertical: 5,
-    paddingHorizontal:10,
-    // height:21,
-     justifyContent:"flex-start",
-     gap:20,
-    
-    // marginHorizontal:1
-  },
-  title: {
-    fontSize: 12,
-    fontWeight: '400',
-    lineHeight: 16.6,
-    color: '#463E31',
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 10,
-    marginTop:20
-  },
-  headerText: {
-    marginLeft: 5,
-    fontSize: 16,
-    fontWeight: '600',
-  },
-});
 
 export default SearchFilter;

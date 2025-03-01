@@ -35,9 +35,9 @@ export default function Button({
         >
             <Text style={{
                 fontSize: 15,
-                fontWeight: '700',
+                fontWeight: '400',
                 textAlign: "center",
-                fontFamily: "ProximaNova"
+                fontFamily: "Proxima Nova"
             }}>
                 {title}
             </Text>

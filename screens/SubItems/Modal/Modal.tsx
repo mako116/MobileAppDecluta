@@ -43,7 +43,7 @@ export default function SuccessModalScreen() {
           >
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
               <MaterialIcons name="email" size={24} color="black" />
-              <Text style={{ color: '#000000', lineHeight: 19.6, fontSize: 14, fontWeight: '400' }}>
+              <Text style={{ color: '#000000', lineHeight: 19.6, fontSize: 14, fontWeight: '400' , fontFamily:"ProximaNovaR"}}>
                 Email: help@decluttaking.com
               </Text>
             </View>
@@ -56,7 +56,7 @@ export default function SuccessModalScreen() {
           >
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, width: '90%' }}>
               <FontAwesome6 name="square-x-twitter" size={24} color="black" />
-              <Text style={{ color: '#000000', lineHeight: 19.6, fontSize: 14, fontWeight: '400' }}>Follow @decluttaking</Text>
+              <Text style={{ color: '#000000', lineHeight: 19.6, fontSize: 14, fontWeight: '400', fontFamily:"ProximaNovaR" }}>Follow @decluttaking</Text>
             </View>
             <MaterialIcons name="keyboard-arrow-right" size={24} color="black" />
           </TouchableOpacity>
@@ -67,7 +67,7 @@ export default function SuccessModalScreen() {
           >
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, width: '90%' }}>
               <Image style={{ height: 20, width: 20, resizeMode: 'contain' }} source={require('@/assets/images/insta.png')} />
-              <Text style={{ color: '#000000', lineHeight: 19.6, fontSize: 14, fontWeight: '400' }}>Follow @decluttaking</Text>
+              <Text style={{ color: '#000000', lineHeight: 19.6, fontSize: 14, fontWeight: '400', fontFamily:"ProximaNovaR" }}>Follow @decluttaking</Text>
             </View>
             <MaterialIcons name="keyboard-arrow-right" size={24} color="black" />
           </TouchableOpacity>
@@ -107,12 +107,14 @@ const styles = StyleSheet.create({
     lineHeight: 26.6,
     color: '#212121',
     marginBottom: 10,
+      fontFamily:"HelveticaNeueLTPro"
   },
   modalText: {
     fontSize: 13,
     lineHeight: 19.6,
     color: '#212121',
     marginBottom: 10,
-    paddingTop:10
+    paddingTop:10,
+     fontFamily:"ProximaNovaR"
   },
 });

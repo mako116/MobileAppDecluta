@@ -6,21 +6,23 @@ export const Needs = StyleSheet.create({
       marginVertical: 10,
     },
     dropdownButton: {
-      height: 55,
-      borderRadius: 3,
-      marginHorizontal: 16,
-      borderWidth: 1,
-      borderColor: "#E9E9E9",
+        paddingVertical: 25,
+        paddingHorizontal:10,
       paddingLeft: 15,
       fontSize: 14,
-      backgroundColor: "white",
+      borderWidth:1,
+      borderColor:'#E9E9E9',
+      backgroundColor:"#fff",
       color: "#a1a1a1",
+      fontFamily:"Proxima Nova",
+
+      // height: 55,
+      borderRadius: 3,
+      
       flexDirection: "row",
       justifyContent: "space-between",
       alignItems: "center",
-      padding: 10,
-      marginTop: 8,
-    },
+     },
     dropdownButtonText: {
       color: "#333",
     },
@@ -48,29 +50,38 @@ export const Needs = StyleSheet.create({
       marginTop: 6,
     },
     phoneContainer: {
-      flexDirection: "row",
-      alignItems: "center",
-      backgroundColor: "white",
-      marginHorizontal: 16,
+      flexDirection: 'row',
+   alignItems: 'center',
+   backgroundColor: "white",
+   paddingVertical:5
     },
     flagButton: {
       marginLeft: 8,
     },
     callingCode: {
-      marginRight: 10,
-      fontSize: 16,
-      color: "#333",
+      marginHorizontal: 10,
+   fontSize: 13,
+   color: '#212121',
+   borderRightWidth: 1,
+   height:20,
+   
+   borderColor: "#212121",
+   paddingRight: 15,
+   fontFamily:"Helvetica Neue",
+   lineHeight:18.2,
+   fontWeight:"500"
     },
     phoneInput: {
-      height: 55,
-      borderRadius: 3,
-      borderLeftWidth: 1,
-      borderColor: "#E9E9E9",
-      paddingLeft: 15,
-      fontSize: 14,
-      backgroundColor: "white",
-      color: "#a1a1a1",
-      flex: 1, // Allows phone input to take up remaining space
+      flex:1,
+   height: 55,
+   borderRadius: 3,
+    fontSize: 14,
+   backgroundColor: "white",
+    color: '#212121',
+   paddingRight: 15,
+   fontFamily:"Proxima Nova",
+   lineHeight:14,
+   fontWeight:"500"
     },
   
     // Text Input Styles
@@ -86,6 +97,7 @@ export const Needs = StyleSheet.create({
       paddingHorizontal: 15,
       paddingTop: 10,
       fontSize: 14,
+           fontFamily:"ProximaNovaR",
       color: "#333",
       textAlignVertical: "top", // Ensures text starts at the top-left
     },

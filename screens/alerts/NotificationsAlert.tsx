@@ -1,29 +1,49 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
- import Octicons from '@expo/vector-icons/Octicons';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import { useCart } from '@/context/CartContext';
  
  export default function NotificationsAlert() {
+  const { cart} = useCart();
+  
+  const getCartSummary = () => {
+    let totalAmount = 0;
+    let uniqueItemCount = cart.length; // Unique items count is the number of items in the cart.
+  
+    cart.forEach((item) => {
+      totalAmount += item.price * item.count;
+    });
+  
+    return { totalAmount, uniqueItemCount };
+  };
+  
+  const { uniqueItemCount } = getCartSummary();
+
+ 
   return (
     <View style={styles.container}>
       {/* Live Icon */}
-      <TouchableOpacity>
+      <TouchableOpacity onPress={()=>router.push("/(routes)/DkLive")}>
       <View style={styles.circle}>
-      <Text style={styles.signs} >
-        Live
-      </Text>
-           <Octicons name="circle" size={29} color="black" />
-      {/* Red Dot in the Center */}
-      <View style={styles.redDot} />
-    </View>
+      <Image source={require('../../assets/images/newimages/live.png')} style={{width:36.5,height:30, objectFit:"contain"}} />
+     </View>
     </TouchableOpacity>
-    <TouchableOpacity>
-      <Octicons name="bell" size={24} color="black" style={styles.icon}/>
-      </TouchableOpacity>
+
+    {/* Notifications */}
+    <TouchableOpacity onPress={()=>router.push("/(routes)/Notifications")} style={{marginTop:7,marginRight:12}}>
+    <Image source={require('../../assets/images/newimages/notification-bing.png')} style={{width:24,height:24, objectFit:"contain"}} />
+    <View style={styles.redDot} >
+     </View>
+    </TouchableOpacity>
+
       {/* Cart Icon */}
-      <TouchableOpacity onPress={()=>router.push("/(routes)/Notifications")}>
-      <MaterialCommunityIcons name="cart-outline" size={24} color="black" style={styles.icon} />
+      <TouchableOpacity onPress={()=>router.push("/(routes)/cart")} style={{marginTop:7}}>
+      <Image source={require('../../assets/images/newimages/cart.png')} style={{width: 24, height:24, objectFit:"contain"}} />
+      <View style={styles.redDots} >
+      <Text style={{ fontSize:8,textAlign:"center",color:"#fff"}}>
+      {uniqueItemCount}
+      </Text>
+    </View>
       </TouchableOpacity>
      </View>
   )
@@ -33,16 +53,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    gap:10,
-    // padding: 20,
+    gap:5,
+    padding: 4,
   },
   icon: {
-    marginHorizontal: 10,
+    // marginHorizontal: 10,
   },
   circle: {
     justifyContent: 'center',
     alignItems: 'center',
-    position: 'relative',
+    // position: 'relative',
   },
   signs:{
     position: 'absolute',
@@ -59,9 +79,26 @@ const styles = StyleSheet.create({
   },
   redDot: {
     position: 'absolute',
-    width: 10,
-    height: 10,
+    right:0,
+    width: 12,
+    height: 12,
     borderRadius: 8, // Makes the dot circular
     backgroundColor: 'red',
+    top:-3,
+    fontWeight:"700",
+    fontSize:13,
+    color:"#fff"
+  },
+  redDots: {
+    position: 'absolute',
+    right:-2,
+    width: 12,
+    height: 12,
+    borderRadius: 8, // Makes the dot circular
+    backgroundColor: 'red',
+    top:-6,
+    fontWeight:"700",
+    fontSize:13,
+    color:"#fff"
   },
 });

@@ -1,24 +1,27 @@
-import { View, Text, ScrollView, TextInput, TouchableOpacity, ActivityIndicator, BackHandler, Modal, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, TextInput, TouchableOpacity, ActivityIndicator, BackHandler, StyleSheet, Image } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
 import { SignUpStyles } from '../../../styles/Signup/signup.style';
 import { router } from 'expo-router';
 import PhoneInput from 'react-native-phone-input';
-import CountryPicker, { Country, CountryCode } from 'react-native-country-picker-modal';
 import { useAuth } from '@/context/AuthContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import MessageQuestion from '@/assets/svg/message-question';
+import ArrowUpGray from '@/assets/svg/ArrowUpGray';
+import ArrowGrayDown from '@/assets/svg/ArrowGrayDown';
 
 export default function DetailScreen() {
-  const { email, register} = useAuth();
+  const { register } = useAuth();
    const [buttonSpinner, setButtonSpinner] = useState(false);
    const [isButtonEnabled, setIsButtonEnabled] = useState(false); // State for button enabled/disabled
-  const [userInfo, setUserInfo] = useState({
-    firstName: "",
-    LastName: "",
-    Gender: "",
-    Phone: "",
-    email: ""
-  });
+  // const [userInfo, setUserInfo] = useState({
+  //   firstName: "",
+  //   LastName: "",
+  //   Gender: "",
+  //   Phone: "",
+  //   email: ""
+  // });
   const [focusInput, setFocusInput] = useState({
     email: false,
     firstName: false,
@@ -31,31 +34,44 @@ export default function DetailScreen() {
   const [firstName, setFirstName] = useState<string>('')
   const [lastName, setLastName] = useState<string>('')
   const [gender, setGender] = useState<string>('')
+  const [email, setEmail] = useState<string>('')
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [countryCode, setCountryCode] = useState<CountryCode>('US'); // Default to 'US'
-  const [callingCode, setCallingCode] = useState('1');  // Default calling code for 'US'
+  // const [countryCode, setCountryCode] = useState<CountryCode>('US'); // Default to 'US'
+  const [callingCode, setCallingCode] = useState('234');  // Default calling code for 'US'
+
+  // Retrieve email from AsyncStorage when the component mounts
+  useEffect(() => {
+    const fetchEmail = async () => {
+      try {
+        const storedEmail = await AsyncStorage.getItem('email');
+        console.log('Stored email:', storedEmail);
+        if (storedEmail) {
+          setEmail(storedEmail); // Set email to the state
+        }
+      } catch (error) {
+        console.error('Error fetching email from AsyncStorage:', error);
+      }
+    };
+
+    fetchEmail();
+  }, []);
 
   // Check if the required fields are filled
   useEffect(() => {
     setIsButtonEnabled(
-      userInfo.firstName.length > 0 &&
-      userInfo.LastName.length > 0 &&
-      userInfo.Gender.length > 0 &&
-      userInfo.email.length > 0 &&
-      phoneNumber.length > 0
+      firstName.length > 0 &&
+      lastName.length > 0 &&
+      gender.length > 0 &&
+      email.length > 0 &&
+      phoneNumber.length <= 10
     );
-  }, [userInfo, phoneNumber]);
+  }, [firstName, lastName, gender, email, phoneNumber]);
+  
 
   // Handle phone number change, only numeric values
   const handlePhoneChange = (number: string) => {
     const filteredNumber = number.replace(/[^0-9]/g, ''); // Remove non-numeric characters
     setPhoneNumber(filteredNumber);
-  };
-
-  // Handle country selection from CountryPicker
-  const onSelectCountry = (country: Country) => {
-    setCountryCode(country.cca2 as CountryCode); // Set the selected country code
-    setCallingCode(country.callingCode[0]); // Set the corresponding calling code
   };
 
   // Handle hardware back press
@@ -80,113 +96,116 @@ export default function DetailScreen() {
 
   // Select gender
   const selectGender = (gender: string) => {
-    setUserInfo({ ...userInfo, Gender: gender });
+    setGender(gender);
     setIsDropdownOpen(false); // Close dropdown after selection
   };
 
-  const NextPage= () =>{
-    setButtonSpinner(true);
-    setTimeout(() => {
-      router.push("/(routes)/OTPPhone")
-      setButtonSpinner(false);
-      // Navigate to dashboard/home after successful login
-    }, 1000);
-  }
+  // const NextPage= () =>{
+  //   setButtonSpinner(true);
+  //   setTimeout(() => {
+  //     router.push("/(routes)/OTPEmail")
+  //     setButtonSpinner(false);
+  //     // Navigate to dashboard/home after successful login
+  //   }, 1000);
+  // }
   const handleSignUp = async () => {
     try {
       setButtonSpinner(true);
       if (!email) {
         alert('Email is required');
+        setButtonSpinner(false);
         return;
       }
       await register(firstName, lastName, email, gender, phoneNumber);
+      console.log({
+        firstName,
+        lastName,
+        email,
+        gender,
+        phoneNumber,
+      });
+      
     } catch (err) {
+      console.error('Error during registration', err);
     } finally {
-      setButtonSpinner(true);
-      setTimeout(() => {
-        setButtonSpinner(false);
-        // setTimeout(() => {
-        //   setSuccessMessage("");
-        //   router.push("/(routes)/splashscren"); // Navigate to the dashboard or home
-        // }, 2000);
-      }, 1000);
+      setButtonSpinner(false);
     }
-
-    
   };
 
   const handleHelp = () =>{
     router.push("/(routes)/need-help")
   }
   return (
-    <ScrollView style={{ flex: 1 ,}} scrollEventThrottle={1}>
-      <View style={{ marginTop: 15 }}>
+    <ScrollView style={{ flex: 1}} scrollEventThrottle={1}>
+      <View style={{ marginTop: 15, marginHorizontal: 16, }}>
+
         {/* First Name Input */}
         <View>
           <Text style={SignUpStyles.label}>First name</Text>
-          <TextInput
-            style={[
-              SignUpStyles.input,
-              focusInput.firstName && { borderColor: "#DEBC8E" },
-              { paddingHorizontal: 40 }
-            ]}
-            keyboardType="default"
-            value={userInfo.firstName}
-            placeholder="Enter your legal first name"
-            placeholderTextColor='gray'
-            onFocus={() => setFocusInput({ ...focusInput, firstName: true })}
-            onBlur={() => setFocusInput({ ...focusInput, firstName: false })}
-            onChangeText={(value) => setUserInfo({ ...userInfo, firstName: value })}
-          />
+          <View style={[SignUpStyles.row, SignUpStyles.inputContainerStyle]}>
+            <TextInput
+              style={[
+                SignUpStyles.input,
+                focusInput.firstName && { borderColor: "#DEBC8E" },
+                { paddingHorizontal: 40 }
+              ]}
+              keyboardType="default"
+              value={firstName}
+              placeholder="Enter your legal first name"
+              placeholderTextColor='gray'
+              onFocus={() => setFocusInput({ ...focusInput, firstName: true })}
+              onBlur={() => setFocusInput({ ...focusInput, firstName: false })}
+              onChangeText={(value) => setFirstName(value)}
+            />
+          </View>
         </View>
 
         {/* Last Name Input */}
-        <View>
+        <View  style={{marginTop:10}}>
           <Text style={SignUpStyles.label}>Last name</Text>
-          <TextInput
-            style={[
-              SignUpStyles.input,
-              focusInput.LastName && { borderColor: "#DEBC8E" },
-              { paddingHorizontal: 40 }
-            ]}
-            keyboardType="default"
-            value={userInfo.LastName}
-            placeholder="Enter your legal last name"
-            placeholderTextColor='gray'
-            onFocus={() => setFocusInput({ ...focusInput, LastName: true })}
-            onBlur={() => setFocusInput({ ...focusInput, LastName: false })}
-            onChangeText={(value) => setUserInfo({ ...userInfo, LastName: value })}
-          />
+          <View style={[SignUpStyles.row, SignUpStyles.inputContainerStyle]}>
+            <TextInput
+              style={[
+                SignUpStyles.input,
+                focusInput.LastName && { borderColor: "#DEBC8E" },
+                { paddingHorizontal: 40 }
+              ]}
+              keyboardType="default"
+              value={lastName}
+              placeholder="Enter your legal last name"
+              placeholderTextColor='gray'
+              onFocus={() => setFocusInput({ ...focusInput, LastName: true })}
+              onBlur={() => setFocusInput({ ...focusInput, LastName: false })}
+              onChangeText={(value) => setLastName(value)}
+            />
+          </View>
+          
         </View>
 
         {/* Custom Gender Dropdown */}
-        <View style={styles.dropdownContainer}>
+        <View style={SignUpStyles.dropdownContainer}>
           <Text style={SignUpStyles.label}>Gender</Text>
           <TouchableOpacity
-            style={styles.dropdownButton}
+            style={SignUpStyles.dropdownButton}
             onPress={toggleDropdown}
           >
-            <Text style={styles.dropdownButtonText}>
-              {userInfo.Gender || "Select Gender"}
+            <Text style={SignUpStyles.dropdownButtonText}>
+              {gender || "Select Gender"}
             </Text>
-            <Ionicons
-              name={isDropdownOpen ? 'chevron-up' : 'chevron-down'}
-              size={20}
-              color="#333"
-            />
+            {isDropdownOpen ? <ArrowUpGray/> :  <ArrowGrayDown/>}
           </TouchableOpacity>
           {isDropdownOpen && (
-            <View style={styles.dropdownMenu}>
+            <View style={SignUpStyles.dropdownMenu}>
               {["Male", "Female"].map((gender) => (
                 <TouchableOpacity
                   key={gender}
                   style={[
-                    styles.dropdownItem,
-                    userInfo.Gender === gender && styles.selectedBackground // Highlight selected item
+                    SignUpStyles.dropdownItem,
+                    gender === gender && SignUpStyles.selectedBackground // Highlight selected item
                   ]}
                   onPress={() => selectGender(gender)}
                 >
-                  <Text style={styles.dropdownItemText}>{gender}</Text>
+                  <Text style={SignUpStyles.dropdownItemText}>{gender}</Text>
                 </TouchableOpacity>
               ))}
             </View>
@@ -196,43 +215,40 @@ export default function DetailScreen() {
         {/* Email Input */}
         <View>
           <Text style={SignUpStyles.label}>Email</Text>
-          <TextInput
+          <View style={[SignUpStyles.row, SignUpStyles.inputContainerStyle]}>
+            <TextInput
             style={[
               SignUpStyles.input,
               focusInput.email && { borderColor: "#DEBC8E" },
               { paddingHorizontal: 40 }
             ]}
             keyboardType="email-address"
-            value={userInfo.email}
-            placeholder="matthewc@email.com"
+            placeholder="matthew@email.com"
+            value={email}
             placeholderTextColor='gray'
             onFocus={() => setFocusInput({ ...focusInput, email: true })}
             onBlur={() => setFocusInput({ ...focusInput, email: false })}
-            onChangeText={(value) => setUserInfo({ ...userInfo, email: value })}
+            onChangeText={(value) => setEmail(value)} // Update email state
           />
+          </View>
+          
         </View>
 
         {/* Phone Number Input */}
-        <View style={styles.container}>
+        <View style={SignUpStyles.container}>
           <Text style={SignUpStyles.label}>Phone Number</Text>
-          <View style={styles.phoneContainer}>
-            <CountryPicker
-              countryCode={countryCode}
-              withFilter
-              withFlag
-              withCallingCode
-              withCountryNameButton={false}
-              onSelect={onSelectCountry}
-              containerButtonStyle={styles.flagButton}
+          <View style={SignUpStyles.phoneContainer}>
+            <Image
+              source={require("../../../assets/images/newimages/twemoji_flag-nigeria.png")} 
+              style={SignUpStyles.customLogo}
             />
-            <Text style={styles.callingCode}>+{callingCode}</Text>
+            <Text style={SignUpStyles.callingCode}>+{callingCode}</Text>
             <TextInput
-              style={styles.phoneInput}
+              style={SignUpStyles.phoneInput}
               keyboardType="numeric"
               value={phoneNumber}
               onChangeText={handlePhoneChange}
               placeholder="Phone number"
-              placeholderTextColor='gray'
             />
           </View>
         </View>
@@ -240,20 +256,23 @@ export default function DetailScreen() {
         {/* Referral */}
         <View style={{marginTop:15,marginBottom:40}}>
           <Text style={SignUpStyles.label}>Who Referred You?</Text>
-          <TextInput
+          <View style={[SignUpStyles.row, SignUpStyles.inputContainerStyle]}>
+            <TextInput
             style={[SignUpStyles.input]}
             keyboardType="default"
             placeholder="Enter referral code"
             placeholderTextColor='gray'
           />
+          </View>
+          
         </View>
         
         {/* Next Button */}
         <TouchableOpacity
           onPress={handleSignUp}
           style={[
-            { marginVertical: 20 },
-            SignUpStyles.loginButton,
+            
+            SignUpStyles.loginButtons,
             !isButtonEnabled && { backgroundColor: "#E9E9E9" } // Gray out if disabled
           ]}
           disabled={!isButtonEnabled} // Disable button if not enabled
@@ -265,87 +284,15 @@ export default function DetailScreen() {
           )}
         </TouchableOpacity>
 
-        <View style={{flexDirection:"row", justifyContent: "center"}}>
-          <MaterialCommunityIcons name="message-question" size={24} color="black" />
+        <View style={{flexDirection:"row", justifyContent: "center", gap:5, paddingTop:25}}>
+          <MessageQuestion/>
           <Text>Need help?</Text>
           <TouchableOpacity onPress={handleHelp}>
             <Text style={{color:"#DEBC8E"}}>Click Here</Text>
           </TouchableOpacity>
         </View>
       </View>
-      
     </ScrollView>
-  );
+      
+   );
 }
-
-const styles = StyleSheet.create({
-  dropdownContainer: {
-    marginVertical: 10,
-  },
-  dropdownButton: {
-    height: 55,
-    borderRadius: 3,
-    marginHorizontal: 16,
-    borderWidth: 1,
-    borderColor: "#E9E9E9",
-    paddingLeft: 15,
-    fontSize: 14,
-    backgroundColor: "white",
-    color: "#a1a1a1",
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 10,
-    marginTop: 8,
-  },
-  dropdownButtonText: {
-    color: '#333',
-  },
-  dropdownMenu: {
-    marginTop: 5,
-    borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 8,
-    marginHorizontal: 16,
-    backgroundColor: '#fff',
-    overflow: 'hidden',
-  },
-  dropdownItem: {
-    padding: 10,
-  },
-  dropdownItemText: {
-    color: '#333',
-  },
-  selectedBackground: {
-    backgroundColor: '#F5EADC', // Highlight background color for selected item
-  },
-  container: {
-    marginTop: 16,
-  },
-  phoneContainer: {
-     flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: "white",
-    marginHorizontal: 16,
-    // marginTop: 30,
-    // gap: 10,
-  },
-  callingCode: {
-    marginRight: 10,
-    fontSize: 16,
-    color: '#333',
-  },
-  flagButton: {
-    marginLeft: 8,
-  },
-  phoneInput: {
-    height: 55,
-     borderRadius: 3,
-     borderLeftWidth:1,
-    borderColor: "#E9E9E9",
-    paddingLeft: 15,
-    fontSize: 14,
-    backgroundColor: "white",
-    color: "#a1a1a1",
-  },
-}); 

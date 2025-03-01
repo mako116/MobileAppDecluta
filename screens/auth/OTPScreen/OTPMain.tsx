@@ -155,7 +155,7 @@ export default function OTPMain() {
           <Text style={styles.successText}>{successMessage}</Text>
         </View>
       ) : null}
-      {isLoading && <ActivityIndicator size="small" color="#007bff" />}
+      {isLoading && <ActivityIndicator size="small" color="#DEBC8E" />}
 
       {/* Timer or "Get a new code" button */}
       {timer > 0 ? (
@@ -171,7 +171,7 @@ export default function OTPMain() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     paddingHorizontal: 20,
   },
   otpContainer: {

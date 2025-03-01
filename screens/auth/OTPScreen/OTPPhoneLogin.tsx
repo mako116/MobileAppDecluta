@@ -9,7 +9,7 @@ export default function OTPPhoneLogin() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
-  const [timer, setTimer] = useState(119); // Set timer to 1 minute 59 seconds
+  const [timer, setTimer] = useState(60); // Set timer to 1 minute 59 seconds
   const inputRefs = useRef<Array<React.RefObject<TextInput>>>([]);
   const timerRef = useRef<NodeJS.Timeout | null>(null); // Ref to store timer interval
   const [otpVerified, setOtpVerified] = useState(false); // Track OTP verification status
@@ -17,7 +17,11 @@ export default function OTPPhoneLogin() {
   useEffect(() => {
     fetchOtpLengthFromApi();
     startCountdown();
-    return () => clearInterval(timerRef.current); // Clear timer on component unmount
+    return () => {
+      if (timerRef.current !== null) {
+        clearInterval(timerRef.current); // Clear timer on component unmount
+      }
+    };
   }, []);
 
   const fetchOtpLengthFromApi = async () => {
@@ -30,12 +34,14 @@ export default function OTPPhoneLogin() {
   };
 
   const startCountdown = () => {
-    clearInterval(timerRef.current); // Clear any existing timer
-    setTimer(119); // Reset timer to 1 minute 59 seconds
+    if (timerRef.current !== null) {
+      clearInterval(timerRef.current); // Clear any existing timer
+    }
+    setTimer(60); // Reset timer to 1 minute 59 seconds
     timerRef.current = setInterval(() => {
       setTimer(prevTimer => {
         if (prevTimer <= 0) {
-          clearInterval(timerRef.current);
+          clearInterval(timerRef.current as NodeJS.Timeout);
           return 0;
         }
         return prevTimer - 1;
@@ -157,8 +163,7 @@ export default function OTPPhoneLogin() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingHorizontal: 20,
+    paddingHorizontal: 15,
   },
   otpContainer: {
     flexDirection: 'row',
@@ -174,7 +179,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     fontSize: 18,
     color: '#333',
-    marginHorizontal: 5,
+    marginRight: 5,
   },
   inputError: {
     borderColor: 'red',

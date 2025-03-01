@@ -94,13 +94,16 @@ export default function NeedHelpScreen() {
 
  
   return (
-    <ScrollView  scrollEventThrottle={16}>
+    <View
+     style={{paddingHorizontal:16, marginBottom:"30%"}}
+
+    >
         {/* Email Input */}
         <View style={{paddingVertical:20}}>
           <Text style={SignUpStyles.label}>Email</Text>
           <TextInput
             style={[
-              SignUpStyles.input,
+              SignUpStyles.TextInput,
               focusInput.email && { borderColor: "#DEBC8E" },
               { paddingHorizontal: 40 }
             ]}
@@ -150,7 +153,7 @@ export default function NeedHelpScreen() {
             <Ionicons
               name={isDropdownOpen ? 'chevron-up' : 'chevron-down'}
               size={20}
-              color="#333"
+              color="#a4a4a4"
             />
           </TouchableOpacity>
           {isDropdownOpen && (
@@ -177,20 +180,20 @@ export default function NeedHelpScreen() {
         </View>
 
         {/* Upload Photo */}
-        <View style={{paddingHorizontal:20}}>
-            <Text style={{fontWeight:"400", fontSize:14,lineHeight:19.6,color:"#212121"}}>Upload a photo (Optional)</Text>
+        <View style={{paddingHorizontal:0}}>
+            <Text style={{fontWeight:"400", fontSize:14,lineHeight:19.6,color:"#212121",     fontFamily:"ProximaNovaR"}}>Upload a photo (Optional)</Text>
             <Text style={{color:"#A4A4A4", fontWeight:"400",fontStyle:"italic", fontSize:13, lineHeight:18.2}}>not more than 3</Text>
 
             <View style={{backgroundColor:' #fff', paddingVertical:15}}>
                 <TouchableOpacity style={{ backgroundColor: "white",borderRadius:5, alignItems:"center",flexDirection:"column", width:70,height:70, borderWidth:1, borderColor:"#E9E9E9",justifyContent:"center", gap:5}}>
                 <Entypo name="plus" size={15} color="black" />               
-                <Text style={{textAlign: "center",fontWeight:"400", fontSize:12,lineHeight:16.8,}}>Add file</Text>
+                <Text style={{textAlign: "center",fontWeight:"400", fontSize:12,lineHeight:16.8,     fontFamily:"ProximaNovaR"}}>Add file</Text>
                 </TouchableOpacity>
             </View>
         </View>
 
         {/* Description */}
-        <View style={{paddingHorizontal:20}}>
+        <View style={{paddingHorizontal:0}}>
   <Text style={[Needs.label,{alignItems:"center", fontWeight:"400",fontSize:14,lineHeight:19.6}]}>Description <Text style={{color:"#E42527"}}>*</Text></Text>
   <TextInput
     style={[Needs.textarea, focusInput.description && Needs.inputFocused]}
@@ -208,7 +211,7 @@ export default function NeedHelpScreen() {
           <View style={{ marginTop: 40, paddingVertical: 20 }}>
         <TouchableOpacity
           onPress={NextPage}
-          style={SignUpStyles.loginButton
+          style={SignUpStyles.loginButtons
            }
          >
           {buttonSpinner ? (
@@ -218,7 +221,7 @@ export default function NeedHelpScreen() {
           )}
         </TouchableOpacity>
       </View>
-    </ScrollView>
+    </View>
   )
 }
 

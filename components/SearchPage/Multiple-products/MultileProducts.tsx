@@ -1,7 +1,7 @@
 import React from 'react';
 import { FlatList, Image, StyleSheet, Text, View } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
-import Category from '@/screens/Products/ExploreNewFinds/Category/category';
+import Category from '@/screens/Products/Rending/category';
 
 // Define the type for items
 type Item = {
@@ -27,11 +27,10 @@ const MultipleProd: React.FC = () => {
         <View style={styles.itemContainer}>
             <View style={{ marginBottom: 0 }}>
           <Category
-            imageUrl={item.imageUrl}
-            name={item.name}
-            title={item.title}
-            locations={item.locations}
-          />
+              imageUrl={item.imageUrl}
+              name={item.name}
+              title={item.title}
+              locations={item.locations} timeAgo={'1min'}          />
         </View>
          </View>
       )}

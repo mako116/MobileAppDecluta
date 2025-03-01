@@ -1,20 +1,20 @@
 {
   "expo": {
-    "name": "decluttaking-mobileapp",
-    "slug": "decluttaking-mobileapp",
+    "name": "DecluttaKing",
+    "slug": "DecluttaKing", 
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
+    "permissions": ["CAMERA"],
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#483A2D"
     },
     "ios": {
       "supportsTablet": true,
-      "bundlerIdentifier": "com.decluttaking.app",
       "infoPlist": {
         "CFBundleURLTypes": [
           {
@@ -39,14 +39,18 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true
     },
     "extra": {
       "eas": {
-        "projectId": "3b0f2f9d-d04e-4487-9dd0-40d7dbf42bb5"
+        "projectId": "5389560f-1e05-496e-9619-67d0a0b98919"
+      },
+      "router": {
+        "origin": false
       }
     }
   }

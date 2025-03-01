@@ -1,123 +1,114 @@
-  import Mores from '@/styles/MoreModal/MoreModal';
-import { AntDesign, FontAwesome5, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import Mores from '@/styles/MoreModal/MoreModal';
 import React from 'react';
-import { View, Text, Modal, Button,   TouchableOpacity, Pressable } from 'react-native';
+import { View, Text, Modal, Pressable, Image, TouchableOpacity } from 'react-native';
 
 interface MoreModalProps {
   isModalVisible: boolean;
   toggleModal: () => void;
 }
 
-const MoreModal: React.FC<MoreModalProps> = ({ isModalVisible ,toggleModal}) => {
+const modalOptions = [
+  {
+    label: "Pending Pickups",
+    icon: require('../../assets/images/newimages/octicon_package-24.png'),
+    badge: 1, // Badge count
+  },
+  {
+    label: "My Wallet",
+    icon: require('../../assets/images/newimages/dropwallet.png'),
+    walletBalance: "₦75.0k", // Wallet text instead of badge
+  },
+  {
+    label: "My Profile",
+    icon: require('../../assets/images/newimages/user-square.png'),
+  },
+  {
+    label: "My Rewards",
+    icon: require('../../assets/images/newimages/gift.png'),
+    badge: 1, // Badge count
+  },
+  {
+    label: "Refer and Earn",
+    icon: require('../../assets/images/newimages/people.png'),
+  },
+  {
+    label: "Help Center",
+    icon: require('../../assets/images/newimages/hugeicons_bot.png'),
+  },
+];
+
+const MoreModal: React.FC<MoreModalProps> = ({ isModalVisible, toggleModal }) => {
   return (
     <Modal
-        animationType="slide"
-        transparent={true}
-        visible={isModalVisible}
-        onRequestClose={toggleModal}
-      >
-        <Pressable
-          style={Mores.modalBackground}
-          onPress={toggleModal} // Close modal on background press
-        >
-          <View style={Mores.modalContainer}>
-            {/* Content of the modal */}
+      animationType="slide"
+      transparent={true}
+      visible={isModalVisible}
+      onRequestClose={toggleModal}
+    >
+      <Pressable style={Mores.modalBackground} onPress={toggleModal}>
+        <View style={Mores.modalContainer}>
+          {modalOptions.map((option, index) => (
             <TouchableOpacity
-              style={[Mores.modalOption, { gap: 0 }]}
+              key={index}
+              style={Mores.modalOption}
               onPress={toggleModal}
             >
-              <Ionicons name="cube-outline" size={15} color="black" />
-              <Text style={[Mores.modalText, { marginRight: 10 }]}>
-                Pending Pickups
-              </Text>
-              <View
+              <Image
+                source={option.icon}
                 style={{
-                  width: 12,
-                  height: 12,
-                  borderRadius: 50,
-                  backgroundColor: '#E42527',
+                  width: 20,
+                  height: 20,
+                  resizeMode: "contain",
                 }}
-              >
-                <Text
+              />
+              <Text style={Mores.modalText}>{option.label}</Text>
+              {option.badge && (
+                <View
                   style={{
+                    width: 12,
+                    height: 12,
+                    borderRadius: 50,
+                    backgroundColor: '#E42527',
                     justifyContent: 'center',
-                    textAlign: 'center',
-                    fontSize: 9,
-                    color: '#fff',
-                    fontWeight: '400',
+                    alignItems: 'center',
                   }}
                 >
-                  1
-                </Text>
-              </View>
+                  <Text
+                    style={{
+                      fontSize: 9,
+                      color: '#fff',
+                      fontWeight: '400',
+                    }}
+                  >
+                    {option.badge}
+                  </Text>
+                </View>
+              )}
+              {option.walletBalance && (
+                <View style={{ width: 55, justifyContent: "flex-end", alignItems: "flex-end" }}>
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      color: '#212121',
+                      fontWeight: '400',
+                      lineHeight: 16.8,
+                      backgroundColor: "#F5EADC",
+                      borderRadius: 4,
+                      width: 47,
+                      height: 17,
+                      textAlign: "center",
+                    }}
+                  >
+                    {option.walletBalance}
+                  </Text>
+                </View>
+              )}
             </TouchableOpacity>
-            <TouchableOpacity style={[Mores.modalOption, { gap: 5 }]} onPress={toggleModal}>
-              <AntDesign name="wallet" size={20} color="black" />
-              <Text style={Mores.modalText}>My Wallet</Text>
-              <Text
-                style={{
-                  fontSize: 12,
-                  color: '#212121',
-                  fontWeight: '400',
-                  lineHeight: 16.8,
-                  backgroundColor:"#F5EADC",
-                  padding:5,
-                  borderRadius:8
-                }}
-              >
-                ₦75.0k
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={Mores.modalOption} onPress={toggleModal}>
-              <FontAwesome5 name="user-circle" size={20} color="black" />
-              <Text style={Mores.modalText}>My Profile</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[Mores.modalOption, { gap: 5 }]} onPress={toggleModal}>
-              <MaterialCommunityIcons
-                name="gift-outline"
-                size={20}
-                color="black"
-              />
-              <Text style={Mores.modalText}>My Rewards</Text>
-              <View
-                style={{
-                  width: 12,
-                  height: 12,
-                  borderRadius: 50,
-                  backgroundColor: '#E42527',
-                }}
-              >
-                <Text
-                  style={{
-                    justifyContent: 'center',
-                    textAlign: 'center',
-                    fontSize: 9,
-                    color: '#fff',
-                    fontWeight: '400',
-                  }}
-                > 
-                  1
-                </Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={Mores.modalOption} onPress={toggleModal}>
-              <FontAwesome5 name="users" size={20} color="black" />
-              <Text style={Mores.modalText}>Refer and Earn</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={Mores.modalOption} onPress={toggleModal}>
-              <MaterialCommunityIcons
-                name="robot-excited-outline"
-                size={20}
-                color="black"
-              />
-              <Text style={Mores.modalText}>Help Center</Text>
-            </TouchableOpacity>
-          </View>
-        </Pressable>
-      </Modal>
+          ))}
+        </View>
+      </Pressable>
+    </Modal>
   );
 };
-
-
 
 export default MoreModal;

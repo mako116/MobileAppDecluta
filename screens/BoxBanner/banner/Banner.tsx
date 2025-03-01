@@ -10,8 +10,9 @@ export default function Banner() {
   return (
    <View style={{paddingHorizontal:12}}>
      <ImageBackground
-      source={require('../../../assets/images/bgimage1.jpg')}
+      source={require('../../../assets/images/bannerBg.png')}
       style={styles.background}
+      
     >
       {/* Overlay with semi-transparent background color */}
       <View style={styles.overlay} />
@@ -19,8 +20,8 @@ export default function Banner() {
       {/* Content */}
       <View style={styles.container}>
         <View style={{ flexDirection: 'row', gap: 4 }}>
-          <Image source={require('../../../assets/images/heroiconssparkles.png')} />
-          <Text style={styles.headingText}>Hello, Mathew</Text>
+          <Image source={require('../../../assets/images/heroicons_sp.png')}  style={{ objectFit:"contain", width:20, height:20}} />
+          <Text style={styles.headingText}>Hello, There!</Text>
         </View>
         <Text style={styles.subText}>How can we help you today?</Text>
       </View>
@@ -41,19 +42,20 @@ export default function Banner() {
 const styles = StyleSheet.create({
   background: {
     padding: 10,
-    borderRadius: 10, // Rounded corners for the image
+    borderRadius: 10,  
     overflow: 'hidden', 
+ 
+    // borderRadius:10,
   },
   overlay: {
-    ...StyleSheet.absoluteFillObject,  
-    backgroundColor: '#DEBC8E', // Your background color
-    opacity: 0.5,  
-    borderRadius:10, // Rounded corners for the overlay
+    backgroundColor: '#DEBC8E',
+    opacity: 0.7, 
+     ...StyleSheet.absoluteFillObject, 
+ // Rounded corners for the overlay
   },
   container: {
     borderRadius: 10,
     paddingTop: 20,
-    paddingHorizontal: 10,
     paddingVertical: 10,
     zIndex: 1, // Place content above overlay
   },
@@ -62,11 +64,13 @@ const styles = StyleSheet.create({
     fontSize: 22,
     lineHeight: 22.4,
     color: '#212121',
+    fontFamily: 'Helvetica Neue',
   },
   subText: {
     fontWeight: '400',
     fontSize: 16,
     lineHeight: 22.4,
     color: '#212121',
+    fontFamily: 'ProximaNova',
   },
 });

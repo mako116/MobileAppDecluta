@@ -1,46 +1,172 @@
-import { AntDesign, Feather, SimpleLineIcons } from '@expo/vector-icons';
-import { router } from 'expo-router';
-import React from 'react';
-import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import Browse from './Browse';
-  
-const HeaderBrowse = () => {
-    return (
-        <View style={{}}>
-            <View style={{paddingTop:40,backgroundColor:"#fff"}}>
-            <View style={styles.searchBox}>
-           <View style={{flexDirection:"row",width:"70%",alignItems:"center", gap:20}}>
-           <AntDesign onPress={router.back} name="arrowleft" size={24} color="black" />
-         <View style={{borderWidth:1, flexDirection:"row", alignItems:"center",borderRadius:7, paddingHorizontal:5,borderColor:"#E9E9E9"}}>
-         <TextInput
-              style={styles.input}
-              placeholder="I'm looking for...."
-              placeholderTextColor="#888"
-              
-            />
-            <TouchableOpacity>
-              <Feather name="search" size={24} color="#A4A4A4" />
-            </TouchableOpacity>
-         </View>
-          </View>
-            <TouchableOpacity>
-           <Image  source={require("../../../assets/images/filter.png")} />           
-           </TouchableOpacity>
-          </View>
-            </View>
-          <ScrollView style={{ marginBottom:"10%" ,paddingHorizontal:20, paddingVertical:15, }}>
-            <Text style={{color:"#212121",fontFamily:"HelveticaNeueLTPro", fontWeight:"700", fontSize:16,lineHeight:22.4}}>Browse our categories</Text>
-            <Text style={{color:"#212121", fontWeight:"400", fontSize:12,lineHeight:22.4}}>Find fantastic deals on items you love! From discounts on tech and home essentials to special offers across categories, enjoy quality items at unbeatable prices; grab these deals before they’re gone!</Text>
-            <Browse/>
-          </ScrollView>
-        </View>
-    );
+import React, { useState, useEffect } from 'react';
+import {
+  ScrollView,
+   Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  Image,
+} from 'react-native';
+import { Href, router } from 'expo-router'; // Ensure you have expo-router installed
+import BackButton from '@/assets/images/kyc/LeftArrow';
+import LetsIconsFilter from '@/assets/svg/lets-icons_filter';
+import Search from '@/assets/images/kyc/Search';
+import RightArrow from '@/assets/images/kyc/rightarrow';
+import HeadBrowse from '@/styles/categories/HeaderBrowse.style';
+
+interface Category {
+  id: string;
+  name: string;
+  img: any;
+  para: string;
+  Link: Href;
 }
 
-const styles = StyleSheet.create({
-    searchBox: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 10, paddingVertical:20, justifyContent:"space-between" },
-    input: { flex: 1,  fontSize: 13 ,  paddingVertical:5,padding:10, },
-  
-})
+const HeaderBrowse = () => {
+  const categories: Category[] = [
+    {
+      id: '1',
+      name: 'Phones & Tablets',
+      img: require('../../../assets/svg/phone.png'),
+      para: 'Apple, Samsung, Tecno, Infinix, Itel...',
+      Link: '/(routes)/Categories/phone-tablets',
+    },
+    {
+      id: '2',
+      name: 'Home & Kitchen',
+      img: require('../../../assets/images/categories/kitchen.png'),
+      para: 'Washing Machines, Fans, Irons, ACs...',
+      Link: '/(routes)/Categories/phone-tablets',
+    },
+    {
+      id: '3',
+      name: 'Furniture',
+      img: require('../../../assets/images/categories/funitures.png'),
+      para: 'Tables, Chairs, TV Stands & Mounts...',
+      Link: '/(routes)/Categories/phone-tablets',
+    },
+    {
+      id: '4',
+      name: 'Computing',
+      img: require('../../../assets/images/categories/laptops.png'),
+      para: 'Laptops, Desktops, Monitors...',
+      Link: '/(routes)/Categories/phone-tablets',
+    },
+    {
+      id: '5',
+      name: 'Electronics',
+      img: require('../../../assets/images/categories/computin.png'),
+      para: 'Cameras, TV & DVDs, Audio...',
+      Link: '/(routes)/Categories/phone-tablets',
+    },
+    {
+      id: '6',
+      name: 'Fashion',
+      img: require('../../../assets/images/categories/wardrops.png'),
+      para: 'Bags, Shoes, Watches, Wedding...',
+      Link: '/(routes)/Categories/phone-tablets',
+    },
+    {
+      id: '7',
+      name: 'Solar Energy',
+      img: require('../../../assets/images/categories/solarEne.png'),
+      para: 'Solar Systems, Batteries, Panels...',
+      Link: '/(routes)/Categories/phone-tablets',
+    },
+    {
+      id: '8',
+      name: 'Generators',
+      img: require('../../../assets/images/categories/gen.png'),
+      para: 'Portable Generators, Industrial Gen...',
+      Link: '/(routes)/Categories/phone-tablets',
+    },
+  ];
+
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [filteredCategories, setFilteredCategories] = useState<Category[]>(categories);
+
+  // Reset categories when the input is cleared
+  useEffect(() => {
+    if (searchQuery.trim() === '') {
+      setFilteredCategories(categories);
+    }
+  }, [searchQuery]);
+
+
+ 
+  const handleSearch = () => {
+    if (searchQuery.trim() === '') {
+      setFilteredCategories(categories);
+    } else {
+      const filtered = categories.filter((category) =>
+        category.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilteredCategories(filtered);
+    }
+  };
+
+  return (
+    <View style={HeadBrowse.container}>
+      {/* Header Section */}
+      <View style={[HeadBrowse.header,{gap:0,}]}>
+        <BackButton />
+        <View style={HeadBrowse.searchBar}>
+          <TextInput
+            style={HeadBrowse.input}
+            placeholder="Search in Phones & Tablets"
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+          />
+          <TouchableOpacity onPress={handleSearch} >
+            <Search />
+          </TouchableOpacity>
+        </View>
+        <TouchableOpacity style={HeadBrowse.filterButton}>
+          <LetsIconsFilter />
+        </TouchableOpacity>
+      </View>
+
+      {/* Categories Section */}
+      <ScrollView showsVerticalScrollIndicator={false} style={HeadBrowse.categoryScroll}>
+        {filteredCategories.length > 0 ? (
+          filteredCategories.map((item) => (
+            <TouchableOpacity
+            key={item.id}
+            style={HeadBrowse.categoryBox}
+            onPress={() => {
+              try {
+                router.push(item.Link);
+                console.log('Navigating to:', item.Link);
+              } catch (error) {
+                console.error('Navigation error:', error);
+              }
+            }}
+            
+            >
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Image
+                  source={item.img}
+                  style={HeadBrowse.categoryImage}
+                  // defaultSource={require('../../../assets/images/default-category.png')} // Default fallback image
+                />
+                <View>
+                  <Text style={HeadBrowse.categoryText}>{item.name}</Text>
+                  <Text style={HeadBrowse.categoryP}>{item.para}</Text>
+                </View>
+              </View>
+              <RightArrow />
+            </TouchableOpacity>
+          ))
+        ) : (
+          <Text style={HeadBrowse.noResultsText}>
+            No categories found. Try searching for something else.
+          </Text>
+        )}
+      </ScrollView>
+    </View>
+  );
+};
+
+
 
 export default HeaderBrowse;

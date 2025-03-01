@@ -1,10 +1,30 @@
+import Arrowleft2 from '@/assets/svg/ArrowLeft2';
 import NotificationStyles from '@/styles/Notification/Notification.styles';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import React from 'react';
 import { Image, SafeAreaView, ScrollView,  Text, View } from 'react-native';
 
-const notifications: Notification[] = [];
-
+const notifications: Notification[] = [
+  {
+    id: '1',
+    title: 'Confirm Your Item Pickup',
+    description: "Please confirm that your item for order #12345-1 has been picked up. ",
+    image: require('../../../assets/images/Frame 646966.png'),
+    time: 'Today 20:28',
+    tag: 'Updates',
+    action: 'View More',
+  },
+  {
+    id: '2',
+    title: ' Item Picked Up',
+    description: "You confirmed your item for order #12345-1 has been picked up sucessfully ",
+    image: require('../../../assets/images/Frame 646966.png'),
+    time: 'Today 20:28',
+    tag: 'Updates',
+    action: 'View More',
+  },
+  
+];
 type Notification = {
   id: string;
   title: string;
@@ -18,12 +38,12 @@ type Notification = {
 const Pickup = () => {
   return (
     <SafeAreaView>
-      <ScrollView>
+        <ScrollView style={{paddingHorizontal:10, paddingBottom:"50%"}}>
         {notifications.length === 0 ? (
           <View style={NotificationStyles.noNotificationContainer}>
-          <Image source={require('../../../assets/images/None.png')}   />
-       <Text style={[NotificationStyles.noNotificationText,{fontFamily:"ProximaNovaBold", fontSize:19}]}>No Updates at the Moment</Text>
-       <Text style={NotificationStyles.noNotificationText}>You’ll be notified here when new features or important updates are available.</Text>
+            <Image source={require('../../../assets/images/notifi/none/Frame 25 (2).png')}  style={{height:66, width:"100%", objectFit:"contain"}}  />
+       <Text style={[NotificationStyles.noNotificationText,{fontFamily:"ProximaNovaBold", fontSize:19}]}>No Pickup Updates Yet</Text>
+       <Text style={NotificationStyles.noNotificationText}>Your pickup notifications will appear here when items are ready for collection.</Text>
      </View>
         ) : (
           notifications.map((item) => (
@@ -43,7 +63,7 @@ const Pickup = () => {
                 {item.action && (
                   <View style={NotificationStyles.footerRight}>
                     <Text style={NotificationStyles.actionText}>{item.action}</Text>
-                    <SimpleLineIcons name="arrow-right" size={10} color="black" />
+                    <Arrowleft2/>                   
                   </View>
                 )}
               </View>
