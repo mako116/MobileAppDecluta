@@ -19,13 +19,13 @@ export default function Button({
             style={[
                 {
                     width:"100%",
-                     paddingHorizontal: "10%",
+                    paddingHorizontal: "10%",
                     height: 50,
                     alignItems: "center",
                     flexDirection: "row",
                     justifyContent: "center",
                     margin: "auto",
-                    borderRadius: 10,
+                    borderRadius: 6,
                     backgroundColor: backgroundColor, // Set background color dynamically
                     borderWidth: borderWidth ? 1 : 0, // Add border width if specified
                     borderColor: borderWidth ? '#E9E9E9' : 'transparent', // Light border if borderWidth is set

@@ -62,7 +62,6 @@ export const SignUpStyles = StyleSheet.create({
     },
     label: {
       // marginLeft: 18,
-      marginBottom: 10,
       fontFamily:"Proxima Nova",
       fontSize: 14,
       fontWeight: "400"
@@ -83,7 +82,7 @@ export const SignUpStyles = StyleSheet.create({
     },
     input: {
       flex: 1,
-      padding: 20,
+      padding: 17,
       paddingLeft: 5,
       fontSize: 14,
       color: "#a1a1a1",
@@ -131,7 +130,7 @@ export const SignUpStyles = StyleSheet.create({
     },
     loginButton: {
       padding: 17,
-      borderRadius: 8,
+      borderRadius: 5,
       marginHorizontal: 16,
       backgroundColor: "#DEBC8E",
       marginTop: 5,
@@ -205,7 +204,7 @@ export const SignUpStyles = StyleSheet.create({
     },
     socialButton: {
       flexDirection: "row",
-      padding: 16,
+      padding: 17,
       alignItems: "center",
       justifyContent:"center",
       borderWidth: 1,

@@ -1,6 +1,6 @@
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, ActivityIndicator, Image, Alert } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator, Image, Alert } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { AntDesign, Entypo, Feather, MaterialIcons, SimpleLineIcons } from '@expo/vector-icons';
+import { AntDesign, Entypo } from '@expo/vector-icons';
 import { SignUpStyles } from '@/styles/Signup/signup.style';
 import { commonstyles } from '@/styles/common/common.style';
 import { router } from 'expo-router';
@@ -9,6 +9,10 @@ import { useAuth } from '@/context/AuthContext';
 import * as Google from 'expo-auth-session/providers/google';
 import GoolgSignUp from '../GoogleSignup/GoogleSignUpComponent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import TermsAndPolicyComponent from '@/components/TermsAndPolicy/TermsAndPolicy';
+import TextInputField from '@/UI/InputFields/TextInputField';
+import SignUpWithPhone from '../PhoneNumberSignUp/SignUpWithPhone';
+import SignUpWithApple from '../AppleSignUp/SignUpWithApple';
 
 
 export default function EmailSetup() {
@@ -16,7 +20,6 @@ export default function EmailSetup() {
   const [userInfo, setUserInfo] = useState({ email: ""});
   const [required, setRequired] = useState("");
   const [token] = useState("")
-  const [focusInput, setFocusInput] = useState({ email: false, password: false });
   const [buttonSpinner, setButtonSpinner] = useState(false);
 
   // const CLIENTID = process.env.CLIENT_ID
@@ -66,8 +69,8 @@ export default function EmailSetup() {
         router.push("/(routes)/PhoneLogin");
       }
   return (
-    <SafeAreaView edges={['bottom']} style = {{ flex: 1 }} >
-      <View style = {{ flex: 1, backgroundColor: "#F9F9F9" }}>
+    <SafeAreaView edges={['bottom']} style = {{ flex: 1, backgroundColor: "#F9F9F9"  }} >
+      <View style = {{ flex: 1 }}>
         <View style={SignUpStyles.signs}>
           <TouchableOpacity onPress={handleGoBack}>
             <Image source={require("../../../../assets/images/leftArrow.png")} style={{ height: 15, width: 30 }} />
@@ -76,9 +79,21 @@ export default function EmailSetup() {
         </View>
 
         <View style = {{ flex: 1 }} >
-          <View style={{ marginTop: 40, marginBottom: 10 }}>
-            <Text style={[SignUpStyles.label,{marginLeft: 20}]}>Email</Text>
-            <View style={[SignUpStyles.row, SignUpStyles.inputContainerStyle]}>
+          <View style={{ marginTop: 40, marginBottom: 10, paddingHorizontal: 13 }}>
+            <Text style={[SignUpStyles.label]}>Email</Text>
+            <TextInputField
+              placeholder="Enter email"
+              value={userInfo.email}
+              onChangeText={(value) => {
+                setUserInfo({ ...userInfo, email: value });
+                if (required) setRequired("");  // Clear error if user starts typing
+              }}
+              keyboardType="email-address"
+              placeholderTextColor='gray'
+              icon={<AntDesign name="lock" size={20} color="gray" />}
+            />
+            
+            {/* <View style={[SignUpStyles.row, SignUpStyles.inputContainerStyle]}>
               <TextInput
                 style={[
                   SignUpStyles.input,
@@ -96,7 +111,8 @@ export default function EmailSetup() {
                   if (required) setRequired("");  // Clear error if user starts typing
                 }}
               />
-            </View>
+            </View> */}
+
             {/* come back to this */}
             {required && (
               <View style={commonstyles.errorContainer}>
@@ -127,20 +143,14 @@ export default function EmailSetup() {
           </View>
 
           <View style={SignUpStyles.socialButtons}>
-            <TouchableOpacity onPress={handlePhonePush} style={SignUpStyles.socialButton}>
-              <MaterialIcons name="phone-android" size={26} color="black" />
-              <Text style={{ color: "#000000", lineHeight: 19.6, fontSize: 14, fontWeight: '400' , fontFamily:"Proxima Nova"}}>Continue with Phone</Text>
-            </TouchableOpacity>
+            <SignUpWithPhone />
             
             <GoolgSignUp />
       
             {/* Conditionally render the other buttons */}
             {showMore && (
               <>
-                <TouchableOpacity style={SignUpStyles.socialButton}>
-                  <AntDesign name="apple1" size={26} color="black" />
-                  <Text style={{ color: "#000000", lineHeight: 19.6, fontSize: 14, fontWeight: '400' , fontFamily:"Proxima Nova"}}>Continue with Apple</Text>
-                </TouchableOpacity>
+                <SignUpWithApple />
 
                 
               </>
@@ -159,17 +169,8 @@ export default function EmailSetup() {
               </View>
           </View>
         </View>
-
-        <View style={{ paddingTop: 80, flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 5 }}>
-          <TouchableOpacity onPress={navigateToTerms}>
-            <Text style={{ color: "#DEBC8E", fontWeight: "700", fontSize: 16, lineHeight: 22.4 }}>Terms of use</Text>
-            </TouchableOpacity>
-            <View style={SignUpStyles.separator2} />
-            <TouchableOpacity onPress={() => router.push("/(routes)/privacyPolicy")}>
-            <Text style={{ color: "#DEBC8E", fontWeight: "700", fontSize: 16, lineHeight: 22.4 }}>Privacy Policy</Text>
-            </TouchableOpacity>
-        </View>
       </View>
+      <TermsAndPolicyComponent />
     </SafeAreaView>
   );
 }

@@ -2,16 +2,22 @@ import { StyleSheet } from "react-native";
 
 
 export const Creating = StyleSheet.create({
-    signs: {
-      width:"100%",
-      paddingHorizontal: 12,
-      paddingTop: 60,
-       justifyContent:"center",
-      paddingBottom: 20,
-      flexDirection: "row",
-      alignItems: "center",
-      backgroundColor: "#fff",
-    },
+  row: {
+    display: "flex",
+    flexDirection: 'row',
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  signs: {
+    width:"100%",
+    paddingHorizontal: 12,
+    paddingTop: 60,
+      justifyContent:"center",
+    paddingBottom: 20,
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#fff",
+  },
     phoneContainer: {
       flexDirection: 'row',
       alignItems: 'center',
@@ -132,5 +138,30 @@ export const Creating = StyleSheet.create({
       color: "#DEBC8E",
       fontSize: 14,
       fontWeight: "600",
+    },
+    rowJustified: {
+      display: "flex",
+      flexDirection: 'row',
+      alignItems: "center",
+      justifyContent: "space-between",
+      paddingHorizontal: 12,
+      paddingTop:65,
+      paddingBottom: 20,
+    },
+    divider: {
+      width: 70,
+      height: 1,
+      backgroundColor: "black",
+      marginHorizontal: 7
+    },
+    currentStageIcon: {
+      padding: 4,
+      borderRadius: 20,
+      backgroundColor: "black"
+    },
+    passedStageIcon: {
+      padding: 4,
+      borderRadius: 20,
+      backgroundColor: "black"
     },
   });

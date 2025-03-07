@@ -76,9 +76,9 @@ const HomeScreen: React.FC =() => {
   
   {/* Do not remove for testing purpose */}
   
-  // const handleLogout = async () => {
-  //   await logout();
-  // }
+  const handleLogout = async () => {
+    await logout();
+  }
 
   return (
     <>
@@ -111,12 +111,12 @@ const HomeScreen: React.FC =() => {
           <View style={Homes.content}>
             {/* Do not remove for testing purpose */}
 
-            {/* <Button
+            <Button
               title="Log Out"
               onPress={handleLogout}
               backgroundColor="#DEBC8E"
               borderWidth="1"
-            /> */}
+            />
             {/* Complete KYC */}
             <View>
               <ProfileKYc />

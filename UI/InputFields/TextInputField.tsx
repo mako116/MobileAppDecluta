@@ -1,12 +1,26 @@
 import { useState } from "react";
-import { StyleSheet, TextInput, View } from "react-native";
+import { StyleSheet, TextInput, View, TouchableOpacity } from "react-native";
+import { AntDesign } from "@expo/vector-icons";
 
 interface TextInputFieldProps {
     placeholder?: string;
     value?: string;
     onChangeText?: (text: string) => void;
     secureTextEntry?: boolean;
-    keyboardType?: "default" | "email-address" | "numeric" | "phone-pad" | "ascii-capable" | "numbers-and-punctuation" | "url" | "number-pad" | "name-phone-pad" | "decimal-pad" | "twitter" | "web-search" | "visible-password";
+    keyboardType?: 
+        | "default" 
+        | "email-address" 
+        | "numeric" 
+        | "phone-pad" 
+        | "ascii-capable" 
+        | "numbers-and-punctuation" 
+        | "url" 
+        | "number-pad" 
+        | "name-phone-pad" 
+        | "decimal-pad" 
+        | "twitter" 
+        | "web-search" 
+        | "visible-password";
     autoCapitalize?: "none" | "sentences" | "words" | "characters";
     autoCorrect?: boolean;
     style?: object;
@@ -15,6 +29,7 @@ interface TextInputFieldProps {
     numberOfLines?: number;
     maxLength?: number;
     editable?: boolean;
+    icon?: JSX.Element;
 }
 
 const TextInputField: React.FC<TextInputFieldProps> = ({    
@@ -30,33 +45,52 @@ const TextInputField: React.FC<TextInputFieldProps> = ({
     multiline, 
     numberOfLines, 
     maxLength, 
-    editable 
+    editable, 
+    icon
 }) => {
-    const [focusInput, setFocusInput] = useState({
-        email: false,
-        firstName: false,
-        LastName: false,
-        Gender: false,
-        Phone: false,
-    })
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+    const [isFocused, setIsFocused] = useState(false);
+
     return (
-        <View style={styles.container}>
+        <View 
+            style={[
+                styles.container, 
+                { borderColor: isFocused ? "#DEBC8E" : "#E9E9E9" } // Change border color on focus
+            ]}
+        >
+
+            {/* Text Input */}
             <TextInput 
                 placeholder={placeholder} 
                 value={value} 
                 onChangeText={onChangeText} 
-                secureTextEntry={secureTextEntry} keyboardType={keyboardType} 
+                secureTextEntry={secureTextEntry && !isPasswordVisible} 
+                keyboardType={keyboardType} 
                 autoCapitalize={autoCapitalize} 
                 autoCorrect={autoCorrect} 
-                style={[
-                    styles.textInput,
-                    focusInput.firstName && { borderColor: "#DEBC8E" }
-                ]} 
-                placeholderTextColor={placeholderTextColor} multiline={multiline} 
+                style={[styles.textInput, style]} 
+                placeholderTextColor={placeholderTextColor} 
+                multiline={multiline} 
                 numberOfLines={numberOfLines} 
                 maxLength={maxLength} 
                 editable={editable}
+                onFocus={() => setIsFocused(true)} // Set focus state
+                onBlur={() => setIsFocused(false)} // Reset on blur
             />
+
+            {/* Toggle Password Visibility Icon */}
+            {secureTextEntry && (
+                <TouchableOpacity 
+                    onPress={() => setIsPasswordVisible(!isPasswordVisible)} 
+                    style={styles.eyeIcon}
+                >
+                    <AntDesign 
+                        name={isPasswordVisible ? "eye" : "eyeo"} 
+                        size={20} 
+                        color="gray" 
+                    />
+                </TouchableOpacity>
+            )}
         </View>
     );
 }
@@ -65,16 +99,22 @@ export default TextInputField;
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'white',
-        borderColor: '#E9E9E9',
+        flexDirection: "row",
+        alignItems: "center",
+        backgroundColor: "white",
         borderWidth: 1,
         borderRadius: 5,
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
+        paddingHorizontal: 10,
+        marginVertical: 10,
     },
     textInput: {
         flex: 1,
-        padding: 20,
+        paddingVertical: 16,
+        paddingHorizontal: 5,
+        fontSize: 16,
+        fontFamily: "Proxima Nova",
+    },
+    eyeIcon: {
+        padding: 10,
     },
 });
