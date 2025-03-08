@@ -11,29 +11,41 @@ const PhoneNumberInputField: React.FC<PhoneInputFieldProps> = ({
     onChangeText
 }) => {
     return(
-        <View style={styles.phoneContainer}>
+      <View style={styles.phoneContainer}>
+          <View style={[ 
+            styles.row, 
+            {
+              borderRightWidth: 1,
+              borderColor: "#212121",
+            } 
+            ]} >
             <Image
             source={require("../../assets/images/newimages/twemoji_flag-nigeria.png")} 
             style={styles.customLogo}
             />
             <Text style={styles.callingCode}>+234</Text>
-            <TextInput
-                style={styles.phoneInput}
-                // keyboardType="numeric"
-                value={value}
-                onChangeText={onChangeText}
-                placeholder="Phone number"
-                keyboardType= "phone-pad"
-            />
-        </View>
+          </View>
+          <TextInput
+              style={styles.phoneInput}
+              // keyboardType="numeric"
+              value={value}
+              onChangeText={onChangeText}
+              placeholder="Phone number"
+              keyboardType= "phone-pad"
+          />
+      </View>
     )
 }
 
 export default PhoneNumberInputField;
 
 const styles = StyleSheet.create({
+  row:{
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   container: {
-    marginTop: 16,
+    marginTop: 10,
   },
   phoneContainer: {
     flexDirection: 'row',
@@ -45,14 +57,10 @@ const styles = StyleSheet.create({
     borderRadius: 5
   },
   callingCode: {
-    marginHorizontal: 10,
+    marginHorizontal: 5,
     fontSize: 13,
     color: '#212121',
-    borderRightWidth: 1,
-    borderColor: "#212121",
-    paddingRight: 15,
     fontFamily:"Helvetica Neue",
-    lineHeight:18.2,
     fontWeight:"500"
   },
   flagButton: {
@@ -65,15 +73,12 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   phoneInput: {
-    height: 55,
-    borderRadius: 3,
-    
-    fontSize: 14,
+    flex: 1,
+    padding: 16,
+    fontSize: 13,
     backgroundColor: "white",
-     color: '#212121',
-    paddingRight: 15,
+    color: '#212121',
     fontFamily:"Proxima Nova",
-    lineHeight:14,
     fontWeight:"500"
   },
 });

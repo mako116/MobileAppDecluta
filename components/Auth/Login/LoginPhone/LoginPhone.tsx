@@ -119,7 +119,7 @@ const [showMore, setShowMore] = useState(false);
             <>
               <TouchableOpacity style={SignUpStyles.socialButton}>
                 <AntDesign name="apple1" size={24} color="black" />
-                <Text style={{ color: "#000000", lineHeight: 19.6, fontSize: 14, fontWeight: '400' , fontFamily:"Proxima Nova"}}>Continue with Apple</Text>
+                <Text style={{ color: "#000000", lineHeight: 19.6, fontSize: 14, fontWeight: '400' , fontFamily:"ProximaNova"}}>Continue with Apple</Text>
               </TouchableOpacity>
 
               
@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
      color: '#212121',
     paddingRight: 15,
-    fontFamily:"Proxima Nova",
+    fontFamily:"ProximaNova",
     lineHeight:14,
     fontWeight:"500"
   },

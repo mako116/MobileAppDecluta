@@ -6,19 +6,17 @@ export const Needs = StyleSheet.create({
       marginVertical: 10,
     },
     dropdownButton: {
-        paddingVertical: 25,
-        paddingHorizontal:10,
+      paddingVertical: 16,
+      paddingHorizontal:10,
       paddingLeft: 15,
+      marginTop: 10,
       fontSize: 14,
       borderWidth:1,
       borderColor:'#E9E9E9',
       backgroundColor:"#fff",
       color: "#a1a1a1",
       fontFamily:"Proxima Nova",
-
-      // height: 55,
       borderRadius: 3,
-      
       flexDirection: "row",
       justifyContent: "space-between",
       alignItems: "center",
@@ -27,15 +25,16 @@ export const Needs = StyleSheet.create({
       color: "#333",
     },
     dropdownMenu: {
-      marginTop: 5,
+      marginTop: 7,
+      width: '100%',
       borderWidth: 1,
       borderColor: "#ddd",
       borderRadius: 8,
-      marginHorizontal: 16,
       backgroundColor: "#fff",
       overflow: "hidden",
     },
     dropdownItem: {
+      paddingVertical: 20,
       padding: 15,
     },
     dropdownItemText: {
@@ -43,11 +42,6 @@ export const Needs = StyleSheet.create({
     },
     selectedBackground: {
       backgroundColor: "#F5EADC", // Highlight selected item
-    },
-  
-    // Phone Input Styles
-    container: {
-      marginTop: 6,
     },
     phoneContainer: {
       flexDirection: 'row',
@@ -95,7 +89,7 @@ export const Needs = StyleSheet.create({
       borderColor: "#E9E9E9",
       backgroundColor: "#FFF",
       paddingHorizontal: 15,
-      paddingTop: 10,
+      paddingTop: 16,
       fontSize: 14,
            fontFamily:"ProximaNovaR",
       color: "#333",

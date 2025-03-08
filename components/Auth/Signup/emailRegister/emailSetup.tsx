@@ -13,6 +13,7 @@ import TermsAndPolicyComponent from '@/components/TermsAndPolicy/TermsAndPolicy'
 import TextInputField from '@/UI/InputFields/TextInputField';
 import SignUpWithPhone from '../PhoneNumberSignUp/SignUpWithPhone';
 import SignUpWithApple from '../AppleSignUp/SignUpWithApple';
+import HeaderProp from '@/UI/Header/HeaderProp';
 
 
 export default function EmailSetup() {
@@ -51,33 +52,16 @@ export default function EmailSetup() {
     }
   }, [response]);
 
-  const handleGoBack = () => {
-    router.back();
-  };
-
-  const navigateToTerms = () => router.push("/(routes)/Terms");
-
   
     const [showMore, setShowMore] = useState(false);
   
     const handleShowMore = () => {
       setShowMore(prevState => !prevState);
     };
-
-    
-      const handlePhonePush =()=>{
-        router.push("/(routes)/PhoneLogin");
-      }
   return (
     <SafeAreaView edges={['bottom']} style = {{ flex: 1, backgroundColor: "#F9F9F9"  }} >
       <View style = {{ flex: 1 }}>
-        <View style={SignUpStyles.signs}>
-          <TouchableOpacity onPress={handleGoBack}>
-            <Image source={require("../../../../assets/images/leftArrow.png")} style={{ height: 15, width: 30 }} />
-          </TouchableOpacity>
-          <Text style={SignUpStyles.texts}> Sign Up</Text>
-        </View>
-
+        <HeaderProp title="Sign Up" />
         <View style = {{ flex: 1 }} >
           <View style={{ marginTop: 40, marginBottom: 10, paddingHorizontal: 13 }}>
             <Text style={[SignUpStyles.label]}>Email</Text>
@@ -174,7 +158,3 @@ export default function EmailSetup() {
     </SafeAreaView>
   );
 }
- 
-const styles = StyleSheet.create({
-
-});

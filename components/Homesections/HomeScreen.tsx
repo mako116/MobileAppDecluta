@@ -7,7 +7,6 @@ import {
   StatusBar,
   TouchableOpacity,
   ScrollView,
-  Modal,
   RefreshControl,
 } from 'react-native';
 import LocationIcons from '@/screens/icons';
@@ -24,7 +23,7 @@ import LocationModal from '@/screens/ChangeLocation/changelocationScreen';
 import Homes from '@/styles/Homes/Home.styles';
 import FloatingCart from '@/screens/FloatingCart/FloatingCart';
 import { useAuth } from '@/context/AuthContext';
-import Button from '../Button/button';
+// import Button from '../Button/button';
 
 const HomeScreen: React.FC =() => {
   const { getUser, logout } = useAuth();
@@ -111,12 +110,12 @@ const HomeScreen: React.FC =() => {
           <View style={Homes.content}>
             {/* Do not remove for testing purpose */}
 
-            <Button
+            {/* <Button
               title="Log Out"
               onPress={handleLogout}
               backgroundColor="#DEBC8E"
               borderWidth="1"
-            />
+            /> */}
             {/* Complete KYC */}
             <View>
               <ProfileKYc />

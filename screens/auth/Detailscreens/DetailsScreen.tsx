@@ -1,6 +1,5 @@
-import { View, Text, ScrollView, TextInput, TouchableOpacity, ActivityIndicator, BackHandler, StyleSheet, Image } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, ActivityIndicator, BackHandler } from 'react-native';
 import React, { useState, useEffect } from 'react';
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
 import { SignUpStyles } from '../../../styles/Signup/signup.style';
 import { router } from 'expo-router';
@@ -9,6 +8,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import MessageQuestion from '@/assets/svg/message-question';
 import ArrowUpGray from '@/assets/svg/ArrowUpGray';
 import ArrowGrayDown from '@/assets/svg/ArrowGrayDown';
+import TextInputField from '@/UI/InputFields/TextInputField';
+import PhoneNumberInputField from '@/UI/InputFields/PhoneNumberInputField';
 
 export default function DetailScreen() {
   const { register } = useAuth();
@@ -21,13 +22,6 @@ export default function DetailScreen() {
   //   Phone: "",
   //   email: ""
   // });
-  const [focusInput, setFocusInput] = useState({
-    email: false,
-    firstName: false,
-    LastName: false,
-    Gender: false,
-    Phone: false,
-  });
   const [showExitModal, setShowExitModal] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false); // Toggle for custom dropdown
   const [firstName, setFirstName] = useState<string>('')
@@ -35,8 +29,6 @@ export default function DetailScreen() {
   const [gender, setGender] = useState<string>('')
   const [email, setEmail] = useState<string>('')
   const [phoneNumber, setPhoneNumber] = useState('');
-  // const [countryCode, setCountryCode] = useState<CountryCode>('US'); // Default to 'US'
-  const [callingCode, setCallingCode] = useState('234');  // Default calling code for 'US'
 
   // Retrieve email from AsyncStorage when the component mounts
   useEffect(() => {
@@ -55,6 +47,15 @@ export default function DetailScreen() {
     fetchEmail();
   }, []);
 
+  const handleSaveEmail = async (email: string) => {
+    try {
+      await AsyncStorage.setItem('email', email.toLowerCase());
+      console.log('Email saved successfully:', email);
+    } catch (error) {
+      console.error('Error saving email to AsyncStorage:', error);
+    }
+  };
+
   // Check if the required fields are filled
   useEffect(() => {
     setIsButtonEnabled(
@@ -62,7 +63,7 @@ export default function DetailScreen() {
       lastName.length > 0 &&
       gender.length > 0 &&
       email.length > 0 &&
-      phoneNumber.length <= 10
+      phoneNumber.length == 11
     );
   }, [firstName, lastName, gender, email, phoneNumber]);
   
@@ -98,15 +99,25 @@ export default function DetailScreen() {
     setGender(gender);
     setIsDropdownOpen(false); // Close dropdown after selection
   };
-
-  // const NextPage= () =>{
-  //   setButtonSpinner(true);
-  //   setTimeout(() => {
-  //     router.push("/(routes)/OTPEmail")
-  //     setButtonSpinner(false);
-  //     // Navigate to dashboard/home after successful login
-  //   }, 1000);
-  // }
+  // for quick debugging
+  const NextPage = () => {
+    setButtonSpinner(true);
+  
+    // Assuming you have an email state
+    if (!email) {
+      console.error("Email is missing");
+      setButtonSpinner(false);
+      return;
+    }
+  
+    handleSaveEmail(email); // Pass the email argument
+  
+    setTimeout(() => {
+      router.push("/(routes)/OTPEmail");
+      setButtonSpinner(false);
+    }, 1000);
+  };
+  
   const handleSignUp = async () => {
     try {
       setButtonSpinner(true);
@@ -135,140 +146,105 @@ export default function DetailScreen() {
     router.push("/(routes)/need-help")
   }
   return (
-    <ScrollView style={{ flex: 1}} scrollEventThrottle={1}>
-      <View style={{ marginTop: 15, marginHorizontal: 16, }}>
+    <View>
+      <ScrollView style={{ flex: 1}} scrollEventThrottle={1}>
+        <View style={{ marginTop: 15, marginHorizontal: 16, }}>
 
-        {/* First Name Input */}
-        <View>
-          <Text style={SignUpStyles.label}>First name</Text>
-          <View style={[SignUpStyles.row, SignUpStyles.inputContainerStyle]}>
-            <TextInput
-              style={[
-                SignUpStyles.input,
-                focusInput.firstName && { borderColor: "#DEBC8E" },
-                { paddingHorizontal: 40 }
-              ]}
-              keyboardType="default"
-              value={firstName}
+          {/* First Name Input */}
+          <View>
+            <Text style={SignUpStyles.label}>First name</Text>
+            <TextInputField
               placeholder="Enter your legal first name"
-              placeholderTextColor='gray'
-              onFocus={() => setFocusInput({ ...focusInput, firstName: true })}
-              onBlur={() => setFocusInput({ ...focusInput, firstName: false })}
+              value={firstName}
               onChangeText={(value) => setFirstName(value)}
-            />
-          </View>
-        </View>
-
-        {/* Last Name Input */}
-        <View  style={{marginTop:10}}>
-          <Text style={SignUpStyles.label}>Last name</Text>
-          <View style={[SignUpStyles.row, SignUpStyles.inputContainerStyle]}>
-            <TextInput
-              style={[
-                SignUpStyles.input,
-                focusInput.LastName && { borderColor: "#DEBC8E" },
-                { paddingHorizontal: 40 }
-              ]}
               keyboardType="default"
-              value={lastName}
-              placeholder="Enter your legal last name"
               placeholderTextColor='gray'
-              onFocus={() => setFocusInput({ ...focusInput, LastName: true })}
-              onBlur={() => setFocusInput({ ...focusInput, LastName: false })}
+            />
+          </View>
+
+          {/* Last Name Input */}
+          <View  style={{marginTop:10}}>
+            <Text style={SignUpStyles.label}>Last name</Text>
+            <TextInputField
+              placeholder="Enter your legal first name"
+              value={lastName}
               onChangeText={(value) => setLastName(value)}
+              keyboardType="default"
+              placeholderTextColor='gray'
             />
           </View>
-          
-        </View>
 
-        {/* Custom Gender Dropdown */}
-        <View style={SignUpStyles.dropdownContainer}>
-          <Text style={SignUpStyles.label}>Gender</Text>
-          <TouchableOpacity
-            style={SignUpStyles.dropdownButton}
-            onPress={toggleDropdown}
-          >
-            <Text style={SignUpStyles.dropdownButtonText}>
-              {gender || "Select Gender"}
-            </Text>
-            {isDropdownOpen ? <ArrowUpGray/> :  <ArrowGrayDown/>}
-          </TouchableOpacity>
-          {isDropdownOpen && (
-            <View style={SignUpStyles.dropdownMenu}>
-              {["Male", "Female"].map((gender) => (
-                <TouchableOpacity
-                  key={gender}
-                  style={[
-                    SignUpStyles.dropdownItem,
-                    gender === gender && SignUpStyles.selectedBackground // Highlight selected item
-                  ]}
-                  onPress={() => selectGender(gender)}
-                >
-                  <Text style={SignUpStyles.dropdownItemText}>{gender}</Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          )}
-        </View>
+          {/* Custom Gender Dropdown */}
+          <View style={SignUpStyles.dropdownContainer}>
+            <Text style={SignUpStyles.label}>Gender</Text>
+            <TouchableOpacity
+              style={SignUpStyles.dropdownButton}
+              onPress={toggleDropdown}
+            >
+              <Text style={SignUpStyles.dropdownButtonText}>
+                {gender || "Select Gender"}
+              </Text>
+              {isDropdownOpen ? <ArrowUpGray /> : <ArrowGrayDown />}
+            </TouchableOpacity>
 
-        {/* Email Input */}
-        <View>
-          <Text style={SignUpStyles.label}>Email</Text>
-          <View style={[SignUpStyles.row, SignUpStyles.inputContainerStyle]}>
-            <TextInput
-            style={[
-              SignUpStyles.input,
-              focusInput.email && { borderColor: "#DEBC8E" },
-              { paddingHorizontal: 40 }
-            ]}
-            keyboardType="email-address"
-            placeholder="matthew@email.com"
-            value={email}
-            placeholderTextColor='gray'
-            onFocus={() => setFocusInput({ ...focusInput, email: true })}
-            onBlur={() => setFocusInput({ ...focusInput, email: false })}
-            onChangeText={(value) => setEmail(value)} // Update email state
-          />
+            {isDropdownOpen && (
+              <View style={SignUpStyles.dropdownMenu}>
+                {["Male", "Female"].map((option) => (
+                  <TouchableOpacity
+                    key={option}
+                    style={[
+                      SignUpStyles.dropdownItem,
+                      gender === option && SignUpStyles.selectedBackground, // Compare correctly
+                    ]}
+                    onPress={() => selectGender(option)}
+                  >
+                    <Text style={SignUpStyles.dropdownItemText}>{option}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            )}
+
           </View>
-          
-        </View>
 
-        {/* Phone Number Input */}
-        <View style={SignUpStyles.container}>
-          <Text style={SignUpStyles.label}>Phone Number</Text>
-          <View style={SignUpStyles.phoneContainer}>
-            <Image
-              source={require("../../../assets/images/newimages/twemoji_flag-nigeria.png")} 
-              style={SignUpStyles.customLogo}
+          {/* Email Input */}
+          <View style={{marginTop:10}}>
+            <Text style={SignUpStyles.label}>Email</Text>
+            <TextInputField
+              placeholder="Enter your legal first name"
+              value={email}
+              onChangeText={(value) => setEmail(value)}
+              keyboardType="default"
+              placeholderTextColor='gray'
             />
-            <Text style={SignUpStyles.callingCode}>+{callingCode}</Text>
-            <TextInput
-              style={SignUpStyles.phoneInput}
-              keyboardType="numeric"
+          </View>
+
+          {/* Phone Number Input */}
+          <View style={SignUpStyles.container}>
+            <Text style={SignUpStyles.label}>Phone Number</Text>
+            <PhoneNumberInputField
               value={phoneNumber}
               onChangeText={handlePhoneChange}
-              placeholder="Phone number"
             />
           </View>
-        </View>
 
-        {/* Referral */}
-        <View style={{marginTop:15,marginBottom:40}}>
-          <Text style={SignUpStyles.label}>Who Referred You?</Text>
-          <View style={[SignUpStyles.row, SignUpStyles.inputContainerStyle]}>
-            <TextInput
-            style={[SignUpStyles.input]}
-            keyboardType="default"
-            placeholder="Enter referral code"
-            placeholderTextColor='gray'
-          />
+          {/* Referral */}
+          <View style={{marginTop:10,marginBottom:40}}>
+            <Text style={SignUpStyles.label}>Who Referred You?</Text>
+            <TextInputField
+              placeholder="Enter referral code"
+              keyboardType="default"
+              placeholderTextColor='gray'
+            />
+            
           </View>
-          
         </View>
-        
+      </ScrollView>
+      <View style={{
+        marginHorizontal: 16,
+      }}>
         {/* Next Button */}
         <TouchableOpacity
-          onPress={handleSignUp}
+          onPress={NextPage}
           style={[
             
             SignUpStyles.loginButtons,
@@ -291,7 +267,7 @@ export default function DetailScreen() {
           </TouchableOpacity>
         </View>
       </View>
-    </ScrollView>
+    </View>
       
    );
 }

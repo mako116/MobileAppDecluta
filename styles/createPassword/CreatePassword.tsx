@@ -109,9 +109,9 @@ export const Creating = StyleSheet.create({
       fontFamily:"Proxima Nova",
     },
     buttonText: {
-       color: "#212121",
+      color: "#212121",
       fontSize: 16,
-      fontWeight: "700",
+      fontWeight: "400",
       fontFamily:"Proxima Nova",
     },
     section: {

@@ -2,7 +2,7 @@ import BackButton from '@/assets/images/kyc/LeftArrow';
 import Otpheademail from '@/assets/svg/otpheademail';
 import OTPMainEmail from '@/screens/auth/OTPScreen/OTPEmail';
 import PhoneOtpStyles from '@/styles/Login/phoneOtpStyles';
-import { Entypo, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Entypo, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
 import React, { useEffect, useState } from 'react';
@@ -26,20 +26,20 @@ export default function OTPPageEmail() {
     fetchEmail();
   }, []);
 
+  const handleGoBack = () => {
+    router.back();
+  };
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" ,paddingTop:50}}>
       <View>
         {/* Header Section with Logo */}
         <View style={styles.signs}>
-          <View style= { styles.row } >
-            <View style = {[ styles.row, styles.passedStageIcon ]} >
-              <Entypo name="check" size={8} color="white" />
-            </View>
-            <View style = { styles.divider } ></View>
-            <View style = {[ styles.row, styles.passedStageIcon ]} >
-              <Entypo name="check" size={8} color="white" />
-            </View>
-            <View style = { styles.divider } ></View>
+          <TouchableOpacity onPress={handleGoBack}>
+            <Feather name="arrow-left" size={24} color="black" />
+          </TouchableOpacity>
+          
+          <View style= { [styles.row, { marginRight: 20 }] } >
             <View style = {[ styles.row, styles.passedStageIcon ]} >
               <Entypo name="check" size={8} color="white" />
             </View>
@@ -47,6 +47,18 @@ export default function OTPPageEmail() {
             <View style = {[ styles.row, styles.currentStageIcon ]} >
               <Entypo name="check" size={8} color="white" />
             </View>
+            <View style = { styles.divider } ></View>
+            <View style = {[ styles.row, styles.nextStageIcon ]} >
+              <Entypo name="check" size={8} color="white" />
+            </View>
+            <View style = { styles.divider } ></View>
+            <View style = {[ styles.row, styles.nextStageIcon ]} >
+              <Entypo name="check" size={8} color="white" />
+            </View>
+          </View>
+
+          <View>
+
           </View>
         </View>
         
@@ -58,7 +70,7 @@ export default function OTPPageEmail() {
         <View style={styles.instructions}>
           <Text style={styles.title}>Verify Your Email Address</Text>
           <Text style={styles.subtitle}>
-            We sent a 4-digit code to{" "}
+            We sent a 4-digit code to {" "}
             <Text style={styles.phoneNumber}>{storedEmail}</Text>. Please enter it below to verify your account.
           </Text>
         </View>
@@ -91,12 +103,13 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   signs: {
-    paddingTop: 70,
-    paddingBottom: 30,
+    paddingTop: 20,
+    paddingBottom: 15,
+    marginHorizontal: 10,
     display: "flex",
     flexDirection: 'row',
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-between",
     backgroundColor: "#fff",
   },
   logo: {
@@ -122,7 +135,7 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     fontSize: 14,
     lineHeight: 19.6,
-    fontFamily:"Proxima Nova",
+    fontFamily:"ProximaNova",
     marginRight: 10,
   },
   phoneNumber: {
@@ -132,19 +145,25 @@ const styles = StyleSheet.create({
   },
   divider: {
     width: 35,
-    height: 2,
+    height: 1,
     backgroundColor: "black",
-    marginHorizontal: 7
+    marginHorizontal: 2
   },
   currentStageIcon: {
-    padding: 4,
+    padding: 3,
     borderRadius: 20,
     backgroundColor: "#DEBC8E"
   },
   passedStageIcon: {
-    padding: 4,
+    padding: 3,
     borderRadius: 20,
     backgroundColor: "black"
+  },
+  nextStageIcon: {
+    padding: 1.5,
+    borderRadius: 20,
+    borderWidth: 2,
+    borderColor: "#A4A4A4"
   },
   otpSection: {
      marginBottom: 140,

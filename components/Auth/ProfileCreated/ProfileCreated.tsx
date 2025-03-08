@@ -2,13 +2,22 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { router } from 'expo-router';
+import { enableBiometricAuth } from '../Actions/hook/useBiometricAuth';
 
 export default function ProfileCreationFlow() {
   const [step, setStep] = useState(1);
+  const [isEnabling, setIsEnabling] = useState(false);
 
   const nextStep = () => setStep((prev) => prev + 1);
-  const skipStep = () => setStep(3); // Skip to final step
+  const skipStep = () => router.push('/(routes)/welcomscreen'); 
   const goToHome = () => router.push('/(routes)/welcomscreen'); // Adjust 'Home' to your home route name
+
+  const handleEnableBiometric = async () => {
+    setIsEnabling(true);
+    const success = await enableBiometricAuth();
+    if (success) nextStep(); // Proceed only if biometric was enabled
+    setIsEnabling(false);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -43,7 +52,7 @@ export default function ProfileCreationFlow() {
             <TouchableOpacity style={styles.secondaryButton} onPress={skipStep}>
               <Text style={[styles.secondaryButtonText]}>Not Now</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.secondaryFilledButton]} onPress={nextStep}>
+            <TouchableOpacity style={[styles.secondaryFilledButton]} onPress={handleEnableBiometric}>
               <Text style={[styles.buttonText]}>Enable</Text>
             </TouchableOpacity>
           </View>
@@ -51,16 +60,18 @@ export default function ProfileCreationFlow() {
       )}
 
       {step === 3 && (
-        <View style={{}}>
-          <Image
-            source={require('../../../assets/images/sucesshand.png')}
-            style={{alignItems:"center", margin:'auto'}}
-          />
-          <Text style={styles.title}>Biometric Setup Successful</Text>
-          <View style={{marginTop: "80%",}}>
-          <TouchableOpacity style={[styles.button,{ paddingHorizontal:20 }]} onPress={goToHome}>
-            <Text style={[styles.buttonText,{}]}>Continue</Text>
-          </TouchableOpacity>
+        <View style={{ flex: 1, paddingHorizontal: 20,}}>
+          <View style={{ flex: 1, alignItems: 'center'}}>
+            <Image
+              source={require('../../../assets/images/sucesshand.png')}
+            />
+            <Text style={styles.title}>Biometric Successful</Text>
+          </View>
+          
+          <View>
+            <TouchableOpacity style={[styles.button,{ paddingHorizontal:20 }]} onPress={goToHome}>
+              <Text style={[styles.buttonText,{}]}>Continue</Text>
+            </TouchableOpacity>
           </View>
         </View>
       )}

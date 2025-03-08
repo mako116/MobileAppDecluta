@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingVertical: 16,
         paddingHorizontal: 5,
-        fontSize: 16,
+        fontSize: 14,
         fontFamily: "Proxima Nova",
     },
     eyeIcon: {

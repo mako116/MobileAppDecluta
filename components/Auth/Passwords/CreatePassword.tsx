@@ -1,4 +1,4 @@
-import { Entypo, Feather, Ionicons } from '@expo/vector-icons';
+import { AntDesign, Entypo, Feather, Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import {
@@ -15,6 +15,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { SignUpStyles } from '@/styles/Signup/signup.style';
 import { useAuth } from '@/context/AuthContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import TextInputField from '@/UI/InputFields/TextInputField';
 
 interface RequirementProps {
   label: string;
@@ -38,7 +39,7 @@ function RequirementItem({ label, isValid }: RequirementProps) {
           lineHeight: 19.6,
           width: 230,
           alignItems: 'center',
-          fontFamily: "Proxima Nova",
+          fontFamily: "ProximaNova",
         }}
       >
         {label}
@@ -80,7 +81,7 @@ export default function CreatePassword(): JSX.Element {
     const fetchEmail = async () => {
       try {
         const storedUserId = await AsyncStorage.getItem('userId');
-        console.log('Stored email:', storedUserId);
+        console.log('Stored User Id:', storedUserId);
       } catch (error) {
         console.error('Error fetching email from AsyncStorage:', error);
       }
@@ -108,20 +109,47 @@ export default function CreatePassword(): JSX.Element {
       setButtonSpinner(false);
     }
   };
+  const handleDemoCreatePassword = async () => {
+    try {
+      setButtonSpinner(true);
+  
+      if (!allRequirementsMet) {
+        Alert.alert(
+          'Error',
+          'Password does not meet the required criteria or passwords do not match'
+        );
+        setButtonSpinner(false);
+        return;
+      }
+  
+      console.log("passwords", password, confirmPassword);
+  
+      // Simulate successful password creation without API call
+      setTimeout(() => {
+        router.push('/(routes)/Profile-created'); // Navigate to success screen
+      }, 1000); // Simulate delay
+    } catch (err) {
+      console.error('Error during password creation', err);
+    } finally {
+      setButtonSpinner(false);
+    }
+  };
+  
 
   const navigateToTerms = () => router.push('/(routes)/Terms');
   const navigateToPrivacyPolicy = () => router.push('/(routes)/privacyPolicy');
 
   return (
-    <SafeAreaView edges={['bottom']}>
+    <SafeAreaView edges={['bottom']} style={{ flex: 1 }}>
       <View 
-      style={[
-        SignUpStyles.signs, 
-        {
-          justifyContent: "center", 
-          paddingTop: 80 
-        }
-      ]}>
+        style={[
+          SignUpStyles.signs, 
+          {
+            justifyContent: "center", 
+            paddingTop: 80 
+          }
+        ]}
+      >
         <View style= { SignUpStyles.row } >
           <View style = {[ SignUpStyles.row, SignUpStyles.passedStageIcon ]} >
             <Entypo name="check" size={8} color="white" />
@@ -156,55 +184,28 @@ export default function CreatePassword(): JSX.Element {
         </Text>
       </View>
 
-      <View style={Creating.container}>
-        <Text style={{ marginVertical: 5 ,marginLeft:2, fontFamily:"Proxima Nova"}}>Enter Password</Text>
-        <View
-          style={[
-            Creating.passwordContainer,
-            password ? Creating.focusBorder : undefined, // Avoid using an empty string
-          ]}
-        >
-          <TextInput
-            style={Creating.input}
-            secureTextEntry={!showPassword}
-            value={password}
-            onChangeText={handlePasswordChange}
-            placeholder="Enter password"
-          />
-          <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-            <Feather
-              name={showPassword ? 'eye' : 'eye-off'}
-              size={20}
-              color="gray"
-            />
-          </TouchableOpacity>
-        </View>
+      <View style={[Creating.container, { flex: 1 }]}>
+        <Text style={{ marginVertical: 5 ,marginLeft:2, fontFamily:"ProximaNova"}}>Enter Password</Text>
+        <TextInputField
+          placeholder="Enter password"
+          value={password}
+          onChangeText={handlePasswordChange}
+          keyboardType="default"
+          maxLength={11}
+          secureTextEntry={true}
+          icon={<AntDesign name="lock" size={20} color="gray" />}
+        />
 
-        <Text style={{ marginTop: 15 ,marginLeft:2, fontFamily:"Proxima Nova"}}>Confirm Password</Text>
-        <View
-          style={[
-            Creating.passwordContainer,
-            confirmPassword ? Creating.focusBorder : undefined, // Avoid using an empty string
-          ]}
-        >
-          <TextInput
-            style={Creating.input}
-            secureTextEntry={!showConfirmPassword}
-            value={confirmPassword}
-            onChangeText={setConfirmPassword}
-            placeholder="Confirm password"
-          />
-          <TouchableOpacity
-            onPress={() => setShowConfirmPassword(!showConfirmPassword)}
-          >
-            <Feather
-              name={showConfirmPassword ? 'eye' : 'eye-off'}
-              size={20}
-              color="gray"
-            />
-          </TouchableOpacity>
-        </View>
-
+        <Text style={{ marginTop: 15 ,marginLeft:2, fontFamily:"ProximaNova"}}>Confirm Password</Text>
+        <TextInputField
+          placeholder="Confirm password"
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+          keyboardType="default"
+          maxLength={11}
+          secureTextEntry={true}
+          icon={<AntDesign name="lock" size={20} color="gray" />}
+        />
         <Text
           style={{
             marginTop: 10,
@@ -240,14 +241,16 @@ export default function CreatePassword(): JSX.Element {
             isValid={requirements.specialChar}
           />
         </View>
+      </View>
 
+      <View style={{ marginHorizontal: 16 }} >
         <View>
           <TouchableOpacity
             style={[
               Creating.createAccountButton,
               (!allRequirementsMet || buttonSpinner) && Creating.disabledButton,
             ]}
-            onPress={handleCreatePassword}
+            onPress={handleDemoCreatePassword}
             disabled={!allRequirementsMet || buttonSpinner} // Disable when processing
             >
             {buttonSpinner ? (
@@ -259,12 +262,12 @@ export default function CreatePassword(): JSX.Element {
                   (!allRequirementsMet || buttonSpinner) && Creating.disabledButton,
                 ]}
               >
-                Create Account
+                Create Profile
               </Text>
             )}
           </TouchableOpacity>
         </View>
-          
+            
         <View style={Creating.footerTextContainer}>
           <Text style={Creating.footerText}>
             By clicking create profile, you accept our

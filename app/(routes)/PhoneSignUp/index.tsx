@@ -4,8 +4,6 @@ import PhoneSignUpScreen from '@/screens/auth/SignUp/PhoneSignUp'
 
 export default function PhoneNumberSignUpScreen() {
   return (
-    <View>
-      <PhoneSignUpScreen />
-    </View>
+    <PhoneSignUpScreen />
   )
 }

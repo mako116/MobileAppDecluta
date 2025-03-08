@@ -90,19 +90,19 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontSize: 19,
     lineHeight: 26.6,
-    fontFamily:"Helvetica Neue"
+    fontFamily:"HelveticaNeue"
   },
   subtitle: {
     color: "#212121",
     fontWeight: "400",
     fontSize: 14,
     lineHeight: 19.6,
-    fontFamily:"Proxima Nova",
+    fontFamily:"ProximaNova",
     marginRight: 10,
   },
   phoneNumber: {
     fontWeight: "700",
-    fontFamily:"Helvetica Neue"
+    fontFamily:"HelveticaNeue"
 
   },
   divider: {

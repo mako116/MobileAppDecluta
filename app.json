@@ -15,6 +15,7 @@
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
+        "NSFaceIDUsageDescription": "Allow biometric authentication for faster sign-in.",
         "CFBundleURLTypes": [
           {
             "CFBundleURLSchemes": [

@@ -54,7 +54,45 @@ export default function OTPMainEmail() {
     return otp.every(digit => digit !== null && digit !== undefined);
   };
 
-  const handleSignIn = async (otp: string[]) => {
+  const handleDemoVerifyOtp = async (otp: string[]) => {
+    if (isVerifying || hasNavigated.current) return; // Prevent duplicate execution
+  
+    const numericOtp = otp.map(digit => Number(digit));
+  
+    if (!validateOtp(numericOtp)) {
+      setError('Please enter a valid OTP');
+      return;
+    }
+  
+    try {
+      setIsLoading(true);
+      setIsVerifying(true);
+  
+      const convertOtp = numericOtp.join('');
+      console.log('Converted OTP:', convertOtp);
+  
+      // Simulate a successful OTP verification without API call
+      setTimeout(() => {
+        if (!hasNavigated.current) {
+          hasNavigated.current = true; // Prevent further navigation
+          setSuccessMessage('Email address verification successful.');
+          setOtpVerified(true);
+          router.push('/(routes)/CreatePassword'); // Navigate
+        }
+      }, 1000); // Simulate network delay
+    } catch (error) {
+      setError('Invalid Code');
+      setOtpVerified(false);
+      setSuccessMessage('');
+    } finally {
+      setIsLoading(false);
+      setIsVerifying(false);
+      setError('');
+    }
+  };
+  
+
+  const handleVerifyOtp = async (otp: string[]) => {
     if (isVerifying || hasNavigated.current) return; // Prevent duplicate execution
   
     const numericOtp = otp.map(digit => Number(digit));
@@ -102,9 +140,9 @@ export default function OTPMainEmail() {
   
     // Debounce handleSignIn to prevent multiple calls
     if (newOtp.every(digit => digit !== '')) {
-      setTimeout(() => handleSignIn(newOtp), 300); // Small delay to ensure only one call
+      setTimeout(() => handleDemoVerifyOtp(newOtp), 300); // Small delay to ensure only one call
     }
-  }, [otp, setOtp, handleSignIn, inputRefs]);
+  }, [otp, setOtp, handleDemoVerifyOtp, inputRefs]);
   
   
 

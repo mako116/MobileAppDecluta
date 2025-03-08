@@ -290,7 +290,6 @@ export const SignUpStyles = StyleSheet.create({
       marginVertical: 10,
     },
     dropdownButton: {
-      height: 55,
       borderRadius: 3,
       borderWidth: 1,
       borderColor: "#E9E9E9",
@@ -302,7 +301,7 @@ export const SignUpStyles = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      padding: 10,
+      padding: 16,
       marginTop: 8,
     },
     dropdownButtonText: {
@@ -316,16 +315,17 @@ export const SignUpStyles = StyleSheet.create({
        resizeMode: "contain",
      },
     dropdownMenu: {
+      width: '100%',
       marginTop: 5,
       borderWidth: 1,
       borderColor: '#ddd',
-      borderRadius: 8,
-      marginHorizontal: 16,
+      borderRadius: 2,
       backgroundColor: '#fff',
       overflow: 'hidden',
     },
     dropdownItem: {
       padding: 10,
+      paddingVertical: 20
     },
     dropdownItemText: {
       color: '#333',
@@ -335,7 +335,7 @@ export const SignUpStyles = StyleSheet.create({
       backgroundColor: '#F5EADC', // Highlight background color for selected item
     },
     container: {
-      marginTop: 16,
+      marginTop: 10,
     },
     phoneContainer: {
        flexDirection: 'row',

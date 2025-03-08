@@ -264,7 +264,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         return;
       }
 
-      const response = await axios.put(`${EXPO_PUBLIC_API_KEY}/api/v1/auth/password/create/${userId}`, { password, confirmPassword });
+      const response = await axios.patch(`${EXPO_PUBLIC_API_KEY}/api/v1/auth/password/create/${userId}`, { password, confirmPassword });
       console.log('setPassword response', response);
 
       if (response.data && response.data.message) {

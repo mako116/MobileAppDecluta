@@ -17,31 +17,38 @@ export default function SignUp() {
  
 
   return (
-    <SafeAreaView edges={['bottom']}>
-      <ScrollView scrollEventThrottle={16} >
-        <View>
-          <View style={[ styles.rowJustified]}>
-            <TouchableOpacity onPress={handleGoBack}>
-              <Feather name="arrow-left" size={24} color="black" />
-            </TouchableOpacity>
+    <SafeAreaView edges={['bottom']} style = {{flex: 1, backgroundColor: "#F9F9F9"  }}>
+      <View style={{ backgroundColor: 'white' }} >
+        <View style={[ styles.rowJustified, { marginRight: 20 }]}>
+          <TouchableOpacity onPress={handleGoBack}>
+            <Feather name="arrow-left" size={24} color="black" />
+          </TouchableOpacity>
 
-            <View style= { styles.row } >
-              <View style = {[ styles.row, styles.passedStageIcon ]} >
-                <Entypo name="check" size={8} color="white" />
-              </View>
-              <View style = { styles.divider } ></View>
-              <View style = {[ styles.row, styles.currentStageIcon ]} >
-                <Entypo name="check" size={8} color="white" />
-              </View>
+          <View style= { styles.row } >
+            <View style = {[ styles.row, styles.currentStageIcon ]} >
+              <Entypo name="check" size={8} color="white" />
             </View>
-
-            {/* leave empty */}
-            <View>
+            <View style = {[ styles.divider, { backgroundColor: '#DEBC8E' } ]} />
+            <View style = {[ styles.row, styles.nextStageIcon ]} >
+              <Entypo name="check" size={8} color="white" />
             </View>
-
+            <View style = {[ styles.divider, { backgroundColor: '#A4A4A4' } ]} />
+            <View style = {[ styles.row, styles.nextStageIcon ]} >
+              <Entypo name="check" size={8} color="white" />
+            </View>
+            <View style = {[ styles.divider, { backgroundColor: '#A4A4A4' } ]} />
+            <View style = {[ styles.row, styles.nextStageIcon ]} >
+              <Entypo name="check" size={8} color="white" />
+            </View>
           </View>
+
+          {/* leave empty */}
+          <View>
+          </View>
+
         </View>
-        
+      </View>
+      <ScrollView scrollEventThrottle={16} >
         <View style={styles.section}>
           <Text style={{color:"#212121", fontWeight:"700", fontSize:23, lineHeight:32.2, fontFamily:"Helvetica Neue"}}>Tell Us About yourself</Text>
         </View>
@@ -70,9 +77,8 @@ const styles = StyleSheet.create({
   },
   divider: {
     width: 35,
-    height: 2,
-    backgroundColor: "black",
-    marginHorizontal: 7
+    height: 1,
+    marginHorizontal: 3
   },
   currentStageIcon: {
     padding: 4,
@@ -85,7 +91,10 @@ const styles = StyleSheet.create({
     backgroundColor: "black"
   },
   nextStageIcon: {
-
+    padding: 2.5,
+    borderRadius: 20,
+    borderWidth: 2,
+    borderColor: "#A4A4A4"
   },
   signs: {
     paddingHorizontal: 12,

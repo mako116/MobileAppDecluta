@@ -6,6 +6,8 @@ import { SignUpStyles } from '@/styles/Signup/signup.style';
 import CountryPicker, { Country, CountryCode } from 'react-native-country-picker-modal';
 import { Entypo, Ionicons } from '@expo/vector-icons';
 import { Needs } from '@/styles/needhelp/needhelps.styles';
+import TextInputField from '@/UI/InputFields/TextInputField';
+import PhoneNumberInputField from '@/UI/InputFields/PhoneNumberInputField';
 
 export default function NeedHelpScreen() {
     const [buttonSpinner, setButtonSpinner] = useState(false);
@@ -99,45 +101,21 @@ export default function NeedHelpScreen() {
 
     >
         {/* Email Input */}
-        <View style={{paddingVertical:20}}>
+        <View style={{paddingVertical: 10, marginTop: 20}}>
           <Text style={SignUpStyles.label}>Email</Text>
-          <TextInput
-            style={[
-              SignUpStyles.TextInput,
-              focusInput.email && { borderColor: "#DEBC8E" },
-              { paddingHorizontal: 40 }
-            ]}
-            keyboardType="email-address"
-            value={userInfo.email}
+          <TextInputField
             placeholder="matthewc@email.com"
-            onFocus={() => setFocusInput({ ...focusInput, email: true })}
-            onBlur={() => setFocusInput({ ...focusInput, email: false })}
+            value={userInfo.email}
             onChangeText={(value) => setUserInfo({ ...userInfo, email: value })}
+            keyboardType="default"
+            placeholderTextColor='gray'
           />
         </View>
 
-         {/* Phone Number Input */}
-         <View style={Needs.container}>
+        {/* Phone Number Input */}
+        <View>
           <Text style={SignUpStyles.label}>Phone Number (Optional)</Text>
-          <View style={Needs.phoneContainer}>
-            <CountryPicker
-              countryCode={countryCode}
-              withFilter
-              withFlag
-              withCallingCode
-              withCountryNameButton={false}
-              onSelect={onSelectCountry}
-              containerButtonStyle={Needs.flagButton}
-            />
-            <Text style={Needs.callingCode}>+{callingCode}</Text>
-            <TextInput
-              style={Needs.phoneInput}
-              keyboardType="numeric"
-              value={phoneNumber}
-              onChangeText={handlePhoneChange}
-              placeholder="Phone number"
-            />
-          </View>
+          <PhoneNumberInputField />
         </View>
 
         {/* Custom Issues Dropdown */}
@@ -148,7 +126,7 @@ export default function NeedHelpScreen() {
             onPress={toggleDropdown}
           >
             <Text style={Needs.dropdownButtonText}>
-              {userInfo.issues || ""}
+              {userInfo.issues || "I can’t sign up"}
             </Text>
             <Ionicons
               name={isDropdownOpen ? 'chevron-up' : 'chevron-down'}
@@ -157,54 +135,55 @@ export default function NeedHelpScreen() {
             />
           </TouchableOpacity>
           {isDropdownOpen && (
-  <View style={Needs.dropdownMenu}>
-    {[
-      "I can’t sign up",
-      "I can’t log in",
-      "I can’t reset my password",
-      "I’m not getting an OTP",
-    ].map((issue) => (
-      <TouchableOpacity
-        key={issue}
-        style={[
-          Needs.dropdownItem,
-          userInfo.issues === issue && Needs.selectedBackground, // Highlight selected item
-        ]}
-        onPress={() => selectIssues(issue)}
-      >
-        <Text style={Needs.dropdownItemText}>{issue}</Text>
-      </TouchableOpacity>
-    ))}
-  </View>
-)}
+            <View style={Needs.dropdownMenu}>
+              {[
+                "I can’t sign up",
+                "I can’t log in",
+                "I can’t reset my password",
+                "I’m not getting an OTP",
+              ].map((issue) => (
+                <TouchableOpacity
+                  key={issue}
+                  style={[
+                    Needs.dropdownItem,
+                    userInfo.issues === issue && Needs.selectedBackground, // Highlight selected item
+                  ]}
+                  onPress={() => selectIssues(issue)}
+                >
+                  <Text style={Needs.dropdownItemText}>{issue}</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          )}
         </View>
 
         {/* Upload Photo */}
         <View style={{paddingHorizontal:0}}>
-            <Text style={{fontWeight:"400", fontSize:14,lineHeight:19.6,color:"#212121",     fontFamily:"ProximaNovaR"}}>Upload a photo (Optional)</Text>
-            <Text style={{color:"#A4A4A4", fontWeight:"400",fontStyle:"italic", fontSize:13, lineHeight:18.2}}>not more than 3</Text>
+          <Text style={{fontWeight:"400", fontSize:14,lineHeight:19.6,color:"#212121",     fontFamily:"ProximaNovaR"}}>Upload a photo (Optional)</Text>
+          <Text style={{color:"#A4A4A4", fontWeight:"400",fontStyle:"italic", fontSize:13, lineHeight:18.2}}>not more than 3</Text>
 
-            <View style={{backgroundColor:' #fff', paddingVertical:15}}>
-                <TouchableOpacity style={{ backgroundColor: "white",borderRadius:5, alignItems:"center",flexDirection:"column", width:70,height:70, borderWidth:1, borderColor:"#E9E9E9",justifyContent:"center", gap:5}}>
-                <Entypo name="plus" size={15} color="black" />               
-                <Text style={{textAlign: "center",fontWeight:"400", fontSize:12,lineHeight:16.8,     fontFamily:"ProximaNovaR"}}>Add file</Text>
-                </TouchableOpacity>
-            </View>
+          <View style={{backgroundColor:' #fff', paddingVertical:15}}>
+              <TouchableOpacity style={{ backgroundColor: "white",borderRadius:5, alignItems:"center",flexDirection:"column", width:70,height:70, borderWidth:1, borderColor:"#E9E9E9",justifyContent:"center", gap:5}}>
+              <Entypo name="plus" size={15} color="black" />               
+              <Text style={{textAlign: "center",fontWeight:"400", fontSize:12,lineHeight:16.8,     fontFamily:"ProximaNovaR"}}>Add file</Text>
+              </TouchableOpacity>
+          </View>
         </View>
 
         {/* Description */}
         <View style={{paddingHorizontal:0}}>
-  <Text style={[Needs.label,{alignItems:"center", fontWeight:"400",fontSize:14,lineHeight:19.6}]}>Description <Text style={{color:"#E42527"}}>*</Text></Text>
-  <TextInput
-    style={[Needs.textarea, focusInput.description && Needs.inputFocused]}
-    multiline
-    numberOfLines={5}
-    value={userInfo.description}
-    placeholder="Kindly explain the issue you’re facing here. Please be specific so that we can help you as soon as possible. Kindly refrain from using swear words."
-    onFocus={() => setFocusInput({ ...focusInput, description: true })}
-    onBlur={() => setFocusInput({ ...focusInput, description: false })}
-    onChangeText={(value) => setUserInfo({ ...userInfo, description: value })}
-  />
+          <Text style={[Needs.label,{alignItems:"center", fontWeight:"400",fontSize:14,lineHeight:19.6}]}>Description <Text style={{color:"#E42527"}}>*</Text></Text>
+          <TextInput
+            style={[Needs.textarea, focusInput.description && Needs.inputFocused]}
+            multiline
+            numberOfLines={5}
+            value={userInfo.description}
+            placeholder="Kindly explain the issue you’re facing here. Please be specific so that we can help you as soon as possible. Kindly refrain from using swear words."
+            onFocus={() => setFocusInput({ ...focusInput, description: true })}
+            onBlur={() => setFocusInput({ ...focusInput, description: false })}
+            onChangeText={(value) => setUserInfo({ ...userInfo, description: value })}
+            placeholderTextColor={'gray'}
+          />
         </View>
 
           {/* Next Button */}
