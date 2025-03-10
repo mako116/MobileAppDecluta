@@ -22,16 +22,17 @@ export default function ProfileCreationFlow() {
   return (
     <SafeAreaView style={styles.container}>
       {step === 1 && (
-        <View style={[styles.box,{height:"100%", flexDirection:"column", justifyContent:"space-between", alignItems:"center"}]}>
-        <View style={{marginVertical:"20%", justifyContent:"center", alignItems:"center", paddingHorizontal:"20%"}}>
-        <Image
-      source={require('../../../assets/images/createdprofile.png')}
-      style={{}}
-      />
-          <Text style={styles.title}>Profile Created</Text>
-          <Text style={{textAlign:"center",fontFamily:"Proxima Nova",marginTop:-10,lineHeight:19.6, fontSize:14,fontWeight:'400', letterSpacing:0.1}}>Congrats your profile has been created.</Text>
-        </View>
-          <TouchableOpacity style={[styles.button ]} onPress={nextStep}>
+        <View style={{ flex: 1, paddingHorizontal: 20,}}>
+          <View style={{ flex: 1, alignItems: 'center', marginTop: 70 }}>
+            <Image
+              source={require('../../../assets/images/createdprofile.png')}
+              style={{}}
+            />
+            <Text style={styles.title}>Profile Created</Text>
+            <Text style={{textAlign:"center",fontFamily:"Proxima Nova",marginTop:-10,lineHeight:19.6, fontSize:14,fontWeight:'400', letterSpacing:0.1}}>Congrats your profile has been created.</Text>
+          </View>
+
+          <TouchableOpacity style={[styles.button, { marginBottom: 20 } ]} onPress={nextStep}>
             <Text style={styles.buttonText}>Continue</Text>
           </TouchableOpacity>
         </View>
@@ -39,7 +40,7 @@ export default function ProfileCreationFlow() {
 
       {step === 2 && (
         <View style={{ flex: 1, paddingHorizontal: 20,}}>
-          <View style={{ flex: 1, alignItems: 'center' }}>
+          <View style={{ flex: 1, alignItems: 'center', marginTop: 70 }}>
             <Image
               source={require('../../../assets/images/bio.png')}
               style={{}}
@@ -48,7 +49,7 @@ export default function ProfileCreationFlow() {
             <Text style={{fontWeight:"400", textAlign:"center",lineHeight:19.6, fontSize:14, fontFamily:"Proxima Nova"}}>Make your login & transaction faster and more secure with biometrics enabled</Text>
           </View>
 
-          <View style={{flexDirection: "row", alignItems:"center", justifyContent:"space-between" }}>
+          <View style={{flexDirection: "row", alignItems:"center", justifyContent:"space-between", marginBottom: 20, }}>
             <TouchableOpacity style={styles.secondaryButton} onPress={skipStep}>
               <Text style={[styles.secondaryButtonText]}>Not Now</Text>
             </TouchableOpacity>
@@ -61,7 +62,7 @@ export default function ProfileCreationFlow() {
 
       {step === 3 && (
         <View style={{ flex: 1, paddingHorizontal: 20,}}>
-          <View style={{ flex: 1, alignItems: 'center'}}>
+          <View style={{ flex: 1, alignItems: 'center', marginTop: 70}}>
             <Image
               source={require('../../../assets/images/sucesshand.png')}
             />
@@ -69,7 +70,7 @@ export default function ProfileCreationFlow() {
           </View>
           
           <View>
-            <TouchableOpacity style={[styles.button,{ paddingHorizontal:20 }]} onPress={goToHome}>
+            <TouchableOpacity style={[styles.button,{ paddingHorizontal:20, marginBottom: 20, }]} onPress={goToHome}>
               <Text style={[styles.buttonText,{}]}>Continue</Text>
             </TouchableOpacity>
           </View>
@@ -81,13 +82,9 @@ export default function ProfileCreationFlow() {
 
 const styles = StyleSheet.create({
   container: {
-   paddingHorizontal:20,
     flex: 1,
-    marginTop:100,
     justifyContent: 'center',
-    // alignItems: 'center',
     backgroundColor: '#F5F5F5',
-    // margin:"auto",
   },
   
   box: { 

@@ -1,11 +1,11 @@
 import { Linking, View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import React from 'react';
 import { FontAwesome6, MaterialIcons } from '@expo/vector-icons';
-import { SignUpStyles } from '@/styles/Signup/signup.style';
 import { router } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import CloseSquare from '@/assets/svg/closeSquare';
 import HomeIndicator from '@/assets/svg/homeIndicator';
+import CloseSquare from '@/assets/svg/closeSquare';
+import { SignUpStyles } from '@/styles/Signup/signup.style';
 
 export default function SuccessModalScreen() {
   const handleEmailPress = () => {
