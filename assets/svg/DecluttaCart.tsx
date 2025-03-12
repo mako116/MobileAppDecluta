@@ -1,7 +1,7 @@
 import React from 'react';
 import Svg, { Rect, Circle, Path } from 'react-native-svg';
 
-const Cart = () => {
+const DecluttaCart = () => {
   return (
     <Svg width="67" height="66" viewBox="0 0 67 66" fill="none">
       <Rect x="0.5" width="66" height="66" rx="33" fill="#F5EADC" />
@@ -22,4 +22,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default DecluttaCart;

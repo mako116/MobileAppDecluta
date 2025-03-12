@@ -5,11 +5,13 @@ export default function Button({
     title,
     backgroundColor,
     borderWidth,
+    borderColor,
     onPress,
 }: {
     title: string;
     backgroundColor: string;
-    borderWidth: string;
+    borderWidth: number;
+    borderColor? :string
     onPress: () => void;
 }) {
     const { width } = Dimensions.get("window");
@@ -18,17 +20,15 @@ export default function Button({
         <TouchableOpacity
             style={[
                 {
-                    width:"100%",
-                    paddingHorizontal: "10%",
-                    height: 50,
+                    paddingHorizontal: 20,
+                    padding: 20,
                     alignItems: "center",
                     flexDirection: "row",
                     justifyContent: "center",
-                    margin: "auto",
                     borderRadius: 6,
                     backgroundColor: backgroundColor, // Set background color dynamically
                     borderWidth: borderWidth ? 1 : 0, // Add border width if specified
-                    borderColor: borderWidth ? '#E9E9E9' : 'transparent', // Light border if borderWidth is set
+                    borderColor: borderColor ? '#E9E9E9' : 'black', // Light border if borderWidth is set
                 }
             ]}
             onPress={onPress}

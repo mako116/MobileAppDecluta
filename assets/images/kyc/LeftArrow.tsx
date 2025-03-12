@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
     button: {
         // padding: 10,
         paddingVertical:10,
-        paddingRight:10,
         // paddingHorizontal:5,
         alignSelf: 'flex-start', // Adjust alignment as needed
     },

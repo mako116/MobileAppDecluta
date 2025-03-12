@@ -10,7 +10,6 @@ import TextInputField from '@/UI/InputFields/TextInputField';
 export default function ForgotPassword() {
     const [userInfo, setUserInfo] = useState({ email: "" });
     const [required, setRequired] = useState("");
-    const [focusInput, setFocusInput] = useState({ email: false });
     const [buttonSpinner, setButtonSpinner] = useState(false);
 
     const handleGoBack = () => {
@@ -61,29 +60,6 @@ export default function ForgotPassword() {
               keyboardType="email-address"
               placeholderTextColor='gray'
             />
-            {/* <View style = {[
-              SignUpStyles.row,
-              SignUpStyles.inputContainerStyle, 
-              focusInput.email && 
-              {  borderColor: "#DEBC8E" },
-              { paddingHorizontal: 40 }, ]}
-            >
-              <TextInput
-                style={[
-                  SignUpStyles.input
-                ]}
-                keyboardType="email-address"
-                value={userInfo.email}
-                placeholder="Enter your email Address"
-                onFocus={() => setFocusInput({ ...focusInput, email: true })}
-                onBlur={() => setFocusInput({ ...focusInput, email: false })}
-                // onChangeText={(value) => setUserInfo({ ...userInfo, email: value })}
-                onChangeText={(value) => {
-                  setUserInfo({ ...userInfo, email: value });
-                  if (required) setRequired("");  // Clear error if user starts typing
-                }}
-              />
-            </View> */}
             {required && (
               <View style={commonstyles.errorContainer}>
                 <Entypo name="cross" size={18} color="red" />

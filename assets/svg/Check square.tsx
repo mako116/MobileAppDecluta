@@ -1,6 +1,5 @@
 import React from 'react';
 import Svg, { Path } from 'react-native-svg';
-import { StyleSheet } from 'react-native';
 
 const CheckSquares = () => {
   return (
@@ -20,7 +19,5 @@ const CheckSquares = () => {
     </Svg>
   );
 };
-
-const styles = StyleSheet.create({});
 
 export default CheckSquares;

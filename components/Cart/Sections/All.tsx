@@ -17,8 +17,8 @@ import Star from '@/assets/images/cart/Star';
 import ArrowDownBlack from '@/assets/images/cart/arrowDownBlack';
 import { useCart } from '@/context/CartContext';
 import YourCart from '@/styles/Cart/YourCart.styles';
-import Cart from '@/assets/svg/cart';
 import CheckoutFoot from './Footer/CheckoutFoot';
+import DecluttaCart from '@/assets/svg/DecluttaCart';
  
  
 
@@ -80,7 +80,7 @@ const Alling: React.FC = () => {
     return ( 
       <View style={YourCart.container}>
         <View style={{ justifyContent: "center", alignItems: "center", paddingVertical: 20 }}>
-          <Cart />
+          <DecluttaCart />
           <Text style={[YourCart.title, { textAlign: "center",fontSize:19 , marginBottom:3,marginTop:10}]}>
             Your cart is empty</Text>
           <Text style={YourCart.rewardText}>Start shopping to add items!</Text>

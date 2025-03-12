@@ -1,4 +1,4 @@
-import { View, Text, Image, StyleSheet, ImageSourcePropType } from 'react-native';
+import { View, Text, Image, StyleSheet, ImageSourcePropType, TouchableOpacity } from 'react-native';
 import React from 'react';
 import LocationIcons from '../../icons';
 
@@ -7,38 +7,42 @@ interface CategoryProps {
   name: string;
   title: string;
   locations: string;
+  condition: string;
   timeAgo: string;
+  onPress: () => void;
 }
 
-export default function SlidLingCategory({ imageUrl, name, title, locations, timeAgo }: CategoryProps) {
+export default function SlidLingCategory({ imageUrl, name, title, locations, timeAgo, onPress }: CategoryProps) {
   return (
-    <View style={styles.container}>
-      {/* Image Section */}
-      <View style={styles.imageContainer}>
-        <Image source={imageUrl} style={styles.image} />
-        <View style={styles.timeAgoContainer}>
-          <Text style={styles.timeAgoText}>{timeAgo}</Text>
-        </View>
-      </View>
-      
-      {/* Text Details */}
-      <View>
-        {/* Title and Icon */}
-        <View style={styles.row}>
-          <Image source={require("../../../assets/images/naira.png")} style={styles.nairaIconStyle} />
-          <Text style={styles.title}>{title}</Text>
+    <TouchableOpacity onPress={onPress} activeOpacity={0.7}>
+      <View style={styles.container}>
+        {/* Image Section */}
+        <View style={styles.imageContainer}>
+          <Image source={imageUrl} style={styles.image} />
+          <View style={styles.timeAgoContainer}>
+            <Text style={styles.timeAgoText}>{timeAgo}</Text>
+          </View>
         </View>
         
-        {/* Name */}
-        <Text style={styles.name}>{name}</Text>
-        
-        {/* Location Details */}
-        <View style={styles.locations}>
-          <LocationIcons />
-          <Text style={styles.locationsText}>{locations}</Text>
+        {/* Text Details */}
+        <View>
+          {/* Title and Icon */}
+          <View style={styles.row}>
+            <Image source={require("../../../assets/images/naira.png")} style={styles.nairaIconStyle} />
+            <Text style={styles.title}>{title}</Text>
+          </View>
+          
+          {/* Name */}
+          <Text style={styles.name}>{name}</Text>
+          
+          {/* Location Details */}
+          <View style={styles.locations}>
+            <LocationIcons />
+            <Text style={styles.locationsText}>{locations}</Text>
+          </View>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 
