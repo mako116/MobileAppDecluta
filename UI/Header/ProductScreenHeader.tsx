@@ -7,7 +7,7 @@ import { TextInput } from "react-native-gesture-handler";
 
 const ProductHeader: React.FC = () => {
     return(
-        <View style={[ styles.row, { backgroundColor: 'white', paddingHorizontal: 16, paddingTop: 60 } ]} >
+        <View style={[ styles.row, { backgroundColor: 'white', paddingHorizontal: 16, paddingTop: 60, paddingBottom: 10 } ]} >
             <BackButton />
             <View style={[ styles.inputContainer ]} >
                 <TextInput 

@@ -6,12 +6,18 @@ export default function Button({
     backgroundColor,
     borderWidth,
     borderColor,
+    padding,
+    paddingHorizontal,
+    icon,
     onPress,
 }: {
     title: string;
     backgroundColor: string;
     borderWidth: number;
     borderColor? :string
+    padding?: number
+    paddingHorizontal?: number 
+    icon? : React.ReactNode
     onPress: () => void;
 }) {
     const { width } = Dimensions.get("window");
@@ -20,8 +26,8 @@ export default function Button({
         <TouchableOpacity
             style={[
                 {
-                    paddingHorizontal: 20,
-                    padding: 20,
+                    paddingHorizontal: paddingHorizontal ? 20 : 0,
+                    padding: padding ? 15 : 20,
                     alignItems: "center",
                     flexDirection: "row",
                     justifyContent: "center",
@@ -29,12 +35,14 @@ export default function Button({
                     backgroundColor: backgroundColor, // Set background color dynamically
                     borderWidth: borderWidth ? 1 : 0, // Add border width if specified
                     borderColor: borderColor ? '#E9E9E9' : 'black', // Light border if borderWidth is set
+                    gap: icon ? 15 : 0
                 }
             ]}
             onPress={onPress}
         >
+            {icon}
             <Text style={{
-                fontSize: 15,
+                fontSize: 18,
                 fontWeight: '400',
                 textAlign: "center",
                 fontFamily: "Proxima Nova"
