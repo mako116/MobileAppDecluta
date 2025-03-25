@@ -1,14 +1,23 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
-const QuantitySelector: React.FC = () => {
+export default function QuantitySelector ({
+  padding,
+  paddingHorizontal,
+}: {
+padding?: number;
+paddingHorizontal?: number;
+}) {
   const [quantity, setQuantity] = useState(1);
 
   const increaseQuantity = () => setQuantity(prev => prev + 1);
   const decreaseQuantity = () => setQuantity(prev => (prev > 1 ? prev - 1 : prev));
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container,{
+      paddingVertical: padding ? 12 : 20,
+      paddingHorizontal: paddingHorizontal ? 20 : 16,
+    }]}>
       <TouchableOpacity onPress={decreaseQuantity}>
         <Text style={styles.symbol}>−</Text>
       </TouchableOpacity>
@@ -30,7 +39,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#E0E0E0",
     borderRadius: 6,
-    padding: 15,
     gap: 15
   },
   symbol: {
@@ -42,5 +50,3 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
 });
-
-export default QuantitySelector;

@@ -27,7 +27,7 @@ const Kyc = StyleSheet.create({
       color: '#333',
       flex: 1,
       textAlign: 'center',
-      paddingBottom:12
+      paddingLeft: 20
     },
     searchContainer: {
       flexDirection: 'row',

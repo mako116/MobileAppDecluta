@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
         color: '#212121',
         fontFamily: 'FONTSPRING DEMO - Proxima Nova',
         fontWeight: 700,
-        fontSize: 16,
+        fontSize: 14,
         textDecorationLine: "underline"
     },
     subTitleText: {

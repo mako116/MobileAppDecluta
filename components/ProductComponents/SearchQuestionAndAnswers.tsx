@@ -14,8 +14,8 @@ const SearchQuestionAndAnswers = () => {
         }
     }
   return (
-    <View style={{ marginTop: 20 }} >
-      <Text style={[ styles.setionTitleText ]} >Item description from the seller</Text>
+    <View >
+      <Text style={[ styles.setionTitleText ]} >Search questions and answers</Text>
 
         <View style={[ styles.row ]} >
             <View style = {{ flex: 1 }}>
@@ -30,7 +30,7 @@ const SearchQuestionAndAnswers = () => {
                     backgroundColor='#DEBC8E'
                     borderWidth={0}
                     paddingHorizontal={20}
-                    padding={1}
+                    padding={10}
                 />
             </View>
         </View>
@@ -69,13 +69,13 @@ const styles = StyleSheet.create({
         borderColor: '#E9E9E9',
         borderRadius: 6,
         padding: 10,
+        backgroundColor: 'white'
     },
     setionTitleText: {
         color: '#212121',
         fontFamily: 'Helvetica Neue',
         fontWeight: 700,
-        fontSize: 18,
-        marginBottom: 10,
+        fontSize: 14,
     },
     text:{
         color: '#212121',

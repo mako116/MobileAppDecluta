@@ -77,7 +77,7 @@ const Recommend: React.FC = () => {
         ListFooterComponent={renderFooter} // Footer with loading animation
         numColumns={2} // Automatically handle two-column layout
         columnWrapperStyle={{ justifyContent: 'space-between', marginBottom: 0 }} // Add spacing between rows
-        contentContainerStyle={{ paddingTop: 10, gap: 10, marginBottom: '70%' }}
+        contentContainerStyle={{ paddingTop: 10, gap: 10}}
       />
     );
   };

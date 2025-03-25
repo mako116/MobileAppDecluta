@@ -1,6 +1,6 @@
-import { Text, Image, StyleSheet, View, ScrollView, TouchableOpacity } from "react-native"
-import React from 'react';
-import { useLocalSearchParams } from 'expo-router';
+import { Text, Image, StyleSheet, View, ScrollView, TouchableOpacity, Animated, LayoutChangeEvent } from "react-native"
+import React, { useRef, useState } from 'react';
+import { router, useLocalSearchParams } from 'expo-router';
 import ProductHeader from "@/UI/Header/ProductScreenHeader";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ConditionIcon from "@/assets/svg/ConditionIcon";
@@ -15,12 +15,37 @@ import DotIcon from "@/assets/svg/DotIcon";
 import AboutItems from "@/components/ProductComponents/AboutItems";
 import ItemDescription from "@/components/ProductComponents/ItemDescription";
 import QuestionsAndAnswer from "@/components/ProductComponents/QuestionsAndAnswer";
-import SearchQuestionAndAnswers from "@/components/ProductComponents/SearchQuestionAndAnswers";
 import Button from "@/components/Button/button";
+import SellerProfileCard from "@/components/ProductComponents/SellerProfileCard";
+import SellerReviews from "@/components/ProductComponents/SellerReviews";
+import ExploreProducts3 from "../RecommendProducts/Explore3/ExploreProducts3";
+import Recommend from "@/screens/HomeSectionFinds/Recommend/Recommend";
+import FixedBuyAndAddToCart from "@/components/ProductComponents/FixedBuyAndAddToCart";
 import MessageQuestion from "@/assets/svg/MessageQuestion";
 
 const ProductDetailsScreen = () => {
   const { id, imageUrl, name, title, locations, condition, timeAgo } = useLocalSearchParams();
+
+  // States
+  const scrollY = useRef(new Animated.Value(0)).current;
+  const [showFixedCart, setShowFixedCart] = useState(false);
+  const buyAndAddToCartRef = useRef<View | null>(null);
+
+  const handleScroll = Animated.event(
+      [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+      { useNativeDriver: false }
+  );
+
+  const handleLayout = (event: LayoutChangeEvent) => {
+      const { y } = event.nativeEvent.layout;
+      scrollY.addListener(({ value }) => {
+          if (value > y) {
+              setShowFixedCart(true);
+          } else {
+              setShowFixedCart(false);
+          }
+      });
+  };
   const handleAskAQuestion = () => {
     try {
         
@@ -30,10 +55,12 @@ const ProductDetailsScreen = () => {
   }
 
     return (
-      <SafeAreaView edges={[ 'bottom' ]} style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <ProductHeader />
-        <ScrollView
+        <Animated.ScrollView
             scrollEventThrottle={16}
+            onScroll={handleScroll}
+            style={{backgroundColor: '#F9F9F9'}}
         >
             <View style={{ backgroundColor: 'white', paddingHorizontal: 16, paddingTop: 30 }} >
                 <ScrollView
@@ -116,6 +143,10 @@ const ProductDetailsScreen = () => {
                         people are eyeing this item right now.
                     </Text>
                 </View>
+
+                <View ref={buyAndAddToCartRef} onLayout={handleLayout}>
+                    <BuyAndAddToCart />
+                </View>
                 
                 <TouchableOpacity
                     style={[ styles.beforebuyingAndSecurity ]}
@@ -187,19 +218,6 @@ const ProductDetailsScreen = () => {
                 />
 
                 <QuestionsAndAnswer />
-                
-                <SearchQuestionAndAnswers />
-
-                {/* Questions and answer section */}
-                <View style={{ marginVertical: 20 }} >
-                    <Button 
-                        title="Ask a question"
-                        backgroundColor="#DEBC8E"
-                        borderWidth={0}
-                        onPress={handleAskAQuestion}
-                        icon={<MessageQuestion />}
-                    />
-                </View>
 
                 <Button 
                     title="Show more questions"
@@ -207,13 +225,57 @@ const ProductDetailsScreen = () => {
                     borderWidth={0}
                     onPress={handleAskAQuestion}
                 />
-            </View>
-        </ScrollView>
+                <SellerProfileCard />
 
-        <View>
-            <BuyAndAddToCart />
-        </View>
-        
+                <SellerReviews />
+                <View 
+                    style={{
+                    flexDirection:"row", 
+                    alignItems:"center", 
+                    justifyContent:"space-between",
+                    marginTop:20,
+                    marginBottom:10,
+                    }}
+                >
+                    <Text style={{fontWeight:"700",fontSize:17,lineHeight:22.4, fontFamily:"Helvetica Neue"}}>Recommended Items</Text>
+                    <TouchableOpacity 
+                        onPress={()=> router.push("/(routes)/HomesectionViewAll/Recommend")} 
+                        style={{
+                            flexDirection:"row",
+                            gap:10,
+                            alignItems:"center", 
+                            paddingRight:0
+                        }}>
+                        <Text 
+                        style={{
+                            fontWeight:"400",
+                            fontSize:17,
+                            lineHeight:22.4, 
+                            fontFamily:"Proxima Nova", 
+                            color:"#212121"
+                        }}>
+                            View All
+                        </Text>
+                        
+                        <Image source={require('../../../assets/images/newimages/Vector.png')} style={{width:6,height:11}} />
+                    </TouchableOpacity>
+                </View>
+
+                <Recommend />
+            </View>
+        </Animated.ScrollView>
+        {/* Fixed BuyAndAddToCart when scrolled out */}
+        {showFixedCart && (
+            <View style={{ backgroundColor: 'white' }} >
+                <FixedBuyAndAddToCart />
+                <View style={[ styles.row , {justifyContent: 'center', gap: 5, marginTop: 10 }]} >
+                    <MessageQuestion />
+                    <Text>
+                        Ask a question
+                    </Text>
+                </View>
+            </View>
+        )}
       </SafeAreaView>
     );
 }
@@ -228,7 +290,7 @@ const styles = StyleSheet.create({
     },
     container: {
       flex: 1,
-      backgroundColor: '#F9F9F9'
+      backgroundColor: '#FFFFFF',
     },
     imageContainer: {
         borderWidth: 1,

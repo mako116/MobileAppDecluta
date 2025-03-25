@@ -13,8 +13,7 @@ const BuyAndAddToCart: React.FC = () => {
     return(
         <View
             style={{
-                paddingHorizontal: 16,
-                paddingVertical: 10
+                paddingTop: 20
             }}
         >
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, marginBottom: 10 }} >

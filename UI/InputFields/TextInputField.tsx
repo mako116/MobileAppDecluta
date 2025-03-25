@@ -29,6 +29,7 @@ interface TextInputFieldProps {
     numberOfLines?: number;
     maxLength?: number;
     editable?: boolean;
+    height?: number
     icon?: JSX.Element;
 }
 
@@ -45,7 +46,8 @@ const TextInputField: React.FC<TextInputFieldProps> = ({
     multiline, 
     numberOfLines, 
     maxLength, 
-    editable, 
+    editable,
+    height, 
     icon
 }) => {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -55,7 +57,7 @@ const TextInputField: React.FC<TextInputFieldProps> = ({
         <View 
             style={[
                 styles.container, 
-                { borderColor: isFocused ? "#DEBC8E" : "#E9E9E9" } // Change border color on focus
+                { borderColor: isFocused ? "#DEBC8E" : "#E9E9E9", height: height } // Change border color on focus
             ]}
         >
 
@@ -100,7 +102,7 @@ export default TextInputField;
 const styles = StyleSheet.create({
     container: {
         flexDirection: "row",
-        alignItems: "center",
+        alignItems: "flex-start",
         backgroundColor: "white",
         borderWidth: 1,
         borderRadius: 5,
