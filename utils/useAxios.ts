@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 // import { persistor } from "../store";
-import { RootState } from '../store';
+import { RootState } from '../redux/store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const BASE_URL = process.env.EXPO_PUBLIC_API_KEY;

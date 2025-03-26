@@ -23,35 +23,32 @@ import LocationModal from '@/screens/ChangeLocation/changelocationScreen';
 import Homes from '@/styles/Homes/Home.styles';
 import FloatingCart from '@/screens/FloatingCart/FloatingCart';
 import { useAuth } from '@/context/AuthContext';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
 // import Button from '../Button/button';
 
 const HomeScreen: React.FC =() => {
-  const { getUser, logout } = useAuth();
   const [modalVisible, setModalVisible] = useState(false);
   const [currentPopup, setCurrentPopup] = useState(1);
   const [selectedState, setSelectedState] = useState('');
   const [refreshing, setRefreshing] = useState(false);
 
+  const res = useSelector((state: RootState) => state.auth.userData);
+  console.log("User data from Redux:", res);
+
 
   useEffect(() => {
-    const getUserData = async () => {
-      try {
-        const user = await getUser();
-        console.log('User data detail:', user?.data);
-        const userState = user?.data?.users?.state;
+    if (res) {
+      const userState = res?.state; // Adjust this based on the actual structure
 
-        if (userState) {
-          setSelectedState(userState);
-        }else(
-          setSelectedState('Oyo')
-        )
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-        
+      if (userState) {
+        setSelectedState(userState);
+      } else {
+        setSelectedState("Oyo");
       }
-    };
-    getUserData();
-  }, [getUser]);
+    }
+  }, [res]); // Runs whenever `res` updates
+
 
   const openModal = () => {
     setModalVisible(true);
@@ -75,9 +72,9 @@ const HomeScreen: React.FC =() => {
   
   {/* Do not remove for testing purpose */}
   
-  const handleLogout = async () => {
-    await logout();
-  }
+  // const handleLogout = async () => {
+  //   await logout();
+  // }
 
   return (
     <>

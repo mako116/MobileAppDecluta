@@ -5,17 +5,24 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { AuthProvider } from '@/context/AuthContext';
 import { CartProvider } from '@/context/CartContext';
 import { OfferProvider } from '@/context/OfferContext';
+import { store } from '@/redux/store';
+import { Provider } from 'react-redux';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
 
 export default function RootLayout() {
   return (
     <GestureHandlerRootView>
-      <CartProvider>
-      <OfferProvider>
-       <AuthProvider>
-        <Layout />
-      </AuthProvider>
-      </OfferProvider>
-      </CartProvider>
+      <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <CartProvider>
+          <OfferProvider>
+            <Layout />
+          </OfferProvider>
+        </CartProvider>
+      </QueryClientProvider>
+      </Provider>
     </GestureHandlerRootView>
   );
 } 

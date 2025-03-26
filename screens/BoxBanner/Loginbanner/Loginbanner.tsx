@@ -1,34 +1,25 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import { useFocusEffect, router } from 'expo-router';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
 
 export default function Loginbanner() {
-  const [hasToken, setHasToken] = useState(false);
+  const res = useSelector((state: RootState) => state.auth.userData);
+  const token = useSelector((state: RootState) => state.auth.token); // Get token from Redux
 
-  // Function to check token
-  const checkToken = useCallback(async () => {
-    try {
-      const token = await AsyncStorage.getItem('token');
-      setHasToken(!!token); // Efficient way to check if token exists
-    } catch (error) {
-      console.error('Error reading token:', error);
-    }
-  }, []);
-
-  // Check token when the app first loads
+  // Redirect if token exists
   useEffect(() => {
-    checkToken();
-  }, []);
+    if (token) return;
+  }, [token]);
 
-  // Check token when the screen regains focus (user navigates back)
   useFocusEffect(
-    useCallback(() => {
-      checkToken();
-    }, [checkToken])
+    React.useCallback(() => {
+      if (token) return;
+    }, [token])
   );
 
-  if (hasToken) return null;
+  if (token) return null; // Hide component if token exists
 
   return (
     <View style={styles.container}>

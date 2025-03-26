@@ -4,59 +4,43 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useAuth } from "@/context/AuthContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 export default function ProfileKYC() {
-  const { getUser } = useAuth();
-  const [profilePercentage, setProfilePercentage] = useState<string | null>(
-    null
-  );
+  const res = useSelector((state: RootState) => state.auth.userData);
   const [showSignup, setShowSignup] = useState(false);
-  const [showVerification, setShowVerification] = useState(false);
   const [hasToken, setHasToken] = useState(false);
   
 
   useEffect(() => {
     const checkProfileCompletion = async () => {
       try {
-        const user = await getUser();
-        console.log("User data detail:", user?.data);
-
-        const hasAddress = !!user?.data?.users?.address;
-        const hasBVN = !!user?.data?.users?.BankVerificationNumberVerified;
-        const hasNIN = !!user?.data?.users?.NationalIdentityNumberVerified;
-
-        const token = await AsyncStorage.getItem('token');
-        if (token) {
-          setHasToken(true); 
-        } else {
-          return null;
-         }
-
-        if (hasAddress && hasBVN && hasNIN) {
-          setShowSignup(false);
-          setShowVerification(false);
-          return; // All fields are set, so don't render anything
-        }
-
-        if (hasAddress && !hasBVN && !hasNIN) {
-          setProfilePercentage("80%");
-          setShowVerification(true);
+        // If Redux already has the user data, use it instead of fetching again
+        const userData = res;
+        console.log("User data detail:", userData);
+  
+        const hasAddress = !!userData?.address;
+  
+        const token = await AsyncStorage.getItem("token");
+        setHasToken(!!token); // Simplified boolean check
+  
+        if (!token) return;
+  
+        if (hasAddress) {
           setShowSignup(false);
         } else {
-          setProfilePercentage("60%");
           setShowSignup(true);
-          setShowVerification(false);
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
-        setProfilePercentage("60%");
         setShowSignup(true);
-        setShowVerification(false);
       }
     };
-
+  
     checkProfileCompletion();
-  }, [router]);
+  }, [res, router]);
+  
 
   if (!hasToken) {
     return null;
@@ -71,26 +55,10 @@ export default function ProfileKYC() {
           style={styles.card}
         >
           <Text style={styles.progressText}>
-            Your profile is {profilePercentage} complete
+            Your profile is 60% complete
           </Text>
           <View style={styles.kycButton}>
             <Text style={styles.kycText}>Complete KYC</Text>
-            <MaterialIcons name="keyboard-arrow-right" size={20} color="#212121" />
-          </View>
-        </TouchableOpacity>
-      )}
-
-      {/* Show the KYC Verification Component */}
-      {showVerification && (
-        <TouchableOpacity
-          onPress={() => router.push("/(routes)/kyc/identityscreen")}
-          style={styles.card}
-        >
-          <Text style={styles.progressText}>
-            Your profile is {profilePercentage} complete
-          </Text>
-          <View style={styles.kycButton}>
-            <Text style={styles.kycText}>Verify BVN & NIN</Text>
             <MaterialIcons name="keyboard-arrow-right" size={20} color="#212121" />
           </View>
         </TouchableOpacity>
