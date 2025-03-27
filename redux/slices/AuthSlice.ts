@@ -1,4 +1,6 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { persistReducer } from 'redux-persist';
 
 interface AuthState {
     name:string
@@ -6,6 +8,7 @@ interface AuthState {
     token: string | null;
     userData: UserData | null; 
     phone?:string;
+    lastLogin: number | null; // Store timestamp
 }
 
 interface UserData {
@@ -30,9 +33,10 @@ interface UserData {
 
 const initialState: AuthState = {
     name: '',
-     email: '',
+    email: '',
     token: null,
     userData: null,
+    lastLogin: null,
 };
 
 const authSlice = createSlice({
@@ -51,6 +55,7 @@ const authSlice = createSlice({
         setAuthData: (state, action: PayloadAction<{ token: string; user: UserData }>) => {
             state.token = action.payload.token;
             state.userData = action.payload.user;
+            state.lastLogin = Date.now();
         },
         clearAuthData: () => {
             // Reset the state to the initial state when clearing data
@@ -70,11 +75,27 @@ const authSlice = createSlice({
                 if (email !== undefined) state.userData.email = email;
                 if (phone !== undefined) state.userData.phone = phone;
             }
-        } 
+        },
+        logout: (state) => {
+            state.token = null;
+            state.userData = null;
+            state.lastLogin = null;
+        },
     },
     
 });
 
+const persistConfig = {
+    key: 'auth',
+    storage: AsyncStorage,
+    whitelist: ['token', 'userData', 'lastLogin'], // Persist token and last login
+};
+
 export const { 
-      setAuthData, setEmail, clearAuthData, updateUserData } = authSlice.actions;
-export default authSlice.reducer;
+    setAuthData, 
+    setEmail, 
+    clearAuthData, 
+    updateUserData,
+    logout
+} = authSlice.actions;
+export default persistReducer(persistConfig, authSlice.reducer);

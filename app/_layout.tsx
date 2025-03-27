@@ -5,9 +5,10 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { AuthProvider } from '@/context/AuthContext';
 import { CartProvider } from '@/context/CartContext';
 import { OfferProvider } from '@/context/OfferContext';
-import { store } from '@/redux/store';
+import { persistor, store } from '@/redux/store';
 import { Provider } from 'react-redux';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { PersistGate } from 'redux-persist/integration/react';
 
 const queryClient = new QueryClient();
 
@@ -15,13 +16,16 @@ export default function RootLayout() {
   return (
     <GestureHandlerRootView>
       <Provider store={store}>
-      <QueryClientProvider client={queryClient}>
-        <CartProvider>
-          <OfferProvider>
-            <Layout />
-          </OfferProvider>
-        </CartProvider>
-      </QueryClientProvider>
+      <PersistGate loading={null} persistor={persistor}>
+        <QueryClientProvider client={queryClient}>
+          <CartProvider>
+            <OfferProvider>
+              <Layout />
+            </OfferProvider>
+          </CartProvider>
+        </QueryClientProvider>
+      </PersistGate>
+      
       </Provider>
     </GestureHandlerRootView>
   );

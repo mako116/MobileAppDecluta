@@ -1,34 +1,52 @@
 import { View, StyleSheet, Image } from 'react-native';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'expo-router';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState, store } from '@/redux/store';
 import Lottie from 'lottie-react-native';
+import { logout } from '../../../redux/slices/AuthSlice';
+import { persistStore } from 'redux-persist';
+
+const TWELVE_HOURS = 12 * 60 * 60 * 1000; // 12 hours in milliseconds
 
 export default function SplashScreen() {
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  const token = useSelector((state: RootState) => state.auth.token);
+  const lastLogin = useSelector((state: RootState) => state.auth.lastLogin);
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
     const checkAuth = async () => {
-      try {
-        // Simulate a brief delay for the splash screen
-        await new Promise((resolve) => setTimeout(resolve, 1800));
-
-        const email = await AsyncStorage.getItem('email');
-        if (email) {
-          console.log('Authenticated user found. Navigating to home.');
-          console.log('email:', email);
-          router.replace('/(routes)/login'); // Navigate to the home screen for authenticated users
+      await new Promise((resolve) => setTimeout(resolve, 1800)); // Simulated delay
+      if (!isReady) return;
+      if (token && lastLogin) {
+        const timeElapsed = Date.now() - lastLogin;
+        
+        if (timeElapsed < TWELVE_HOURS) {
+          console.log("Session still valid. Navigating to home.");
+          router.replace('/(tabs)/home');
         } else {
-          console.log('No user found. Navigating to login.');
-          router.replace('/(tabs)/home'); // Navigate to login for unauthenticated users
+          console.log("Session expired. Redirecting to Welcome Back.");
+          dispatch(logout()); // Clear token
+          router.replace('/(routes)/welcomebackPIn'); // Navigate to PIN/Biometric
         }
-      } catch (error) {
-        console.error('Error checking authentication:', error);
+      } else {
+        console.log("No session found. Navigating to login.");
+        router.replace('/(tabs)/home');
       }
     };
 
     checkAuth();
-  }, [router]);
+  }, [token, lastLogin, router, dispatch]);
+
+  useEffect(() => {
+    // Wait for redux-persist to finish hydrating
+    persistStore(store, null, () => setIsReady(true));
+  }, []);
+
+  if (!isReady) return null;
 
   return (
     <View style={styles.background}>
@@ -37,7 +55,6 @@ export default function SplashScreen() {
           source={require('../../../assets/images/decluttaking.png')}
           style={styles.logo}
         />
-        {/* loading */}
         <Lottie
           source={require('../../../assets/loading/latestsplash.json')}
           autoPlay
@@ -55,12 +72,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignContent: "center",
   },
-  welcomeText: {
-    textAlign: "center",
-    fontSize: 40,
-    color: "#fff",
-    fontWeight: "600",
-  },
   container: {
     display: "flex",
     paddingBottom: 10,
@@ -69,9 +80,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   logo: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
     width: 226,
     height: 48,
     marginTop: "-12%",
@@ -81,27 +89,5 @@ const styles = StyleSheet.create({
     height: "100%",
     position: "absolute",
     marginTop: 20,
-  },
-  welcomeContainer: {
-    justifyContent: "center",
-    marginBottom: 90,
-    margin: "auto",
-  },
-  welcomeTitle: {
-    color: "#fff",
-    fontWeight: "700",
-    textAlign: "center",
-    fontSize: 23,
-    lineHeight: 32.2,
-    paddingHorizontal: 50,
-    marginBottom: 10,
-  },
-  welcomeDescription: {
-    fontSize: 14,
-    fontWeight: "400",
-    lineHeight: 19.6,
-    textAlign: "center",
-    paddingHorizontal: 50,
-    color: "#FFFFFF",
   },
 });
