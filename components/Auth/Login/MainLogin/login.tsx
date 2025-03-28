@@ -1,10 +1,8 @@
 import { View, Text, ScrollView, Image,  TouchableOpacity, ActivityIndicator, Alert, BackHandler, Modal } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { router } from 'expo-router';
-import { AntDesign, MaterialIcons } from '@expo/vector-icons';
- import { useFocusEffect } from '@react-navigation/native';
-
-
+import { AntDesign } from '@expo/vector-icons';
+import { useFocusEffect } from '@react-navigation/native';
 import {SignUpStyles} from '../../../../styles/Signup/signup.style'
 import GoolgSignUp from '../../Signup/GoogleSignup/GoogleSignUpComponent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -20,9 +18,8 @@ export default function Login() {
   const [showExitModal, setShowExitModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState({ email: "", password: "" });
   const [successMessage, setSuccessMessage] = useState("");
-  const { loginUser } = useAuth(); // Destructure onLogin from useAuth
+  const { loginUser } = useAuth();
   const [email, setEmail] = useState<string>('');
-  const [formData, setFormData] = useState({ email: "", password: "" });
 
   useFocusEffect(
     React.useCallback(() => {
@@ -85,20 +82,15 @@ export default function Login() {
         setButtonSpinner(false);
         return;
       }
-      loginUser({email, password});
+      await loginUser({email, password});
       console.log("login details", email, password )
 
     } catch (err) {
       Alert.alert('Login Failed');
       setSuccessMessage("Login failed!");
-    } finally {
       setButtonSpinner(false);
-    }    
+    }   
   };
-
-  const handlePhonePush =()=>{
-    router.push("/(routes)/PhoneLogin");
-  }
   const handleExit = () => {
     setShowExitModal(false);
     router.back();
@@ -124,26 +116,9 @@ export default function Login() {
             <TextInputField
               placeholder="Enter email"
               value={email}
-              onChangeText={(value) => setEmail(value)}
-              keyboardType="email-address"
+              onChangeText={(value) => setEmail(value.toLowerCase())}
               placeholderTextColor='gray'
             />
-            {/* <View style={[SignUpStyles.row, SignUpStyles.inputContainerStyle]}>
-              <TextInput
-                style={[
-                  SignUpStyles.input,
-                  focusInput.email && { borderColor: "#DEBC8E" },
-                  { paddingHorizontal: 40 },
-                ]}
-                keyboardType="email-address"
-                value={email}
-                placeholder="Enter email"
-                placeholderTextColor='gray'
-                onFocus={() => setFocusInput({ ...focusInput, email: true })}
-                onBlur={() => setFocusInput({ ...focusInput, email: false })}
-                onChangeText={(value) => setEmail(value)}
-              />
-            </View> */}
             {errorMessage.email && (
             <View style={{flexDirection:"row",gap:5, marginHorizontal:14, alignItems:"center"}}>
               <Text style={{ color: "red", fontSize: 12, marginTop: 5 , marginHorizontal:1 }}>{errorMessage.email}</Text>
@@ -164,36 +139,17 @@ export default function Login() {
               secureTextEntry={true}
               icon={<AntDesign name="lock" size={20} color="gray" />}
             />
-            {/* <View style={[SignUpStyles.row, SignUpStyles.inputContainerStyle]}  >
-              <TextInput
-                style={[
-                  SignUpStyles.input,
-                  focusInput.password && { borderColor: "#DEBC8E" },
-                ]}
-                keyboardType="default"
-                secureTextEntry={!isPasswordVisible}
-                placeholder="Enter password"
-                placeholderTextColor='gray'
-                value={userInfo.password}
-                onFocus={() => setFocusInput({ ...focusInput, password: true })}
-                onBlur={() => setFocusInput({ ...focusInput, password: false })}
-                onChangeText={(value) => {setUserInfo({ ...userInfo, password: value });
-                setPassword(value); // Update `userEmail` in sync
-
-                }}
-              />
-              <TouchableOpacity
-                style={{ marginRight: 10 }}
-                onPress={() => setPasswordVisible(!isPasswordVisible)}
-              >
-                <Ionicons name={isPasswordVisible ? 'eye-off-outline' : 'eye-outline'} size={20} color="#747474" />
-              </TouchableOpacity>
-            </View> */}
             {errorMessage.password && (
-              <View style={{flexDirection:"row",gap:5, marginHorizontal:14, alignItems:"center"}}>
-              <Text style={{ color: "red", fontSize: 12, marginTop: 5 ,marginHorizontal:1  }}>{errorMessage.password}</Text>
-
-            </View>          
+              <View 
+                style={{
+                  flexDirection:"row",
+                  gap:5, 
+                  marginHorizontal:14, 
+                  alignItems:"center"
+                }}
+              >
+                <Text style={{ color: "red", fontSize: 12, marginTop: 5 ,marginHorizontal:1  }}>{errorMessage.password}</Text>
+              </View>          
             )}
           </View>
           {successMessage && (

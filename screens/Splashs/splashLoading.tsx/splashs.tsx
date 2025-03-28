@@ -4,47 +4,50 @@ import { useRouter } from 'expo-router';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState, store } from '@/redux/store';
 import Lottie from 'lottie-react-native';
-import { logout } from '../../../redux/slices/AuthSlice';
-import { persistStore } from 'redux-persist';
 
 const TWELVE_HOURS = 12 * 60 * 60 * 1000; // 12 hours in milliseconds
 
 export default function SplashScreen() {
   const router = useRouter();
-  const dispatch = useDispatch();
 
   const token = useSelector((state: RootState) => state.auth.token);
   const lastLogin = useSelector((state: RootState) => state.auth.lastLogin);
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
+    const rehydrateStore = async () => {
+      await new Promise((resolve) => setTimeout(resolve, 500)); // Small delay
+      setIsReady(true);
+    };
+    rehydrateStore();
+  }, []);
+
+  useEffect(() => {
     const checkAuth = async () => {
-      await new Promise((resolve) => setTimeout(resolve, 1800)); // Simulated delay
-      if (!isReady) return;
+      if (!isReady) return; // Wait for Redux to hydrate
+
+      console.log('Splash screen delay...');
+      await new Promise((resolve) => setTimeout(resolve, 1800));
+
       if (token && lastLogin) {
         const timeElapsed = Date.now() - lastLogin;
-        
+        console.log(`Token found. Last login was ${timeElapsed / (1000 * 60)} minutes ago.`);
+
         if (timeElapsed < TWELVE_HOURS) {
-          console.log("Session still valid. Navigating to home.");
+          console.log('Navigating to home...');
           router.replace('/(tabs)/home');
         } else {
-          console.log("Session expired. Redirecting to Welcome Back.");
-          dispatch(logout()); // Clear token
-          router.replace('/(routes)/welcomebackPIn'); // Navigate to PIN/Biometric
+          console.log('Session expired. Navigating to Welcome Back...');
+          router.replace('/(routes)/welcomebackPIn');
         }
       } else {
-        console.log("No session found. Navigating to login.");
-        router.replace('/(tabs)/home');
+        console.log('No session found. Navigating to login...');
+        router.replace('/(routes)/login');
       }
     };
 
     checkAuth();
-  }, [token, lastLogin, router, dispatch]);
-
-  useEffect(() => {
-    // Wait for redux-persist to finish hydrating
-    persistStore(store, null, () => setIsReady(true));
-  }, []);
+  }, [isReady, token, lastLogin]);
 
   if (!isReady) return null;
 

@@ -264,6 +264,7 @@ const ProductDetailsScreen = () => {
                 <Recommend />
             </View>
         </Animated.ScrollView>
+        
         {/* Fixed BuyAndAddToCart when scrolled out */}
         {showFixedCart && (
             <View style={{ backgroundColor: 'white' }} >
