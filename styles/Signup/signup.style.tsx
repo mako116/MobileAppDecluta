@@ -136,6 +136,15 @@ export const SignUpStyles = StyleSheet.create({
       marginTop: 5,
     },
     loginButtons: {
+      // flex:1,
+      padding: 20,
+      borderRadius: 8,
+      // marginHorizontal: 16,
+      backgroundColor: "#DEBC8E",
+      marginTop: 5,
+    },
+    loginButtoned: {
+      flex:1,
       padding: 20,
       borderRadius: 8,
       // marginHorizontal: 16,

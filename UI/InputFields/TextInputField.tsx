@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { StyleSheet, TextInput, View, TouchableOpacity } from "react-native";
+import { StyleSheet, TextInput, View, TouchableOpacity, Text } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 
 interface TextInputFieldProps {
@@ -31,6 +31,7 @@ interface TextInputFieldProps {
     editable?: boolean;
     height?: number
     icon?: JSX.Element;
+    symbol?: string;  // Now it's a string (currency symbol)
 }
 
 const TextInputField: React.FC<TextInputFieldProps> = ({    
@@ -48,6 +49,7 @@ const TextInputField: React.FC<TextInputFieldProps> = ({
     maxLength, 
     editable,
     height, 
+    symbol,
     icon
 }) => {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -60,6 +62,10 @@ const TextInputField: React.FC<TextInputFieldProps> = ({
                 { borderColor: isFocused ? "#DEBC8E" : "#E9E9E9", height: height } // Change border color on focus
             ]}
         >
+            {/* Currency Symbol (Display only if the symbol is provided) */}
+            {symbol && (
+                <Text style={styles.currencySymbol}>{symbol}</Text>
+            )}
 
             {/* Text Input */}
             <TextInput 
@@ -119,4 +125,10 @@ const styles = StyleSheet.create({
     eyeIcon: {
         padding: 10,
     },
+    currencySymbol: {
+        color: "black", 
+        fontSize: 16, 
+        marginRight: 5,
+        marginVertical:"auto"
+    }
 });

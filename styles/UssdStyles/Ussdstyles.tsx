@@ -79,7 +79,16 @@ const UssdStyles = StyleSheet.create({
         width: "100%",
         backgroundColor: "white",
         borderRadius: 10,
-        padding: 20,
+        paddingHorizontal: 20,
+        paddingVertical:14,
+        elevation: 5,
+      },
+      modalContents: {
+        width: "100%",
+        backgroundColor: "white",
+        borderRadius: 30,
+        paddingHorizontal: 20,
+        paddingVertical:14,
         elevation: 5,
       },
       searchInput: {
@@ -94,6 +103,16 @@ const UssdStyles = StyleSheet.create({
         justifyContent: "space-between",
         paddingVertical: 20,
         paddingHorizontal:10
+       
+      },
+      CategoryItem: {
+        flexDirection: "row",
+        // justifyContent: "space-between",
+        paddingVertical: 15,
+        paddingHorizontal:0,
+        gap:0,
+        borderBottomWidth:1,
+        borderColor:"#E9E9E9"
        
       },
       bankName: {

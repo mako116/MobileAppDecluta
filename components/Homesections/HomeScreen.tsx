@@ -100,7 +100,7 @@ const HomeScreen: React.FC =() => {
         </View>
 
         {/* Content */}
-        <ScrollView
+        <ScrollView 
           scrollEventThrottle={16}
           refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         >

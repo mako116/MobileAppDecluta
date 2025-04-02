@@ -17,7 +17,7 @@ import HeaderProp from '@/UI/Header/HeaderProp';
 
 
 export default function EmailSetup() {
-  const { googleLogin } = useAuth();
+  // const { googleLogin } = useAuth();
   const [userInfo, setUserInfo] = useState({ email: ""});
   const [required, setRequired] = useState("");
   const [token] = useState("")

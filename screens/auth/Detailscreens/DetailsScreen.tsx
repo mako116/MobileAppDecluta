@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { SignUpStyles } from '../../../styles/Signup/signup.style';
 import { router } from 'expo-router';
-import { useAuth } from '@/context/AuthContext';
+// import { useAuth } from '@/context/AuthContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import MessageQuestion from '@/assets/svg/message-question';
 import ArrowUpGray from '@/assets/svg/ArrowUpGray';
@@ -12,7 +12,7 @@ import TextInputField from '@/UI/InputFields/TextInputField';
 import PhoneNumberInputField from '@/UI/InputFields/PhoneNumberInputField';
 
 export default function DetailScreen() {
-  const { register } = useAuth();
+  // const { register } = useAuth();
    const [buttonSpinner, setButtonSpinner] = useState(false);
    const [isButtonEnabled, setIsButtonEnabled] = useState(false); // State for button enabled/disabled
   // const [userInfo, setUserInfo] = useState({
@@ -126,7 +126,7 @@ export default function DetailScreen() {
         setButtonSpinner(false);
         return;
       }
-      await register(firstName, lastName, email, gender, phoneNumber);
+      // await register(firstName, lastName, email, gender, phoneNumber);
       console.log({
         firstName,
         lastName,
