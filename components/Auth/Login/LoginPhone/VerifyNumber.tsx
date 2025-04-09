@@ -6,6 +6,7 @@ import OTPPhoneLogin from '@/screens/auth/OTPScreen/OTPPhoneLogin';
 import { router } from 'expo-router';
 // import styles from '@/styles/Login/styles';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import HeaderWithDesc from '@/UI/Header/HeaderWithDescription';
 
 export default function VerifyOTP() {
   const handlehelp =()=>{
@@ -15,10 +16,7 @@ export default function VerifyOTP() {
     <SafeAreaView edges={['bottom']} style={{ flex: 1, backgroundColor: "#F9F9F9" }}>
       {/* Header Section with Logo */}
       <View style={styles.signs}>
-        <Image
-          source={require('@/assets/images/square.png')}
-          style={{ height: 10, width: 130 }}
-        />
+         <HeaderWithDesc  title='Verify Your Phone Number' />
       </View>
 
       <View
@@ -29,9 +27,7 @@ export default function VerifyOTP() {
       >
         {/* Title and Instructions */}
         <View style={styles.instructions}>
-          <Text style={styles.title}>
-            Verify Your Phone Number
-          </Text>
+          
           <Text style={styles.subtitle}>
             We sent a 4-digit code to{" "}
             <Text style={styles.phoneNumber}>123456789</Text>. Please enter it below to verify your account.
@@ -66,12 +62,12 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   signs: {
-    paddingTop: 70,
-    paddingBottom: 30,
-    display: "flex",
-    flexDirection: 'row',
-    alignItems: "center",
-    justifyContent: "center",
+    paddingTop: 10,
+    paddingBottom: 10,
+    // display: "flex",
+    // flexDirection: 'row',
+    // alignItems: "center",
+    // justifyContent: "center",
     backgroundColor: "#fff",
   },
   logo: {
@@ -90,14 +86,15 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontSize: 19,
     lineHeight: 26.6,
-    fontFamily:"HelveticaNeue"
+    fontFamily:"Helvetica Neue",
   },
   subtitle: {
     color: "#212121",
+    maxWidth:270,
     fontWeight: "400",
     fontSize: 14,
     lineHeight: 19.6,
-    fontFamily:"ProximaNova",
+    fontFamily:"Proxima Nova",
     marginRight: 10,
   },
   phoneNumber: {

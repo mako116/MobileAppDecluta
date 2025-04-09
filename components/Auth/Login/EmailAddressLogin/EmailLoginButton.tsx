@@ -3,7 +3,7 @@ import { AntDesign } from "@expo/vector-icons"
 import { router } from "expo-router"
 import { Image, Text, TouchableOpacity } from "react-native"
 
-const SignUpWithEmail: React.FC = () => {
+const EmailLoginButton: React.FC = () => {
     const handlePhonePush =()=>{
         router.push("/(routes)/login");
     }
@@ -15,4 +15,4 @@ const SignUpWithEmail: React.FC = () => {
     )
 }
 
-export default SignUpWithEmail;
+export default EmailLoginButton;

@@ -9,6 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import TextInputField from '@/UI/InputFields/TextInputField';
 import TermsAndPolicyComponent from '@/components/TermsAndPolicy/TermsAndPolicy';
 import SignUpWithPhone from '../../Signup/PhoneNumberSignUp/SignUpWithPhone';
+import LoginPhoneButton from '../PhoneNumberLoginButton/LoginPhoneButton';
 // import { useAuth } from '@/hooks/useAuth';
 
 export default function Login() {
@@ -155,7 +156,7 @@ export default function Login() {
           </View>
           {successMessage && (
             <Text style={{ color: "green", fontSize: 14, marginTop: 10, textAlign: "center" }}>{successMessage}</Text>
-          )}
+           )}
           <TouchableOpacity onPress={() => router.push("/(routes)/forgot-password")}>
             <Text style={SignUpStyles.forgotSection}>Forgot Password?</Text>
           </TouchableOpacity>
@@ -182,8 +183,7 @@ export default function Login() {
           </View>
 
           <View style={SignUpStyles.socialButtons}>
-              <SignUpWithPhone />
-            
+              <LoginPhoneButton />
               <GoolgSignUp />
 
             {/* Conditionally render the other buttons */}

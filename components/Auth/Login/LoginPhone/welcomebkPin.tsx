@@ -21,10 +21,10 @@ export default function WelcomeBkPin() {
   const [pin, setPin] = useState(["", "", "", ""]);
   const [isModalVisible, setModalVisible] = useState(false); // State to control the modal visibility
 
-  // Function to show the modal when fingerprint button is pressed
-  const handleFingerprint = () => {
-    setModalVisible(true); // Show the modal
-  };
+  // // Function to show the modal when fingerprint button is pressed
+  // const handleFingerprint = () => {
+  //   setModalVisible(true); // Show the modal
+  // };
 
   // Function to close the modal
   const handleCloseModal = () => {
@@ -150,15 +150,15 @@ export default function WelcomeBkPin() {
                     </TouchableOpacity>
                   ))}
                 </View>
-                <View style={welcomePin.calculatorRow}>
-                  <TouchableOpacity
+                <View style={welcomePin.calculatorRows}>
+                  {/* <TouchableOpacity
                     onPress={handleFingerprint}
                     style={welcomePin.calculatorButton}
                   >
                     <Text style={welcomePin.buttonText}>
                       <Ionicons name="finger-print" size={24} color="black" />
                     </Text>
-                  </TouchableOpacity>
+                  </TouchableOpacity> */}
                   <TouchableOpacity
                     style={welcomePin.calculatorButton}
                     onPress={() => handlePinChange("0", pin.indexOf(""))}
@@ -213,7 +213,7 @@ export default function WelcomeBkPin() {
             <View style={{ alignItems: "center", flexDirection: "row", justifyContent: "center" }}>
               <Text style={welcomePin.span}>Not your account?</Text>
               <TouchableOpacity>
-                <Text style={welcomePin.logout}>Log Out</Text>
+                <Text style={welcomePin.logout}> Log Out</Text>
               </TouchableOpacity>
             </View>
           </View>

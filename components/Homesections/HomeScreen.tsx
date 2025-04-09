@@ -120,7 +120,11 @@ const HomeScreen: React.FC =() => {
 
             {/* Banner */}
             <View>
-              <Banner />
+            <Image
+              source={require('../../assets/images/newimages/Main Logo.png')}
+              style={{ width: 150, height: 30 }}
+            />
+              {/* <Banner /> */}
             </View>
 
             {/* Explore Products */}
