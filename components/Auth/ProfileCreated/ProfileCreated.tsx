@@ -28,7 +28,7 @@ export default function ProfileCreationFlow() {
               source={require('../../../assets/images/createdprofile.png')}
               style={{}}
             />
-            <Text style={styles.title}>Profile Created</Text>
+            <Text style={styles.title}>Account Created</Text>
             <Text style={{textAlign:"center",fontFamily:"Proxima Nova",marginTop:-10,lineHeight:19.6, fontSize:14,fontWeight:'400', letterSpacing:0.1}}>Congrats your profile has been created.</Text>
           </View>
 

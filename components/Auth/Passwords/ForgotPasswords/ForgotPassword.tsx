@@ -20,7 +20,7 @@ export default function ForgotPassword() {
       }
 
       const handleRestEmail = () =>{
-        router.push("/(routes)/reset-password")
+        router.push("/(routes)/PasswordResetOtp")
       }
   return (
     <SafeAreaView edges={['bottom']} style = {{ flex: 1, backgroundColor: "#F9F9F9" }}>

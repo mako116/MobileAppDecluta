@@ -1,31 +1,41 @@
 import { View, Text, TextInput, StyleSheet, ActivityIndicator, FlatList, TouchableOpacity } from 'react-native';
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Entypo, Ionicons } from '@expo/vector-icons';
-import { useAuth } from '@/context/AuthContext';
 import { router } from 'expo-router';
+import { useAppDispatch, useAppSelector } from '@/redux/Redux/hook/hook';
+import { verifyOtp, resendOTP } from '@/redux/Redux/slice/authSlice';
 
 export default function OTPMainEmail() {
-  const { verifyOtp, resendOTP } = useAuth();
+  const dispatch = useAppDispatch();
+  const { loading, error: reduxError } = useAppSelector((state) => state.auth);
+  
   const [otp, setOtp] = useState<string[]>([]);
   const [otpLength, setOtpLength] = useState(4); // Default OTP length
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
-  const [timer, setTimer] = useState(60); // Set timer to 1 minute 59 seconds
+  const [timer, setTimer] = useState(60); // Set timer to 60 seconds
+  const [otpVerified, setOtpVerified] = useState(false); // Track OTP verification status
+  const [isVerifying, setIsVerifying] = useState(false); // Track verification state
+  
   const inputRefs = useRef<Array<React.RefObject<TextInput>>>([]);
-   const [otpVerified, setOtpVerified] = useState(false); // Track OTP verification status
-   const [isVerifying, setIsVerifying] = useState(false); // Add this state
- 
-  const timerRef = useRef<number | null>(null); 
+  const timerRef = useRef<number | null>(null);
   const hasNavigated = useRef(false);
 
   useEffect(() => {
     fetchOtpLengthFromApi();
     startCountdown();
     return () => {
-      if (timerRef.current !== null) clearInterval(timerRef.current); // Ensure timerRef is not null
+      if (timerRef.current !== null) clearInterval(timerRef.current);
     };
   }, []);
+
+  // Set error from Redux state if available
+  useEffect(() => {
+    if (reduxError) {
+      setError(reduxError);
+    }
+  }, [reduxError]);
 
   const fetchOtpLengthFromApi = async () => {
     const responseOtpLength = 4; // Replace with actual API response length
@@ -38,8 +48,8 @@ export default function OTPMainEmail() {
 
   const startCountdown = () => {
     if (timerRef.current !== null) clearInterval(timerRef.current); // Clear any existing timer
-    setTimer(60); // Reset timer to 1 minute 59 seconds
-    timerRef.current = window.setInterval(() => { // Use window.setInterval to get the correct ID
+    setTimer(60); // Reset timer to 60 seconds
+    timerRef.current = window.setInterval(() => {
       setTimer(prevTimer => {
         if (prevTimer <= 0) {
           if (timerRef.current !== null) clearInterval(timerRef.current);
@@ -50,16 +60,16 @@ export default function OTPMainEmail() {
     }, 1000);
   };
 
-  const validateOtp = (otp: number[]) => {
-    return otp.every(digit => digit !== null && digit !== undefined);
+  const validateOtp = (otpString: string) => {
+    return otpString.length === otpLength && /^\d+$/.test(otpString);
   };
 
   const handleDemoVerifyOtp = async (otp: string[]) => {
     if (isVerifying || hasNavigated.current) return; // Prevent duplicate execution
   
-    const numericOtp = otp.map(digit => Number(digit));
+    const otpString = otp.join('');
   
-    if (!validateOtp(numericOtp)) {
+    if (!validateOtp(otpString)) {
       setError('Please enter a valid OTP');
       return;
     }
@@ -68,8 +78,7 @@ export default function OTPMainEmail() {
       setIsLoading(true);
       setIsVerifying(true);
   
-      const convertOtp = numericOtp.join('');
-      console.log('Converted OTP:', convertOtp);
+      console.log('OTP String:', otpString);
   
       // Simulate a successful OTP verification without API call
       setTimeout(() => {
@@ -90,40 +99,48 @@ export default function OTPMainEmail() {
       setError('');
     }
   };
-  
 
   const handleVerifyOtp = async (otp: string[]) => {
-    if (isVerifying || hasNavigated.current) return; // Prevent duplicate execution
-  
-    const numericOtp = otp.map(digit => Number(digit));
-  
-    if (!validateOtp(numericOtp)) {
+    if (isVerifying) return; // Remove hasNavigated check to allow re-verification
+    
+    const otpString = otp.join('');
+    
+    if (!validateOtp(otpString)) {
       setError('Please enter a valid OTP');
       return;
     }
-  
+    
     try {
       setIsLoading(true);
-      setIsVerifying(true); // Mar
-      const convertOtp = numericOtp.join('');
-      console.log('Converted OTP:', convertOtp);
-  
-      const response = await verifyOtp(convertOtp);
-  
-      if (response?.data?.message && !hasNavigated.current) {
-        hasNavigated.current = true; // Prevent further navigation
+      setIsVerifying(true);
+      console.log('OTP String:', otpString);
+      
+      // Dispatch the Redux action with OTP as string
+      const result = await dispatch(verifyOtp(otpString)).unwrap();
+      console.log("Verification result:", result); // Add debugging log
+      
+      // Check if result exists with any success indicator (message or verified property)
+      if (result && (result.message || result.verified)) {
         setSuccessMessage('Email address verification successful.');
         setOtpVerified(true);
-        router.push('/(routes)/CreatePassword'); // Navigate once
+        
+        // Add small delay to ensure state updates before navigation
+        setTimeout(() => {
+          router.push('/(routes)/CreatePassword');
+        }, 100);
+      } else {
+        // Handle case where result exists but doesn't have expected properties
+        setError('Verification failed. Please try again.');
+        setOtpVerified(false);
       }
     } catch (error) {
+      console.error("Verification error:", error); // Add debugging log
       setError('Invalid Code');
       setOtpVerified(false);
       setSuccessMessage('');
     } finally {
       setIsLoading(false);
-      setIsVerifying(false); // Reset flag
-      setError('');
+      setIsVerifying(false);
     }
   };
   
@@ -135,36 +152,32 @@ export default function OTPMainEmail() {
     setOtp(newOtp);
   
     if (text && index < inputRefs.current.length - 1) {
-      inputRefs.current[index + 1]?.current?.focus(); // Ensure `current` is accessed
+      inputRefs.current[index + 1]?.current?.focus();
     }
   
     // Debounce handleSignIn to prevent multiple calls
     if (newOtp.every(digit => digit !== '')) {
-      setTimeout(() => handleDemoVerifyOtp(newOtp), 300); // Small delay to ensure only one call
+      setTimeout(() => handleVerifyOtp(newOtp), 300); // Use actual verification instead of demo
     }
-  }, [otp, setOtp, handleDemoVerifyOtp, inputRefs]);
-  
-  
+  }, [otp]);
 
   const handleResendCode = async () => {
     try {
       setIsLoading(true);
-      await resendOTP(); // Call the function here
-      setSuccessMessage('Otp sent successfully');
+      // Dispatch the Redux action instead of using context
+      await dispatch(resendOTP());
+      setSuccessMessage('OTP sent successfully');
     } catch (error) {
-      setError('Unable to send otp');
-      setOtpVerified(false); // Mark OTP as not verified
-      setSuccessMessage(''); // Clear success message on failure
+      setError('Unable to send OTP');
+      setOtpVerified(false);
+      setSuccessMessage('');
     } finally {
       setIsLoading(false);
-      setError(''); // Clear error on success
+      setError('');
     }
-    startCountdown(); // Restart timer
+    startCountdown();
     setOtp(Array(otpLength).fill(''));
-    setError(''); // Clear error when the code is resent
-    setSuccessMessage(''); // Clear success message on resend
-    setOtpVerified(false); // Reset OTP verified status
-    // Trigger OTP resend API call here if needed
+    setOtpVerified(false);
   };
 
   const formatTime = () => {
@@ -184,7 +197,7 @@ export default function OTPMainEmail() {
             style={[
               styles.input,
               error ? styles.inputError : null,
-              otpVerified && item ? styles.inputSuccess : null, // Apply success border color
+              otpVerified && item ? styles.inputSuccess : null,
             ]}
             value={item}
             onChangeText={text => handleChange(text, index)}
@@ -208,7 +221,7 @@ export default function OTPMainEmail() {
           <Text style={styles.successText}>{successMessage}</Text>
         </View>
       ) : null}
-      {isLoading && <ActivityIndicator size="small" color="#DEBC8E" />}
+      {(isLoading || loading) && <ActivityIndicator size="small" color="#DEBC8E" />}
 
       {/* Timer or "Get a new code" button */}
       {timer > 0 ? (
@@ -224,7 +237,6 @@ export default function OTPMainEmail() {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
     paddingHorizontal: 20,
   },
   otpContainer: {
@@ -241,39 +253,38 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     fontSize: 18,
     color: '#333',
-    fontFamily:"Proxima Nova",
+    fontFamily: "Proxima Nova",
     marginHorizontal: 5,
   },
   inputError: {
     borderColor: 'red',
   },
   inputSuccess: {
-    borderColor: 'green', // Success border color when OTP is verified
+    borderColor: 'green',
   },
   errorText: {
     color: 'red',
     fontSize: 14,
     marginBottom: 10,
-    fontFamily:"Proxima Nova",
+    fontFamily: "Proxima Nova",
   },
   successText: {
     color: '#212121',
-    fontWeight:"400",
-    lineHeight:19.6,
-    fontFamily:"Proxima Nova",
+    fontWeight: "400",
+    lineHeight: 19.6,
+    fontFamily: "Proxima Nova",
     fontSize: 14,
   },
   timerText: {
     fontSize: 14,
     color: '#333',
-    fontFamily:"Proxima Nova",
+    fontFamily: "Proxima Nova",
     marginTop: 10,
   },
-  
   resendText: {
     fontSize: 14,
     color: '#DEBC8E',
-    fontFamily:"Proxima Nova",
+    fontFamily: "Proxima Nova",
     fontWeight: 'bold',
   },
 });
