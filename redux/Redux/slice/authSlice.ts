@@ -415,7 +415,119 @@ export const initializeAuth = createAsyncThunk(
   }
 );
 
+export const forgotPassword = createAsyncThunk(
+  'auth/forgotPassword',
+  async (email: string, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await axios.post(
+        `${EXPO_PUBLIC_API_KEY}/api/v1/auth/forgot-password`,
+        { email }
+      );
 
+      if (response.data && response.data.message) {
+        // Save email to Redux state AND AsyncStorage
+        await dispatch(setEmail(email));
+
+        router.push('/(routes)/PasswordResetOtp');
+        return { email, message: response.data.message };
+      } else {
+        return rejectWithValue('Forgot password request failed');
+      }
+    } catch (error: any) {
+      console.error('Forgot password error:', error);
+      return rejectWithValue(error.response?.data?.message || 'Forgot password request failed');
+    }
+  }
+);
+
+
+
+export const verifyResetPasswordOtp = createAsyncThunk(
+  'auth/verifyResetPasswordOtp',
+  async (
+    { email, otp }: { email: string | null; otp: string },
+    { getState, rejectWithValue }
+  ) => {
+    try {
+      let effectiveEmail = email;
+
+
+      if (!effectiveEmail) {
+        const state: any = getState();
+        effectiveEmail = state.auth.email;
+
+        // If still not available, try AsyncStorage
+        if (!effectiveEmail) {
+          effectiveEmail = await AsyncStorage.getItem('userEmail');
+          if (!effectiveEmail) {
+            return rejectWithValue('No email found');
+          }
+        }
+      }
+
+      // Force the OTP to be a string
+      const stringifiedOTP = String(otp);
+
+      const response = await axios.post(
+        `${EXPO_PUBLIC_API_KEY}/api/v1/auth/password/verify-otp/${effectiveEmail}`,
+        { otp: stringifiedOTP },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          }
+        }
+      );
+
+      if (response.data && response.data.message) {
+        router.push('/(routes)/reset-password');
+        return response.data;
+      } else {
+        return rejectWithValue('OTP verification failed');
+      }
+    } catch (error: any) {
+      console.error('Reset password OTP verification error:', error);
+      return rejectWithValue(error.response?.data?.message || 'OTP verification failed');
+    }
+  }
+);
+
+export const resetPassword = createAsyncThunk(
+  'auth/resetPassword',
+  async (
+    { password, confirmPassword }:
+      { password: string; confirmPassword: string },
+    { getState, rejectWithValue }
+  ) => {
+    try {
+      // Get email from state or AsyncStorage
+      const state: any = getState();
+      let email = state.auth.email;
+
+      if (!email) {
+        email = await AsyncStorage.getItem('userEmail');
+        if (!email) {
+          return rejectWithValue('No email found');
+        }
+      }
+
+      const response = await axios.post(
+        `${EXPO_PUBLIC_API_KEY}/api/v1/auth/reset-password`,
+        { email, password, confirmPassword }
+      );
+
+      if (response.data && response.data.message) {
+        router.push('/(routes)/login');
+        return response.data;
+      } else {
+        return rejectWithValue('Password reset failed');
+      }
+    } catch (error: any) {
+      console.error('Reset password error:', error);
+      return rejectWithValue(error.response?.data?.message || 'Password reset failed');
+    }
+  }
+);
 
 // Create the auth slice
 const authSlice = createSlice({

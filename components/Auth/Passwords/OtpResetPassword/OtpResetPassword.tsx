@@ -5,11 +5,18 @@ import { router } from 'expo-router';
 import { commonstyles } from '@/styles/common/common.style';
 import { SignUpStyles } from '@/styles/Signup/signup.style';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useDispatch, useSelector } from 'react-redux';
+import { verifyResetPasswordOtp, resendOTP } from '@/redux/Redux/slice/authSlice';
+import { AppDispatch, RootState } from '@/redux/store'; 
 
-export default function VerifyEmail() {
+export default function ForgotPasswordOTP() {
     const [verificationCode, setVerificationCode] = useState(['', '', '', '']);
     const [buttonSpinner, setButtonSpinner] = useState(false);
     const [timeLeft, setTimeLeft] = useState(59); // 59 seconds timer
+    const [error, setError] = useState('');
+    
+    const dispatch = useDispatch<AppDispatch>();
+    const { email, loading } = useSelector((state: RootState) => state.auth);
     
     // Create refs for each input
     const inputRefs = [
@@ -40,7 +47,6 @@ export default function VerifyEmail() {
     const handleCodeInput = (text, index) => {
         // Only allow digits
         if (/^\d*$/.test(text)) {
-    
             const newVerificationCode = [...verificationCode];
             newVerificationCode[index] = text;
             setVerificationCode(newVerificationCode);
@@ -59,19 +65,41 @@ export default function VerifyEmail() {
         }
     };
 
-    const handleResendCode = () => {
-        // Reset the timer when resending code
-        setTimeLeft(59);
-  
+    const handleResendCode = async () => {
+        if (!email) {
+            setError('Email not found. Please go back and try again.');
+            return;
+        }
+
+        try {
+            await dispatch(resendOTP()).unwrap();
+            // Reset the timer when resending code
+            setTimeLeft(59);
+            setError('');
+        } catch (err) {
+            setError(err as string || 'Failed to resend OTP');
+        }
     };
 
-    const handleVerify = () => {
-        // Add your verification logic here
+    const handleVerify = async () => {
+        // Combine the verification code digits
+        const otp = verificationCode.join('');
+        
+        if (otp.length !== 4) {
+            setError('Please enter a valid 4-digit code');
+            return;
+        }
+
         setButtonSpinner(true);
-        setTimeout(() => {
+        try {
+            // Passing the email directly from Redux state
+            await dispatch(verifyResetPasswordOtp({ email, otp })).unwrap();
+            // Navigation is handled in the thunk
+        } catch (err) {
+            setError(err as string || 'OTP verification failed');
+        } finally {
             setButtonSpinner(false);
- 
-        }, 1500);
+        }
     };
 
     const formatTime = (seconds) => {
@@ -95,8 +123,8 @@ export default function VerifyEmail() {
                             <Entypo name="check" size={8} color="white" />
                         </View>
                         <View style={styles.divider}></View>
-                        <View style={[styles.row, styles.passedStageIcon]}>
-                            <Entypo name="check" size={8} color="white" />
+                        <View style={[styles.row, styles.nextStageIcon]}>
+                            <Text style={{ fontSize: 8 }}>3</Text>
                         </View>
                     </View>
 
@@ -109,7 +137,7 @@ export default function VerifyEmail() {
                         Verify Your Email Address
                     </Text>
                     <Text style={{ marginTop: 10, color: "#212121" }}>
-                        We sent a 4-digit code to matthew.c@gmail.com.
+                        We sent a 4-digit code to {email || "your email"}.
                     </Text>
                     <Text style={{ color: "#212121" }}>
                         Please enter it below to verify your account.
@@ -132,6 +160,10 @@ export default function VerifyEmail() {
                         ))}
                     </View>
 
+                    {error ? (
+                        <Text style={styles.errorText}>{error}</Text>
+                    ) : null}
+
                     <View style={styles.timerContainer}>
                         <Text>Get a new code in {formatTime(timeLeft)}</Text>
                         {timeLeft === 0 && (
@@ -148,7 +180,7 @@ export default function VerifyEmail() {
                         !verificationCode.every(digit => digit !== '') && styles.disabledButton
                     ]} 
                     onPress={handleVerify}
-                    disabled={!verificationCode.every(digit => digit !== '')}
+                    disabled={!verificationCode.every(digit => digit !== '') || buttonSpinner}
                 >
                     {buttonSpinner ? (
                         <ActivityIndicator size="small" color="white" />
@@ -201,6 +233,12 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         backgroundColor: "black"
     },
+    nextStageIcon: {
+        padding: 4,
+        borderRadius: 20,
+        borderWidth: 1,
+        borderColor: 'black'
+    },
     codeContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -234,5 +272,9 @@ const styles = StyleSheet.create({
         flexDirection: "row", 
         justifyContent: "center", 
         marginBottom: 30,
+    },
+    errorText: {
+        color: 'red',
+        marginTop: 5,
     }
 });

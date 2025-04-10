@@ -1,82 +1,124 @@
-import { Feather, MaterialCommunityIcons, AntDesign, Entypo } from '@expo/vector-icons';
+import { MaterialCommunityIcons, AntDesign, Entypo } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
   ScrollView,
-  TextInput,
   TouchableOpacity,
   Image,
   ActivityIndicator,
 } from 'react-native';
-import { NotificationBanner } from '../../../../NotifyAlert/NotificationsALert'; 
-// Ensure the correct path
+import { NotificationBanner } from '../../../../NotifyAlert/NotificationsALert';
 import { Creating } from '@/styles/createPassword/CreatePassword'; 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import TextInputField from '@/UI/InputFields/TextInputField';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetPassword } from '@/redux/Redux/slice/authSlice';
+import { AppDispatch, RootState } from '@/redux/store';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function ResetPassword(): JSX.Element {
   const [buttonSpinner, setButtonSpinner] = useState(false);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [error, setError] = useState('');
   const [notificationVisible, setNotificationVisible] = useState(false);
+  const [userEmail, setUserEmail] = useState<string | null>(null);
+  
+  const dispatch = useDispatch<AppDispatch>();
+  const { email } = useSelector((state: RootState) => state.auth);
 
-  const handlePasswordChange = (text: string) => {
-    setPassword(text);
-  };
+  useEffect(() => {
+    const getEmailFromStorage = async () => {
+      if (email) {
+        setUserEmail(email);
+      } else {
+        try {
+          const storedEmail = await AsyncStorage.getItem('userEmail');
+          if (storedEmail) {
+            setUserEmail(storedEmail);
+          }
+        } catch (err) {
+          console.error('Failed to retrieve email from storage:', err);
+        }
+      }
+    };
+    
+    getEmailFromStorage();
+  }, [email]);
 
-  const handleCreateAccount = () => {
-    setButtonSpinner(true); // Start spinner
+  const handleSubmit = async () => {
+    // Password validation
+    if (!password) {
+      setError('Password is required');
+      return;
+    }
 
-    setTimeout(() => {
-      setButtonSpinner(false); // Stop spinner after 1 second
+    if (password.length < 8) {
+      setError('Password must be at least 8 characters long');
+      return;
+    }
 
-      // Show notification
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+
+    if (!userEmail && !email) {
+      setError('Email not found. Please restart the password recovery process.');
+      return;
+    }
+
+    setButtonSpinner(true);
+    try {
+      await dispatch(resetPassword({ 
+        password, 
+        confirmPassword 
+      })).unwrap();
+      // Navigation is handled in the resetPassword thunk
       setNotificationVisible(true);
-
-      // Navigate to login after 3 seconds
-      setTimeout(() => {
-        router.push('/(routes)/login');
-      }, 3000);
-    }, 1000); // Delay for spinner
+    } catch (err) {
+      setError(err as string || 'Failed to reset password');
+    } finally {
+      setButtonSpinner(false);
+    }
   };
 
   const handleGoBack = () => {
     router.back();
   };
+  
   const handleHelp = () => {
     router.push('/(routes)/need-help');
   };
 
   return (
-    <SafeAreaView edges={['bottom']} style = {{ flex: 1, backgroundColor: "#F9F9F9" }} >
-
-      <View style={[ Creating.rowJustified, { backgroundColor: "#fff" }]}>
+    <SafeAreaView edges={['bottom']} style={{ flex: 1, backgroundColor: "#F9F9F9" }}>
+      <View style={[Creating.rowJustified, { backgroundColor: "#fff" }]}>
         <TouchableOpacity onPress={handleGoBack}>
           <Image source={require("../../../../assets/images/leftArrow.png")} style={{ height: 20, width: 30 }} />
         </TouchableOpacity>
 
-        <View style= { Creating.row } >
-          <View style = {[ Creating.row, Creating.passedStageIcon ]} >
+        <View style={Creating.row}>
+          <View style={[Creating.row, Creating.passedStageIcon]}>
             <Entypo name="check" size={8} color="white" />
           </View>
-          <View style = { Creating.divider } ></View>
-          <View style = {[ Creating.row, Creating.currentStageIcon ]} >
+          <View style={Creating.divider}></View>
+          <View style={[Creating.row, Creating.passedStageIcon]}>
+            <Entypo name="check" size={8} color="white" />
+          </View>
+          <View style={Creating.divider}></View>
+          <View style={[Creating.row, Creating.currentStageIcon]}>
             <Entypo name="check" size={8} color="white" />
           </View>
         </View>
 
         {/* leave empty */}
-        <View style={{ marginLeft: 30 }} >
-        </View>
-
+        <View style={{ marginLeft: 30 }}></View>
       </View>
 
       <ScrollView>
-        
         <View style={Creating.section}>
           <Text
             style={{
@@ -88,6 +130,11 @@ export default function ResetPassword(): JSX.Element {
           >
             Reset Password
           </Text>
+          {userEmail && (
+            <Text style={{ color: '#666', marginTop: 5 }}>
+              Creating new password for {userEmail}
+            </Text>
+          )}
         </View>
 
         <View style={Creating.container}>
@@ -95,9 +142,12 @@ export default function ResetPassword(): JSX.Element {
           <TextInputField
             placeholder="Enter new password"
             value={password}
-            onChangeText={setPassword}
+            onChangeText={(text) => {
+              setPassword(text);
+              setError('');
+            }}
             keyboardType="default"
-            maxLength={11}
+            maxLength={20}
             secureTextEntry={true}
             icon={<AntDesign name="lock" size={20} color="gray" />}
           />
@@ -106,12 +156,19 @@ export default function ResetPassword(): JSX.Element {
           <TextInputField
             placeholder="Confirm new Password"
             value={confirmPassword}
-            onChangeText={setConfirmPassword}
+            onChangeText={(text) => {
+              setConfirmPassword(text);
+              setError('');
+            }}
             keyboardType="default"
-            maxLength={11}
+            maxLength={20}
             secureTextEntry={true}
             icon={<AntDesign name="lock" size={20} color="gray" />}
           />
+
+          {error ? (
+            <Text style={{ color: 'red', marginTop: 5 }}>{error}</Text>
+          ) : null}
 
           <View>
             <TouchableOpacity
@@ -119,8 +176,8 @@ export default function ResetPassword(): JSX.Element {
                 Creating.createAccountButton,
                 buttonSpinner && Creating.disabledButton,
               ]}
-              onPress={handleCreateAccount}
-              disabled={buttonSpinner} // Disable button while processing
+              onPress={handleSubmit}
+              disabled={buttonSpinner}
             >
               {buttonSpinner ? (
                 <ActivityIndicator size="small" color="#000" />
