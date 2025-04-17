@@ -223,6 +223,16 @@ export const verifyOtp = createAsyncThunk(
         effectiveUserId = storedUserId;
       }
 
+      let effectiveEmail = state.auth.email;
+      if (!effectiveEmail) {
+        // to get userId from AsyncStorage if not in state
+        const storedEmail = await AsyncStorage.getItem('userEmail');
+        if (!storedEmail) {
+          return rejectWithValue('No user ID found');
+        }
+        effectiveEmail = storedEmail;
+      }
+
       // Force the OTP to be a string 
       const stringifiedOTP = String(otp);
 
@@ -238,7 +248,7 @@ export const verifyOtp = createAsyncThunk(
       };
 
       // Construct full URL for debugging
-      const apiUrl = `${EXPO_PUBLIC_API_KEY}/api/v1/auth/email/verify-otp/${effectiveUserId}`;
+      const apiUrl = `${EXPO_PUBLIC_API_KEY}/api/v1/auth/email/verify-otp/${effectiveEmail}`;
       console.log('API URL:', apiUrl);
 
       const response = await axios.post(

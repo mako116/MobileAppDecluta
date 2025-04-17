@@ -16,7 +16,7 @@ export default function OTPPageEmail() {
   useEffect(() => {
     const fetchEmail = async () => {
       try {
-        const email = await AsyncStorage.getItem('email');
+        const email = await AsyncStorage.getItem('userEmail');
         setStoredEmail(email);
       } catch (error) {
         console.error('Error fetching email from AsyncStorage:', error);
