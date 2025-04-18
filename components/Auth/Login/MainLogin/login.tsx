@@ -41,7 +41,7 @@ export default function Login() {
   useEffect(() => {
     const fetchEmail = async () => {
       try {
-        const storedEmail = await AsyncStorage.getItem('email');
+        const storedEmail = await AsyncStorage.getItem('userEmail');
         console.log('Stored email:', storedEmail);
         if (storedEmail) {
           setEmail(storedEmail); // Set email to the state

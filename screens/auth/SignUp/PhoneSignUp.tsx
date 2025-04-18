@@ -48,7 +48,7 @@ const PhoneSignUpScreen: React.FC = () => {
                             title=" Continue "
                             onPress={NextPage}
                             backgroundColor="#DEBC8E"
-                            borderWidth="1"
+                            borderWidth= {1}
                         />
                     </View>
                     <View style={[SignUpStyles.signUpRedirect,{justifyContent:"center", paddingVertical: 20, alignItems:"center"}]}>

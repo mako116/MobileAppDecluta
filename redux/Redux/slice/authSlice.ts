@@ -3,6 +3,8 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { router } from 'expo-router';
+import { useDispatch } from 'react-redux';
+import { setAuthData } from '@/redux/slices/AuthSlice';
 
 // Define the auth state type
 interface AuthState {
@@ -24,6 +26,7 @@ const initialState: AuthState = {
 };
 
 const EXPO_PUBLIC_API_KEY = process.env.EXPO_PUBLIC_API_KEY;
+
 
 // Async thunks for auth actions
 export const setEmail = createAsyncThunk(
@@ -153,6 +156,7 @@ export const registerUser = createAsyncThunk(
     gender: string;
     phoneNumber: string;
   }, { rejectWithValue }) => {
+    // const dispatch = useDispatch();
     try {
       const response = await axios.post(`${EXPO_PUBLIC_API_KEY}/api/v1/auth/register`, {
         firstName,
@@ -163,6 +167,7 @@ export const registerUser = createAsyncThunk(
       });
 
       if (response.data && response.data.newUser && response.data.newUser._id) {
+        // dispatch(setAuthData({ token: response.data.token, user: response.data.newUser }));
         const newUserId = response.data.newUser._id;
         await AsyncStorage.setItem('userId', newUserId);
 
