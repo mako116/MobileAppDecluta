@@ -3,7 +3,6 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { router } from 'expo-router';
-import { useDispatch } from 'react-redux';
 import { setAuthData } from '@/redux/slices/AuthSlice';
 
 // Define the auth state type
@@ -58,15 +57,21 @@ export const clearEmail = createAsyncThunk(
 
 export const loginUser = createAsyncThunk(
   'auth/login',
-  async ({ email, password }: { email: string; password: string }, { rejectWithValue }) => {
+  async ({ email, password }: { email: string; password: string }, { rejectWithValue, dispatch }) => {
     try {
       const response = await axios.post(`${EXPO_PUBLIC_API_KEY}/api/v1/auth/login`, { email, password });
 
       if (response.data && response.data.token) {
+        console.log('Login response:', response.data.token);
         await AsyncStorage.setItem('token', response.data.token);
         await AsyncStorage.setItem('userId', response.data.user._id);
         await AsyncStorage.setItem('userEmail', email); // Also store email
-
+        
+        // Dispatch the auth data to the store
+        dispatch(setAuthData({ 
+          token: response.data.token, 
+          user: response.data.user 
+        }));
         const lastLogin = new Date(response.data.lastLogin);
         const twentyDaysAgo = new Date();
         twentyDaysAgo.setDate(twentyDaysAgo.getDate() - 20);
@@ -155,8 +160,7 @@ export const registerUser = createAsyncThunk(
     email: string;
     gender: string;
     phoneNumber: string;
-  }, { rejectWithValue }) => {
-    // const dispatch = useDispatch();
+  }, { rejectWithValue, dispatch }) => {
     try {
       const response = await axios.post(`${EXPO_PUBLIC_API_KEY}/api/v1/auth/register`, {
         firstName,
@@ -173,6 +177,10 @@ export const registerUser = createAsyncThunk(
 
         // Save email to AsyncStorage as part of registration
         await AsyncStorage.setItem('userEmail', email);
+        dispatch(setAuthData({ 
+          token: response.data.token, 
+          user: response.data.user 
+        }));
 
         router.push("/(routes)/OTPEmail");
         return {
