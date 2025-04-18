@@ -15,7 +15,7 @@ export default function DiscoverProducts() {
           paddingVertical: 10,
         }}
       >
-        <Text style={{fontWeight:"700",fontSize:18,lineHeight:22.4,fontFamily:"Helvetica Neue",color:"#212121"}}>Discover great offers</Text>
+        <Text style={{fontWeight:"800",fontSize:18,lineHeight:22.4,fontFamily:"Helvetica Neue",color:"#212121"}}>Discover great offers</Text>
         <View >
           <TouchableOpacity onPress={()=> router.push("/(routes)/HomesectionViewAll/Discover")}  style={{width:100,flexDirection:"row",gap:5,justifyContent:"flex-end", alignItems:"center", paddingRight:5}}>
             <Text style={{fontWeight:"400",fontSize:18,lineHeight:22.4, fontFamily:"Proxima Nova", color:"#212121"}}>View All</Text>
