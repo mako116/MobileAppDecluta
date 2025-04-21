@@ -8,7 +8,9 @@ import {
   TouchableOpacity,
   ScrollView,
   RefreshControl,
+  TextInput,
 } from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
 import LocationIcons from '@/screens/icons';
 import NotificationsAlert from '@/screens/alerts/NotificationsAlert';
 import Banner from '@/screens/BoxBanner/banner/Banner';
@@ -22,59 +24,71 @@ import ProfileKYc from '@/screens/Kyc/BannerH/ProfileKYc';
 import LocationModal from '@/screens/ChangeLocation/changelocationScreen';
 import Homes from '@/styles/Homes/Home.styles';
 import FloatingCart from '@/screens/FloatingCart/FloatingCart';
-import { useAuth } from '@/context/AuthContext';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
-// import Button from '../Button/button';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const HomeScreen: React.FC =() => {
+const HomeScreen: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [currentPopup, setCurrentPopup] = useState(1);
   const [selectedState, setSelectedState] = useState('');
   const [refreshing, setRefreshing] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const res = useSelector((state: RootState) => state.auth.userData);
-  console.log("User data from Redux:", res);
-
+  const userData = useSelector((state: RootState) => state.auth.userData);
+  
+  // Check if user is logged in
+  useEffect(() => {
+    const checkAuthStatus = async () => {
+      try {
+        const token = await AsyncStorage.getItem('token');
+        console.log('token', token);
+        
+        setIsLoggedIn(!!token);
+        console.log('User logged in:', !!token);
+        
+      } catch (error) {
+        console.error('Error checking auth status:', error);
+      }
+    };
+    
+    checkAuthStatus();
+  }, []);
 
   useEffect(() => {
-    if (res) {
-      const userState = res?.state; // Adjust this based on the actual structure
-
+    if (userData) {
+      const userState = userData?.state;
       if (userState) {
         setSelectedState(userState);
       } else {
         setSelectedState("Oyo");
       }
     }
-  }, [res]); // Runs whenever `res` updates
-
+  }, [userData]);
 
   const openModal = () => {
     setModalVisible(true);
     setCurrentPopup(1);
   };
 
-  
-
-
-  // const closeModal = () => {
-  //   setModalVisible(false);
-  //   setCurrentPopup(1);
-  // };
-
   const onRefresh = () => {
     setRefreshing(true);
     setTimeout(() => {
       setRefreshing(false);
-    }, 2000); // 2-second delay
+    }, 2000);
   };
-  
-  {/* Do not remove for testing purpose */}
-  
-  // const handleLogout = async () => {
-  //   await logout();
-  // }
+
+
+  // Add this function to your component
+const clearToken = async () => {
+  try {
+    await AsyncStorage.removeItem('token');
+    setIsLoggedIn(false);
+    console.log('Token cleared successfully');
+  } catch (error) {
+    console.error('Error clearing token:', error);
+  }
+};
 
   return (
     <>
@@ -95,9 +109,11 @@ const HomeScreen: React.FC =() => {
             </TouchableOpacity>
           </View>
           <View style={Homes.rightItems}>
-            <NotificationsAlert />
+          <NotificationsAlert />
           </View>
         </View>
+
+       
 
         {/* Content */}
         <ScrollView
@@ -105,45 +121,34 @@ const HomeScreen: React.FC =() => {
           refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         >
           <View style={Homes.content}>
-            {/* Do not remove for testing purpose */}
+            {/* Complete KYC - Only visible when logged in */}
+            {isLoggedIn && (
+              <View>
+                <ProfileKYc />
+              </View>
+            )}
 
-            {/* <Button
-              title="Log Out"
-              onPress={handleLogout}
-              backgroundColor="#DEBC8E"
-              borderWidth="1"
-            /> */}
-            {/* Complete KYC */}
-            <View>
-              <ProfileKYc />
-            </View>
-
-            {/* Banner */}
+            {/* Banner - Always visible */}
             <View>
               <Banner />
             </View>
 
-            {/* Explore Products */}
-            <View>
-              {/* <ExploreProducts /> */}
-            </View>
-
-            {/* Categories */}
+            {/* Categories - Always visible */}
             <View>
               <Categories />
             </View>
 
-            {/* Recommended Products */}
+            {/* Recommended Products - Always visible */}
             <View>
               <ExploreProducts3 />
             </View>
 
-            {/* Product Banner */}
+            {/* Product Banner - Always visible */}
             <View>
               <ProductBanner />
             </View>
 
-            {/* Discover Products */}
+            {/* Discover Products - Always visible */}
             <View>
               <DiscoverProducts />
             </View>
@@ -160,12 +165,21 @@ const HomeScreen: React.FC =() => {
           />
         </ScrollView>
       </SafeAreaView>
-      {/* Cart Icon Fixed at Bottom */}
-      <FloatingCart/>
       
-      {/* Login Banner */}
-      <Loginbanner />
+      {/* Cart Icon Fixed at Bottom - Always visible */}
+      <FloatingCart />
+
+{/* <TouchableOpacity 
+  style={{padding: 10, backgroundColor: 'red', margin: 10, borderRadius: 5}}
+  onPress={clearToken}
+>
+  <Text style={{color: 'white'}}>Clear Token</Text>
+</TouchableOpacity> */}
+      
+      {/* Login Banner - Only visible when NOT logged in */}
+      {!isLoggedIn && <Loginbanner />}
     </>
   );
-}
-export default HomeScreen; 
+};
+
+export default HomeScreen;

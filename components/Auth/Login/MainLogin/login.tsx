@@ -42,9 +42,8 @@ export default function Login() {
     const fetchEmail = async () => {
       try {
         const storedEmail = await AsyncStorage.getItem('userEmail');
-        console.log('Stored email:', storedEmail);
         if (storedEmail) {
-          setEmail(storedEmail); // Set email to the state
+          setEmail(storedEmail);
         }
       } catch (error) {
         console.error('Error fetching email from AsyncStorage:', error);
@@ -98,9 +97,13 @@ export default function Login() {
       
       if (loginUser.fulfilled.match(resultAction)) {
         setSuccessMessage("Login successful!");
+        
+        // Navigate to home screen after successful login
+        setTimeout(() => {
+          router.push("/(tabs)/home");
+        }, 500);
       } else {
         if (resultAction.payload) {
-          // If we have a payload, it's an error message from our API
           Alert.alert('Login Failed', resultAction.payload as string);
         } else {
           Alert.alert('Login Failed', 'Please check your credentials and try again');
@@ -115,13 +118,12 @@ export default function Login() {
   
   const handleExit = () => {
     setShowExitModal(false);
-    router.back();
+    router.push("/(tabs)/home"); // Always redirect to home on exit
   };
 
   const [showMore, setShowMore] = useState(false);
 
   const handleShowMore = () => {
-    // Set showMore to true when the image is clicked
     setShowMore(prevState => !prevState);
   };
 
@@ -221,7 +223,7 @@ export default function Login() {
               <TouchableOpacity onPress={handleShowMore}>
                 <Image
                   style={{ height: 24, width: 24, resizeMode: "contain" }}
-                  source={require("../../../../assets/images/newimages/Down 2.png")} // Image path
+                  source={require("../../../../assets/images/newimages/Down 2.png")}
                 />
               </TouchableOpacity>
             )}

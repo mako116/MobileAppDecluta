@@ -42,7 +42,7 @@ export default function SplashScreen() {
         }
       } else {
         console.log('No session found. Navigating to login...');
-        router.replace('/(routes)/login');
+        router.replace('/(tabs)/home');
       }
     };
 
