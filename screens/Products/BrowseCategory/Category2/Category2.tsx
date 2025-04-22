@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     padding: 4,
     borderWidth: 1,
     borderColor: '#E9E9E9',  
-    borderRadius: 8, // Slightly rounded corners
+    borderRadius: 8, 
     overflow: 'hidden',
    },
   imageContainer: {

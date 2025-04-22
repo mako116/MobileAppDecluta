@@ -129,7 +129,7 @@ const HomeScreen: React.FC =() => {
 
             {/* Explore Products */}
             <View>
-              <ExploreProducts />
+              {/* <ExploreProducts /> */}
             </View>
 
             {/* Categories */}

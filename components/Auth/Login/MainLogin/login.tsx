@@ -1,27 +1,29 @@
-import { View, Text, ScrollView, Image,  TouchableOpacity, ActivityIndicator, Alert, BackHandler, Modal } from 'react-native';
+import { View, Text, ScrollView, Image, TouchableOpacity, ActivityIndicator, Alert, BackHandler, Modal } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { router } from 'expo-router';
 import { AntDesign } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
-import {SignUpStyles} from '../../../../styles/Signup/signup.style'
+import { SignUpStyles } from '../../../../styles/Signup/signup.style';
 import GoolgSignUp from '../../Signup/GoogleSignup/GoogleSignUpComponent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import TextInputField from '@/UI/InputFields/TextInputField';
 import TermsAndPolicyComponent from '@/components/TermsAndPolicy/TermsAndPolicy';
 import SignUpWithPhone from '../../Signup/PhoneNumberSignUp/SignUpWithPhone';
-import LoginPhoneButton from '../PhoneNumberLoginButton/LoginPhoneButton';
-import Crossbad from '@/assets/svg/crossbad';
-// import { useAuth } from '@/hooks/useAuth';
+// Import Redux hooks
+import { useAppDispatch, useAppSelector } from '@/redux/Redux/hook/hook';
+import { loginUser } from '@/redux/Redux/slice/authSlice';
 
 export default function Login() {
   const [password, setPassword] = useState<string>('');
   const [buttonSpinner, setButtonSpinner] = useState(false);
-  const [userInfo, setUserInfo] = useState({ email: "", password: "" });
   const [showExitModal, setShowExitModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState({ email: "", password: "" })
   const [successMessage, setSuccessMessage] = useState("");
-  // const { loginUser } = useAuth();
   const [email, setEmail] = useState<string>('');
+  
+  // Redux hooks
+  const dispatch = useAppDispatch();
+  const { loading, error } = useAppSelector((state) => state.auth);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -39,7 +41,7 @@ export default function Login() {
   useEffect(() => {
     const fetchEmail = async () => {
       try {
-        const storedEmail = await AsyncStorage.getItem('email');
+        const storedEmail = await AsyncStorage.getItem('userEmail');
         console.log('Stored email:', storedEmail);
         if (storedEmail) {
           setEmail(storedEmail); // Set email to the state
@@ -52,22 +54,32 @@ export default function Login() {
     fetchEmail();
   }, []);
 
+  // Set error message when Redux error state changes
+  useEffect(() => {
+    if (error) {
+      setErrorMessage({
+        email: error.includes('email') ? error : "",
+        password: error.includes('password') ? error : error
+      });
+    }
+  }, [error]);
+
   const validateInputs = () => {
     let errors = { email: "", password: "" };
     let isValid = true;
 
-    if (!userInfo.email) {
-      errors.email = "The email you entered doesn’t exist. Please check and try again.";
+    if (!email) {
+      errors.email = "The email you entered doesn't exist. Please check and try again.";
       isValid = false;
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userInfo.email)) {
-      errors.email = "The email you entered doesn’t exist. Please check and try again.";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errors.email = "The email you entered doesn't exist. Please check and try again.";
       isValid = false;
     }
 
-    if (!userInfo.password) {
+    if (!password) {
       errors.password = "The password you entered is incorrect please try again or reset password.";
       isValid = false;
-    } else if (userInfo.password.length < 6) {
+    } else if (password.length < 6) {
       errors.password = "The password you entered is incorrect please try again or reset password.";
       isValid = false;
     }
@@ -77,36 +89,25 @@ export default function Login() {
   };
 
   const handleSignIn = async () => {
+    if (!validateInputs()) return;
+    
+    setButtonSpinner(true);
     try {
-      setButtonSpinner(true);
-      let errors = { email: "", password: "" };
-      let hasError = false;
-  
-      if (!email) {
-        errors.email = "The email you entered doesn’t exist. Please check and try again.";
-        hasError = true;
-      }  
-  
-      if (!password) {
-        errors.password = "The password you entered is incorrect. Please try again or reset password.";
-        hasError = true;
+      // Dispatch loginUser action
+      const resultAction = await dispatch(loginUser({ email, password }));
+      
+      if (loginUser.fulfilled.match(resultAction)) {
+        setSuccessMessage("Login successful!");
+      } else {
+        if (resultAction.payload) {
+          // If we have a payload, it's an error message from our API
+          Alert.alert('Login Failed', resultAction.payload as string);
+        } else {
+          Alert.alert('Login Failed', 'Please check your credentials and try again');
+        }
       }
-  
-      if (hasError) {
-        setErrorMessage(errors);
-        setButtonSpinner(false);
-        return;
-      }
-  
-      // Proceed with login
-      setErrorMessage({ email: "", password: "" }); // Clear any previous errors
-      console.log("login details", email, password);
-      router.push("/(tabs)/home");
-      // await loginUser({ email, password });
-  
     } catch (err) {
-      Alert.alert('Login Failed');
-      setSuccessMessage("Login failed!");
+      Alert.alert('Login Failed', 'An unexpected error occurred');
     } finally {
       setButtonSpinner(false);
     }
@@ -141,16 +142,19 @@ export default function Login() {
               onChangeText={(value) => setEmail(value.toLowerCase())}
               placeholderTextColor='gray'
             />
-            
+            {errorMessage.email && (
+            <View style={{flexDirection:"row",gap:5, marginHorizontal:14, alignItems:"center"}}>
+              <Text style={{ color: "red", fontSize: 12, marginTop: 5 , marginHorizontal:1 }}>{errorMessage.email}</Text>
+            </View>          
+            )}
           </View>
 
           <View style={{ marginTop: 5, marginHorizontal: 16 }}>
             <Text style={[SignUpStyles.label]}>Password</Text>
             <TextInputField
-              placeholder="Enter password" 
-              value={userInfo.password}
-              onChangeText={(value) => {setUserInfo({ ...userInfo, password: value });
-              setPassword(value);}}
+              placeholder="Enter password"
+              value={password}
+              onChangeText={(value) => setPassword(value)}
               keyboardType="default"
               maxLength={11}
               error={errorMessage.password}
@@ -167,7 +171,7 @@ export default function Login() {
           </TouchableOpacity>
 
           <TouchableOpacity style={SignUpStyles.loginButton} onPress={handleSignIn}>
-            {buttonSpinner ? (
+            {buttonSpinner || loading ? (
               <ActivityIndicator size="small" color="white" />
             ) : (
               <Text style={SignUpStyles.loginText}>Login</Text>
@@ -198,8 +202,6 @@ export default function Login() {
                   <AntDesign name="apple1" size={22} color="black" />
                   <Text style={{ color: "#000000", lineHeight: 19.6, fontSize: 16, fontWeight: '400' , fontFamily:"ProximaNova"}}>Continue with Apple</Text>
                 </TouchableOpacity>
-
-                
               </>
             )}
 
@@ -213,11 +215,8 @@ export default function Login() {
                 />
               </TouchableOpacity>
             )}
-
-
             </View>
           </View>
-        
         </View>
       </ScrollView>
       {/* Custom Exit Modal */}
@@ -261,7 +260,6 @@ export default function Login() {
         </View>
       </Modal>
       <TermsAndPolicyComponent />
-
     </View>
   );
 }

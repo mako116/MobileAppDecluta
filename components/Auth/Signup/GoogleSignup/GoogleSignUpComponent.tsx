@@ -19,7 +19,7 @@ const GoolgSignUp:React.FC = () => {
       console.log('access token', access_token)
 
       // Post to Backend
-      axios.post('http://localhost:3000/api/v1/auth/google-register', { token: access_token })
+      axios.post('https://decluttakingsever.onrender.com/api/v1/auth/google-register', { token: access_token })
         .then((res) => {
           console.log('User Registered:', res.data);
         })

@@ -3,41 +3,39 @@ import React, { useState, useEffect } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { SignUpStyles } from '../../../styles/Signup/signup.style';
 import { router } from 'expo-router';
-// import { useAuth } from '@/context/AuthContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import MessageQuestion from '@/assets/svg/message-question';
 import ArrowUpGray from '@/assets/svg/ArrowUpGray';
 import ArrowGrayDown from '@/assets/svg/ArrowGrayDown';
 import TextInputField from '@/UI/InputFields/TextInputField';
 import PhoneNumberInputField from '@/UI/InputFields/PhoneNumberInputField';
+// Import Redux hooks and actions
+import { useAppDispatch, useAppSelector } from '@/redux/Redux/hook/hook';
+import { registerUser, setEmail } from '@/redux/Redux/slice/authSlice';
 
 export default function DetailScreen() {
-  // const { register } = useAuth();
-   const [buttonSpinner, setButtonSpinner] = useState(false);
-   const [isButtonEnabled, setIsButtonEnabled] = useState(false); // State for button enabled/disabled
-  // const [userInfo, setUserInfo] = useState({
-  //   firstName: "",
-  //   LastName: "",
-  //   Gender: "",
-  //   Phone: "",
-  //   email: ""
-  // });
+  // Replace useAuth with Redux
+  const dispatch = useAppDispatch();
+  const { loading, error } = useAppSelector((state) => state.auth);
+  
+  const [buttonSpinner, setButtonSpinner] = useState(false);
+  const [isButtonEnabled, setIsButtonEnabled] = useState(false); // State for button enabled/disabled
   const [showExitModal, setShowExitModal] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false); // Toggle for custom dropdown
   const [firstName, setFirstName] = useState<string>('')
   const [lastName, setLastName] = useState<string>('')
   const [gender, setGender] = useState<string>('')
-  const [email, setEmail] = useState<string>('')
+  const [email, setEmailState] = useState<string>('')
   const [phoneNumber, setPhoneNumber] = useState('');
 
   // Retrieve email from AsyncStorage when the component mounts
   useEffect(() => {
     const fetchEmail = async () => {
       try {
-        const storedEmail = await AsyncStorage.getItem('email');
+        const storedEmail = await AsyncStorage.getItem('userEmail');
         console.log('Stored email:', storedEmail);
         if (storedEmail) {
-          setEmail(storedEmail); // Set email to the state
+          setEmailState(storedEmail); // Set email to the state
         }
       } catch (error) {
         console.error('Error fetching email from AsyncStorage:', error);
@@ -46,15 +44,6 @@ export default function DetailScreen() {
 
     fetchEmail();
   }, []);
-
-  const handleSaveEmail = async (email: string) => {
-    try {
-      await AsyncStorage.setItem('email', email.toLowerCase());
-      console.log('Email saved successfully:', email);
-    } catch (error) {
-      console.error('Error saving email to AsyncStorage:', error);
-    }
-  };
 
   // Check if the required fields are filled
   useEffect(() => {
@@ -67,7 +56,6 @@ export default function DetailScreen() {
     );
   }, [firstName, lastName, gender, email, phoneNumber]);
   
-
   // Handle phone number change, only numeric values
   const handlePhoneChange = (number: string) => {
     const filteredNumber = number.replace(/[^0-9]/g, ''); // Remove non-numeric characters
@@ -88,7 +76,6 @@ export default function DetailScreen() {
     }, [])
   );
  
-
   // Toggle dropdown for gender selection
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -99,24 +86,6 @@ export default function DetailScreen() {
     setGender(gender);
     setIsDropdownOpen(false); // Close dropdown after selection
   };
-  // for quick debugging
-  const NextPage = () => {
-    setButtonSpinner(true);
-  
-    // Assuming you have an email state
-    if (!email) {
-      console.error("Email is missing");
-      setButtonSpinner(false);
-      return;
-    }
-  
-    handleSaveEmail(email); // Pass the email argument
-  
-    setTimeout(() => {
-      router.push("/(routes)/OTPEmail");
-      setButtonSpinner(false);
-    }, 1000);
-  };
   
   const handleSignUp = async () => {
     try {
@@ -126,11 +95,23 @@ export default function DetailScreen() {
         setButtonSpinner(false);
         return;
       }
-      // await register(firstName, lastName, email, gender, phoneNumber);
-      console.log({
+      
+      // First, update email in Redux state
+      await dispatch(setEmail(email.toLowerCase()));
+      
+      // Then register the user
+      await dispatch(registerUser({
+        firstName, 
+        lastName, 
+        email: email.toLowerCase(), 
+        gender, 
+        phoneNumber
+      }));
+      
+      console.log('Registration data:', {
         firstName,
         lastName,
-        email,
+        email: email.toLowerCase(),
         gender,
         phoneNumber,
       });
@@ -142,9 +123,10 @@ export default function DetailScreen() {
     }
   };
 
-  const handleHelp = () =>{
+  const handleHelp = () => {
     router.push("/(routes)/need-help")
   }
+  
   return (
     <View>
       <ScrollView style={{ flex: 1}} scrollEventThrottle={1}>
@@ -166,7 +148,7 @@ export default function DetailScreen() {
           <View  style={{marginTop:10}}>
             <Text style={SignUpStyles.label}>Last name</Text>
             <TextInputField
-              placeholder="Enter your legal first name"
+              placeholder="Enter your legal last name"
               value={lastName}
               onChangeText={(value) => setLastName(value)}
               keyboardType="default"
@@ -210,10 +192,10 @@ export default function DetailScreen() {
           <View style={{marginTop:10}}>
             <Text style={SignUpStyles.label}>Email</Text>
             <TextInputField
-              placeholder="Enter your legal first name"
+              placeholder="Enter your email address"
               value={email}
-              onChangeText={(value) => setEmail(value)}
-              keyboardType="default"
+              onChangeText={(value) => setEmailState(value)}
+              keyboardType="email-address"
               placeholderTextColor='gray'
             />
           </View>
@@ -235,7 +217,6 @@ export default function DetailScreen() {
               keyboardType="default"
               placeholderTextColor='gray'
             />
-            
           </View>
         </View>
       </ScrollView>
@@ -244,20 +225,24 @@ export default function DetailScreen() {
       }}>
         {/* Next Button */}
         <TouchableOpacity
-          onPress={NextPage}
+          onPress={handleSignUp}
           style={[
-            
             SignUpStyles.loginButtons,
-            !isButtonEnabled && { backgroundColor: "#E9E9E9" } // Gray out if disabled
+            !isButtonEnabled && { backgroundColor: "#E9E9E9" }
           ]}
-          disabled={!isButtonEnabled} // Disable button if not enabled
+          disabled={!isButtonEnabled}
         >
-          {buttonSpinner ? (
+          {loading || buttonSpinner ? (
             <ActivityIndicator size="small" color="white" />
           ) : (
             <Text style={[ !isButtonEnabled && { backgroundColor: "#E9E9E9", color:"#E9E9E9" },SignUpStyles.loginText]}>Next</Text>
           )}
         </TouchableOpacity>
+
+        {/* Display error message if there is one */}
+        {error && (
+          <Text style={{ color: 'red', textAlign: 'center', marginTop: 10 }}>{error}</Text>
+        )}
 
         <View style={{flexDirection:"row", justifyContent: "center", gap:5, paddingTop:25}}>
           <MessageQuestion/>
@@ -268,6 +253,5 @@ export default function DetailScreen() {
         </View>
       </View>
     </View>
-      
-   );
+  );
 }
