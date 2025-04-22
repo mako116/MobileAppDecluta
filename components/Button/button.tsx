@@ -11,6 +11,7 @@ export default function Button({
     icon,
     disabled,
     flex,
+    fontSize,
     onPress,
 }: {
     title: string;
@@ -20,6 +21,8 @@ export default function Button({
     padding?: number
     paddingHorizontal?: number 
     disabled?: boolean
+    fontSize?: number;
+
     icon? : React.ReactNode
     flex?: boolean
     onPress: () => void;
@@ -49,7 +52,7 @@ export default function Button({
         >
             {icon}
             <Text style={{
-                fontSize: 18,
+                fontSize: fontSize ?? 18, // Use provided fontSize or default to 18
                 fontWeight: '400',
                 textAlign: "center",
                 fontFamily: "Proxima Nova",

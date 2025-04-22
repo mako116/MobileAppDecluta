@@ -100,7 +100,7 @@ const SellItemMain = () => {
                     <TouchableOpacity
                     onPress={()=> router.push("/sellanItem/secondStep")}
                         style={[SignUpStyles.loginButtons, !isButtonEnabled && { backgroundColor: "#E9E9E9" }]}
-                        // disabled={!isButtonEnabled}
+                        disabled={!isButtonEnabled}
                     >
                         <Text style={[!isButtonEnabled && { color: "#A0A0A0" }, SignUpStyles.loginText]}>
                             Next

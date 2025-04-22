@@ -12,6 +12,7 @@ import SignUpWithPhone from '../../Signup/PhoneNumberSignUp/SignUpWithPhone';
 // Import Redux hooks
 import { useAppDispatch, useAppSelector } from '@/redux/Redux/hook/hook';
 import { loginUser } from '@/redux/Redux/slice/authSlice';
+import LoginWithPhone from '../LoginWithPhone/LoginWithPhone';
 
 export default function Login() {
   const [password, setPassword] = useState<string>('');
@@ -170,7 +171,7 @@ export default function Login() {
             <Text style={SignUpStyles.forgotSection}>Forgot Password?</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={SignUpStyles.loginButton} onPress={handleSignIn}>
+          <TouchableOpacity style={SignUpStyles.loginButton} onPress={()=> router.push("/(tabs)/home")}>
             {buttonSpinner || loading ? (
               <ActivityIndicator size="small" color="white" />
             ) : (
@@ -192,7 +193,7 @@ export default function Login() {
           </View>
 
           <View style={SignUpStyles.socialButtons}>
-              <LoginPhoneButton />
+              <LoginWithPhone />
               <GoolgSignUp />
 
             {/* Conditionally render the other buttons */}

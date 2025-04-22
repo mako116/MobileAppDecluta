@@ -74,12 +74,13 @@ export default function TabLayout() {
               <Image
               source={
                 focused
-                  ? require('../../assets/images/tab/add-square.png')  
-                  :  require('../../assets/images/newimages/add-square.png') 
+                  ? require('../../assets/images/tab/Frame 648183.png')  
+                  :  require('../../assets/images/tab/Frame 648183.png') 
               }   
                  style={{
-                  width: 24,
-                  height: 24,
+                  width: 64,
+                  height: 54,
+                  marginBottom:35
                 }}
               />
             ),
@@ -139,6 +140,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderTopEndRadius: 12,
     paddingVertical: 20,
+    // paddingBottom:25
   },
   label: {
     textTransform: 'capitalize',

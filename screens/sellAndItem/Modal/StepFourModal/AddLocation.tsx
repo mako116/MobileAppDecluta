@@ -8,13 +8,14 @@ import {
   Animated,
   PanResponder,
 } from 'react-native';
-import { AntDesign, Entypo } from '@expo/vector-icons';
 import Button from '@/components/Button/button';
 import HeaderNotification from '@/styles/Notification/HomeHeaderNotificationTabs';
 import YourCart from '@/styles/Cart/YourCart.styles';
 import Close from '@/assets/images/kyc/close';
 import UssdStyles from '@/styles/UssdStyles/Ussdstyles';
 import SellItems from '@/styles/sellItem/Sellitem';
+import ArrowUpGray from '@/assets/svg/ArrowUpGray';
+import ArrowGrayDown from '@/assets/svg/ArrowGrayDown';
 
 interface LocationOption {
   label: string;
@@ -48,6 +49,7 @@ const AddLocationModal: React.FC<AddLocationModalProps> = ({
   const [selectionModalVisibles, setSelectionModalVisibles] = useState(false);
   const [selectionType, setSelectionType] = useState<'state' | 'city' | 'lga'>('state');
   const translateY = useRef(new Animated.Value(0)).current;
+    const [animation] = useState(new Animated.Value(0));
 
   const panResponder = useRef(
     PanResponder.create({
@@ -110,7 +112,44 @@ const AddLocationModal: React.FC<AddLocationModalProps> = ({
     if (selectionType === 'lga' && selectedCity) return lgas;
     return [];
   };
+      // const [isOpen, setIsOpen] = useState(false);
+        
+      const [isStateOpen, setIsStateOpen] = useState(false);
+const [isCityOpen, setIsCityOpen] = useState(false);
+const [isLGAOpen, setIsLGAOpen] = useState(false);
 
+const toggleDropdown = (type: 'state' | 'city' | 'lga') => {
+  if (type === 'state') {
+    setIsStateOpen(prev => !prev);
+    setIsCityOpen(false);
+    setIsLGAOpen(false);
+  } else if (type === 'city') {
+    setIsCityOpen(prev => !prev);
+    setIsStateOpen(false);
+    setIsLGAOpen(false);
+  } else if (type === 'lga') {
+    setIsLGAOpen(prev => !prev);
+    setIsStateOpen(false);
+    setIsCityOpen(false);
+  }
+};
+
+      // const toggleDropdown = () => {
+      //     if (isOpen) {
+      //       Animated.timing(animation, {
+      //         toValue: 0,
+      //         duration: 300,
+      //         useNativeDriver: true,
+      //       }).start(() => setIsOpen(false));
+      //     } else {
+      //       setIsOpen(true);
+      //       Animated.timing(animation, {
+      //         toValue: 1,
+      //         duration: 300,
+      //         useNativeDriver: true,
+      //       }).start();
+      //     }
+      //   };
   return (
     <Modal animationType="slide" transparent visible={modalVisibles}>
       <View style={HeaderNotification.overlay}>
@@ -123,20 +162,47 @@ const AddLocationModal: React.FC<AddLocationModalProps> = ({
             </TouchableOpacity>
             </View>
 
-            <Text style={[SellItems.label,{marginVertical:10}]}>States</Text>
-            <TouchableOpacity onPress={() => openSelectionModal('state')} style={[HeaderNotification.pickerContainer,{paddingVertical:20}]}>
+            <Text style={[SellItems.label,{marginVertical:10,fontSize:14,}]}>States</Text>
+            
+            <View >
+            <TouchableOpacity 
+            onPress={() => 
+            {
+              toggleDropdown('state');
+            openSelectionModal('state')} 
+            }
+            style={[UssdStyles.dropdown, { paddingVertical: 20, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }]}
+            >
               <Text>{selectedState ? selectedState.label : 'Select State'}</Text>
+              {isStateOpen  ? <ArrowUpGray /> : <ArrowGrayDown />}
             </TouchableOpacity>
             
-            <Text style={[SellItems.label,{marginVertical:10}]}>City</Text>
-              <TouchableOpacity onPress={() => openSelectionModal('city')} style={[HeaderNotification.pickerContainer,{paddingVertical:20}]}>
+            </View>
+            
+            <Text style={[SellItems.label,{marginVertical:10,fontSize:14}]}>City</Text>
+              <TouchableOpacity onPress={() => 
+                {
+                  toggleDropdown('city');
+                openSelectionModal('city')}
+                 }
+                 style={[UssdStyles.dropdown, { paddingVertical: 20, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }]}
+                 >
                 <Text>{selectedCity ? selectedCity.label : 'Select City'}</Text>
+                {isCityOpen  ? <ArrowUpGray /> : <ArrowGrayDown />}
               </TouchableOpacity> 
         
             
-              <Text style={[SellItems.label,{marginVertical:10}]}>L.G.A/Region</Text>
-              <TouchableOpacity onPress={() => openSelectionModal('lga')} style={[HeaderNotification.pickerContainer,{paddingVertical:20,marginBottom:40}]}>
+              <Text style={[SellItems.label,{marginVertical:10,fontSize:14}]}>L.G.A/Region</Text>
+              <TouchableOpacity onPress={() => 
+                {
+                  toggleDropdown('lga');
+                openSelectionModal('lga')}
+               }
+               style={[UssdStyles.dropdown, { paddingVertical: 20, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',marginBottom:"11%" }]}
+               >
                 <Text>{selectedLGA ? selectedLGA.label : 'Select LGA'}</Text>
+                {isLGAOpen  ? <ArrowUpGray /> : <ArrowGrayDown />}
+
               </TouchableOpacity>
             
 

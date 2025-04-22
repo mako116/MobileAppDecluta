@@ -15,7 +15,7 @@ import Homes from '@/styles/Homes/Home.styles';
 type Category = {
   id: number;
   name: string;
-  subcategories?: { id: number; name: string }[]; // Add this optional property for subcategories
+  subcategories?: { id: number; name: string }[];  
 };
 
 interface LocationOption {
@@ -24,7 +24,7 @@ interface LocationOption {
   }
   
 
-const SellItemFourth = () => {
+const SellItemFourth = () => { 
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedState, setSelectedState] = useState<LocationOption | null>(null);
     const [selectedCity, setSelectedCity] = useState<LocationOption | null>(null);

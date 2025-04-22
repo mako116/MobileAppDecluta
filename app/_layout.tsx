@@ -69,10 +69,7 @@ import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import React, { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-<<<<<<< HEAD
-// import { AuthProvider } from '@/context/AuthContext';
-=======
->>>>>>> 7ce7caa3cf028d9a89604f8ede30d3fbe2098fd1
+ 
 import { CartProvider } from '@/context/CartContext';
 import { OfferProvider } from '@/context/OfferContext';
 import { persistor, store } from '@/redux/store';
