@@ -10,6 +10,7 @@ import TextInputField from '@/UI/InputFields/TextInputField';
 import TermsAndPolicyComponent from '@/components/TermsAndPolicy/TermsAndPolicy';
 import SignUpWithPhone from '../../Signup/PhoneNumberSignUp/SignUpWithPhone';
 import LoginPhoneButton from '../PhoneNumberLoginButton/LoginPhoneButton';
+import Crossbad from '@/assets/svg/crossbad';
 // import { useAuth } from '@/hooks/useAuth';
 
 export default function Login() {
@@ -17,7 +18,7 @@ export default function Login() {
   const [buttonSpinner, setButtonSpinner] = useState(false);
   const [userInfo, setUserInfo] = useState({ email: "", password: "" });
   const [showExitModal, setShowExitModal] = useState(false);
-  const [errorMessage, setErrorMessage] = useState({ email: "", password: "" });
+  const [errorMessage, setErrorMessage] = useState({ email: "", password: "" })
   const [successMessage, setSuccessMessage] = useState("");
   // const { loginUser } = useAuth();
   const [email, setEmail] = useState<string>('');
@@ -71,28 +72,46 @@ export default function Login() {
       isValid = false;
     }
 
-    setErrorMessage(errors);
+    // setErrorMessage(errors);
     return isValid;
   };
 
   const handleSignIn = async () => {
     try {
       setButtonSpinner(true);
+      let errors = { email: "", password: "" };
+      let hasError = false;
+  
       if (!email) {
-        alert("Please enter your email and password");
+        errors.email = "The email you entered doesn’t exist. Please check and try again.";
+        hasError = true;
+      }  
+  
+      if (!password) {
+        errors.password = "The password you entered is incorrect. Please try again or reset password.";
+        hasError = true;
+      }
+  
+      if (hasError) {
+        setErrorMessage(errors);
         setButtonSpinner(false);
         return;
       }
-      router.push("/(tabs)/home")
-      // await loginUser({email, password});
-      console.log("login details", email, password )
-
+  
+      // Proceed with login
+      setErrorMessage({ email: "", password: "" }); // Clear any previous errors
+      console.log("login details", email, password);
+      router.push("/(tabs)/home");
+      // await loginUser({ email, password });
+  
     } catch (err) {
       Alert.alert('Login Failed');
       setSuccessMessage("Login failed!");
+    } finally {
       setButtonSpinner(false);
-    }   
+    }
   };
+  
   const handleExit = () => {
     setShowExitModal(false);
     router.back();
@@ -118,41 +137,27 @@ export default function Login() {
             <TextInputField
               placeholder="Enter email"
               value={email}
+              error={errorMessage.email}
               onChangeText={(value) => setEmail(value.toLowerCase())}
               placeholderTextColor='gray'
             />
-            {errorMessage.email && (
-            <View style={{flexDirection:"row",gap:5, marginHorizontal:14, alignItems:"center"}}>
-              <Text style={{ color: "red", fontSize: 12, marginTop: 5 , marginHorizontal:1 }}>{errorMessage.email}</Text>
-
-            </View>          
-            )}
+            
           </View>
 
           <View style={{ marginTop: 5, marginHorizontal: 16 }}>
             <Text style={[SignUpStyles.label]}>Password</Text>
             <TextInputField
-              placeholder="Enter password"
+              placeholder="Enter password" 
               value={userInfo.password}
               onChangeText={(value) => {setUserInfo({ ...userInfo, password: value });
               setPassword(value);}}
               keyboardType="default"
               maxLength={11}
+              error={errorMessage.password}
               secureTextEntry={true}
               icon={<AntDesign name="lock" size={20} color="gray" />}
             />
-            {errorMessage.password && (
-              <View 
-                style={{
-                  flexDirection:"row",
-                  gap:5, 
-                  marginHorizontal:14, 
-                  alignItems:"center"
-                }}
-              >
-                <Text style={{ color: "red", fontSize: 12, marginTop: 5 ,marginHorizontal:1  }}>{errorMessage.password}</Text>
-              </View>          
-            )}
+            
           </View>
           {successMessage && (
             <Text style={{ color: "green", fontSize: 14, marginTop: 10, textAlign: "center" }}>{successMessage}</Text>

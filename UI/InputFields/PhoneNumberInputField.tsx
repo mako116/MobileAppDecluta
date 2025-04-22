@@ -10,7 +10,7 @@ interface PhoneInputFieldProps {
 
 const PhoneNumberInputField: React.FC<PhoneInputFieldProps> = ({
   value,
-  onChangeText,
+  onChangeText, 
   error,
 }) => {
   const showError = Boolean(error);

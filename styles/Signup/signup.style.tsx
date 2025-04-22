@@ -31,6 +31,13 @@ export const SignUpStyles = StyleSheet.create({
       paddingTop: 20,
       paddingBottom: 20,
     },
+    Containers:{
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom:10,
+      marginTop:5,
+      marginRight:20
+    },
     genderOption: {
       padding: 10,
       marginHorizontal: 5,

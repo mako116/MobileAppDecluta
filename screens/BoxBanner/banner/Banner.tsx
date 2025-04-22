@@ -1,76 +1,81 @@
-import { View, Text, StyleSheet, Image, ImageBackground } from 'react-native';
-import React from 'react';
-import BuyndSellItems from '../BuyndSell/BuyndSellITems';
-import Searchbox from '../SearchBox/Searchbox';
-import BannerCategory from '../BannerCategory/BannerCategory';
-import { router } from 'expo-router';
+import { View, Text, StyleSheet, Image, ScrollView, Dimensions } from 'react-native';
+import React, { useRef, useState } from 'react';
+
+const { width } = Dimensions.get('window');
+
+const images = [
+  require('../../../assets/images/dklive/banner.png'),
+  require('../../../assets/images/dklive/banner.png'),
+  require('../../../assets/images/dklive/banner.png'),
+];
 
 export default function Banner() {
- 
-  return (
-   <View style={{paddingHorizontal:12}}>
-     <ImageBackground
-      source={require('../../../assets/images/bannerBg.png')}
-      style={styles.background}
-      
-    >
-      {/* Overlay with semi-transparent background color */}
-      <View style={styles.overlay} />
+  const [activeIndex, setActiveIndex] = useState(0);
+  const scrollRef = useRef<ScrollView>(null);
 
-      {/* Content */}
-      <View style={styles.container}>
-        <View style={{ flexDirection: 'row', gap: 4 }}>
-          <Image source={require('../../../assets/images/heroicons_sp.png')}  style={{ objectFit:"contain", width:20, height:20}} />
-          <Text style={styles.headingText}>Hello, There!</Text>
-        </View>
-        <Text style={styles.subText}>How can we help you today?</Text>
+  const handleScroll = (event: any) => {
+    const slide = Math.round(event.nativeEvent.contentOffset.x / width);
+    setActiveIndex(slide);
+  };
+
+  return (
+    <View style={{ marginBottom: 10 }}>
+      <ScrollView
+        horizontal
+        pagingEnabled
+        showsHorizontalScrollIndicator={false}
+        onScroll={handleScroll}
+        scrollEventThrottle={16}
+        ref={scrollRef}
+      >
+        {images.map((img, index) => (
+          <Image
+            key={index}
+            source={img}
+            style={styles.image}
+            resizeMode="cover"
+          />
+        ))}
+      </ScrollView>
+
+      {/* Dot Indicator */}
+      <View style={styles.dotContainer}>
+        {images.map((_, index) => (
+          <View
+            key={index}
+            style={[
+              styles.dot,
+              activeIndex === index && styles.activeDot,
+            ]}
+          />
+        ))}
       </View>
-      <View>
-        <BuyndSellItems/>
-      </View>
-      <View>
-        <Searchbox/>
-      </View>
-      <View>
-        <BannerCategory/>
-      </View>
-    </ImageBackground>
-   </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  background: {
-    padding: 10,
-    borderRadius: 10,  
-    overflow: 'hidden', 
- 
-    // borderRadius:10,
-  },
-  overlay: {
-    backgroundColor: '#DEBC8E',
-    opacity: 0.7, 
-     ...StyleSheet.absoluteFillObject, 
- // Rounded corners for the overlay
-  },
-  container: {
+  image: {
+    width: width - 24,
+    height: 200,
     borderRadius: 10,
-    paddingTop: 20,
-    paddingVertical: 10,
-    zIndex: 1, // Place content above overlay
+    marginHorizontal: 12,
   },
-  headingText: {
-    fontWeight: '700',
-    fontSize: 22,
-    lineHeight: 22.4,
-    color: '#212121',
-    fontFamily: 'Helvetica Neue',
+  dotContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 8,
   },
-  subText: {
-    fontWeight: '400',
-    fontSize: 16,
-    lineHeight: 22.4,
-    color: '#212121',
-    fontFamily: 'ProximaNova',
+  dot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: '#D9D9D9',
+    marginHorizontal: 4,
+  },
+  activeDot: {
+    backgroundColor: '#DEBC8E',
+    width: 20,
+    height: 10,
   },
 });
