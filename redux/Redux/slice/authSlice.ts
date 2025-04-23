@@ -55,6 +55,45 @@ export const clearEmail = createAsyncThunk(
   }
 );
 
+export const loginWithTokenUser = createAsyncThunk(
+  'auth/loginWithToken',
+  async (_, { rejectWithValue, dispatch }) => {
+    try {
+      const token = await AsyncStorage.getItem('token');
+
+      if (!token) {
+        return rejectWithValue('No token found');
+      }
+
+      const response = await axios.get(`${process.env.EXPO_PUBLIC_API_KEY}/api/v1/auth/token-login`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const user = response.data.user;
+
+      if (user) {
+        await AsyncStorage.setItem('userId', user._id);
+        await AsyncStorage.setItem('userEmail', user.email);
+
+        // Save to Redux
+        dispatch(setAuthData({ token, user }));
+
+        // Navigate to home or another screen
+        router.push('/(tabs)/home');
+
+        return { token, user };
+      } else {
+        return rejectWithValue('Token login failed: No user in response');
+      }
+    } catch (error: any) {
+      console.error('Token login error:', error);
+      return rejectWithValue(error.response?.data?.message || 'Token login failed');
+    }
+  }
+);
+
 export const loginUser = createAsyncThunk(
   'auth/login',
   async ({ email, password }: { email: string; password: string }, { rejectWithValue, dispatch }) => {
@@ -87,6 +126,49 @@ export const loginUser = createAsyncThunk(
           token: response.data.token,
           userId: response.data.user._id,
           email
+        };
+      } else {
+        return rejectWithValue('Login failed: No token in response');
+      }
+    } catch (error: any) {
+      console.error('Login error:', error);
+      return rejectWithValue(error.response?.data?.message || 'Login failed');
+    }
+  }
+);
+
+export const loginUserWithPin = createAsyncThunk(
+  'auth/login/pin',
+  async ({ newPin }: {newPin: string }, { rejectWithValue, dispatch }) => {
+    try {
+      const storedEmail = await AsyncStorage.getItem('userEmail');
+      const response = await axios.post(`${EXPO_PUBLIC_API_KEY}/api/v1/auth/login-with-pin`, { email: storedEmail, newPin });
+
+      if (response.data && response.data.token) {
+        console.log('Login response:', response.data.token);
+        await AsyncStorage.setItem('token', response.data.token);
+        await AsyncStorage.setItem('userId', response.data.user._id);
+        
+        // Dispatch the auth data to the store
+        dispatch(setAuthData({ 
+          token: response.data.token, 
+          user: response.data.user 
+        }));
+        const lastLogin = new Date(response.data.lastLogin);
+        const twentyDaysAgo = new Date();
+        twentyDaysAgo.setDate(twentyDaysAgo.getDate() - 20);
+
+        // Determine the redirect path
+        if (lastLogin <= twentyDaysAgo) {
+          router.push("/(routes)/LoginOTP");
+        } else {
+          router.push("/(tabs)/home");
+        }
+
+        return {
+          token: response.data.token,
+          userId: response.data.user._id,
+          data: response.data
         };
       } else {
         return rejectWithValue('Login failed: No token in response');
@@ -179,7 +261,7 @@ export const registerUser = createAsyncThunk(
         await AsyncStorage.setItem('userEmail', email);
         dispatch(setAuthData({ 
           token: response.data.token, 
-          user: response.data.user 
+          user: response.data.newUser,
         }));
 
         router.push("/(routes)/OTPEmail");
@@ -336,7 +418,48 @@ export const addPassword = createAsyncThunk(
   }
 );
 
+export const addPinPassword = createAsyncThunk(
+  'auth/addPinPassword',
+  async ({
+    newPin,
+    userId
+  }: {
+    newPin: string;
+    userId?: string
+  }, { getState, rejectWithValue }) => {
+    try {
+      const state: any = getState();
+      let effectiveUserId = userId;
 
+      if (!effectiveUserId) {
+        effectiveUserId = state.auth.userId;
+      }
+
+      if (!effectiveUserId) {
+        const storedUserId = await AsyncStorage.getItem('userId');
+        if (!storedUserId) {
+          return rejectWithValue('No user ID found');
+        }
+        effectiveUserId = storedUserId;
+      }
+
+      const response = await axios.patch(
+        `${EXPO_PUBLIC_API_KEY}/api/v1/auth/set-pin/create/${effectiveUserId}`,
+        { newPin}
+      );
+
+      if (response.data && response.data.message) {
+        router.push('/(routes)/Profile-created');
+        return response.data;
+      } else {
+        return rejectWithValue('Set password failed');
+      }
+    } catch (error: any) {
+      console.error('Set password error:', error);
+      return rejectWithValue(error.response?.data?.message || 'Failed to set password');
+    }
+  }
+);
 
 export const addResidentInfo = createAsyncThunk(
   'auth/addResidentInfo',
@@ -407,7 +530,7 @@ export const logoutUser = createAsyncThunk(
     try {
       await AsyncStorage.removeItem('token');
       await AsyncStorage.removeItem('userId');
-      router.push("/(routes)/splashscren");
+      router.push("/(routes)/login");
       return null;
     } catch (error) {
       console.error('Logout error:', error);
@@ -566,6 +689,20 @@ const authSlice = createSlice({
     // Clear email
     builder.addCase(clearEmail.fulfilled, (state) => {
       state.email = null;
+    });
+
+    // login with token
+    builder.addCase(loginWithTokenUser.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(loginWithTokenUser.fulfilled, (state, action) => {
+      state.loading = false;
+      state.userToken = action.payload.token;
+    });
+    builder.addCase(loginWithTokenUser.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload as string;
     });
 
     // Login

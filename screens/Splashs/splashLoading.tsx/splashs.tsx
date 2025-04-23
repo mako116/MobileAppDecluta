@@ -4,12 +4,14 @@ import { useRouter } from 'expo-router';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState, store } from '@/redux/store';
 import Lottie from 'lottie-react-native';
+import { useAppDispatch } from '@/redux/Redux/hook/hook';
+import { loginWithTokenUser } from '@/redux/Redux/slice/authSlice';
 
 const TWELVE_HOURS = 12 * 60 * 60 * 1000; // 12 hours in milliseconds
 
 export default function SplashScreen() {
   const router = useRouter();
-
+  const dispatch = useAppDispatch();
   const token = useSelector((state: RootState) => state.auth.token);
   const lastLogin = useSelector((state: RootState) => state.auth.lastLogin);
   const [isReady, setIsReady] = useState(false);
@@ -24,30 +26,31 @@ export default function SplashScreen() {
 
   useEffect(() => {
     const checkAuth = async () => {
-      if (!isReady) return; // Wait for Redux to hydrate
-
+      if (!isReady) return;
+  
       console.log('Splash screen delay...');
       await new Promise((resolve) => setTimeout(resolve, 1800));
-
-      if (token && lastLogin) {
-        const timeElapsed = Date.now() - lastLogin;
-        console.log(`Token found. Last login was ${timeElapsed / (1000 * 60)} minutes ago.`);
-
-        if (timeElapsed < TWELVE_HOURS) {
-          console.log('Navigating to home...');
-          router.replace('/(tabs)/home');
-        } else {
-          console.log('Session expired. Navigating to Welcome Back...');
-          router.replace('/(routes)/welcomebackPIn');
-        }
-      } else {
-        console.log('No session found. Navigating to login...');
+  
+      try {
+        await dispatch(loginWithTokenUser()).unwrap(); // try to login with token
+        console.log('Token valid. Navigating to home...');
         router.replace('/(tabs)/home');
+      } catch (error: any) {
+        console.warn('Token invalid or expired:', error);
+  
+        if (error === 'Token login failed: No token found' || error === 'Access token is missing' || error === 'Invalid or expired token') {
+          console.log('Navigating to Welcome Back due to token issue...');
+          router.replace('/(routes)/welcomebackPIn');
+        } else {
+          console.log('Navigating to home anyway (fallback)...');
+          router.replace('/(tabs)/home');
+        }
       }
     };
-
+  
     checkAuth();
-  }, [isReady, token, lastLogin]);
+  }, [isReady]);
+  
 
   if (!isReady) return null;
 

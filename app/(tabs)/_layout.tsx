@@ -27,7 +27,7 @@ export default function TabLayout() {
     };
     
     checkAuthStatus();
-  }, [auth.userToken]); 
+  }, [auth]); 
   
   const openModal = () => {
     setIsModalVisible(true);

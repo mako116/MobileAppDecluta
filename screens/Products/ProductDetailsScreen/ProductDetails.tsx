@@ -65,13 +65,12 @@ const ProductDetailsScreen = () => {
             <View style={{ backgroundColor: 'white', paddingHorizontal: 16, paddingTop: 30 }} >
                 <ScrollView
                     horizontal
-                    
                 >
                     <View style={[ styles.imageContainer ]} >
-                        <Image source={Number(imageUrl)} style={styles.image} />
+                        <Image source={{ uri: typeof imageUrl === 'string' ? imageUrl : '' }} style={styles.image} />
                     </View>
                     <View style={[ styles.imageContainer ]} >
-                        <Image source={Number(imageUrl)} style={styles.image} />
+                        <Image source={{ uri: typeof imageUrl === 'string' ? imageUrl : '' }} style={styles.image} />
                     </View>
                 </ScrollView>
                 <ScrollView

@@ -8,13 +8,10 @@ import {
   TouchableOpacity,
   ScrollView,
   RefreshControl,
-  TextInput,
 } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
 import LocationIcons from '@/screens/icons';
 import NotificationsAlert from '@/screens/alerts/NotificationsAlert';
 import Banner from '@/screens/BoxBanner/banner/Banner';
-import ExploreProducts from '@/screens/Products/ExploreNewFinds/Explore/ExploreProducts';
 import Categories from '@/screens/Products/BrowseCategory/Categories/Categories';
 import ExploreProducts3 from '@/screens/Products/RecommendProducts/Explore3/ExploreProducts3';
 import ProductBanner from '@/screens/Products/ProductBanner/Banner/banner';
@@ -27,6 +24,8 @@ import FloatingCart from '@/screens/FloatingCart/FloatingCart';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Button from '../Button/button';
+import { logoutUser } from '@/redux/Redux/slice/authSlice';
 
 const HomeScreen: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -89,6 +88,12 @@ const clearToken = async () => {
     console.error('Error clearing token:', error);
   }
 };
+{/* Do not remove for testing purpose */}
+  
+  const handleLogout = async () => {
+    logoutUser();
+    clearToken();
+  }
 
   return (
     <>
@@ -121,6 +126,15 @@ const clearToken = async () => {
           refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         >
           <View style={Homes.content}>
+            {/* Do not remove for testing purpose */}
+
+            {/* <Button
+              title="Log Out"
+              onPress={handleLogout}
+              backgroundColor="#DEBC8E"
+              borderWidth={0}
+            /> */}
+
             {/* Complete KYC - Only visible when logged in */}
             {isLoggedIn && (
               <View>
