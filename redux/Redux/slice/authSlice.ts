@@ -139,10 +139,10 @@ export const loginUser = createAsyncThunk(
 
 export const loginUserWithPin = createAsyncThunk(
   'auth/login/pin',
-  async ({ newPin }: {newPin: string }, { rejectWithValue, dispatch }) => {
+  async ({ pin }: {pin: string }, { rejectWithValue, dispatch }) => {
     try {
       const storedEmail = await AsyncStorage.getItem('userEmail');
-      const response = await axios.post(`${EXPO_PUBLIC_API_KEY}/api/v1/auth/login-with-pin`, { email: storedEmail, newPin });
+      const response = await axios.post(`${EXPO_PUBLIC_API_KEY}/api/v1/auth/login-with-pin`, { email: storedEmail, pin });
 
       if (response.data && response.data.token) {
         console.log('Login response:', response.data.token);

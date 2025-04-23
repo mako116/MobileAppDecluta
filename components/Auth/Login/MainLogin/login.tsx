@@ -8,7 +8,6 @@ import GoolgSignUp from '../../Signup/GoogleSignup/GoogleSignUpComponent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import TextInputField from '@/UI/InputFields/TextInputField';
 import TermsAndPolicyComponent from '@/components/TermsAndPolicy/TermsAndPolicy';
-import SignUpWithPhone from '../../Signup/PhoneNumberSignUp/SignUpWithPhone';
 // Import Redux hooks
 import { useAppDispatch, useAppSelector } from '@/redux/Redux/hook/hook';
 import { loginUser } from '@/redux/Redux/slice/authSlice';
