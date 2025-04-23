@@ -70,6 +70,86 @@ export default function TabLayout() {
             ),
           }}
         />
+        <Tabs.Screen
+          name="myorders/index"
+          options={{
+            title: 'My Orders',
+            tabBarIcon: ({ focused }) => (
+              <Image
+              source={
+                focused
+                  ? require('../../assets/images/tab/task-square.png')  
+                  :  require('../../assets/images/newimages/task-square.png') 
+              }               
+               style={{
+                  width: 24,
+                  height: 24,
+                }}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="sell/index"
+          options={{
+            title: 'Sell',
+            tabBarIcon: ({ focused }) => (
+              <Image
+              source={
+                focused
+                  ? require('../../assets/images/tab/Frame 648183.png')  
+                  :  require('../../assets/images/tab/Frame 648183.png') 
+              }   
+                 style={{
+                  width: 64,
+                  height: 54,
+                  marginBottom:35
+                }}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="message/index"
+          options={{
+            title: 'Messages',
+            tabBarIcon: ({ focused }) => (
+              <Image
+              source={
+                focused
+                  ? require('../../assets/images/tab/Group 473.png')  
+                  :  require('../../assets/images/newimages/message.png') 
+              }   
+                 style={{
+                  width: 24,
+                  height: 24,
+                }}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="more/index"
+          options={{
+            title: 'More',
+            tabBarIcon: ({ color }) => (
+              <TouchableOpacity
+                onPress={() => {
+                  openModal(); // Open modal on "More" tab press
+                }}
+              >
+                <Image
+                  source={moreActive ? require('../../assets/images/newimages/Group 4.png') : require('../../assets/images/newimages/Group 473.png')} 
+                  style={{
+                    width: 24,
+                    height: 24,
+                    // tintColor: color,
+                  }}
+                />
+              </TouchableOpacity>
+            ),
+          }}
+        />
         
         {isLoggedIn && (
           <Tabs.Screen
@@ -174,6 +254,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderTopEndRadius: 12,
     paddingVertical: 20,
+    // paddingBottom:25
   },
   label: {
     textTransform: 'capitalize',

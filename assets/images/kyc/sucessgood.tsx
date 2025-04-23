@@ -1,10 +1,21 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import Svg, { Rect, Circle, Path } from 'react-native-svg';
 
-const SuccessGood = () => {
+interface SuccessGoodProps {
+  width?: number;
+  height?: number;
+  marginHorizontal?: number;
+}
+
+const SuccessGood: React.FC<SuccessGoodProps> = ({
+  width = 135,
+  height = 135,
+  marginHorizontal = 0,
+}) => {
   return (
-       <Svg width="135" height="135" viewBox="0 0 135 135" fill="none">
+    <View style={{ marginHorizontal:"auto" }}>
+      <Svg width={width} height={height} viewBox="0 0 135 135" fill="none">
         <Rect width="135" height="135" rx="67.5" fill="#F5EADC" />
         <Circle cx="68" cy="67" r="56" fill="#DEBC8E" />
         <Path
@@ -19,8 +30,8 @@ const SuccessGood = () => {
           strokeLinejoin="round"
         />
       </Svg>
-   );
+    </View>
+  );
 };
 
- 
 export default SuccessGood;

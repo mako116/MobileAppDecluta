@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { StyleSheet, TextInput, View, TouchableOpacity } from "react-native";
+import { StyleSheet, TextInput, View, TouchableOpacity, Text } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
+import Crossbad from "@/assets/svg/crossbad";
 
 interface TextInputFieldProps {
     placeholder?: string;
@@ -31,6 +32,9 @@ interface TextInputFieldProps {
     editable?: boolean;
     height?: number
     icon?: JSX.Element;
+    symbol?: string;  // Now it's a string (currency symbol)
+    error?: string;
+
 }
 
 const TextInputField: React.FC<TextInputFieldProps> = ({    
@@ -48,18 +52,28 @@ const TextInputField: React.FC<TextInputFieldProps> = ({
     maxLength, 
     editable,
     height, 
-    icon
+    symbol,
+    icon,
+    error
 }) => {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [isFocused, setIsFocused] = useState(false);
+    const showError = Boolean(error);
 
     return (
+        <View>
+            
         <View 
             style={[
                 styles.container, 
-                { borderColor: isFocused ? "#DEBC8E" : "#E9E9E9", height: height } // Change border color on focus
+                { borderColor: isFocused ? "#DEBC8E" : "#E9E9E9", height: height }, // Change border color on focus
+                showError && styles.errorBorder,
             ]}
         >
+            {/* Currency Symbol (Display only if the symbol is provided) */}
+            {symbol && (
+                <Text style={styles.currencySymbol}>{symbol}</Text>
+            )}
 
             {/* Text Input */}
             <TextInput 
@@ -94,6 +108,13 @@ const TextInputField: React.FC<TextInputFieldProps> = ({
                 </TouchableOpacity>
             )}
         </View>
+        {showError && 
+                   <View style={styles.Containers}>
+                   <Crossbad />
+                  <Text style={styles.errorText}>{error}</Text>
+                  </View>
+                 }
+        </View>
     );
 }
 
@@ -107,7 +128,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 5,
         paddingHorizontal: 10,
-        marginVertical: 10,
+        marginVertical: 5,
     },
     textInput: {
         flex: 1,
@@ -119,4 +140,28 @@ const styles = StyleSheet.create({
     eyeIcon: {
         padding: 10,
     },
+    Containers:{
+        flexDirection: 'row',
+        alignItems: 'center',
+        // marginBottom:10,
+        // marginTop:5,
+        marginRight:20
+      },
+    currencySymbol: {
+        color: "black", 
+        fontSize: 16, 
+        marginRight: 5,
+        marginVertical:"auto"
+    },
+    errorText: {
+        color: '#FF4D4F',
+        fontSize: 12,
+        marginTop: 4,
+        fontFamily: "Proxima Nova",
+        lineHeight:19,
+        marginLeft: 5,
+      },
+      errorBorder: {
+        borderColor: '#FF4D4F',
+      },
 });

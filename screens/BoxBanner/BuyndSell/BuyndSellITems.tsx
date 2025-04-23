@@ -23,7 +23,7 @@ export default function BuyndSellItems() {
       </TouchableOpacity>
 
       {/* Second Box */}
-      <TouchableOpacity>
+      <TouchableOpacity onPress={()=> router.push("/(routes)/sellanItem/FirstStep")}>
         <View style={styles.box}>
           <View style={{ backgroundColor: '#F5EADC',justifyContent:"center", paddingHorizontal:"3%", paddingVertical:22}}>
             <Image source={require('../../../assets/images/newimages/wallet.png')}   style={{width:22,height:22,paddingHorizontal:"5%", marginHorizontal:"auto"}}   />

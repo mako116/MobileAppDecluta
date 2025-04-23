@@ -137,14 +137,14 @@ export default function OTPPhoneLogin() {
       {/* Display only one of success or error message */}
       {error && !successMessage ? (
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-          <Entypo name="cross" size={24} color="red" style={styles.errorText} />
+          <Entypo name="cross" size={24} color="#E42527" style={styles.errorText} />
           <Text style={styles.errorText}>{error}</Text>
         </View>
       ) : null}
       {successMessage && !error ? (
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
           <Ionicons name="checkmark-circle-sharp" size={24} style={styles.successText} />
-          <Text style={styles.successText}>{successMessage}</Text>
+          <Text style={[styles.successText,{color:"#000"}]}>{successMessage}</Text>
         </View>
       ) : null}
       {isLoading && <ActivityIndicator size="small" color="#007bff" />}
@@ -182,18 +182,18 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   inputError: {
-    borderColor: 'red',
+    borderColor: '#E42527',
   },
   inputSuccess: {
-    borderColor: 'green', // Success border color when OTP is verified
+    borderColor: '#009217', // Success border color when OTP is verified
   },
   errorText: {
-    color: 'red',
+    color: '#E42527',
     fontSize: 14,
     marginBottom: 10,
   },
   successText: {
-    color: 'green',
+    color: '#009217',
     fontSize: 16,
     marginBottom: 10,
   },

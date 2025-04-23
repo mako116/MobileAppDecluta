@@ -2,6 +2,7 @@ import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import React, { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+ 
 import { CartProvider } from '@/context/CartContext';
 import { OfferProvider } from '@/context/OfferContext';
 import { persistor, store } from '@/redux/store';

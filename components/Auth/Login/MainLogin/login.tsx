@@ -12,12 +12,13 @@ import SignUpWithPhone from '../../Signup/PhoneNumberSignUp/SignUpWithPhone';
 // Import Redux hooks
 import { useAppDispatch, useAppSelector } from '@/redux/Redux/hook/hook';
 import { loginUser } from '@/redux/Redux/slice/authSlice';
+import LoginWithPhone from '../LoginWithPhone/LoginWithPhone';
 
 export default function Login() {
   const [password, setPassword] = useState<string>('');
   const [buttonSpinner, setButtonSpinner] = useState(false);
   const [showExitModal, setShowExitModal] = useState(false);
-  const [errorMessage, setErrorMessage] = useState({ email: "", password: "" });
+  const [errorMessage, setErrorMessage] = useState({ email: "", password: "" })
   const [successMessage, setSuccessMessage] = useState("");
   const [email, setEmail] = useState<string>('');
   
@@ -83,7 +84,7 @@ export default function Login() {
       isValid = false;
     }
 
-    setErrorMessage(errors);
+    // setErrorMessage(errors);
     return isValid;
   };
 
@@ -140,6 +141,7 @@ export default function Login() {
             <TextInputField
               placeholder="Enter email"
               value={email}
+              error={errorMessage.email}
               onChangeText={(value) => setEmail(value.toLowerCase())}
               placeholderTextColor='gray'
             />
@@ -158,30 +160,20 @@ export default function Login() {
               onChangeText={(value) => setPassword(value)}
               keyboardType="default"
               maxLength={11}
+              error={errorMessage.password}
               secureTextEntry={true}
               icon={<AntDesign name="lock" size={20} color="gray" />}
             />
-            {errorMessage.password && (
-              <View 
-                style={{
-                  flexDirection:"row",
-                  gap:5, 
-                  marginHorizontal:14, 
-                  alignItems:"center"
-                }}
-              >
-                <Text style={{ color: "red", fontSize: 12, marginTop: 5 ,marginHorizontal:1  }}>{errorMessage.password}</Text>
-              </View>          
-            )}
+            
           </View>
           {successMessage && (
             <Text style={{ color: "green", fontSize: 14, marginTop: 10, textAlign: "center" }}>{successMessage}</Text>
-          )}
+           )}
           <TouchableOpacity onPress={() => router.push("/(routes)/forgot-password")}>
             <Text style={SignUpStyles.forgotSection}>Forgot Password?</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={SignUpStyles.loginButton} onPress={handleSignIn}>
+          <TouchableOpacity style={SignUpStyles.loginButton} onPress={()=> router.push("/(tabs)/home")}>
             {buttonSpinner || loading ? (
               <ActivityIndicator size="small" color="white" />
             ) : (
@@ -203,8 +195,7 @@ export default function Login() {
           </View>
 
           <View style={SignUpStyles.socialButtons}>
-              <SignUpWithPhone />
-            
+              <LoginWithPhone />
               <GoolgSignUp />
 
             {/* Conditionally render the other buttons */}

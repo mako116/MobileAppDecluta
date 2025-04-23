@@ -121,7 +121,7 @@ const clearToken = async () => {
        
 
         {/* Content */}
-        <ScrollView
+        <ScrollView 
           scrollEventThrottle={16}
           refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         >
@@ -144,6 +144,10 @@ const clearToken = async () => {
 
             {/* Banner - Always visible */}
             <View>
+            {/* <Image
+              source={require('../../assets/images/dklive/banner.png')}
+              // style={{ width: 150, height: 30 }}
+            /> */}
               <Banner />
             </View>
 

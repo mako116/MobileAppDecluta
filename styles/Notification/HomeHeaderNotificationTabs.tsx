@@ -77,9 +77,16 @@ const HeaderNotification = StyleSheet.create({
     },
     modalContentContainerOne: {
         backgroundColor: 'white',
-        borderTopLeftRadius: 20,
+         borderTopLeftRadius: 20,
         borderTopRightRadius: 20, 
     },
+    modalContentContainerOnes: {
+      backgroundColor: 'white',
+      margin:"auto",
+      borderRadius: 5,
+      marginHorizontal:20,
+      // borderTopRightRadius: 20, 
+  },
     modalContentTwo: {
         backgroundColor: 'white',
         paddingHorizontal: 20,
