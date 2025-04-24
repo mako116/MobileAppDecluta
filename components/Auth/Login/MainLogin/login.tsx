@@ -172,7 +172,7 @@ export default function Login() {
             <Text style={SignUpStyles.forgotSection}>Forgot Password?</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={SignUpStyles.loginButton} onPress={()=> router.push("/(tabs)/home")}>
+          <TouchableOpacity style={SignUpStyles.loginButton} onPress={handleSignIn}>
             {buttonSpinner || loading ? (
               <ActivityIndicator size="small" color="white" />
             ) : (

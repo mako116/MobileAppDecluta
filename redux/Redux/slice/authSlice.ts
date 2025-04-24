@@ -101,6 +101,7 @@ export const loginUser = createAsyncThunk(
       const response = await axios.post(`${EXPO_PUBLIC_API_KEY}/api/v1/auth/login`, { email, password });
 
       if (response.data && response.data.token) {
+        console.log('Login response:', response.data);
         console.log('Login response:', response.data.token);
         await AsyncStorage.setItem('token', response.data.token);
         await AsyncStorage.setItem('userId', response.data.user._id);
