@@ -1,8 +1,12 @@
 import { View, Text, TextInput, FlatList, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 
 export default function ProductsCategories() {
+  // Use Expo Router instead of React Navigation
+  const router = useRouter();
+  
   const categories = [
     {
       id: '1',
@@ -36,6 +40,11 @@ export default function ProductsCategories() {
     },
   ];
 
+  // Function to handle search press and navigate to search page
+  const handleSearchPress = () => {
+
+    router.push('/(routes)/SearchPages');
+  };
  
   const renderCategoryItem = ({ item }) => (
     <TouchableOpacity style={styles.categoryItem}>
@@ -52,14 +61,16 @@ export default function ProductsCategories() {
     <View style={styles.container}>
       <View style={styles.searchContainer}>
         <Text style={styles.searchTitle}>Search for anything!</Text>
-        <View style={styles.searchBar}>
+        <TouchableOpacity style={styles.searchBar} onPress={handleSearchPress}>
           <Ionicons name="search-outline" size={20} color="#999" style={styles.searchIcon} />
           <TextInput
             style={styles.searchInput}
             placeholder="Search phones, laptops, furniture & more..."
             placeholderTextColor="#999"
+            editable={false} // Make input not editable since we'll navigate on touch
+            pointerEvents="none" // Prevents input from receiving touch events
           />
-        </View>
+        </TouchableOpacity>
       </View>
 
       {/* Category Header */}
@@ -87,9 +98,9 @@ export default function ProductsCategories() {
 }
 
 const styles = StyleSheet.create({
+  // All your existing styles remain unchanged
   container: {
     marginTop: 1,
-  
   },
   searchContainer: {
     marginBottom: 20,

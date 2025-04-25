@@ -16,7 +16,7 @@ import { SignUpStyles } from "@/styles/Signup/signup.style";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import welcomePin from "@/styles/welcomebackpin/welcomeback.styles";
-import { loginUserWithPin } from "@/redux/Redux/slice/authSlice";
+import { loginUserWithPin, logoutUser } from "@/redux/Redux/slice/authSlice";
 import { useAppDispatch } from "@/redux/Redux/hook/hook";
 
 export default function WelcomeBkPin() {
@@ -108,6 +108,19 @@ export default function WelcomeBkPin() {
       }
     }
     setPin(updatedPin);
+  };
+
+  // Handle logout action - clear token and navigate to login screen
+  const handleLogout = async () => {
+    try {
+      // Dispatch logout action to clear authentication token
+      await dispatch(logoutUser());
+      
+      // Navigate to login screen
+      router.replace("/login");
+    } catch (error) {
+      Alert.alert('Logout Failed', 'An error occurred while logging out.');
+    }
   };
 
   return (
@@ -257,8 +270,8 @@ export default function WelcomeBkPin() {
               </View>
             </Modal>
             <View style={{ alignItems: "center", flexDirection: "row", justifyContent: "center" }}>
-              <Text style={welcomePin.span}>Not your account?</Text>
-              <TouchableOpacity>
+              <Text style={welcomePin.pinText}>Not your account?</Text>
+              <TouchableOpacity onPress={handleLogout}>
                 <Text style={welcomePin.logout}>Log Out</Text>
               </TouchableOpacity>
             </View>

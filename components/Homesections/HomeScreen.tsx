@@ -139,6 +139,12 @@ const clearToken = async () => {
             {isLoggedIn && (
               <View>
                 <ProfileKYc />
+                <TouchableOpacity 
+  style={{padding: 10, backgroundColor: 'red', margin: 10, borderRadius: 5}}
+  onPress={clearToken}
+>
+  <Text style={{color: 'white'}}>Clear Token</Text>
+</TouchableOpacity> 
               </View>
             )}
 
@@ -187,12 +193,7 @@ const clearToken = async () => {
       {/* Cart Icon Fixed at Bottom - Always visible */}
       <FloatingCart />
 
-{/* <TouchableOpacity 
-  style={{padding: 10, backgroundColor: 'red', margin: 10, borderRadius: 5}}
-  onPress={clearToken}
->
-  <Text style={{color: 'white'}}>Clear Token</Text>
-</TouchableOpacity> */}
+
       
       {/* Login Banner - Only visible when NOT logged in */}
       {!isLoggedIn && <Loginbanner />}
