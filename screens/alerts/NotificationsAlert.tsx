@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function NotificationsAlert() {
   const { cart } = useCart();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+  
   // Check if user is logged in
   useEffect(() => {
     const checkAuthStatus = async () => {
@@ -21,7 +21,7 @@ export default function NotificationsAlert() {
     
     checkAuthStatus();
   }, []);
-
+  
   const getCartSummary = () => {
     let totalAmount = 0;
     let uniqueItemCount = cart.length; // Unique items count is the number of items in the cart.
@@ -35,42 +35,47 @@ export default function NotificationsAlert() {
   
   const { uniqueItemCount } = getCartSummary();
   
+  // Handle navigation based on auth status
+  const handleAuthRequiredNavigation = (route) => {
+    if (isLoggedIn) {
+      router.push(route);
+    } else {
+      router.push("/(routes)/login");
+    }
+  };
+  
   return (
     <View style={styles.container}>
-      {/* Live Icon - Only visible when logged in */}
-      {isLoggedIn && (
-        <TouchableOpacity onPress={() => router.push("/(routes)/DkLive")}>
-          <View style={styles.circle}>
-            <Image 
-              source={require('../../assets/images/newimages/live.png')} 
-              style={{width: 36.5, height: 30, objectFit: "contain"}} 
-            />
-          </View>
-        </TouchableOpacity>
-      )}
-      
-      {/* Notifications - Only visible when logged in */}
-      {isLoggedIn && (
-        <TouchableOpacity 
-          onPress={() => router.push("/(routes)/Notifications")} 
-          style={{marginTop: 7, marginRight: 12}}
-        >
-          <Image 
-            source={require('../../assets/images/newimages/notification-bing.png')} 
-            style={{width: 24, height: 24, objectFit: "contain"}} 
+      {/* Live Icon - Always visible */}
+      <TouchableOpacity onPress={() => handleAuthRequiredNavigation("/(routes)/DkLive")}>
+        <View style={styles.circle}>
+          <Image
+            source={require('../../assets/images/newimages/live.png')}
+            style={{width: 36.5, height: 30, objectFit: "contain"}}
           />
-          <View style={styles.redDot}></View>
-        </TouchableOpacity>
-      )}
+        </View>
+      </TouchableOpacity>
+      
+      {/* Notifications - Always visible */}
+      <TouchableOpacity
+        onPress={() => handleAuthRequiredNavigation("/(routes)/Notifications")}
+        style={{marginTop: 7, marginRight: 12}}
+      >
+        <Image
+          source={require('../../assets/images/newimages/notification-bing.png')}
+          style={{width: 24, height: 24, objectFit: "contain"}}
+        />
+        <View style={styles.redDot}></View>
+      </TouchableOpacity>
       
       {/* Cart Icon - Always visible */}
-      <TouchableOpacity 
-        onPress={() => router.push("/(routes)/cart")} 
+      <TouchableOpacity
+        onPress={() => router.push("/(routes)/cart")}
         style={{marginTop: 7}}
       >
-        <Image 
-          source={require('../../assets/images/newimages/cart.png')} 
-          style={{width: 24, height: 24, objectFit: "contain"}} 
+        <Image
+          source={require('../../assets/images/newimages/cart.png')}
+          style={{width: 24, height: 24, objectFit: "contain"}}
         />
         <View style={styles.redDots}>
           <Text style={{ fontSize: 8, textAlign: "center", color: "#fff"}}>

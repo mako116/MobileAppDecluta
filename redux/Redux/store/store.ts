@@ -2,8 +2,9 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import authReducer from '../slice/authSlice';
 
+import authReducer from '../slice/authSlice';
+import cartReducer from '../slice/cartSlice';
 
 const persistConfig = {
   key: 'root',
@@ -13,7 +14,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  //  other reducers here
+  cart: cartReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

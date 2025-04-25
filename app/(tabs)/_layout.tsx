@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Tabs, usePathname } from 'expo-router';
-import { StyleSheet, Image, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { Tabs, usePathname, router } from 'expo-router';
 import { Colors } from '@/constants/Colors';
 import MoreModal from '@/screens/TabbarMore/MoreModal';
 import { useSelector } from 'react-redux';
@@ -32,13 +32,27 @@ export default function TabLayout() {
   }, [auth]); 
   
   const openModal = () => {
-    setIsModalVisible(true);
-    setMoreActive(true);
+    if (isLoggedIn) {
+      setIsModalVisible(true);
+      setMoreActive(true);
+    } else {
+      // Redirect to login if not logged in
+      router.push("/(routes)/login");
+    }
   };
 
   const toggleModal = () => {
     setIsModalVisible(!isModalVisible);
     setMoreActive(!isModalVisible);
+  };
+  
+  // Handle auth-required tab navigation
+  const handleProtectedTabPress = (e: any) => {
+    if (!isLoggedIn) {
+      // Prevent default navigation and redirect to login
+      e.preventDefault();
+      router.push("/(routes)/login");
+    }
   };
   
   // If we're on the sell page, don't show the tab bar
@@ -65,12 +79,12 @@ export default function TabLayout() {
         screenOptions={({ route }) => ({
           tabBarStyle: styles.container,
           tabBarActiveTintColor: Colors['light'].tint,
-          tabBarActiveTintColors: moreActive && route.name !== 'more/index' ? '#A4A4A4' : Colors['light'].tint, 
           tabBarInactiveTintColor: '#A4A4A4',
           tabBarLabelStyle: styles.label,
           headerShown: false,
         })}
       >
+        {/* Home tab - accessible to all users */}
         <Tabs.Screen
           name="home/index"
           options={{
@@ -91,7 +105,7 @@ export default function TabLayout() {
           }}
         />
         
-        {/* Conditionally render these tabs based on login status */}
+        {/* All protected tabs with auth check */}
         <Tabs.Screen
           name="myorders/index"
           options={{
@@ -109,6 +123,9 @@ export default function TabLayout() {
                 }}
               />
             ),
+          }}
+          listeners={{
+            tabPress: handleProtectedTabPress
           }}
         />
 
@@ -131,6 +148,9 @@ export default function TabLayout() {
               />
             ),
           }}
+          listeners={{
+            tabPress: handleProtectedTabPress
+          }}
         />
 
         <Tabs.Screen
@@ -150,6 +170,9 @@ export default function TabLayout() {
                 }}
               />
             ),
+          }}
+          listeners={{
+            tabPress: handleProtectedTabPress
           }}
         />
 
@@ -173,11 +196,19 @@ export default function TabLayout() {
               </TouchableOpacity>
             ),
           }}
+          listeners={{
+        
+            tabPress: (e) => {
+             
+              e.preventDefault();
+              openModal();
+            }
+          }}
         />
       </Tabs>
 
-      {/* Only show the modal if logged in */}
-      {isLoggedIn && isModalVisible && (
+      {/* Modal is only shown when triggered by openModal, which handles auth */}
+      {isModalVisible && (
         <MoreModal isModalVisible={isModalVisible} toggleModal={toggleModal} />
       )}
     </>

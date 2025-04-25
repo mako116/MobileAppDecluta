@@ -32,21 +32,13 @@ const SearchScreen: React.FC = () => {
     router.back();
   };
 
-  const handleItemClick = (item: Item): void => {
-    router.push({
-      pathname: '/product-details',
-      params: {
-        name: item.name,
-        imageUrl: item.imageUrl,
-        title: item.title,
-        locations: item.locations,
-      },
-    });
+  const handleItemClick = () => {
+    router.push('/(routes)/SearchResult');
   };
 
   const handleIphonesClick = (): void => {
-    // Assuming you have a way to fetch iPhone items
-    const iphoneItems: Item[] = []; // Replace with actual fetching logic
+
+    const iphoneItems: Item[] = [];
     router.push({
       pathname: '/multiple-products',
       params: { iphones: JSON.stringify(iphoneItems) },

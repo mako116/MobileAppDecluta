@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
-import { ScrollView, Text, StyleSheet, View, Image, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { ScrollView, Text, StyleSheet, View, Image, TouchableOpacity, Alert } from 'react-native';
 import Ionlocate from '@/assets/images/cart/ionlocate';
 import Tag from '@/assets/images/cart/tag';
-import { useCart } from '@/context/CartContext';
- 
+import { useDispatch, useSelector } from 'react-redux';
+import { addItemToCart, fetchCart } from '@/redux/Redux/slice/cartSlice';
+import { RootState } from '@/redux/store';
+
 type Notification = {
   id: string;
   title: string;
@@ -17,7 +19,7 @@ type Notification = {
 
 const initialNotifications: Notification[] = [
   {
-    id: '1',
+    id: '67f324b749ab762a23c32bdc', // Updated with a valid MongoDB ObjectId format
     title: 'Samsung Galaxy A0...',
     image: require('../../../../assets/images/speakks.png'),
     time: 'Today 20:28',
@@ -27,7 +29,7 @@ const initialNotifications: Notification[] = [
     count: 1,
   },
   {
-    id: '2',
+    id: '67f324b749ab762a23c32bdd', // Another valid MongoDB ObjectId format
     title: 'LG Home Theatre',
     image: require('../../../../assets/images/speakks.png'),
     time: 'Today 20:28',
@@ -39,23 +41,42 @@ const initialNotifications: Notification[] = [
 ];
 
 const DropdownContent: React.FC = () => {
-  const [notifications, setNotifications] = useState(initialNotifications);
-  const { addToCart } = useCart();  // Use addToCart from CartContext
+  const [notifications] = useState(initialNotifications);
+  const dispatch = useDispatch();
+  const cartState = useSelector((state: RootState) => state.cart);
 
-  const handleAddToCart = (item: any) => {
-    addToCart({
-      id: item.id,
-      name: item.title,
-      count: 1,
-      price: parseFloat(item.price.replace('₦', '').replace(',', '')),
-      image: item.image,
-      location: item.location,
-      used: '',
-      description: 'Challenge, Ibadan, Oyo',
-      totalPrice: 0,
-      rewardPrice: 0,
-      checkout: 0
-    });
+  // Fetch cart data when component mounts
+  useEffect(() => {
+    dispatch(fetchCart());
+  }, [dispatch]);
+
+  const handleAddToCart = async (item: Notification) => {
+    try {
+      console.log("Adding to cart:", item.id);
+      
+      // Make sure the item id is in the correct format for your API
+      if (!item.id || typeof item.id !== 'string') {
+        console.error("Invalid product ID:", item.id);
+        Alert.alert('Error', 'Invalid product ID');
+        return;
+      }
+      
+      // Log the exact payload being sent
+      console.log("Dispatching with payload:", {
+        productId: item.id,
+        quantity: item.count
+      });
+      
+      await dispatch(addItemToCart({
+        productId: item.id,
+        quantity: item.count
+      }));
+      
+      Alert.alert('Success', 'Item added to cart successfully');
+    } catch (error) {
+      console.error('Add to cart error:', error);
+      Alert.alert('Error', 'Failed to add item to cart');
+    }
   };
 
   return (
@@ -77,7 +98,7 @@ const DropdownContent: React.FC = () => {
                 </Text>
               </View>
             </View>
-
+            
             <TouchableOpacity
               style={styles.button}
               onPress={() => handleAddToCart(item)}
