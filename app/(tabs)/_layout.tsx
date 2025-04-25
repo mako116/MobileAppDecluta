@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Tabs } from 'expo-router';
-import { StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { Tabs, usePathname } from 'expo-router';
+import { StyleSheet, Image, TouchableOpacity, View } from 'react-native';
 import { Colors } from '@/constants/Colors';
 import MoreModal from '@/screens/TabbarMore/MoreModal';
 import { useSelector } from 'react-redux';
@@ -13,6 +13,10 @@ export default function TabLayout() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   
   const auth = useSelector((state: RootState) => state.auth);
+  const pathname = usePathname();
+  
+  // Check if current path is the sell page
+  const isOnSellPage = pathname === '/sell' || pathname === '/sell/index';
   
   useEffect(() => {
     const checkAuthStatus = async () => {
@@ -36,6 +40,24 @@ export default function TabLayout() {
     setIsModalVisible(!isModalVisible);
     setMoreActive(!isModalVisible);
   };
+  
+  // If we're on the sell page, don't show the tab bar
+  if (isOnSellPage) {
+    return (
+      <Tabs
+        screenOptions={{
+          tabBarStyle: { display: 'none' },
+          headerShown: false,
+        }}
+      >
+        <Tabs.Screen name="home/index" />
+        <Tabs.Screen name="myorders/index" />
+        <Tabs.Screen name="sell/index" />
+        <Tabs.Screen name="message/index" />
+        <Tabs.Screen name="more/index" />
+      </Tabs>
+    );
+  }
   
   return (
     <>

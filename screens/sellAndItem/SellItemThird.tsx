@@ -1,16 +1,17 @@
 import SellItems from '@/styles/sellItem/Sellitem';
 import HeaderWithDesc from '@/UI/Header/HeaderWithDescription';
-import React, { useState, useEffect } from 'react';
-import { Text, TouchableOpacity, View, ScrollView, StyleSheet, Image } from 'react-native';
+import React, { useEffect } from 'react';
+import { Text, TouchableOpacity, View, ScrollView, StyleSheet, Image, Alert } from 'react-native';
 import { SignUpStyles } from '@/styles/Signup/signup.style';
 import activeCheckbox from "../../assets/images/checkbox/Frame 645588 (1).png";
 import inactiveCheckbox from "../../assets/images/checkbox/Frame 645588.png";
 import { router } from 'expo-router';
- 
-const SellItemThird = () => {
-    const [isButtonEnabled, setIsButtonEnabled] = useState(false);
-    const [selectedCondition, setSelectedCondition] = useState<number | null>(null);
+import { useProductForm } from '@/api/Product/Context/ProductFromContext';
+import { SafeAreaView } from 'react-native';
 
+const SellItemThird = () => {
+    const { formData, updateFormData, validateStep, errors } = useProductForm();
+    
     const conditions = [
         { id: 1, label: "New", subText: "Never used, still in original packaging." },
         { id: 2, label: "Used Like New", subText: "Gently used, minimal signs of wears, looks and feels like new." },
@@ -19,41 +20,72 @@ const SellItemThird = () => {
         { id: 5, label: "Refurbished", subText: "Pre-owned, restored to great condition" }
     ];
 
-    useEffect(() => {
-        setIsButtonEnabled(selectedCondition !== null);
-    }, [selectedCondition]);
+    // Find the condition ID based on the stored condition string
+    const selectedConditionId = formData.condition ? 
+        conditions.find(item => item.label === formData.condition)?.id || null : null;
+
+    const isButtonEnabled = formData.condition !== '';
 
     const handleSelect = (id: number) => {
-        setSelectedCondition(id);
-    };
-
-    const handleNext = () => {
-        if (isButtonEnabled) {
-            router.push("/sellanItem/fourStep");
+        const selectedCondition = conditions.find(item => item.id === id);
+        if (selectedCondition) {
+            updateFormData('condition', selectedCondition.label);
         }
     };
 
+    const handleNext = () => {
+        if (validateStep(3)) {
+            router.push("/sellanItem/fourStep");
+        } else {
+            Alert.alert("Missing Information", "Please select a condition for your item");
+        }
+    };
+
+    const handleBack = () => {
+        router.back();
+    };
+
     return (
-        <>
+        <SafeAreaView
+            style={
+                {
+                    backgroundColor: '#fff',
+                    height: '100%',
+                }
+            }
+        >
             <HeaderWithDesc title={'Sell an item'} subTile='(Step 3/5)' headerSave={isButtonEnabled ? 'Save' : ''} />
             <ScrollView contentContainerStyle={SellItems.scrollViewContent}>
                 <View style={SellItems.contains}>
                     <Text style={[SellItems.label, { marginTop: 5 }]}>Item Condition</Text>
+                    {errors.condition && <Text style={{ color: 'red' }}>{errors.condition}</Text>}
+                    
                     {conditions.map((item) => (
                         <View key={item.id} style={SellItems.Box}>
-                           <TouchableOpacity style={{flexDirection:"row",justifyContent:"space-between"}} onPress={() => handleSelect(item.id)}>
-                            <View>
-                            <Text style={SellItems.label}>{item.label}</Text>
-                            <Text style={[SellItems.optionSubText,{maxWidth:"90%"}]}>{item.subText}</Text>
-                            </View>                            
-                                <Image source={selectedCondition === item.id ? activeCheckbox : inactiveCheckbox} style={styles.checkbox} />
+                           <TouchableOpacity 
+                             style={{flexDirection:"row", justifyContent:"space-between"}} 
+                             onPress={() => handleSelect(item.id)}
+                           >
+                                <View>
+                                    <Text style={SellItems.label}>{item.label}</Text>
+                                    <Text style={[SellItems.optionSubText, {maxWidth:"90%"}]}>
+                                        {item.subText}
+                                    </Text>
+                                </View>                            
+                                <Image 
+                                    source={selectedConditionId === item.id ? activeCheckbox : inactiveCheckbox} 
+                                    style={styles.checkbox} 
+                                />
                             </TouchableOpacity>
                         </View>
                     ))}
                 </View>
             </ScrollView>
             <View style={SellItems.flexDifAbs}>
-                <TouchableOpacity style={[SignUpStyles.loginButtoned, { backgroundColor: '#fff', borderWidth: 1, borderColor: "#463E31", width: "100%" }]}>
+                <TouchableOpacity 
+                    onPress={handleBack}
+                    style={[SignUpStyles.loginButtoned, { backgroundColor: '#fff', borderWidth: 1, borderColor: "#463E31", width: "100%" }]}
+                >
                     <Text style={SignUpStyles.loginText}>Back</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -64,7 +96,7 @@ const SellItemThird = () => {
                     <Text style={SignUpStyles.loginText}>Next</Text>
                 </TouchableOpacity>
             </View>
-        </>
+        </SafeAreaView>
     );
 };
 

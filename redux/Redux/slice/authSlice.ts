@@ -72,6 +72,7 @@ export const loginWithTokenUser = createAsyncThunk(
       });
 
       const user = response.data.user;
+      console.log('User data response:', user);
 
       if (user) {
         await AsyncStorage.setItem('userId', user._id);

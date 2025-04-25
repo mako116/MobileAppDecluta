@@ -11,6 +11,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { PersistGate } from 'redux-persist/integration/react';
 import { useAppDispatch } from '@/redux/Redux/hook/hook';
 import { initializeAuth } from '@/redux/Redux/slice/authSlice';
+import { ProductFormProvider } from '@/api/Product/Context/ProductFromContext';
 
 const queryClient = new QueryClient();
 
@@ -32,11 +33,13 @@ export default function RootLayout() {
         <PersistGate loading={null} persistor={persistor}>
           <QueryClientProvider client={queryClient}>
             <AuthInitializer>
+            <ProductFormProvider>
               <CartProvider>
                 <OfferProvider>
                   <Layout />
                 </OfferProvider>
               </CartProvider>
+            </ProductFormProvider>
             </AuthInitializer>
           </QueryClientProvider>
         </PersistGate>

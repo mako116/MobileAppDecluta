@@ -11,7 +11,8 @@ import { Animated, Modal, PanResponder, StyleSheet, Text, TouchableOpacity, View
 interface ModalProps {
     visible: boolean;
     onClose: () => void;
-     }
+    onConfirm?: () => void;
+  }
 const Disclaimer: React.FC<ModalProps> = ({
     visible,
     onClose,

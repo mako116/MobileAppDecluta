@@ -1,33 +1,42 @@
 import SellItems from '@/styles/sellItem/Sellitem';
 import HeaderWithDesc from '@/UI/Header/HeaderWithDescription';
-import React, { useState, useEffect } from 'react';
-import { Text, TouchableOpacity, View, ScrollView, StyleSheet } from 'react-native';
+import React, { useEffect } from 'react';
+import { Text, TouchableOpacity, View, ScrollView, StyleSheet, Alert, SafeAreaView } from 'react-native';
 import { SignUpStyles } from '@/styles/Signup/signup.style';
 import TextAreaField from '@/UI/InputFields/TextAreaInput';
 import SelectDropdown from '@/UI/SelectDropdown/SelectDropdown';
 import TextInputField from '@/UI/InputFields/TextInputField';
 import { router } from 'expo-router';
+import { useProductForm } from '@/api/Product/Context/ProductFromContext';
 
 const SellItemSecond = () => {
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [quantity, setQuantity] = useState('');
-    const [selectedAvailability, setSelectedAvailability] = useState<string | null>(null);
-    const [isButtonEnabled, setIsButtonEnabled] = useState(false);
+    const { formData, updateFormData, validateStep, errors } = useProductForm();
+    const { title, description, quantity, availability } = formData;
 
-    // Effect to check if any field is filled or selected
-    useEffect(() => {
-        setIsButtonEnabled(title.trim() !== '' || description.trim() !== '' || selectedAvailability !== null);
-    }, [title, description, selectedAvailability]);
+    // Check if form is valid for this step
+    const isButtonEnabled = title.trim() !== '' || description.trim() !== '' || availability !== '';
 
     const handleNext = () => {
-        if (isButtonEnabled) {
+        if (validateStep(2)) {
             router.push("/sellanItem/thirdStep");
+        } else {
+            Alert.alert("Missing Information", "Please complete all required fields");
         }
     };
 
+    const handleBack = () => {
+        router.back();
+    };
+
     return (
-        <>
+        <SafeAreaView
+            style={
+                {
+                    backgroundColor: '#fff',
+                    height: '100%',
+                }
+            }
+        >
             <HeaderWithDesc title={'Sell an item'} subTile='(Step 2/5)' headerSave={isButtonEnabled ? 'Save' : ''} />
 
             {/* Form ScrollView */}
@@ -38,9 +47,10 @@ const SellItemSecond = () => {
                     <TextAreaField
                         placeholder="Add a title or name for your item"
                         value={title}
-                        onChangeText={setTitle}
+                        onChangeText={(text) => updateFormData('title', text)}
                         placeholderTextColor="gray"
                     />
+                    {errors.title && <Text style={{ color: 'red' }}>{errors.title}</Text>}
                     <Text style={SellItems.number}>{title.length}/100</Text>
                 </View>
 
@@ -50,9 +60,10 @@ const SellItemSecond = () => {
                     <TextAreaField
                         placeholder="Provide a description of the item"
                         value={description}
-                        onChangeText={setDescription}
+                        onChangeText={(text) => updateFormData('description', text)}
                         placeholderTextColor="gray"
                     />
+                    {errors.description && <Text style={{ color: 'red' }}>{errors.description}</Text>}
                     <Text style={SellItems.number}>{description.length}/100</Text>
                 </View>
 
@@ -64,8 +75,9 @@ const SellItemSecond = () => {
                             { text: "List Single item", subText: "if you are selling only one of this item" },
                             { text: "List as in stock", subText: "if you are selling more than one item" },
                         ]}
-                        onSelect={(selectedOption) => setSelectedAvailability(selectedOption.text)}
+                        onSelect={(selectedOption) => updateFormData('availability', selectedOption.text)}
                     />
+                    {errors.availability && <Text style={{ color: 'red' }}>{errors.availability}</Text>}
                 </View>
 
                 {/* Quantity Section */}
@@ -74,8 +86,8 @@ const SellItemSecond = () => {
                     <TextInputField
                         keyboardType="number-pad"
                         placeholder="Enter item quantity"
-                        value={quantity}
-                        onChangeText={setQuantity}
+                        value={quantity.toString()}
+                        onChangeText={(text) => updateFormData('quantity', parseInt(text) || 1)}
                         placeholderTextColor="gray"
                         maxLength={10}
                     />
@@ -85,6 +97,7 @@ const SellItemSecond = () => {
             {/* Buttons at the Bottom */}
             <View style={SellItems.flexDifAbs}>
                 <TouchableOpacity
+                    onPress={handleBack}
                     style={[SignUpStyles.loginButtoned, { backgroundColor: '#fff', borderWidth: 1, borderColor: "#463E31", width: "48%" }]}
                 >
                     <Text style={SignUpStyles.loginText}>Back</Text>
@@ -93,35 +106,12 @@ const SellItemSecond = () => {
                 <TouchableOpacity
                     onPress={handleNext}
                     style={[SignUpStyles.loginButtoned, !isButtonEnabled && { backgroundColor: '#E9E9E9' }]}
-                    // disabled={!isButtonEnabled}
                 >
                     <Text style={SignUpStyles.loginText}>Next</Text>
                 </TouchableOpacity>
             </View>
-        </>
+        </SafeAreaView>
     );
 };
-
-// Styles
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    scrollViewContent: {
-        flexGrow: 1,
-        paddingBottom: 100, // Adds space for the buttons
-    },
-    buttonContainer: {
-        position: 'absolute',
-        bottom: 0,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        width: '100%',
-        padding: 20,
-        backgroundColor: '#fff',
-        borderTopWidth: 1,
-        borderColor: '#E9E9E9',
-    },
-});
 
 export default SellItemSecond;

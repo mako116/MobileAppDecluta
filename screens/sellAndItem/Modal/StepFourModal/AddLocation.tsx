@@ -26,11 +26,11 @@ interface AddLocationModalProps {
   modalVisibles: boolean;
   setModalVisibles: Dispatch<SetStateAction<boolean>>;
   selectedState: LocationOption | null;
-  setSelectedState: Dispatch<SetStateAction<LocationOption | null>>;
+  setSelectedState: (state: LocationOption | null) => void;
   selectedCity: LocationOption | null;
-  setSelectedCity: Dispatch<SetStateAction<LocationOption | null>>;
+  setSelectedCity: (city: LocationOption | null) => void;
   selectedLGA: LocationOption | null;
-  setSelectedLGA: Dispatch<SetStateAction<LocationOption | null>>;
+  setSelectedLGA: (lga: LocationOption | null) => void;
   currentPopup: number;
   setCurrentPopup: Dispatch<SetStateAction<number>>;
 }

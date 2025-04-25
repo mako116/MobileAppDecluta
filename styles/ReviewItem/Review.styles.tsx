@@ -108,7 +108,7 @@ export const ReviewsStyles = StyleSheet.create({
       borderWidth: 1,
       borderRadius: 8,
       padding: 16,
-      marginTop: 20,
+      marginVertical: 20,
     },
     summaryTitle: {
       fontSize: 14,

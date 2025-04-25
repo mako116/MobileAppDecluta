@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -6,7 +6,9 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
-   ActivityIndicator,
+  ActivityIndicator,
+  SafeAreaView,
+  Alert,
 } from 'react-native';
 
 import HeaderWithDesc from '@/UI/Header/HeaderWithDescription';
@@ -15,70 +17,50 @@ import { ReviewsStyles } from '@/styles/ReviewItem/Review.styles';
 import SellItems from '@/styles/sellItem/Sellitem';
 import { SignUpStyles } from '@/styles/Signup/signup.style';
 import CancelItem from './Modal/cancelItem/CancelItem';
+import { router } from 'expo-router';
+import { mapFormToApiRequest, useProductForm } from '@/api/Product/Context/ProductFromContext';
+import { createProduct } from '@/api/Product/Hooks/useProduct';
+import { RootState } from '@/redux/store';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from '@/redux/Redux/hook/hook';
 
 const ReviewItem = () => {
-  const [formData, setFormData] = useState({
-    availability: '',
-    condition: '',
-    description:'',
-    category: '',
-    title: '',
-    location: '',
-    price: '',
-    salePrice: '',
-    discountPrice: '',
-  });
+  const { formData, updateFormData } = useProductForm();
+  const [loading, setLoading] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const res = useSelector((state: RootState) => state.auth.userData);
+  const dispatch = useAppDispatch();
 
   const [editableFields, setEditableFields] = useState({
+    title: false,
+    description: false,
+    quantity: false,
     availability: false,
     condition: false,
-    title:false,
     category: false,
-    description:false,
-    location: false,
+    subcategory: false,
+    state: false,
+    city: false,
+    lga: false,
     price: false,
-    salePrice: false,
     discountPrice: false,
   });
 
-  const [loading, setLoading] = useState(true);
-    const [modalVisible, setModalVisible] = useState(false);
+  const openModal = () => {
+    setModalVisible(true);
+  };
 
-    const openModal = () => {
-      setModalVisible(true);
-     };
+  const handleBack = () => {
+    router.back();
+  };
 
-  // This is a dummy feteching make use of it and do yours
-  useEffect(() => {
-    const fetchDummyData = async () => {
-      setLoading(true);
-      await new Promise(res => setTimeout(res, 1500));  
-      const dummyResponse = {
-        availability: 'List as single item',
-        description: 'For sale is my used Samsung Galaxy A05 with a 6.7 display, 4GB RAM, and 64GB ROM, running on Android 13. This phone has been well-maintained and is in good condition, with minor signs of wear on the exterior. The screen is scratch-free and the battery life is still strong. I’m upgrading to a new device, so i’m letting this reliable phone go to a new home. Includes original charger and cable. No other accessories included.',
-        title:'Samsung Galaxy A05 6.7 4GB RAM/64GB ROM Android 13.',
-        condition: 'Used - Like New',
-        category: 'Phones & Tablets',
-        location: 'Ibadan Southwest',
-        price: '39000',
-        salePrice: '39000',
-        discountPrice: '',
-      };
-      setFormData(dummyResponse);
-      setLoading(false);
-    };
-
-    fetchDummyData();
-  }, []);
-
-  const formatToNGN = (value: string) => {
-    const number = parseFloat(value.replace(/,/g, ''));
-    if (isNaN(number)) return '';
+  const formatToNGN = (value: number) => {
+    if (isNaN(value)) return '';
     return new Intl.NumberFormat('en-NG', {
       style: 'currency',
       currency: 'NGN',
       minimumFractionDigits: 0,
-    }).format(number);
+    }).format(value);
   };
 
   const handleEditToggle = (field: keyof typeof editableFields) => {
@@ -88,32 +70,42 @@ const ReviewItem = () => {
     }));
   };
 
-  const handleInputChange = (field: keyof typeof formData, value: string) => {
-    setFormData(prev => ({
-      ...prev,
-      [field]: value,
-    }));
+  const handleInputChange = (field: keyof typeof formData, value: any) => {
+    // For number fields, convert string to number
+    if (field === 'price' || field === 'discountPrice' || field === 'quantity') {
+      const numValue = parseFloat(value);
+      updateFormData(field, isNaN(numValue) ? 0 : numValue);
+    } else {
+      updateFormData(field, value);
+    }
   };
 
   const renderEditableField = (field: keyof typeof formData, label: string) => (
     <View style={ReviewsStyles.fieldContainer}>
       <View style={ReviewsStyles.fieldHeader}>
-        <Text style={[SellItems.label,{fontSize:16}]}>{label}</Text>
-        <TouchableOpacity onPress={() => handleEditToggle(field)}>
-          <Text style={[SellItems.subLabal,{color:"#7E7E7E"}]}>{editableFields[field] ? 'Cancel' : 'Edit'}</Text>
+        <Text style={[SellItems.label, { fontSize: 16 }]}>{label}</Text>
+        <TouchableOpacity onPress={() => handleEditToggle(field as any)}>
+          <Text style={[SellItems.subLabal, { color: "#7E7E7E" }]}>
+            {editableFields[field as keyof typeof editableFields] ? 'Cancel' : 'Edit'}
+          </Text>
         </TouchableOpacity>
       </View>
 
-      {editableFields[field] ? (
+      {editableFields[field as keyof typeof editableFields] ? (
         <>
           <TextInput
-            value={formData[field]}
+            value={formData[field]?.toString() || ''}
             onChangeText={text => handleInputChange(field, text)}
             style={ReviewsStyles.input}
             placeholder={`Enter ${label.toLowerCase()}`}
+            keyboardType={
+              field === 'price' || field === 'discountPrice' || field === 'quantity' 
+                ? 'numeric' 
+                : 'default'
+            }
           />
           <TouchableOpacity
-            onPress={() => handleEditToggle(field)}
+            onPress={() => handleEditToggle(field as any)}
             style={ReviewsStyles.saveButton}
           >
             <Text style={ReviewsStyles.saveButtonText}>Save</Text>
@@ -121,18 +113,31 @@ const ReviewItem = () => {
         </>
       ) : (
         <Text style={ReviewsStyles.valueText}>
-          {['price', 'salePrice', 'discountPrice'].includes(field)
-            ? formatToNGN(formData[field])
-            : formData[field]}
+          {field === 'price' || field === 'discountPrice'
+            ? formatToNGN(formData[field] as number)
+            : formData[field]?.toString() || 'Not specified'}
         </Text>
       )}
     </View>
   );
 
-  const itemImages = Array.from({ length: 7 }).map((_, i) => ({
-    id: i + 1,
-    uri: AddVideo,
+  // Create an array of image objects from the selectedImages URLs
+  const itemImages = formData.selectedImages.map((uri, index) => ({
+    id: index + 1,
+    uri: uri,
   }));
+
+  // If no images are available, use a placeholder
+  if (itemImages.length === 0) {
+    itemImages.push({ id: 1, uri: AddVideo });
+  }
+
+  // Calculate the location string
+  const locationString = `${formData.lga}, ${formData.city}, ${formData.state}`.replace(/^, |, $/g, '');
+
+  // Calculate service fee (10%)
+  const serviceFee = formData.price * 0.1;
+  const amountReceived = formData.price * 0.9;
 
   if (loading) {
     return (
@@ -143,22 +148,117 @@ const ReviewItem = () => {
     );
   }
 
+  // Function to handle publish action
+  const handlePublish = async () => {
+    const user = res
+    try {
+      setLoading(true);
+      
+      // Map form data to API request format
+      const productData = mapFormToApiRequest(formData, user?._id || '');
+      
+      // Add seller information
+      productData.sellerName = user?.firstName || '';
+      productData.sellerPhoneNumber = user?.phoneNumber || '';
+      productData.sellerAddress = user?.address || '';
+
+          
+    // Create FormData object for multipart/form-data request (for file uploads)
+    const formDataToSend = new FormData();
+    
+    // Append all product data as fields
+    Object.keys(productData).forEach(key => {
+      formDataToSend.append(key, productData[key as keyof typeof productData] as string);
+    });
+    
+    // Append each image file
+    await Promise.all(
+      formData.selectedImages.map(async (imageUri, index) => {
+        // Get filename from URI
+        const filename = imageUri.split('/').pop() || `image_${index}.jpg`;
+        
+        // Extract file extension
+        const match = /\.(\w+)$/.exec(filename);
+        const type = match ? `image/${match[1]}` : 'image/jpeg';
+        
+        // Create file object
+        const imageFile = {
+          uri: imageUri,
+          name: filename,
+          type: type
+        };
+        
+        const response = await fetch(imageFile.uri);
+        const blob = await response.blob();
+        formDataToSend.append('productImages', blob, imageFile.name);
+      })
+    );
+    
+    // If there's a video, append it as well
+    if (formData.selectedVideo) {
+      const videoFilename = formData.selectedVideo.split('/').pop() || 'video.mp4';
+      const videoType = 'video/mp4'; // Adjust based on your specific video type
+      
+      const videoFile = {
+        uri: formData.selectedVideo,
+        name: videoFilename,
+        type: videoType
+      };
+      
+      const videoResponse = await fetch(videoFile.uri);
+      const videoBlob = await videoResponse.blob();
+      formDataToSend.append('productVideo', videoBlob, videoFile.name);
+    }
+    
+    console.log('Sending product data with files');
+      
+      // Dispatch the createProduct action
+      const resultAction = await dispatch(createProduct(productData));
+      
+      if (createProduct.fulfilled.match(resultAction)) {
+        // Success - close modal and navigate
+        setModalVisible(false);
+        Alert.alert('Success', 'Your item has been published successfully!');
+        router.push('/(routes)/sellanItem/itemUnderReview'); // Adjust route as needed
+      } else {
+        // Handle error
+        Alert.alert('Error', resultAction.payload as string || 'Failed to publish your item. Please try again.');
+      }
+    } catch (error) {
+      Alert.alert('Error', 'An unexpected error occurred. Please try again.');
+      console.error('Publish error:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <>
+    <SafeAreaView
+      style={
+          {
+            backgroundColor: '#fff',
+            height: '100%',
+          }
+      }
+    >
       <HeaderWithDesc title="Sell an item" headerSave="Save" />
 
-      <ScrollView contentContainerStyle={[SellItems.scrollViewContent,{height:"200%"}]}>
+      <ScrollView style={[SellItems.scrollViewContent]}>
         <View style={SellItems.contains}>
-          <Text style={[[SellItems.label,{fontSize:16}],{marginVertical:5}]}>Review Item Details</Text>
+          <Text style={[[SellItems.label, { fontSize: 16 }], { marginVertical: 5 }]}>Review Item Details</Text>
           <Text style={SellItems.optionSubText}>
             Please review the item details carefully before publishing to ensure everything is accurate and complete.
           </Text>
 
-          <Text style={[[SellItems.label,{fontSize:16}],{marginVertical:12}]}>Item Media</Text>
+          <Text style={[[SellItems.label, { fontSize: 16 }], { marginVertical: 12 }]}>Item Media</Text>
           <View style={ReviewsStyles.imageRow}>
             {itemImages.slice(0, 4).map((image, index) => (
               <View key={image.id} style={ReviewsStyles.imageWrapper}>
-                <Image source={image.uri} style={ReviewsStyles.image} />
+                {typeof image.uri === 'string' ? (
+                  <Image source={{ uri: image.uri }} style={ReviewsStyles.image} />
+                ) : (
+                  <Image source={image.uri} style={ReviewsStyles.image} />
+                )}
                 {index === 3 && itemImages.length > 4 && (
                   <View style={ReviewsStyles.overlay}>
                     <Text style={ReviewsStyles.overlayText}>+{itemImages.length - 4}</Text>
@@ -168,66 +268,100 @@ const ReviewItem = () => {
             ))}
           </View>
 
-        
+          {/* Display video if available */}
+          {/* {formData.selectedVideo && (
+            <View style={{ marginTop: 10 }}>
+              <Text style={[SellItems.label, { fontSize: 16 }]}>Video</Text>
+              <View style={ReviewsStyles.videoWrapper}>
+                <Image 
+                  source={{ uri: formData.selectedVideo }} 
+                  style={ReviewsStyles.videoThumbnail} 
+                />
+                <View style={ReviewsStyles.playIconContainer}>
+                  <Text style={ReviewsStyles.playIcon}>▶</Text>
+                </View>
+              </View>
+            </View>
+          )} */}
 
           {/* Editable fields */}
           {renderEditableField('title', 'Title')}
           {renderEditableField('description', 'Description')}
+          {renderEditableField('quantity', 'Quantity')}
           {renderEditableField('availability', 'Availability')}
           {renderEditableField('condition', 'Condition')}
           {renderEditableField('category', 'Category')}
-          {renderEditableField('location', 'Location')}
-          {renderEditableField('price', 'Price')}
-          {renderEditableField('salePrice', 'Sale Price')}
-          {renderEditableField('discountPrice', 'Discount Price')}
+          {renderEditableField('subcategory', 'Subcategory')}
 
-          {/* Fee Summary */}
-          <Text style={[SellItems.label,{fontSize:16}]}>Service Fee</Text>
-          <View style={{flexDirection:"row",alignItems:"center",marginVertical:0}}>
-          <Text>
-          We take 10% commission on sold items.
-          </Text>
-           <Image source={require("../../assets/images/info-circle.png")} style={{width:16,height:16}} />
-            </View>
-          <View style={ReviewsStyles.summaryCard}>
-            <Text style={[SellItems.label,{fontSize:16}]}>10% DecluttaKing Service Fee</Text>
-            <Text style={SellItems.subLabal}>
-              {formatToNGN((parseFloat(formData.price || '0') * 0.1).toFixed(2))}
-            </Text>
-
-            <Text style={[[SellItems.label,{fontSize:16}], { marginTop: 16 }]}>You'll Receive</Text>
-            <Text style={SellItems.subLabal}>Your estimated payment after our service fee.</Text>
-            <Text style={[SellItems.label,{fontSize:16}]}>
-              {formatToNGN((parseFloat(formData.price || '0') * 0.9).toFixed(2))}
-            </Text>
+          {/* Location fields */}
+          <Text style={[SellItems.label, { fontSize: 16 }]}>Location</Text>
+          <Text style={ReviewsStyles.valueText}>{locationString || 'Not specified'}</Text>
+          {/* style={ReviewsStyles.locationFields} */}
+          <View >
+            {renderEditableField('state', 'State')}
+            {renderEditableField('city', 'City')}
+            {renderEditableField('lga', 'LGA')}
           </View>
+
+          {/* Price fields */}
+          {renderEditableField('price', 'Price')}
+          {renderEditableField('discountPrice', 'Discount Price')}
+        </View>
+
+        <Text style={[SellItems.label]}>Service Fee</Text>
+        <View style={{ flexDirection: "row", alignItems: "center", marginVertical: 5 }}>
+          <Text>
+            We take 10% commission on sold items.
+          </Text>
+          <Image source={require("../../assets/images/info-circle.png")} style={{ width: 16, height: 16, marginLeft: 5 }} />
+        </View>
+        {/* Fee Summary */}
+
+        <View style={ReviewsStyles.summaryCard}>
+          <Text style={[SellItems.label, { fontSize: 16 }]}>10% DecluttaKing Service Fee</Text>
+          <Text style={SellItems.subLabal}>
+            {formatToNGN(serviceFee)}
+          </Text>
+
+          <Text style={[[SellItems.label, { fontSize: 16 }], { marginTop: 16 }]}>You'll Receive</Text>
+          <Text style={SellItems.subLabal}>Your estimated payment after our service fee.</Text>
+          <Text style={[SellItems.label, { fontSize: 16 }]}>
+            {formatToNGN(amountReceived)}
+          </Text>
         </View>
       </ScrollView>
+
+
 
       {/* Bottom Buttons */}
       <View style={SellItems.flexDifAbs}>
         <TouchableOpacity
-          style={[SignUpStyles.loginButtoned,{ backgroundColor: '#fff', borderWidth: 1, borderColor: "#463E31", width: "100%" }]}>
+          onPress={handleBack}
+          style={[SignUpStyles.loginButtoned, { backgroundColor: '#fff', borderWidth: 1, borderColor: "#463E31", width: "100%" }]}>
           <Text style={SignUpStyles.loginText}>Back</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={openModal}
+          onPress={handlePublish}
           style={[SignUpStyles.loginButtoned]}
-          // disabled={!isButtonEnabled}
+          disabled={loading}
         >
-          <Text style={SignUpStyles.loginText}>Next</Text>
+          {loading ? (
+            <ActivityIndicator size="small" color="#fff" />
+          ) : (
+            <Text style={SignUpStyles.loginText}>Publish</Text>
+          )}
         </TouchableOpacity>
       </View>
 
-       <CancelItem 
-        visible={modalVisible}
-         onClose={() => setModalVisible(false)}
+      <View>
+        <CancelItem 
+          visible={modalVisible}
+          onClose={() => setModalVisible(false)}
         />
-    </>
+      </View>
+    </SafeAreaView>
   );
 };
-
-
 
 export default ReviewItem;

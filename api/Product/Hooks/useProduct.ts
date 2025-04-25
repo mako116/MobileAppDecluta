@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { setSelectedProduct } from '../Actions/selectedProductSlice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const EXPO_PUBLIC_API_KEY = process.env.EXPO_PUBLIC_API_KEY;
 
@@ -27,8 +28,18 @@ interface CreateProductQuestionState {
 export const createProduct = createAsyncThunk(
     'product/create',
     async (data: CreateProductState, { rejectWithValue, dispatch }) => {
+        const token = await AsyncStorage.getItem('token');
         try {
-            const response = await axios.post(`${EXPO_PUBLIC_API_KEY}/api/v1/products/create`, data);
+            const response = await axios.post(
+                `${EXPO_PUBLIC_API_KEY}/api/v1/products/create`,
+                data,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        'Authorization': `Bearer ${token}`,
+                    },
+                }
+            );
 
             if (response?.data && response?.data._id) {
                 // Dispatch the selected product to the store

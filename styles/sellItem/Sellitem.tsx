@@ -21,7 +21,9 @@ const SellItems = StyleSheet.create({
         backgroundColor:"#fff"
     },
     optionSubText: {
-        fontSize: 14,
+        fontSize: 12,
+        fontWeight: "normal",
+        marginTop: 5,
         fontFamily: "Proxima Nova",
         color: "#212121",
     },
@@ -47,33 +49,20 @@ const SellItems = StyleSheet.create({
         flexDirection:"row",
         gap:20,
         justifyContent:"space-between",
-        position: 'absolute',
-        bottom: 0,
-        width: '100%',
         paddingHorizontal: 20,
-        paddingTop: 20,
-        paddingBottom:70,
-        marginBottom:"10%", 
-        backgroundColor:"#fff"
+        backgroundColor:"#fff",
     },
     flexDifAb:{
         // flexDirection:"row",
         gap:20,
-        // justifyContent:"space-between",
-        position: 'absolute',
-        bottom: 0,
         width: '100%',
         paddingHorizontal: 20,
-        paddingTop: 20,
-        paddingBottom:40,
-        marginBottom:"10%", 
-        backgroundColor:"#fff"
+        backgroundColor:"#fff",
     },
     scrollViewContent: {
-        flexGrow: 1,
         paddingHorizontal: 20,
-        height: "120%", 
-      
+        backgroundColor:"#F9F9F9",
+        flex: 1,
     },
 
     label:{
@@ -94,7 +83,76 @@ const SellItems = StyleSheet.create({
     img:{
         width:70,
         height:70,
-        marginTop:10
+        borderStyle:"dashed",
+        borderWidth:1,
+        borderColor:"#E9E9E9",
+        borderRadius:10,
+        backgroundColor: "white",
+        justifyContent:"center",
+        alignItems:"center",
+    },
+    imagesContainer: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        marginTop: 10,
+        justifyContent: 'flex-start',
+    },
+    imageWrapper: {
+        margin: 5,
+        position: 'relative',
+        borderRadius: 8,
+    },
+    imageItem: {
+        width: 70,
+        height: 65,
+        borderRadius: 8,
+    },
+    removeButton: {
+        position: 'absolute',
+        top: -10,
+        right: -10,
+        backgroundColor: '#DEBC8E',
+        width: 20,
+        height: 20,
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    removeButtonText: {
+        color: 'black',
+        fontSize: 12,
+        fontWeight: 'bold',
+    },
+    // These styles should be in your SellItems style object
+    videoContainer: {
+        marginTop: 10,
+    },
+    videoWrapper: {
+        width: '48%',  // Adjust as needed
+        aspectRatio: 16/9,
+        position: 'relative',
+        borderRadius: 8,
+        overflow: 'hidden',
+        marginBottom: 10,
+    },
+    videoThumbnail: {
+        width: '100%',
+        height: '100%',
+        borderRadius: 8,
+    },
+    playIconContainer: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    },
+    playIcon: {
+        color: 'white',
+        fontSize: 30,
     }
 })
 
