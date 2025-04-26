@@ -51,6 +51,9 @@ const initialFormData: ProductFormData = {
 export const mapFormToApiRequest = (formData: ProductFormData, userId: string) => {
   return {
     createdBy: userId,
+    productImages: formData.selectedImages,
+    video: formData.selectedVideo,
+    availability: formData.availability,
     price: formData.price,
     productTitle: formData.title,
     productDescription: formData.description,

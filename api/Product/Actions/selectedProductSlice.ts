@@ -10,7 +10,7 @@ interface Item {
     productCondition: string;
     productCategory: string;
     productSubCategory: string;
-    loaction: string;
+    location: string;
     sellerName: string;
     sellerPhoneNumber: string;
     sellerAddress: string;

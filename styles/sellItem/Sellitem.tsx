@@ -14,15 +14,16 @@ const SellItems = StyleSheet.create({
     Box:{
         borderWidth:1,
         paddingHorizontal:15,
-        paddingVertical:20,
+        paddingVertical: 40,
         marginVertical:10,
         borderRadius:10,
         borderColor:"#E9E9E9",
         backgroundColor:"#fff"
     },
     optionSubText: {
-        fontSize: 12,
-        fontWeight: "normal",
+        fontSize: 16,
+        fontWeight: 400,
+        lineHeight: 22.4,
         marginTop: 5,
         fontFamily: "Proxima Nova",
         color: "#212121",

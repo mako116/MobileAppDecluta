@@ -7,6 +7,7 @@ import {
   ScrollView,
   TouchableOpacity,
    ActivityIndicator,
+   SafeAreaView,
 } from 'react-native';
 
  import AddVideo from '../../assets/images/laptop.png';
@@ -79,14 +80,21 @@ const ItemUnderReview = () => {
 
   
   return ( 
-    <>
-      <HeaderWithNoArrow title="item Under Review" headerSave="Done" />
+    <SafeAreaView
+      style={
+        {
+            backgroundColor: '#fff',
+            height: '100%',
+        }
+      }
+    >
+      <HeaderWithNoArrow title="Item Under Review" headerSave="Done" />
 
       <ScrollView contentContainerStyle={[SellItems.scrollViewContent]}>
         <View style={SellItems.contains}>
          <View style={SellItems.Box}>
-         <ReloadBig/>
-           <Text style={[SellItems.optionSubText,{textAlign:"center"}]}>
+          <ReloadBig/>
+          <Text style={[SellItems.optionSubText,{textAlign:"center"}]}>
            Your item has been successfully uploaded and is now under review by our team to ensure it meets our guidelines. This review process typically takes between 1 minute and 24 hours. Once approved, your item will be visible to potential buyers on DecluttaKing. Thank you for your patience!
           </Text>
          </View>
@@ -123,7 +131,7 @@ const ItemUnderReview = () => {
         </View>
       </ScrollView>
        
-    </>
+    </SafeAreaView>
   );
 };
 

@@ -1,6 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import BackButton from '@/assets/images/kyc/LeftArrow';
 import ArrowBkOutline from "@/assets/images/ArrowBkOutline";
+import { router } from "expo-router";
 
 
 interface HeaderWithNoArrowProps {
@@ -12,12 +13,16 @@ interface HeaderWithNoArrowProps {
 const HeaderWithNoArrow: React.FC<HeaderWithNoArrowProps> = ({ title, subTile ,headerSave}) => {
   return (
     <View style={styles.iconRow}>
-          <View style={[styles.centerContainer,{marginHorizontal:"auto"}]}>
-         <Text style={[styles.label]}>{title}</Text>       
-         </View>
-         <TouchableOpacity>
+      <View style={[styles.centerContainer]}>
+        <Text style={[styles.label]}>{title}</Text>       
+      </View>
+      <TouchableOpacity
+        onPress={() => {
+          router.push("/(tabs)/home");
+        }}
+      >
         <Text style={styles.save} > {headerSave}</Text>
-        </TouchableOpacity>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -51,10 +56,10 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         paddingHorizontal: 20,
-        paddingTop: 60,
-        gap:20,
+        paddingTop: 10,
+        gap:80,
         paddingBottom: 10,
-        justifyContent:"space-between",
+        justifyContent:"flex-end",
       },
     centerContainer: {
         display: "flex",
