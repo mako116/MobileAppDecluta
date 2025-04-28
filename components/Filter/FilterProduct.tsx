@@ -133,7 +133,7 @@ export default function FilterProducts() {
         </View>
         
         <TouchableOpacity style={styles.chevronButton}>
-          <MaterialIcons name="chevron-right" size={22} color="#d4a456" />
+          <MaterialIcons name="chevron-right" size={22} color="#000" />
         </TouchableOpacity>
       </View>
     </View>
@@ -168,16 +168,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     position: 'relative',
     borderColor: '#e0e0e0',
-    borderWidth: 0.5
+    borderWidth: 1,
+    marginHorizontal: 10
   },
   p2pBadge: {
     position: 'absolute',
-    top: 10,
-    left: 10,
+    // top: 1,
+    left: 0,
     backgroundColor: 'white',
-    paddingHorizontal: 6,
-    paddingVertical: 2,
-    borderRadius: 4,
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    borderTopLeftRadius: 10,
     zIndex: 10,
     elevation: 1,
     shadowColor: '#000',
@@ -187,8 +188,8 @@ const styles = StyleSheet.create({
   },
   p2pText: {
     fontSize: 10,
-    fontWeight: '600',
-    color: '#333',
+    fontWeight: 'bold',
+    color: '#000',
   },
   leftContainer: {
     width: 100,
@@ -198,6 +199,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f5f5f5',
     borderTopLeftRadius: 10,
     borderBottomLeftRadius: 10,
+    paddingTop: 30
   },
   imageContainer: {
     width: 75,
@@ -259,20 +261,19 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 12,
     backgroundColor: 'white',
+    width: '100%',
   },
   contentContainer: {
     flex: 1,
-  
   },
   timeAgoBadge: {
-    alignSelf: 'flex-end',
     backgroundColor: '#f5f5f5',
     paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 10,
-    marginBottom: 4,
-    alignItems: 'center',
-  
+    paddingVertical: 8,
+    borderRadius: 5,
+    marginBottom: 6,
+    alignSelf: 'flex-end',
+    marginRight: -32, 
   },
   timeAgoText: {
     fontSize: 10,
@@ -300,17 +301,24 @@ const styles = StyleSheet.create({
   },
   stockInfo: {
     marginBottom: 6,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  stockInfoTextContainer: {
+    flex: 0.5,
   },
   itemsLeft: {
     fontSize: 12,
     color: '#666',
-    marginBottom: 2,
   },
   stockBarContainer: {
     height: 4,
     backgroundColor: '#eee',
     borderRadius: 2,
     overflow: 'hidden',
+    flex: 1,
+    marginLeft: 8,
   },
   stockBar: {
     height: '100%',
