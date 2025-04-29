@@ -21,9 +21,8 @@ const SellItems = StyleSheet.create({
         backgroundColor:"#fff"
     },
     optionSubText: {
-        fontSize: 16,
+        fontSize: 12,
         fontWeight: 400,
-        lineHeight: 22.4,
         marginTop: 5,
         fontFamily: "Proxima Nova",
         color: "#212121",

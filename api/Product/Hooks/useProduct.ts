@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { setSelectedProduct } from '../Actions/selectedProductSlice';
+import { setProducts, setSelectedProduct } from '../Actions/selectedProductSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const EXPO_PUBLIC_API_KEY = process.env.EXPO_PUBLIC_API_KEY;
@@ -27,57 +27,6 @@ interface CreateProductQuestionState {
     productId: string;
     question: string;
 }
-
-// export const createProduct = createAsyncThunk(
-//     'product/create',
-//     async (data: CreateProductState, { rejectWithValue, dispatch }) => {
-//         const token = await AsyncStorage.getItem('token');
-//         try {
-//             const response = await axios.post(
-//                 `${EXPO_PUBLIC_API_KEY}/api/v1/products/create`,
-//                 data,
-//                 {
-//                     headers: {
-//                         'Content-Type': 'multipart/form-data',
-//                         'Authorization': `Bearer ${token}`,
-//                     },
-//                 }
-//             );
-//             console.log('Product creation response:', response.data);
-
-//             if (response?.data && response?.data._id) {
-//                 // Dispatch the selected product to the store
-//                 dispatch(
-//                     setSelectedProduct({
-//                         _id: response.data.newProduct._id,
-//                         productTitle: response.data.newProduct.productTitle,
-//                         createdBy: response.data.newProduct.createdBy,
-//                         price: response.data.newProduct.price,
-//                         productDescription: response.data.newProduct.productDescription,
-//                         productQuantity: response.data.newProduct.productQuantity,
-//                         productCondition: response.data.newProduct.productCondition,
-//                         productCategory: response.data.newProduct.productCategory,
-//                         productSubCategory: response.data.newProduct.productSubCategory,
-//                         loaction: response.data.newProduct._id,
-//                         sellerName: response.data.newProduct.sellerName,
-//                         sellerPhoneNumber: response.data.newProduct.sellerPhoneNumber,
-//                         sellerAddress: response.data.newProduct.sellerAddress
-//                     })
-//                 );
-
-//                 return {
-//                     productId: response.data.newProduct._id,
-//                     productTitle: response.data.newProduct.productTitle,
-//                 };
-//             } else {
-//                 return rejectWithValue('Product creation failed: No product ID in response');
-//             }
-//         } catch (error: any) {
-//             console.error('Product creation error:', error);
-//             return rejectWithValue(error.response?.data?.message || 'Product creation failed');
-//         }
-//     }
-// );
 export const createProduct = createAsyncThunk(
     'product/create',
     async (data: CreateProductState, { rejectWithValue, dispatch }) => {
@@ -189,12 +138,48 @@ export const createProductQuestion = createAsyncThunk(
     'product/createQuestion',
     async (data: CreateProductQuestionState, { rejectWithValue }) => {
         try {
-            const response = await axios.post(`${EXPO_PUBLIC_API_KEY}/api/v1/products/question/create`, data);
+            const token = await AsyncStorage.getItem('token');
+            const response = await axios.post(
+                `${EXPO_PUBLIC_API_KEY}/api/v1/products/question/create`,
+                data,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                    },
+                }
+            );
 
             return response.data;
         } catch (error: any) {
             console.error('Product question creation error:', error);
             return rejectWithValue(error.response?.data?.message || 'Product question creation failed');
+        }
+    }
+)
+
+export const getProducts = createAsyncThunk(
+    'product/getProducts',
+    async (_, { rejectWithValue, dispatch }) => {
+        const PAGE_SIZE = 1;
+        const ITEMS = 3
+        try {
+            const token = await AsyncStorage.getItem('token');
+            const response = await axios.get(
+                `${EXPO_PUBLIC_API_KEY}/api/v1/products?page=${PAGE_SIZE}&limit=${ITEMS}`,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                    },
+                }
+            );
+            dispatch(setProducts(response.data.products));
+
+            return response.data;
+        } catch (error: any) {
+            console.error('Get products error:', error);
+            return rejectWithValue(error.response?.data?.message || 'Failed to fetch products');
         }
     }
 )

@@ -1,53 +1,76 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import persistReducer from "redux-persist/es/persistReducer";
 
 interface Item {
-    _id: string;
-    createdBy: string;
-    price: number;
-    productTitle: string;
-    productDescription: string;
-    productQuantity: number;
-    productCondition: string;
-    productCategory: string;
-    productSubCategory: string;
-    location: string;
-    sellerName: string;
-    sellerPhoneNumber: string;
-    sellerAddress: string;
+  _id: string;
+  createdBy: string;
+  price: number;
+  productTitle: string;
+  productDescription: string;
+  productQuantity: number;
+  productCondition: string;
+  productCategory: string;
+  productSubCategory: string;
+  location: string;
+  sellerName: string;
+  sellerPhoneNumber: string;
+  sellerAddress: string;
 }
 
-const selectedProductSlice = createSlice({
-    name: "selectedProduct",
-    initialState: null as Item | null,
-    reducers: {
-        setSelectedProduct: (_state, action: PayloadAction<Item>) => {
-          return action.payload;
-        },
-        clearSelectedProduct: () => null,
-    
-        // Optional: If you want to "edit" the selected product
-        editProduct: (state, action: PayloadAction<Partial<Item>>) => {
-          if (state) {
-            return { ...state, ...action.payload };
-          }
-          return state;
-        },
-    
-        // Optional: If you want to "delete" the selected product by ID
-        deleteProduct: (state, action: PayloadAction<string>) => {
-          if (state && state._id === action.payload) {
-            return null;
-          }
-          return state;
-        },
-      },
+interface ProductState {
+  products: Item[];
+  selectedProduct: Item | null;
+}
+
+const initialState: ProductState = {
+  products: [],
+  selectedProduct: null,
+};
+
+const persistConfig = {
+  key: "productState",
+  storage: require("redux-persist/lib/storage").default,
+};
+
+const productSlice = createSlice({
+  name: "product",
+  initialState,
+  reducers: {
+    // List actions
+    setProducts: (state, action: PayloadAction<Item[]>) => {
+      state.products = action.payload;
+    },
+    clearProducts: (state) => {
+      state.products = [];
+    },
+
+    // Selected product actions
+    setSelectedProduct: (state, action: PayloadAction<Item>) => {
+      state.selectedProduct = action.payload;
+    },
+    clearSelectedProduct: (state) => {
+      state.selectedProduct = null;
+    },
+    editSelectedProduct: (state, action: PayloadAction<Partial<Item>>) => {
+      if (state.selectedProduct) {
+        state.selectedProduct = { ...state.selectedProduct, ...action.payload };
+      }
+    },
+    deleteSelectedProduct: (state, action: PayloadAction<string>) => {
+      if (state.selectedProduct && state.selectedProduct._id === action.payload) {
+        state.selectedProduct = null;
+      }
+    },
+  },
 });
 
 export const {
-    setSelectedProduct,
-    deleteProduct,
-    clearSelectedProduct,
-    editProduct
-} = selectedProductSlice.actions;
+  setProducts,
+  clearProducts,
+  setSelectedProduct,
+  clearSelectedProduct,
+  editSelectedProduct,
+  deleteSelectedProduct,
+} = productSlice.actions;
 
-export default selectedProductSlice.reducer;
+export default persistReducer(persistConfig, productSlice.reducer);

@@ -1,10 +1,15 @@
-import { View, Text, Modal, StyleSheet, TouchableOpacity, TextInput } from 'react-native'
+import { View, Text, Modal, StyleSheet, TouchableOpacity, TextInput, Alert } from 'react-native'
 import Checkbox from 'expo-checkbox';
 import React, { useState } from 'react'
 import Kyc from '@/styles/Kyc/Kyc.styles';
 import Close from '@/assets/images/kyc/close';
 import TextInputField from '@/UI/InputFields/TextInputField';
 import Button from '../Button/button';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
+import { router } from 'expo-router';
+import { createProductQuestion } from '@/api/Product/Hooks/useProduct';
+import { useAppDispatch } from '@/redux/Redux/hook/hook';
 
 
 interface AskQuestionProps {
@@ -13,12 +18,47 @@ interface AskQuestionProps {
 }
 
 const AskQuestionModal: React.FC<AskQuestionProps> = ({ isQuestion, toggleMod }) => {
+  const res = useSelector((state: RootState) => state.auth.userData);
   const [isChecked, setChecked] = useState(false);
   const [inputText, setInputText] = useState("");
   const [inputAdditionalText, setInputAdditionalText] = useState("");
+  const [loading, setLoading] = useState(false);
+  const dispatch = useAppDispatch();
 
   // Determine if button should be disabled
   const isButtonDisabled = inputText.trim().length === 0 || !isChecked;
+
+  const handleQuestionPublish = async () => {
+    const user = res;
+    console.log('user', user?._id);
+    try {
+      setLoading(true);
+      
+      const productData = {
+        productId: '680c8be14fdf4c53ab74bd6e',
+        createdBy: user?._id || '',
+        question: inputText.trim(),
+      };
+      
+      const resultAction = await dispatch(createProductQuestion(productData));
+      
+      if (createProductQuestion.fulfilled.match(resultAction)) {
+        Alert.alert('Success', 'Your question has been submitted!');
+        setInputText('');
+        setInputAdditionalText('');
+        setChecked(false);
+        toggleMod();
+      } else {
+        Alert.alert('Error', resultAction.payload as string || 'Failed to submit your question. Please try again.');
+      }
+    } catch (error) {
+      Alert.alert('Error', 'An unexpected error occurred. Please try again.');
+      console.error('Publish error:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
 
   return (
     <Modal
@@ -93,8 +133,8 @@ const AskQuestionModal: React.FC<AskQuestionProps> = ({ isQuestion, toggleMod })
             title="Submit Question"
             backgroundColor="#DEBC8E"
             borderWidth={0}
-            onPress={toggleMod}
-            disabled={isButtonDisabled} // Pass disabled prop
+            onPress={handleQuestionPublish}
+            disabled={isButtonDisabled || loading} // Pass disabled prop
           />
         </View>
       </View>

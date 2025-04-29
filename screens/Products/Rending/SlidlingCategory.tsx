@@ -85,7 +85,7 @@ export default function SlidLingCategory({ imageUrl, name, price, originalPrice,
           <View style={styles.posterInfo}>
             <View style={styles.posterIconContainer}>
               <View style={styles.avatarContainer}>
-                <Text style={styles.avatarText}>{postedBy.charAt(0)}</Text>
+                <Text style={styles.avatarText}>{postedBy}</Text>
               </View>
             </View>
             <Text style={styles.postedBy}>Posted by {postedBy}</Text>
