@@ -1,6 +1,7 @@
 import Mores from '@/styles/MoreModal/MoreModal';
 import React from 'react';
 import { View, Text, Modal, Pressable, Image, TouchableOpacity } from 'react-native';
+import { useRouter } from 'expo-router';
 
 interface MoreModalProps {
   isModalVisible: boolean;
@@ -16,11 +17,12 @@ const modalOptions = [
   {
     label: "My Wallet",
     icon: require('../../assets/images/newimages/dropwallet.png'),
-    walletBalance: "₦75.0k", // Wallet text instead of badge
+    walletBalance: "₦75.0k",
   },
   {
     label: "My Profile",
     icon: require('../../assets/images/newimages/user-square.png'),
+    route: "/(routes)/Account/MyAccount", // Ensure this route exists and is correct
   },
   {
     label: "My Rewards",
@@ -38,6 +40,8 @@ const modalOptions = [
 ];
 
 const MoreModal: React.FC<MoreModalProps> = ({ isModalVisible, toggleModal }) => {
+  const router = useRouter(); 
+
   return (
     <Modal
       animationType="slide"
@@ -51,7 +55,12 @@ const MoreModal: React.FC<MoreModalProps> = ({ isModalVisible, toggleModal }) =>
             <TouchableOpacity
               key={index}
               style={Mores.modalOption}
-              onPress={toggleModal}
+              onPress={() => {
+                toggleModal(); 
+                if (option.route) {
+                  router.push(option.route); 
+                }
+              }}
             >
               <Image
                 source={option.icon}
