@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Modal, Pressable } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { router } from 'expo-router';
-
+import { useRouter } from 'expo-router';
 import { Feather } from '@expo/vector-icons';
+import DeleteModal from '@/components/Account/MyItems/ItemManagment/DeleteItem';
+
+
 interface HeaderProps {
   title: string;
   showBack?: boolean;
   showNotification?: boolean;
   showCart?: boolean;
   showMenu?: boolean;
+  itemId?: string; 
+  itemName?: string;
 }
 
 const ItemHeader: React.FC<HeaderProps> = ({
@@ -18,29 +22,46 @@ const ItemHeader: React.FC<HeaderProps> = ({
   showNotification = false,
   showCart = false,
   showMenu = false,
+  itemId = '',
+  itemName = '',
 }) => {
   const [menuVisible, setMenuVisible] = useState(false);
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+  const router = useRouter();
 
   const toggleMenu = () => {
     setMenuVisible(!menuVisible);
   };
 
   const handleMenuOption = (action: string) => {
-    // Handle menu actions
+    // Handle menu actions with routing
     switch (action) {
       case 'preview':
         console.log('Preview selected');
+        router.push("/(routes)/Account/MyItem/PreviewItem");
         break;
       case 'edit':
         console.log('Edit selected');
+        router.push("/(routes)/Account/MyItem/EditItem");
         break;
       case 'delete':
         console.log('Delete selected');
+        setDeleteModalVisible(true);
         break;
       default:
         break;
     }
     setMenuVisible(false);
+  };
+
+  const handleDeleteConfirm = () => {
+    console.log('Item deleted:', itemId);
+    setDeleteModalVisible(false);
+
+  };
+
+  const handleDeleteCancel = () => {
+    setDeleteModalVisible(false);
   };
 
   return (
@@ -105,6 +126,14 @@ const ItemHeader: React.FC<HeaderProps> = ({
           onPress={() => setMenuVisible(false)}
         />
       )}
+
+      {/* Delete Confirmation Modal */}
+      <DeleteModal 
+        visible={deleteModalVisible}
+        onCancel={handleDeleteCancel}
+        onDelete={handleDeleteConfirm}
+        itemName={itemName || 'this item'}
+      />
     </View>
   );
 };
@@ -142,8 +171,6 @@ const styles = StyleSheet.create({
     top: 55,
     backgroundColor: 'white',
     borderRadius: 4,
- 
-
     elevation: 5,
     width: 150,
     zIndex: 10,
@@ -152,7 +179,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     padding: 12,
-
     borderBottomColor: '#f1f1f1',
   },
   menuText: {
