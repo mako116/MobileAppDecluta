@@ -1,30 +1,40 @@
+// MenuItem.tsx
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 
 interface MenuItemProps {
   icon: keyof typeof Ionicons.glyphMap;
   label: string;
   badgeCount?: number;
-  onPress?: () => void;
+  route: string; 
 }
 
-export const MenuItem: React.FC<MenuItemProps> = ({ 
-  icon, 
-  label, 
+export const MenuItem: React.FC<MenuItemProps> = ({
+  icon,
+  label,
   badgeCount = 0,
-  onPress 
+  route
 }) => {
+  const router = useRouter();
+  
+  const handlePress = () => {
+    router.push(route);
+  };
+
   return (
-    <TouchableOpacity 
-      style={styles.item} 
-      onPress={onPress}
+    <TouchableOpacity
+      style={styles.item}
+      onPress={handlePress}
       activeOpacity={0.7}
     >
       <View style={styles.leftContent}>
         <View style={styles.iconContainer}>
           <Ionicons name={icon} size={22} color="#333" />
+          
         </View>
+        
         <Text style={styles.label}>{label}</Text>
         {badgeCount > 0 && (
           <View style={styles.badge}>
@@ -32,9 +42,10 @@ export const MenuItem: React.FC<MenuItemProps> = ({
           </View>
         )}
       </View>
+
       <View style={styles.rightContent}>
-   
-        <Ionicons name="chevron-forward" size={18} color="#ccc" />
+    
+        <Ionicons name="chevron-forward" size={16} color="#c8c8c8" />
       </View>
     </TouchableOpacity>
   );
@@ -55,14 +66,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   iconContainer: {
-    width: 24,
+    width: 22,
     alignItems: 'center',
-    marginRight: 16,
+    marginRight: 8,
   },
   label: {
-    fontSize: 16,
+    fontSize: 15,
     color: '#333',
-    marginRight:9
+    marginRight: 6,
   },
   rightContent: {
     flexDirection: 'row',
