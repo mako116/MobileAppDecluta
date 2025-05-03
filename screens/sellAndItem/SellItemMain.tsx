@@ -126,7 +126,7 @@ const SellItemMain = () => {
                 }
             }
         >
-            <HeaderWithDesc title={'Sell an item'} subTile='(Step 1/5)' headerSave={headerSave} />
+            <HeaderWithDesc title={'Sell an item'} subTile='(Step 1/5)' headerSave={headerSave} paddingTop={40} />
             <ScrollView contentContainerStyle={SellItems.scrollViewContent}>
                 <View
                 style={

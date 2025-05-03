@@ -30,6 +30,22 @@ const YourCart = StyleSheet.create({
       paddingTop:10,
        marginBottom:5,
     },
+    noTokenBox: {
+      borderWidth: 1,
+      borderColor: '#E9E9E9',
+      padding: 15,
+      backgroundColor: '#fff',
+      borderRadius: 4,
+      marginTop: 15,
+      alignItems: 'center',
+    },
+    noTokenText: {
+      fontSize: 16,
+      fontWeight: '500',
+      marginBottom: 10,
+      textAlign: 'center',
+    },
+    
     rows:{
       flexDirection:"row",
       alignItems:"center",

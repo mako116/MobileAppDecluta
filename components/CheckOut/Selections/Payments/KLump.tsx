@@ -9,7 +9,7 @@ import HeaderWithDesc from '@/UI/Header/HeaderWithDescription';
 import DropdownWithSummary from '../../dropdownSummary/ShowSummary';
 import Refresh2 from '@/assets/images/New folder/refresh-2';
 
-const BankTransfer = () => {
+const Klump = () => {
    // Access the cart context
   const { cart } = useCart();
 
@@ -62,85 +62,97 @@ const BankTransfer = () => {
 
   return (
     <View style={{height:"100%",}}>
-      <HeaderWithDesc title='Pay with Bank Transfer' paddingTop={50} />
+      <HeaderWithDesc title='Pay in Installments with KLUMP' paddingTop={50} />
     <ScrollView contentContainerStyle={{flexDirection:"column",justifyContent:"space-between", }}>
       
       <View style={[YourCart.main,{paddingHorizontal:20,marginBottom:"40%"}]}>
-      <DropdownWithSummary />
-        {/* Title */}
-        <Text style={[YourCart.title,{fontWeight:"300",fontSize:23,lineHeight:40,textAlign:"center",marginTop:5}]}>
-        Transfer ₦232,000.00
+         {/* Title */}
+        <Text style={[YourCart.price,{fontWeight:"300",marginTop:15}]}>
+        With Klump, you can split your payment into easy installments. But before you proceed, here are a few important things to note:
         </Text>
-        <Text style={[YourCart.title,{textAlign:"center"}]}>Account number expires in: <Text style={{ color: '#E42527', fontWeight: '700' }}>{expired ? 'Expired' : formatTime(timeLeft)}</Text>
+        <Text style={[YourCart.title,{marginTop:15}]}>
+            How Klump Works:
+         </Text>
+         <Text style={[YourCart.price,{fontWeight:"300",marginTop:5}]}>
+         You’ll make an upfront payment of 25% of the total amount, while Klump covers the remaining 75% which you’ll repay Klump in installments
         </Text>
+         <Text style={[YourCart.title,{marginTop:15}]}>
+         Processing Fee
+         </Text>
+         <Text style={[YourCart.price,{fontWeight:"300",marginTop:5}]}>
+         DecluttaKing applies a 5% processing fee on orders paid with Klump.
+        </Text>
+        <Text style={[YourCart.title,{marginTop:15}]}>
+        KYC & Approval:
+         </Text>
+         <Text style={[YourCart.price,{fontWeight:"300",marginTop:5}]}>
+         Klump requires identity verification (KYC) before approving your payment. 
+         DecluttaKing has no influence over Klump’s decision to approve or decline your request.
+        </Text>
+        <Text style={[YourCart.title,{marginTop:15}]}>
+        Order Cancellation:
+         </Text>
+         <Text style={[YourCart.price,{fontWeight:"300",marginTop:5}]}>
+         If you cancel your order after payment, the 5% processing fee and the 25% upfront payment you made to Klump will be fully refunded. DecluttaKing will also refund Klump the 75% amount they covered for your order. Refund processing
+          times may vary based on Klump’s terms and conditions.        
+        </Text>
+
+        <Text style={[YourCart.title,{marginTop:15}]}>
+        Payment Breakdown:
+         </Text>
 
         <View style={[YourCart.noTokenBox,{alignItems:"flex-start"}]}>
          {/* Bank Details */}
-         <Text style={[YourCart.title, { fontSize:15}]}>
-          Bank Name
+         <View style={{flexDirection:"row",justifyContent:"space-between",width:"100%",paddingVertical:5}}>
+         <Text style={YourCart.price}>
+         Your Order Total
         </Text>
         <Text style={[YourCart.price,{textTransform:"uppercase"}]}>
-          moniepoint mfb
+        ₦232,000.00
         </Text>
-
-         {/* Account name */}
-         <Text style={[YourCart.title,{textTransform:"uppercase",marginTop:10}]}>
-          Account Name
-        </Text>
-        <Text style={[YourCart.price,{textTransform:"uppercase"}]}>
-        DecluttaKing limited
-           </Text>
-
-        
-           
-        {/* Account Number */}
-        <View style={[YourCart.rowed,{justifyContent:"space-between",width:"100%",marginTop:10}]}>
-        <Text style={[YourCart.title,{textTransform:"uppercase"}]}>
-            Account Number
-          </Text>
-             <Copy width={20} height={16} />
          </View>
-         <Text style={[YourCart.price,{textTransform:"uppercase"}]}>
-         01234567890
-           </Text>
 
-           {/* Total Amount */}
-           <View style={[YourCart.rowed,{justifyContent:"space-between",width:"100%",marginTop:10}]}>
-        <Text style={[YourCart.title,{textTransform:"uppercase"}]}>
-            Amount
-          </Text>
-          <Copy width={20} height={16} />
-          </View>
-          <Text style={[YourCart.price,{textTransform:"uppercase"}]}>
-          {formatPrice(totalAmount.toString())}
+         <View style={{flexDirection:"row",justifyContent:"space-between",width:"100%",paddingVertical:5, marginVertical:6,borderTopWidth:1,borderColor:"#E9E9E9"}}>
+         <Text style={YourCart.price}>
+         5% Processing Fee
         </Text>
-       
-        </View>
-        {/* Note */}
-        <Text
-          style={{
-            lineHeight: 16.8,
-            fontSize: 12,
-            fontWeight: '400',
-            fontFamily: 'Proxima Nova',
-            marginTop: 6,
-          }}
-        >
-          <Text style={{ fontWeight: '700' }}>Note:</Text> Please transfer the
-          exact order total amount to the account details above. The account
-          number is only valid for this transaction and expires in{' '}
-          <Text style={{ color: '#E42527', fontWeight: '700' }}>59:30</Text>.
-          Only make payment from an account that is in your legal name.
+        <Text style={[YourCart.price,{textTransform:"uppercase"}]}>
+        ₦232,000.00
         </Text>
+         </View>
 
-       
+          <View style={{flexDirection:"row",justifyContent:"space-between",width:"100%",paddingVertical:5, marginVertical:4,borderTopWidth:1,borderColor:"#E9E9E9"}}>
+         <Text style={YourCart.price}>
+         Total Amount to Pay
+        </Text>
+        <Text style={[YourCart.price,{textTransform:"uppercase"}]}>
+        ₦232,000.00
+        </Text>
+         </View>
 
-        
+         <View style={{flexDirection:"row",justifyContent:"space-between",width:"100%",paddingVertical:5, marginVertical:6,borderTopWidth:1,borderColor:"#E9E9E9"}}>
+         <Text style={YourCart.price}>
+         25% Upfront (paid to Klump)
+        </Text>
+        <Text style={[YourCart.price,{textTransform:"uppercase"}]}>
+        ₦232,000.00
+        </Text>
+         </View>
+
+         <View style={{flexDirection:"row",justifyContent:"space-between",width:"100%",paddingVertical:5, marginVertical:6,borderTopWidth:1,borderColor:"#E9E9E9"}}>
+         <Text style={YourCart.price}>
+         Amount Klump Covers for You
+        </Text>
+        <Text style={[YourCart.price,{textTransform:"uppercase"}]}>
+        ₦232,000.00
+        </Text>
+         </View>
+         </View> 
       </View>
 
       </ScrollView>
       
-      <View style={{paddingHorizontal:20,paddingBottom:30,gap:10 }}>
+      <View style={{paddingHorizontal:20,paddingBottom:30,gap:10 ,backgroundColor:"#fff"}}>
          {/* Action Button */}
          <TouchableOpacity onPress={handleBackCheckout} style={YourCart.bottomButton}>
           <CheckSquares />
@@ -179,4 +191,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BankTransfer;
+export default Klump;

@@ -53,6 +53,16 @@ const UssdStyles = StyleSheet.create({
         borderRadius: 6,
         backgroundColor: "#FFFFFF",
       },
+      dropdownsd: {
+        marginTop:12,
+        // alignItems: "center",
+        paddingHorizontal: 15,
+        paddingVertical:15,
+        gap:10,
+        
+        borderRadius: 6,
+        backgroundColor: "#FFFFFF",
+      },
       dropdowned: {
         flexDirection: "row",
         justifyContent: "space-between",
@@ -159,12 +169,7 @@ const UssdStyles = StyleSheet.create({
       dropdownContainer: {
         backgroundColor: '#fff',
         width: '100%',
-        borderBottomLeftRadius: 4,
-        borderBottomRightRadius: 4,
-        borderLeftWidth: 1,
-        borderRightWidth: 1,
-        borderBottomWidth: 1,
-        borderColor: '#E9E9E9',
+      
       },
       row: {
         flexDirection: 'row',

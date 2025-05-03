@@ -52,7 +52,7 @@ export default function ProfileKYC() {
         <TouchableOpacity
           onPress={() => router.push("/(routes)/kyc/Signup")}
           style={styles.card}
-        >
+        > 
           <Text style={styles.progressText}>
             Your profile is 60% complete
           </Text>
