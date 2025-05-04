@@ -1,9 +1,9 @@
-import { View, Text } from 'react-native'
+ import OrdersBoard from '@/screens/Order-page/my-orders-main/OrdersBoard'
 import React from 'react'
-import MyOrderee from '@/components/Orders/myOrders'
+//  import OrdersBoard from '@/screens/Order-page/my-orders-main/OrdersBoard'
 
 export default function MyOrder() {
   return (
-     <MyOrderee/>
+     <OrdersBoard/>
   )
 }

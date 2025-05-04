@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, TouchableOpacity, DimensionValue } from 'react-native';
 import React from 'react';
 
 export default function Button({
@@ -13,46 +13,47 @@ export default function Button({
     flex,
     fontSize,
     onPress,
+    width,
 }: {
     title: string;
     backgroundColor: string;
     borderWidth: number;
-    borderColor? :string
-    padding?: number
-    paddingHorizontal?: number 
-    disabled?: boolean
+    borderColor?: string;
+    padding?: number;
+    paddingHorizontal?: number;
+    disabled?: boolean;
     fontSize?: number;
-
-    icon? : React.ReactNode
-    flex?: boolean
+    icon?: React.ReactNode;
+    flex?: boolean;
     onPress: () => void;
+    width?: DimensionValue;
 }) {
-    const { width } = Dimensions.get("window");
-
     return (
         <TouchableOpacity
             style={[
                 {
-                    paddingHorizontal: paddingHorizontal ? 20 : 0,
-                    padding: padding ? 15 : 20,
+                    paddingHorizontal: paddingHorizontal ?? 20,
+                    padding: padding ?? 15,
                     alignItems: "center",
                     flexDirection: "row",
                     justifyContent: "center",
                     borderRadius: 6,
-                    backgroundColor: disabled ? "#E0E0E0" : backgroundColor, // Set background color dynamically
-                    borderWidth: borderWidth ? 1 : 0, // Add border width if specified
-                    borderColor: borderColor ? '#E9E9E9' : 'black', // Light border if borderWidth is set
+                    backgroundColor: disabled ? "#E0E0E0" : backgroundColor,
+                    borderWidth: borderWidth ?? 0,
+                    borderColor: borderColor ?? '#E9E9E9',
                     gap: icon ? 15 : 0,
-                    opacity: disabled ? 0.5 : 1, // Reduce opacity if disabled
+                    opacity: disabled ? 0.5 : 1,
                     flex: flex ? 1 : 0,
+                    width: width ?? 'auto',
+                    alignSelf: "center",
                 }
             ]}
-            onPress={!disabled ? onPress : undefined} // Disable onPress if disabled
-            disabled={disabled} // Disable button interaction
+            onPress={!disabled ? onPress : undefined}
+            disabled={disabled}
         >
             {icon}
             <Text style={{
-                fontSize: fontSize ?? 18, // Use provided fontSize or default to 18
+                fontSize: fontSize ?? 18,
                 fontWeight: '400',
                 textAlign: "center",
                 fontFamily: "Proxima Nova",

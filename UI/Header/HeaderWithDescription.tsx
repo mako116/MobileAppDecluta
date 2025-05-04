@@ -1,14 +1,18 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import ArrowBkOutline from "@/assets/images/ArrowBkOutline";
+import { router } from "expo-router";
 
 interface HeaderWithDescProps {
   title: string;
   subTile?: string;
   headerSave?: string;
   paddingTop?:   number;
+  ordersBars?: string | Boolean;
+  Actions?: string | Boolean;
+
 }
 
-const HeaderWithDesc: React.FC<HeaderWithDescProps> = ({ paddingTop = 10, title, subTile, headerSave }) => {
+const HeaderWithDesc: React.FC<HeaderWithDescProps> = ({ordersBars, paddingTop = 10, title, subTile, headerSave,Actions }) => {
   return (
     <View style={[styles.iconRow, { paddingTop }]}>
       <View style={styles.flexRow}>
@@ -17,6 +21,24 @@ const HeaderWithDesc: React.FC<HeaderWithDescProps> = ({ paddingTop = 10, title,
           <Text style={styles.label}>{title}</Text>
           {subTile && <Text style={styles.subLabel}>{subTile}</Text>}
         </View>
+      </View>
+      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 10 }}>
+      {Actions && (
+          <TouchableOpacity onPress={()=> router.push("/(routes)/Notifications")}>
+          <Image source={require("../../assets/images/New folder/Group 490.png")} style={{width:17,height:17}}/>
+          </TouchableOpacity>
+        )}
+      {ordersBars && (
+        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 10 }}>
+          <TouchableOpacity onPress={()=> router.push("/(routes)/Notifications")}>
+          <Image source={require("../../assets/images/New folder/notification-bing.png")} style={{width:17,height:17}}/>
+          </TouchableOpacity>
+         
+          <TouchableOpacity onPress={()=>router.push("/(routes)/cart")}>
+          <Image source={require("../../assets/images/New folder/Group 489.png")} style={{width:17,height:17}} />
+          </TouchableOpacity>
+       </View>
+      )}
       </View>
       {headerSave && (
         <TouchableOpacity>
