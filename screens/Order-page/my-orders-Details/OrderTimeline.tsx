@@ -27,7 +27,15 @@ const OrderTimeline = () => {
           <View>
             <Text style={OrderTime.timelineTitle}>Payment Made</Text>
             <Text style={OrderTime.timelineSubtitle}>Payment has been made and is held in escrow.</Text>
-            <View style={{flexDirection:"row",alignItems:"center",gap:5}}>
+            <View style={{
+            flexDirection:"row",
+            alignItems:"center",
+            gap:5,
+            backgroundColor: "#F5EADC",
+            maxWidth: "90%",
+            padding: 9,
+            borderRadius: 8,
+            }}>
             <Lock /> 
             <Text style={OrderTime.escrowAmount}>
             Amount in Escrow: ₦75,000.00

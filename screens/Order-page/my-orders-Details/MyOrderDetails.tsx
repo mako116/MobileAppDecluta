@@ -108,7 +108,7 @@ const MyOrderDetails = () => {
          onPress={()=>router.push("/(routes)/order/order-transactions")} 
          style={{
             flexDirection:'row',
-            gap:5,
+            gap:1,
             borderTopWidth:1,
             borderColor:"#E9E9E9",
             alignItems:"center",

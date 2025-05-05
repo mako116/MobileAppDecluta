@@ -47,11 +47,11 @@ const OrderTime = StyleSheet.create({
       fontFamily: 'Proxima Nova',
       color: "#212121",
       marginVertical: 5,
-      backgroundColor: "#F5EADC",
-      padding: 9,
+      
+      
       alignItems:"flex-end",
-      borderRadius: 8,
-      maxWidth: "90%",
+     
+    
     },
     statusIcon: {
       width: 24,

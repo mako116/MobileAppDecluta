@@ -41,11 +41,13 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: '#7E7E7E',
         fontWeight: '400',
+        fontFamily: "Proxima Nova",
       },
       value: {
         fontSize: 14,
         fontWeight: '500',
         color: '#212121',
+        fontFamily: "Proxima Nova",
       },
       
       historyLink: {
@@ -62,5 +64,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: '500',
         color: '#212121',
+        fontFamily: "Proxima Nova",
+
       },
 })

@@ -120,8 +120,6 @@ const ConfimPickup: React.FC = () => {
    */
   const renderButtons = (title: string) => {
     const lowerTitle = title?.toLowerCase() ?? '';
-  
-    
       return (
         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 10 }}>
           <BoxButton width="45%" title="View Details" backgroundColor="#fff" borderWidth={1} onPress={() =>router.push("/(routes)/order/order-details")} borderColor="#463E31" />
@@ -163,7 +161,7 @@ const ConfimPickup: React.FC = () => {
               {expandedOrders[orderId] && (
                 <View style={orderStyles.itemBox}>
                   {items.map((item) => {
-                    // Set background and status icon based on statusLabel
+                    // Set background and status based on statusLabel
                     let bgColor = '#E9E9E9';
                     let icon = null;
                     let color = '#fff'
@@ -220,8 +218,6 @@ const ConfimPickup: React.FC = () => {
     </SafeAreaView>
   );
 };
-
-// Component orderStyles
-
+ 
 
 export default ConfimPickup;
