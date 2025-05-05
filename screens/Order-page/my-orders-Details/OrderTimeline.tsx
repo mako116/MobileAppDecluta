@@ -27,9 +27,12 @@ const OrderTimeline = () => {
           <View>
             <Text style={OrderTime.timelineTitle}>Payment Made</Text>
             <Text style={OrderTime.timelineSubtitle}>Payment has been made and is held in escrow.</Text>
+            <View style={{flexDirection:"row",alignItems:"center",gap:5}}>
+            <Lock /> 
             <Text style={OrderTime.escrowAmount}>
-              <Lock /> Amount in Escrow: ₦75,000.00
+            Amount in Escrow: ₦75,000.00
             </Text>
+            </View>
           </View>
         </View>
 
@@ -75,7 +78,7 @@ const OrderTimeline = () => {
 
             {isPickedUp && (
               <>
-             <Text style={[OrderTime.timelineSubtitle,{maxWidth:"70%"}]}>
+             <Text style={[OrderTime.timelineSubtitle,{maxWidth:"80%"}]}>
              You have confirmed that the pickup was successful and the funds have been released to Segun A.
                </Text>
                 <Text style={OrderTime.timelineTitle}>Confirmation Photo</Text>

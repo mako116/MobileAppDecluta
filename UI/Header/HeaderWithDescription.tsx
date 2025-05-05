@@ -9,10 +9,11 @@ interface HeaderWithDescProps {
   paddingTop?:   number;
   ordersBars?: string | Boolean;
   Actions?: string | Boolean;
+  Receipt?: string | Boolean;
 
 }
 
-const HeaderWithDesc: React.FC<HeaderWithDescProps> = ({ordersBars, paddingTop = 10, title, subTile, headerSave,Actions }) => {
+const HeaderWithDesc: React.FC<HeaderWithDescProps> = ({Receipt,ordersBars, paddingTop = 10, title, subTile, headerSave,Actions }) => {
   return (
     <View style={[styles.iconRow, { paddingTop }]}>
       <View style={styles.flexRow}>
@@ -27,6 +28,13 @@ const HeaderWithDesc: React.FC<HeaderWithDescProps> = ({ordersBars, paddingTop =
           <TouchableOpacity onPress={()=> router.push("/(routes)/Notifications")}>
           <Image source={require("../../assets/images/New folder/Group 490.png")} style={{width:17,height:17}}/>
           </TouchableOpacity>
+        )}
+
+        {Receipt && (
+          <View style={{flexDirection:"row",alignItems:"center",gap:7}}>
+          <Image source={require("../../assets/images/New folder/document-text.png")} style={{width:19,height:19}}/>
+          <Text>Receipt</Text>
+          </View>
         )}
       {ordersBars && (
         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 10 }}>

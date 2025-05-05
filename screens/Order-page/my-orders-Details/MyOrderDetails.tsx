@@ -2,17 +2,11 @@ import React from 'react';
 import {Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
  import { useCart } from '@/context/CartContext';
 import YourCart from '@/styles/Cart/YourCart.styles';
-import Copy from '@/assets/svg/copy';
-import CheckSquares from '@/assets/svg/Check square';
-import { router } from 'expo-router';
+ import { router } from 'expo-router';
 import HeaderWithDesc from '@/UI/Header/HeaderWithDescription';
 // import DropdownWithSummary from '../../dropdownSummary/ShowSummary';
-import Refresh2 from '@/assets/images/New folder/refresh-2';
-import Rightarrow from '@/assets/images/kyc/rightarrow';
-import LocationIcons from '@/screens/icons';
-import PinLocation from '@/assets/svg/PinLocationIcon';
-import Tag from '@/assets/images/cart/tag';
-import Cube from '@/assets/images/cart/cube';
+ import Rightarrow from '@/assets/images/kyc/rightarrow';
+ 
 import SellersDetails from './SellersDetails';
 import OrderTimeline from './OrderTimeline';
 
@@ -110,7 +104,9 @@ const MyOrderDetails = () => {
          
          </View>
          {/* Transaction History */}
-         <View style={{
+         <TouchableOpacity 
+         onPress={()=>router.push("/(routes)/order/order-transactions")} 
+         style={{
             flexDirection:'row',
             gap:5,
             borderTopWidth:1,
@@ -126,7 +122,7 @@ const MyOrderDetails = () => {
         </Text>
         {/* Arrow */}
         <Rightarrow width={10} height={10} color='#212121' strokeWidth={'2.5'}/>
-        </View>       
+        </TouchableOpacity>       
 
         </View>
         {/* Seller details */}

@@ -2,7 +2,7 @@ import {  StyleSheet } from 'react-native';
 
 const NotificationTabsStyles = StyleSheet.create({
     container: {
-      paddingVertical: 10,
+      // paddingVertical: 10,
       // paddingHorizontal: 15,
     },
     listItem: {

@@ -49,6 +49,7 @@ const OrderTime = StyleSheet.create({
       marginVertical: 5,
       backgroundColor: "#F5EADC",
       padding: 9,
+      alignItems:"flex-end",
       borderRadius: 8,
       maxWidth: "90%",
     },
@@ -63,7 +64,7 @@ const OrderTime = StyleSheet.create({
     },
     lineTall: {
       width: 2,
-      height: 220,
+      height: 200,
       marginHorizontal: "auto",
     },
     confirmButton: {
