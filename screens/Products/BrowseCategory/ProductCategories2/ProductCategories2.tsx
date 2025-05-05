@@ -98,7 +98,7 @@ export default function ProductsCategories() {
 }
 
 const styles = StyleSheet.create({
-  // All your existing styles remain unchanged
+
   container: {
     marginTop: 1,
   },
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
   },
   viewAllText: {
     color: '#333',
-    fontSize: 14,
+    fontSize: 18,
     fontFamily:"ProximaNovaR",
   },
   viewAllArrow: {

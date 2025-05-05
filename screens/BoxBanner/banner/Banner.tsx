@@ -131,7 +131,7 @@ width: '100%',
 
   paginationActive: {
     backgroundColor: '#DEBC8E',
-    width: 18,
+    width: 25,
     height: 8,
     borderRadius: 4,
     opacity: 1,
