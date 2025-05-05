@@ -52,7 +52,7 @@ const ORDER = {
 };
 
 const TransactionDetailsStylesDetails = () => {
-  const [notifications] = useState<Notification[]>([]);
+//   const [notifications] = useState<Notification[]>([]);
 
   const formatPrice = (amount: number): string =>
     `₦ ${Number(amount).toLocaleString('en-NG')}`;
