@@ -81,7 +81,7 @@ const OrderTimeline = () => {
              <Text style={[OrderTime.timelineSubtitle,{maxWidth:"80%"}]}>
              You have confirmed that the pickup was successful and the funds have been released to Segun A.
                </Text>
-                <Text style={OrderTime.timelineTitle}>Confirmation Photo</Text>
+                <Text style={[OrderTime.timelineTitle,{marginTop:7}]}>Confirmation Photo</Text>
                 <View style={OrderTime.imageRow}>
                   <Image source={require("../../../assets/images/New folder/Frame 646237.png")} style={OrderTime.confirmImage} />
                   <Image source={require("../../../assets/images/New folder/Frame 646237.png")} style={OrderTime.confirmImage} />
