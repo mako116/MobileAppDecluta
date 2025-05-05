@@ -6,7 +6,7 @@ import BannerCategory from '../BannerCategory/BannerCategory';
 import { router } from 'expo-router';
 
 const { width } = Dimensions.get('window');
-const ITEM_WIDTH = width - 24; // Account for horizontal padding
+const ITEM_WIDTH = width - 24; 
 
 export default function Banner() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -87,8 +87,8 @@ export default function Banner() {
           <View
             key={index}
             style={[
-              styles.paginationDot,
-              { backgroundColor: index === activeIndex ? '#DEBC8E' : '#D9D9D9' }
+              styles.paginationDot, 
+               index === activeIndex &&  styles.paginationActive ,
             ]}
           />
         ))}
@@ -119,9 +119,23 @@ width: '100%',
     marginVertical: 10,
   },
   paginationDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    marginHorizontal: 3,
+    backgroundColor: '#DEBC8E',
+
+    opacity: 0.5,
+   
+  },
+
+  paginationActive: {
+    backgroundColor: '#DEBC8E',
     width: 18,
     height: 8,
     borderRadius: 4,
-    marginHorizontal: 5,
+    opacity: 1,
   },
 });
+
+// #DEBC8E

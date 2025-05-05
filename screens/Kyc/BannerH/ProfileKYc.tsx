@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
   progressText: {
     fontSize: 12,
     lineHeight: 16.8,
-    fontWeight: "400",
+fontFamily:"ProximaNovaR",
     color: "#474747",
   },
   kycButton: {
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     lineHeight: 16.8,
     borderRadius: 4,
-    fontWeight: "400",
+fontFamily:"HelveticaNeueBold",
     color: "#212121",
     padding: 3,
     backgroundColor: "#FDEBD0",

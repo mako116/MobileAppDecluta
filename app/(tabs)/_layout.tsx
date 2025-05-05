@@ -224,5 +224,6 @@ const styles = StyleSheet.create({
   label: {
     textTransform: 'capitalize',
     fontSize: 12,
+    fontFamily:"ProximaNovaR",
   },
 });
