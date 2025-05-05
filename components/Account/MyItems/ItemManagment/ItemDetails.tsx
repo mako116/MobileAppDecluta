@@ -9,6 +9,7 @@ import { Item, ItemStatus } from './item';
 import ItemHeader from '@/UI/Header/ItemHeader';
 import ItemBtn from './ItemBtn';
 
+import { useRouter } from 'expo-router';
 
 
   const items: Item[] = [
@@ -97,6 +98,7 @@ import ItemBtn from './ItemBtn';
 export default function ItemDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   
+  const router = useRouter();
 
   const item: Item = items.find(item => item.id === id) || items[0];
 
@@ -181,7 +183,7 @@ export default function ItemDetailScreen() {
         <ItemBtn 
           title="Edit Item" 
           icon="edit" 
-          onPress={() => console.log('Edit Item pressed')} 
+          onPress={() =>   router.push("/(routes)/Account/MyItem/EditItem")} 
         />
         
         {/* Only show Update Status button if item is not pending or rejected */}

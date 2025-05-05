@@ -87,7 +87,7 @@ export default function SlidLingCategory({ imageUrl, name, price, originalPrice,
           <View style={styles.posterInfo}>
             <View style={styles.posterIconContainer}>
               <View style={styles.avatarContainer}>
-                <Text style={styles.avatarText}>{postedBy}</Text>
+                <Text style={styles.avatarText}>{postedBy.substring(0, 1)}</Text>
               </View>
             </View>
             <Text style={styles.postedBy}>Posted by {postedBy}</Text>
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     borderColor: '#e0e0e0',
     borderWidth: 1,
-    marginHorizontal: 10
+    // marginHorizontal: 100
   },
   p2pBadge: {
     position: 'absolute',
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
   },
   p2pText: {
     fontSize: 10,
-    fontWeight: 'bold',
+    fontFamily:"HelveticaNeueBold",  
     color: '#000',
   },
   leftContainer: {
@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
   badgeText: {
     color: 'white',
     fontSize: 10,
-    fontWeight: 'bold',
+    fontFamily: 'HelveticaNeueBold',
   },
   mainContent: {
     flex: 1,
@@ -223,11 +223,13 @@ const styles = StyleSheet.create({
   timeAgoText: {
     fontSize: 10,
     color: '#666',
+    fontFamily:"ProximaNovaR",  
   },
   productName: {
     fontSize: 16,
-    fontWeight: '500',
+    fontFamily:"HelveticaNeueBold",  
     marginBottom: 4,
+    color: '#333',
   },
   priceContainer: {
     flexDirection: 'row',
@@ -238,11 +240,13 @@ const styles = StyleSheet.create({
     color: '#999',
     textDecorationLine: 'line-through',
     marginRight: 6,
+    fontFamily:"HelveticaNeueBold",  
   },
   price: {
     fontSize: 16,
     fontWeight: '600',
     color: '#d4a456',
+    fontFamily:"HelveticaNeueBold",  
   },
   stockInfo: {
     marginBottom: 6,
@@ -256,6 +260,7 @@ const styles = StyleSheet.create({
   itemsLeft: {
     fontSize: 12,
     color: '#666',
+    fontFamily:"ProximaNovaR",
   },
   stockBarContainer: {
     height: 4,
@@ -279,6 +284,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#666',
     marginLeft: 4,
+    fontFamily:"ProximaNovaR",
   },
   posterInfo: {
     flexDirection: 'row',
@@ -298,11 +304,12 @@ const styles = StyleSheet.create({
   avatarText: {
     color: 'white',
     fontSize: 10,
-    fontWeight: '500',
+    fontFamily:"ProximaNovaR",  
   },
   postedBy: {
     fontSize: 12,
     color: '#666',
+    fontFamily:"ProximaNovaR",
   },
   chevronButton: {
     justifyContent: 'center',

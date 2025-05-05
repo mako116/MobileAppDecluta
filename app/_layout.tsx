@@ -52,6 +52,10 @@ export const Layout = () => {
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
     HelveticaNeue: require('../assets/fonts/helvetica/HelveticaNeueLTProBdEx.otf'),
+    
+    HelveticaNeueBold: require('../assets/fonts/helvetica/HelveticaNeueLTProBd.otf'),
+    HelveticaNeueLight: require('../assets/fonts/helvetica/HelveticaNeueLTProLt.otf'),
+    
     HelveticaNeueLT: require('../assets/fonts/helvetica/HelveticaNeueLTProUltLt.otf'),
     ProximaNova: require('../assets/fonts/Fonts/Proxima Nova/ProximaNova-Light.otf'),
     ProximaNovaR: require('../assets/fonts/Fonts/Proxima Nova/ProximaNova-Regular.otf'),
@@ -60,6 +64,8 @@ export const Layout = () => {
     PoppinsBold: require('../assets/fonts/poppins/Poppins-Bold.ttf'),
     Poppins: require('../assets/fonts/poppins/Poppins-Medium.ttf'),
   });
+
+
   
   if (!loaded) {
     return null;

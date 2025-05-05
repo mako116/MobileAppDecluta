@@ -10,32 +10,32 @@ export default function ProductsCategories() {
   const categories = [
     {
       id: '1',
-      imageUrl: require('../../../../assets/images/newimages/compu.png'),
+      imageUrl: require('../../../../assets/images/newimages/com.png'),
       name: 'Electronics',
     },
     {
       id: '2',
-      imageUrl: require('../../../../assets/images/newimages/phone.png'),
+      imageUrl: require('../../../../assets/images/newimages/ph.png'),
       name: 'Smartphones',
     },
     {
       id: '3',
-      imageUrl: require('../../../../assets/images/newimages/lap.png'),
+      imageUrl: require('../../../../assets/images/newimages/hp.png'),
       name: 'Laptops',
     },
     {
       id: '4',
-      imageUrl: require('../../../../assets/images/newimages/compu.png'),
+      imageUrl: require('../../../../assets/images/newimages/fun.png'),
       name: 'Furniture',
     },
     {
       id: '5',
-      imageUrl: require('../../../../assets/images/newimages/compu.png'),
+      imageUrl: require('../../../../assets/images/newimages/appl.png'),
       name: 'Appliances',
     },
     {
       id: '6',
-      imageUrl: require('../../../../assets/images/newimages/compu.png'),
+      imageUrl: require('../../../../assets/images/newimages/fash.png'),
       name: 'Fashion',
     },
   ];
@@ -98,17 +98,19 @@ export default function ProductsCategories() {
 }
 
 const styles = StyleSheet.create({
-  // All your existing styles remain unchanged
+
   container: {
     marginTop: 1,
   },
   searchContainer: {
-    marginBottom: 20,
+    // marginBottom: 20,
+    marginVertical: 10,
   },
   searchTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 10,
+  //  fontWeight: "700", 
+   fontFamily:"HelveticaNeueBold",
+    marginBottom: 14,
   },
   searchBar: {
     flexDirection: 'row',
@@ -117,7 +119,7 @@ const styles = StyleSheet.create({
     borderColor: '#e0e0e0',
     borderRadius: 8,
     paddingHorizontal: 10,
-    paddingVertical: 6,
+    paddingVertical: 13,
     backgroundColor: '#fff',
   },
   searchIcon: {
@@ -130,6 +132,8 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 16,
     color: '#333',
+    fontFamily:"ProximaNovaR",
+
   },
   categoryHeader: {
     flexDirection: 'row',
@@ -139,7 +143,8 @@ const styles = StyleSheet.create({
   },
   categoryTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
+  
+    fontFamily:"HelveticaNeueBold",  
   },
   viewAllContainer: {
     flexDirection: 'row',
@@ -147,7 +152,8 @@ const styles = StyleSheet.create({
   },
   viewAllText: {
     color: '#333',
-    fontSize: 14,
+    fontSize: 18,
+    fontFamily:"ProximaNovaR",
   },
   viewAllArrow: {
     fontSize: 18,
@@ -162,7 +168,7 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     backgroundColor: '#fff',
-    borderRadius: 8,
+    borderRadius: 4,
     padding: 8,
     alignItems: 'center',
     shadowColor: '#000',
@@ -170,27 +176,29 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 2,
     elevation: 1,
+  
+
   },
   imageContainer: {
-    backgroundColor: '#FFF8EE',
-    borderRadius: 8,
+    // backgroundColor: 'white',
+    borderRadius: 3,
     width: '100%',
-    aspectRatio: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 8,
-    padding: 10,
+  
+    // height: 30,
+    // aspectRatio: 1,
+  
   },
   categoryImage: {
-    width: '70%',
-    height: '70%',
+    width: '100%',
+    
+
   },
   categoryName: {
-    fontSize: 14,
+    fontSize: 12,
     textAlign: 'center',
-    color: '#333',
-    fontWeight: 'bold',
-    marginTop: 4,
-    marginBottom: 6,
+    color: 'gray',
+    fontFamily:"HelveticaNeueBold", 
+    paddingVertical: 6, 
+
   },
 });
