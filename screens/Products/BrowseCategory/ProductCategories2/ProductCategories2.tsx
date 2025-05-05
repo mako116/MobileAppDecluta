@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     borderColor: '#e0e0e0',
     borderRadius: 8,
     paddingHorizontal: 10,
-    paddingVertical: 6,
+    paddingVertical: 13,
     backgroundColor: '#fff',
   },
   searchIcon: {
@@ -132,6 +132,8 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 16,
     color: '#333',
+    fontFamily:"ProximaNovaR",
+
   },
   categoryHeader: {
     flexDirection: 'row',
