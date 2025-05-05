@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
  import { useCart } from '@/context/CartContext';
 import YourCart from '@/styles/Cart/YourCart.styles';
 import Copy from '@/assets/svg/copy';
@@ -9,6 +9,12 @@ import HeaderWithDesc from '@/UI/Header/HeaderWithDescription';
 // import DropdownWithSummary from '../../dropdownSummary/ShowSummary';
 import Refresh2 from '@/assets/images/New folder/refresh-2';
 import Rightarrow from '@/assets/images/kyc/rightarrow';
+import LocationIcons from '@/screens/icons';
+import PinLocation from '@/assets/svg/PinLocationIcon';
+import Tag from '@/assets/images/cart/tag';
+import Cube from '@/assets/images/cart/cube';
+import SellersDetails from './SellersDetails';
+import OrderTimeline from './OrderTimeline';
 
 const MyOrderDetails = () => {
    // Access the cart context
@@ -41,19 +47,17 @@ const MyOrderDetails = () => {
   
 
   return (
-    <View style={{height:"100%",}}>
+    <View style={{height:"100%",marginBottom:"150%"}}>
       <HeaderWithDesc title='Order #12345-1' paddingTop={50} Actions ordersBars/>
-    <ScrollView contentContainerStyle={{flexDirection:"column",justifyContent:"space-between", }}>
+    <ScrollView  contentContainerStyle={{flexDirection:"column",height:"200%", marginBottom:"150%"}}>
       
       <View style={[YourCart.main,{paddingHorizontal:20}]}>
          {/* Title */}
-         
         <Text style={[YourCart.title,{marginTop:10,marginBottom:-5}]}>
         Order Summary 
         </Text>
 
-        <View style={[YourCart.noTokenBox,{alignItems:"flex-start",padding:2,paddingHorizontal:10}]}>
-        
+        <View style={[YourCart.noTokenBox,{alignItems:"flex-start",padding:7,paddingHorizontal:10}]}>
         {/* Item */}
         <View style={[YourCart.rowed,{justifyContent:"space-between",width:"100%",marginTop:10}]}>
         <Text style={[YourCart.title,{fontSize:14,fontWeight:'200',color:"#7E7E7E"}]}>
@@ -125,30 +129,11 @@ const MyOrderDetails = () => {
         </View>       
 
         </View>
-        {/* Note */}
-        <Text style={{ 
-            fontWeight: '700',
-            lineHeight: 16.8,
-            fontSize: 14,
-            fontFamily: 'Proxima Nova',
-            marginTop: 12,
-        }}>Pickup Details:</Text>
-        <Text
-          style={{
-            lineHeight: 16.8,
-            fontSize: 14,
-            fontWeight: '400',
-            fontFamily: 'Proxima Nova',
-            marginTop: 6,
-          }}
-        >
-         Collect your item from the seller before  
-         <Text style={{ color: '#E42527', fontWeight: '700',marginHorizontal:3 }}> June 31st.</Text>
-         Chat or call the seller, confirm details, 
-         and collect your purchase. 
-         Don't miss the deadline!
-         </Text>
- 
+        {/* Seller details */}
+        <SellersDetails/>
+
+        {/* Order Timeline */}
+        <OrderTimeline/>
       </View>
 
       </ScrollView>
