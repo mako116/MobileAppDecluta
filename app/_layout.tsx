@@ -1,4 +1,5 @@
 import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
 import { Stack } from 'expo-router';
 import React, { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -25,6 +26,10 @@ const AuthInitializer = ({ children }: { children: React.ReactNode }) => {
   
   return <>{children}</>;
 };
+SplashScreen.preventAutoHideAsync();
+
+// After your app is ready, hide the splash screen
+SplashScreen.hideAsync();
 
 export default function RootLayout() {
   return (

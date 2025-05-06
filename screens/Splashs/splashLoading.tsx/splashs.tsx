@@ -38,7 +38,7 @@ export default function SplashScreen() {
       } catch (error: any) {
         console.warn('Token invalid or expired:', error);
   
-        if (error === 'Token login failed: No token found' || error === 'Access token is missing' || error === 'Invalid or expired token') {
+        if (error === 'Token login failed: No token found' || error === 'Invalid or expired token' || error === 'Invalid or expired token') {
           console.log('Navigating to Welcome Back due to token issue...');
           router.replace('/(routes)/welcomebackPIn');
         } else {

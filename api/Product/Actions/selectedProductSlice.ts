@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import persistReducer from "redux-persist/es/persistReducer";
 
@@ -29,7 +30,7 @@ const initialState: ProductState = {
 
 const persistConfig = {
   key: "productState",
-  storage: require("redux-persist/lib/storage").default,
+  storage: AsyncStorage,
 };
 
 const productSlice = createSlice({
