@@ -16,17 +16,29 @@ export default function Banner() {
   const banners = [
     {
       id: '1',
-      image: 'https://res.cloudinary.com/dmhvsyzch/image/upload/v1744944613/Frame_648229_gatx6i.png',
+      image: 'https://res.cloudinary.com/dmhvsyzch/image/upload/v1746527523/decluttaking-banner-01_uwf5oh.jpg',
     
     },
     {
       id: '2',
-      image: require('../../../assets/images/bannerBg.png'),
+      image: "https://res.cloudinary.com/dmhvsyzch/image/upload/v1746527419/decluttaking-banner-02_alt_ecs8ti.jpg",
      
     },
     {
       id: '3',
-      image: require('../../../assets/images/bannerBg.png'),
+      image: "https://res.cloudinary.com/dmhvsyzch/image/upload/v1746527421/decluttaking-banner-03_alt_jkdg7m.jpg",
+    
+    },
+
+    {
+      id: '4',
+      image: "https://res.cloudinary.com/dmhvsyzch/image/upload/v1746527423/decluttaking-banner-04_alt_ibidch.jpg",
+    
+    },
+
+    {
+      id: '5',
+      image: "https://res.cloudinary.com/dmhvsyzch/image/upload/v1746527425/decluttaking-banner-05_alt_qerdjd.jpg",
     
     }
   ];
