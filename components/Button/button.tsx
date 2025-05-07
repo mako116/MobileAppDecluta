@@ -44,7 +44,7 @@ export default function Button({
                     gap: icon ? 15 : 0,
                     opacity: disabled ? 0.5 : 1,
                     flex: flex ? 1 : 0,
-                    width: width ?? 'auto',
+                    width: width ?? '100%',
                     alignSelf: "center",
                 }
             ]}

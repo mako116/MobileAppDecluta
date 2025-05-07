@@ -5,7 +5,7 @@ import { Image, Text, TouchableOpacity } from "react-native"
 
 const SignUpWithEmail: React.FC = () => {
     const handlePhonePush =()=>{
-        router.push("/(routes)/login");
+        router.push("/(routes)/emailRegister");
     }
     return (
         <TouchableOpacity onPress={handlePhonePush} style={SignUpStyles.socialButton}>

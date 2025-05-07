@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     color: '#212121',
     fontFamily: "Proxima Nova",
-    fontWeight: "500",
+    fontWeight: "400",
   },
   errorText: {
     color: '#FF4D4F',

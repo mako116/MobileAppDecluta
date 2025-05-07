@@ -4,6 +4,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { router } from 'expo-router';
 import { setAuthData } from '@/redux/slices/AuthSlice';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
 
 // Define the auth state type
 interface AuthState {
@@ -41,6 +43,18 @@ export const setEmail = createAsyncThunk(
   }
 );
 
+export const setUserPhoneNumber = createAsyncThunk(
+  'auth/setEmail',
+  async (phone: string, { rejectWithValue }) => {
+    try {
+      await AsyncStorage.setItem('phoneNumber', phone);
+      return phone;
+    } catch (error) {
+      console.error('Failed to save email to storage', error);
+      return rejectWithValue('Failed to save email');
+    }
+  }
+);
 
 export const clearEmail = createAsyncThunk(
   'auth/clearEmail',
@@ -58,8 +72,8 @@ export const clearEmail = createAsyncThunk(
 export const loginWithTokenUser = createAsyncThunk(
   'auth/loginWithToken',
   async (_, { rejectWithValue, dispatch }) => {
+    const token = useSelector((state: RootState) => state.auth.token);
     try {
-      const token = await AsyncStorage.getItem('token');
 
       if (!token) {
         return rejectWithValue('No token found');
@@ -105,7 +119,7 @@ export const loginUser = createAsyncThunk(
         console.log('Login response:', response.data);
         console.log('Login response:', response.data.token);
         await AsyncStorage.setItem('token', response.data.token);
-        await AsyncStorage.setItem('userId', response.data.user._id);
+        await AsyncStorage.setItem('userId', response.data.userId);
         await AsyncStorage.setItem('userEmail', email); // Also store email
         
         // Dispatch the auth data to the store
@@ -133,7 +147,7 @@ export const loginUser = createAsyncThunk(
         return rejectWithValue('Login failed: No token in response');
       }
     } catch (error: any) {
-      console.error('Login error:', error);
+      console.error('Login error:', error.response?.data?.message);
       return rejectWithValue(error.response?.data?.message || 'Login failed');
     }
   }
@@ -255,14 +269,15 @@ export const registerUser = createAsyncThunk(
       });
 
       if (response.data && response.data.newUser && response.data.newUser._id) {
-        // dispatch(setAuthData({ token: response.data.token, user: response.data.newUser }));
+        console.log('Registration response:', response.data);
+        const token = response.data.token;
         const newUserId = response.data.newUser._id;
         await AsyncStorage.setItem('userId', newUserId);
 
         // Save email to AsyncStorage as part of registration
         await AsyncStorage.setItem('userEmail', email);
         dispatch(setAuthData({ 
-          token: response.data.token, 
+          token: token, 
           user: response.data.newUser,
         }));
 
@@ -275,7 +290,7 @@ export const registerUser = createAsyncThunk(
         return rejectWithValue('Registration failed: No user ID in response');
       }
     } catch (error: any) {
-      console.error('Registration error:', error);
+      console.error('Registration error:', error.response?.data?.message);
       return rejectWithValue(error.response?.data?.message || 'Registration failed');
     }
   }

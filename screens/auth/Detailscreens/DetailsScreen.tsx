@@ -37,6 +37,12 @@ export default function DetailScreen() {
         if (storedEmail) {
           setEmailState(storedEmail); // Set email to the state
         }
+
+        const storePhoneNumber = await AsyncStorage.getItem('phoneNumber');
+        console.log('Stored phone number:', storePhoneNumber);
+        if (storePhoneNumber) {
+          setPhoneNumber(storePhoneNumber); // Set phone number to the state
+        }
       } catch (error) {
         console.error('Error fetching email from AsyncStorage:', error);
       }
@@ -51,15 +57,31 @@ export default function DetailScreen() {
       firstName.length > 0 &&
       lastName.length > 0 &&
       gender.length > 0 &&
-      email.length > 0 &&
-      phoneNumber.length == 11
+      email.length > 0 ||
+      phoneNumber.length >= 10
     );
   }, [firstName, lastName, gender, email, phoneNumber]);
   
   // Handle phone number change, only numeric values
   const handlePhoneChange = (number: string) => {
     const filteredNumber = number.replace(/[^0-9]/g, ''); // Remove non-numeric characters
-    setPhoneNumber(filteredNumber);
+    
+    // If the number starts with '0', remove it
+    if (filteredNumber.startsWith('0')) {
+      setPhoneNumber(filteredNumber.substring(1));
+    } else {
+      setPhoneNumber(filteredNumber);
+    }
+  };
+
+  // Format phone number with +234 prefix for submission
+  const formatPhoneNumber = (number: string) => {
+    // If the number starts with '0', remove it before adding the prefix
+    if (number.startsWith('0')) {
+      return `+234${number.substring(1)}`;
+    }
+    // Otherwise, just add the prefix
+    return `+234${number}`;
   };
 
   // Handle hardware back press
@@ -96,16 +118,19 @@ export default function DetailScreen() {
         return;
       }
       
+      // Format the phone number with +234 prefix
+      const formattedPhoneNumber = formatPhoneNumber(phoneNumber);
+      
       // First, update email in Redux state
       await dispatch(setEmail(email.toLowerCase()));
       
-      // Then register the user
+      // Then register the user with formatted phone number
       await dispatch(registerUser({
         firstName, 
         lastName, 
         email: email.toLowerCase(), 
         gender, 
-        phoneNumber
+        phoneNumber: formattedPhoneNumber
       }));
       
       console.log('Registration data:', {
@@ -113,7 +138,7 @@ export default function DetailScreen() {
         lastName,
         email: email.toLowerCase(),
         gender,
-        phoneNumber,
+        phoneNumber: formattedPhoneNumber,
       });
       
     } catch (err) {

@@ -1,17 +1,43 @@
 import { View, Text, StyleSheet, Image } from 'react-native';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'expo-router';
 import Lottie from 'lottie-react-native';
+import { useAppDispatch } from '@/redux/Redux/hook/hook';
+import { loginWithTokenUser } from '@/redux/Redux/slice/authSlice';
 
 export default function Splashs() {
   const router = useRouter();
-
-  useEffect(()=>{
-      setTimeout(() => {
-          // router.push("/(tabs)/home")
-          router.push("/(tabs)/home")
-       }, 1900);
-  },[])
+  const dispatch = useAppDispatch();
+  const [isReady, setIsReady] = useState(false);
+  useEffect(() => {
+    const rehydrateStore = async () => {
+      await new Promise((resolve) => setTimeout(resolve, 500)); // Small delay
+      setIsReady(true);
+    };
+    rehydrateStore();
+  }, []);
+  
+  useEffect(() => {
+    const checkAuth = async () => {
+      if (!isReady) return;
+      await new Promise((resolve) => setTimeout(resolve, 1800));
+  
+      try {
+        await dispatch(loginWithTokenUser()).unwrap(); // try to login with token
+        router.replace('/(tabs)/home');
+      } catch (error: any) {
+        console.warn('Token invalid or expired:', error);
+  
+        if (error === 'Token login failed: No token found' || error === 'Invalid or expired token' || error === 'Invalid or expired token') {
+          router.replace('/(routes)/welcomebackPIn');
+        } else {
+          router.replace('/(tabs)/home');
+        }
+      }
+    };
+  
+    checkAuth();
+  }, [isReady]);
 
   return (
     <View style={styles.background}>
