@@ -43,8 +43,7 @@
     },
     "plugins": [
       "expo-router",
-      "expo-font",
-      "expo-dev-client"
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true
@@ -55,8 +54,7 @@
       },
       "router": {
         "origin": false
-      },
-      "EXPO_PUBLIC_API_KEY": "https://decluttakingsever-vcs7.onrender.com"
+      }
     }
   }
 }
