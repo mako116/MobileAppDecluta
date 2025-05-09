@@ -4,6 +4,7 @@ const orderStyles = StyleSheet.create({
     container: {
       flex: 1,
       paddingHorizontal: 12,
+      height:"100%"
     },
     orderContainer: {
       backgroundColor: '#fff',
@@ -11,7 +12,7 @@ const orderStyles = StyleSheet.create({
       borderColor: '#E9E9E9',
       borderWidth: 1,
       paddingHorizontal: 12,
-      paddingVertical:22,
+      paddingVertical:15,
       marginBottom: 14,
     },
     header: {
@@ -23,8 +24,39 @@ const orderStyles = StyleSheet.create({
       fontWeight: 'bold',
       fontSize: 15,
       lineHeight:25,
-      fontFamily:"Proxima Nova"
+      fontFamily:"Proxima Nova",
+      alignItems: 'center',
+     },
+     actionRow: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      gap: 10,
     },
+    centeredContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    inline: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 5,
+    },
+    itemCount: {
+      color: '#7E7E7E',
+      fontSize: 12,
+      fontWeight: '300',
+    },
+    buttonRow: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginTop: 16,
+      gap: 12,
+    },
+    
+    location: {
+      color: '#474747',
+    },    
     orderTotal: {
       marginTop: 2,
       color: '#555',
@@ -96,7 +128,7 @@ const orderStyles = StyleSheet.create({
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent:"center",
-      paddingVertical: 8,
+      paddingVertical: 5,
       paddingHorizontal: 10,
       borderRadius: 5,
       // alignSelf: 'flex-start',
