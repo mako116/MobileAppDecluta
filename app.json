@@ -31,7 +31,10 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "INTERNET"
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -40,7 +43,8 @@
     },
     "plugins": [
       "expo-router",
-      "expo-font"
+      "expo-font",
+      "expo-dev-client"
     ],
     "experiments": {
       "typedRoutes": true
@@ -51,7 +55,8 @@
       },
       "router": {
         "origin": false
-      }
+      },
+      "EXPO_PUBLIC_API_KEY": "https://decluttakingsever-vcs7.onrender.com"
     }
   }
 }

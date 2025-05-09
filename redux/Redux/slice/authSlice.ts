@@ -71,12 +71,14 @@ export const clearEmail = createAsyncThunk(
 
 export const loginWithTokenUser = createAsyncThunk(
   'auth/loginWithToken',
-  async (_, { rejectWithValue, dispatch }) => {
-    const token = useSelector((state: RootState) => state.auth.token);
+  async (_, { rejectWithValue, dispatch, getState }) => {
+    // Use getState instead of useSelector
+    const state = getState() as RootState;
+    const token = state.auth.token;
+    
     try {
-
       if (!token) {
-        return rejectWithValue('No token found');
+        return rejectWithValue('Token login failed: No token found');
       }
 
       const response = await axios.get(`${process.env.EXPO_PUBLIC_API_KEY}/api/v1/auth/token-login`, {
@@ -94,17 +96,14 @@ export const loginWithTokenUser = createAsyncThunk(
 
         // Save to Redux
         dispatch(setAuthData({ token, user }));
-
-        // Navigate to home or another screen
-        router.push('/(tabs)/home');
-
+        
         return { token, user };
       } else {
         return rejectWithValue('Token login failed: No user in response');
       }
     } catch (error: any) {
       console.error('Token login error:', error);
-      return rejectWithValue(error.response?.data?.message || 'Token login failed');
+      return rejectWithValue(error.response?.data?.message || 'Invalid or expired token');
     }
   }
 );

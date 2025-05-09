@@ -1,9 +1,12 @@
 {
     "build": {
-      "preview": {
+      "development": {
         "android": {
           "buildType": "apk",
           "image": "latest"
+        },
+        "env": {
+          "EXPO_PUBLIC_API_KEY": "https://decluttakingsever-vcs7.onrender.com"
         }
       },
       "preview2": {
