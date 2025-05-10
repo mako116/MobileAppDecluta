@@ -175,41 +175,28 @@ const NinVerification: React.FC = () => {
     const { verifyNinUser } = useMonnify();
 
     useEffect(() => {
-        // const verify = async () => {
-        //     try {
-        //         setVerifying(true);
-        //         setVerificationStatus("pending");
+        const verify = async () => {
+            try {
+                setVerifying(true);
+                setVerificationStatus("pending");
     
-        //         const response = await verifyNinUser({nin}); // Call your actual verification function
+                const response = await verifyNinUser({nin}); // Call your actual verification function
     
-        //         if (response === "success") {
-        //             setVerificationStatus("success");
-        //         } else {
-        //             setVerificationStatus("error");
-        //         }
-        //     } catch (error) {
-        //         console.error("Error verifying NIN:", error);
-        //         setVerificationStatus("error");
-        //     } finally {
-        //         setVerifying(false);
-        //     }
-        // };
-    
-        // if (nin.length === 11) {
-        //     verify(); // Call the async verification function
-        // }
-        if (nin.length === 11) {
-            setVerifying(true);
-            setVerificationStatus("pending");
-
-            setTimeout(() => {
-                if (nin === "12345678901") { // Simulate a valid NIN
+                if (response === "success") {
                     setVerificationStatus("success");
                 } else {
                     setVerificationStatus("error");
                 }
+            } catch (error) {
+                console.error("Error verifying NIN:", error);
+                setVerificationStatus("error");
+            } finally {
                 setVerifying(false);
-            }, 2000);
+            }
+        };
+    
+        if (nin.length === 11) {
+            verify(); // Call the async verification function
         }
     }, [nin]);
 

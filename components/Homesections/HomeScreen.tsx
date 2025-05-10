@@ -30,7 +30,7 @@ import { logoutUser } from '@/redux/Redux/slice/authSlice';
 const HomeScreen: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [currentPopup, setCurrentPopup] = useState(1);
-  const [selectedState, setSelectedState] = useState('');
+  const [selectedState, setSelectedState] = useState('Oyo');
   const [refreshing, setRefreshing] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -109,7 +109,7 @@ const clearToken = async () => {
             <TouchableOpacity onPress={openModal} style={{ flexDirection: 'row', alignItems: 'center' }}>
               <LocationIcons />
               <Text>
-                {selectedState} <Text style={{ color: 'gray' }}>(change)</Text>
+                {selectedState}, Nigeria <Text style={{ color: 'gray' }}>(change)</Text>
               </Text>
             </TouchableOpacity>
           </View>
@@ -139,7 +139,6 @@ const clearToken = async () => {
             {isLoggedIn && (
               <View>
                 <ProfileKYc />
-
               </View>
             )}
 

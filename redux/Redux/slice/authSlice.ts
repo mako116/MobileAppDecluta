@@ -1,10 +1,9 @@
 // src/redux/features/auth/authSlice.ts - Updated version
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { router } from 'expo-router';
 import { setAuthData } from '@/redux/slices/AuthSlice';
-import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 
 // Define the auth state type
@@ -15,6 +14,25 @@ interface AuthState {
   loading: boolean;
   error: string | null;
   isEmailVerified: boolean;
+  userData: UserData | null; 
+}
+interface UserData {
+  _id: string;
+  role: string;
+  createdAt: string;
+  updatedAt: string;
+  address?: string;
+  BankVerificationNumberVerified?: boolean;
+  NationalIdentityNumberVerified?: boolean;
+  state?: string;
+  city?: string;
+  lastName: string;
+  firstName: string;
+  email: string;
+  password: string;
+  phoneNumber: string;
+  name: string;
+  profileImage: string;
 }
 
 const initialState: AuthState = {
@@ -24,6 +42,7 @@ const initialState: AuthState = {
   loading: false,
   error: null,
   isEmailVerified: false,
+  userData: null,
 };
 
 const EXPO_PUBLIC_API_KEY = process.env.EXPO_PUBLIC_API_KEY;
@@ -73,8 +92,9 @@ export const loginWithTokenUser = createAsyncThunk(
   'auth/loginWithToken',
   async (_, { rejectWithValue, dispatch, getState }) => {
     // Use getState instead of useSelector
-    const state = getState() as RootState;
-    const token = state.auth.token;
+    // const state = getState() as RootState;
+    // const token = state.auth.token;
+    const token = await AsyncStorage.getItem('token');
     
     try {
       if (!token) {
@@ -481,8 +501,9 @@ export const addResidentInfo = createAsyncThunk(
   'auth/addResidentInfo',
   async ({ address, country, state, city }: { address: string; country: string; state: string; city: string }, { getState, rejectWithValue }) => {
     try {
-      const state: any = getState();
-      const { userId } = state.auth;
+      // const reduxState: any = getState() as RootState;
+      // const { userId } = reduxState.auth.userId;
+      const userId = await AsyncStorage.getItem('userId');
 
       if (!userId) {
         const storedUserId = await AsyncStorage.getItem('userId');
@@ -492,6 +513,7 @@ export const addResidentInfo = createAsyncThunk(
       }
 
       const response = await axios.patch(`${EXPO_PUBLIC_API_KEY}/api/v1/auth/add-address/${userId}`, { address, country, state, city });
+      console.log('Resident info response:', response );
 
       if (response.data && response.data.message) {
         router.push('/(routes)/kyc/identityscreen');
@@ -691,11 +713,70 @@ export const resetPassword = createAsyncThunk(
   }
 );
 
+// export const addResidentInfo = createAsyncThunk(
+
+//   'auth/addResidentInfo',
+//   async ({ address, country, state, city }: { address: string; country: string; state: string; city: string }, { getState, rejectWithValue }) => {
+//     try {
+//       const state: any = getState();
+//       const { userId } = state.auth;
+//       if (!userId) {
+//         const storedUserId = await AsyncStorage.getItem('userId');
+//         if (!storedUserId) {
+//           return rejectWithValue('No user ID found');
+//         }
+//         userId = storedUserId;
+//       }
+//       const response = await axios.patch(`${EXPO_PUBLIC_API_KEY}/api/v1/auth/add-address/${userId}`, { address, country, state, city });
+//       if (response.data && response.data.message) {
+//         router.push('/(routes)/kyc/identityscreen');
+//         return response.data;
+//       } else {
+//         return rejectWithValue('Resident details failed');
+//       }
+//     } catch (error: any) {
+//       console.error('Registration error:', error);
+//       return rejectWithValue(error.response?.data?.message || 'Failed to add resident info');
+//     }
+//   }
+// );
+
 // Create the auth slice
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    setAuthData: (state, action: PayloadAction<{ token: string; user: UserData }>) => {
+      state.userToken = action.payload.token;
+      state.userData = action.payload.user;
+      state.email = action.payload.user.email;
+
+      // Save to AsyncStorage
+      AsyncStorage.setItem('token', action.payload.token);
+      AsyncStorage.setItem('email', action.payload.user.email);
+    },
+    clearAuthData: (state) => {
+      AsyncStorage.removeItem('token');
+      AsyncStorage.removeItem('email');
+      AsyncStorage.removeItem('lastLogin');
+
+      return initialState;
+    },
+    updateUserData: (state, action: PayloadAction<Partial<UserData>>) => {
+      if (state.userData) {
+          const { name, email, password, createdAt, phoneNumber, firstName, lastName } = action.payload;
+          if (firstName !== undefined) state.userData.firstName = firstName;
+          if (lastName !== undefined) state.userData.lastName = lastName;
+          if (phoneNumber !== undefined) state.userData.phoneNumber = phoneNumber;
+          if (password !== undefined) state.userData.password = password;
+          if (name !== undefined) state.userData.name = name;
+          if (createdAt !== undefined) state.userData.createdAt = createdAt;
+          if (email !== undefined) state.userData.email = email;
+          if (phoneNumber !== undefined) state.userData.phoneNumber = phoneNumber;
+      }
+    },
+  },
   extraReducers: (builder) => {
     // Set email
     builder.addCase(setEmail.fulfilled, (state, action) => {
