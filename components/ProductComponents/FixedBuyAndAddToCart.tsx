@@ -40,7 +40,7 @@ const FixedBuyAndAddToCart: React.FC = () => {
             });
             
             await dispatch(addItemToCart({
-                productId: id, // Make sure this matches what the API expects
+                productId: id,
                 quantity
             }));
             

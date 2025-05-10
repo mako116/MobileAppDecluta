@@ -83,7 +83,7 @@ export default function Banner() {
         scrollEventThrottle={16}
       >
         {banners.map((banner, index) => (
-          <View key={banner.id} style={{ width: ITEM_WIDTH }}>
+          <View key={banner.id} style={{ width: ITEM_WIDTH, paddingRight: 7 }}>
             <ImageBackground
               source={typeof banner.image === 'string' ? { uri: banner.image } : banner.image}
               style={styles.background}

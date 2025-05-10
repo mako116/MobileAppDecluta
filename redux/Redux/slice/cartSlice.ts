@@ -51,10 +51,12 @@ export const fetchCart = createAsyncThunk(
 
       console.log(`Fetching cart for user ${userId}`);
       const response = await axios.get(`${EXPO_PUBLIC_API_KEY}/api/v1/cart/${userId}`, {
+        
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
+      console.log('Cart fetch successful:', response.data);
 
       console.log('Cart fetch successful:', response.data);
       return response.data;
