@@ -15,10 +15,10 @@ export default function DiscoverProducts() {
           paddingVertical: 10,
         }}
       >
-        <Text style={{fontSize:18,lineHeight:22.4,   fontFamily:"HelveticaNeueBold",color:"#212121"}}>Discover great offers</Text>
+        <Text style={{fontSize:15,lineHeight:22.4,   fontFamily:"HelveticaNeueBold",color:"#212121"}}>Discover great offers</Text>
         <View >
           <TouchableOpacity onPress={()=> router.push("/(routes)/HomesectionViewAll/Discover")}  style={{width:100,flexDirection:"row",gap:5,justifyContent:"flex-end", alignItems:"center", paddingRight:5}}>
-            <Text style={{fontWeight:"400",fontSize:18,lineHeight:22.4, fontFamily:"ProximaNovaR", color:"#212121"}}>View All</Text>
+            <Text style={{fontWeight:"400",fontSize:13,lineHeight:22.4, fontFamily:"ProximaNovaR", color:"#212121"}}>View All</Text>
             <Image source={require('../../../../assets/images/newimages/Vector.png')} style={{width:6,height:11}} />
           </TouchableOpacity>
         </View>

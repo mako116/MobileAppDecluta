@@ -175,6 +175,7 @@ export const getProducts = createAsyncThunk(
                 }
             );
             dispatch(setProducts(response.data.products));
+            
 
             return response.data;
         } catch (error: any) {

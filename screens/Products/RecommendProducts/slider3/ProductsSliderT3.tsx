@@ -23,6 +23,7 @@ export default function ProductsSliderT3() {
   const screenWidth = Dimensions.get('window').width;
   
   const { products } = useSelector((state: RootState) => state.products);
+  console.log('products here oooo =========gggr', products);
   
   useEffect(() => {
     dispatch(getProducts());
@@ -51,7 +52,7 @@ export default function ProductsSliderT3() {
           router.push({
             pathname: '/(routes)/ProductDetails',
             params: {
-              id: item.id,
+              id: item._id,
               imageUrl: item.productImages,
               name: item.productTitle || item.title,
               title: item.price,

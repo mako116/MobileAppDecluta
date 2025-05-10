@@ -25,10 +25,10 @@ export default function Loginbanner() {
     <View style={styles.container}>
       <View style={styles.Row}>
         <Text style={styles.text}>
-          Login to DecluttaKing to start buying & selling!
+          Login/Signup to DecluttaKing to start buying & selling!
         </Text>
         <TouchableOpacity onPress={() => router.push('/(routes)/login')} style={styles.button}>
-          <Text style={styles.buttonText}>Login</Text>
+          <Text style={styles.buttonText}>Login/Signup</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 19.6,
     color: '#fff',
+    fontFamily: 'ProximaNovaR',
   },
   button: {
     backgroundColor: '#DEBC8E',
@@ -61,8 +62,9 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#463E31',
-    fontWeight: '400',
+
     fontSize: 14,
     lineHeight: 19.6,
+    fontFamily: 'ProximaNovaR',
   },
 });

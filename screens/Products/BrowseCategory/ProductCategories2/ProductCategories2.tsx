@@ -50,7 +50,7 @@ export default function ProductsCategories() {
     <TouchableOpacity style={styles.categoryItem}>
       <View style={styles.cardContainer}>
         <View style={styles.imageContainer}>
-          <Image source={item.imageUrl} style={styles.categoryImage} resizeMode="contain" />
+          <Image source={item.imageUrl} style={styles.categoryImage} resizeMode="cover"  />
         </View>
         <Text style={styles.categoryName}>{item.name}</Text>
       </View>
@@ -67,8 +67,9 @@ export default function ProductsCategories() {
             style={styles.searchInput}
             placeholder="Search phones, laptops, furniture & more..."
             placeholderTextColor="#999"
-            editable={false} // Make input not editable since we'll navigate on touch
-            pointerEvents="none" // Prevents input from receiving touch events
+       
+            editable={false} 
+            pointerEvents="none" 
           />
         </TouchableOpacity>
       </View>
@@ -107,7 +108,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   searchTitle: {
-    fontSize: 18,
+    fontSize: 15,
   //  fontWeight: "700", 
    fontFamily:"HelveticaNeueBold",
     marginBottom: 14,
@@ -130,7 +131,7 @@ const styles = StyleSheet.create({
   },
   searchInput: {
     flex: 1,
-    fontSize: 16,
+    fontSize: 14,
     color: '#333',
     fontFamily:"ProximaNovaR",
 
@@ -139,10 +140,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 15,
+    // marginBottom: 5,
   },
   categoryTitle: {
-    fontSize: 18,
+    fontSize: 15,
   
     fontFamily:"HelveticaNeueBold",  
   },
@@ -152,7 +153,7 @@ const styles = StyleSheet.create({
   },
   viewAllText: {
     color: '#333',
-    fontSize: 18,
+    fontSize: 14,
     fontFamily:"ProximaNovaR",
   },
   viewAllArrow: {
@@ -190,6 +191,7 @@ const styles = StyleSheet.create({
   },
   categoryImage: {
     width: '100%',
+    // objectFit:"contain",
     
 
   },
