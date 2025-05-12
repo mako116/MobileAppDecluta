@@ -243,9 +243,9 @@ export const getUser = createAsyncThunk(
 
 export const googleLoginUser = createAsyncThunk(
   'auth/googleLogin',
-  async (token: string, { rejectWithValue }) => {
+  async (token: string | undefined, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`https://decluttakingsever.onrender.com/api/v1/auth/google-register`, { token });
+      const response = await axios.post(`${EXPO_PUBLIC_API_KEY}/api/v1/auth/google/signup"`, { token });
 
       if (response.data && response.data.token) {
         await AsyncStorage.setItem('token', response.data.token);
@@ -254,11 +254,11 @@ export const googleLoginUser = createAsyncThunk(
           token: response.data.token
         };
       } else {
-        return rejectWithValue('Login failed: No token in response');
+        return rejectWithValue('Goolge sign up failed: No token in response');
       }
     } catch (error: any) {
-      console.error('Login error:', error);
-      return rejectWithValue(error.response?.data?.message || 'Login failed');
+      console.error('Goolge sign up error:', error.response?.data?.message);
+      return rejectWithValue(error.response?.data?.message || 'Goolge sign up failed');
     }
   }
 );
