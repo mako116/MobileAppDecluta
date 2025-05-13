@@ -28,15 +28,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingVertical: 30,
     backgroundColor: '#FFFFFF',
     borderBottomWidth: 1,
     borderBottomColor: '#E5E7EB',
-    paddingTop: 40,
+    paddingTop: 50,
+
   },
   headerTitle: {
     fontSize: 18,
-    fontWeight: '600',
+  fontFamily:"HelveticaNeueBold",
     color: '#1F2937',
   },
   headerRight: {
