@@ -137,7 +137,7 @@ const TransactionHistory: React.FC = () => {
   };
 
   const renderTransactionIcon = (transaction: Transaction) => {
-    // For Purchase and Sale, show image if available
+   
     if ((transaction.type === 'Purchase' || transaction.type === 'Sale') && transaction.imageUrl) {
       return (
         <Image

@@ -2,14 +2,14 @@ import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-const TransactionHeader = () => (
+const TransactionHeader = ({ onFilterPress }) => (
   <View style={styles.header}>
     <TouchableOpacity>
       <Ionicons name="arrow-back" size={24} color="#1F2937" />
     </TouchableOpacity>
     <Text style={styles.headerTitle}>Transaction History</Text>
     <View style={styles.headerRight}>
-      <TouchableOpacity style={styles.headerIcon}>
+      <TouchableOpacity style={styles.headerIcon} onPress={onFilterPress}>
         <Ionicons name="options-outline" size={24} color="#1F2937" />
       </TouchableOpacity>
       <TouchableOpacity style={styles.headerIcon}>
@@ -28,16 +28,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 16,
-    paddingVertical: 30,
+    paddingVertical: 20,
     backgroundColor: '#FFFFFF',
     borderBottomWidth: 1,
     borderBottomColor: '#E5E7EB',
     paddingTop: 50,
-
   },
   headerTitle: {
     fontSize: 18,
-  fontFamily:"HelveticaNeueBold",
+    fontWeight: 'bold',
     color: '#1F2937',
   },
   headerRight: {
