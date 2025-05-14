@@ -128,12 +128,12 @@ const clearToken = async () => {
           <View style={Homes.content}>
             {/* Do not remove for testing purpose */}
 
-            <Button
+            {/* <Button
               title="Log Out"
               onPress={handleLogout}
               backgroundColor="#DEBC8E"
               borderWidth={0}
-            />
+            /> */}
 
             {/* Complete KYC - Only visible when logged in */}
             {isLoggedIn && (

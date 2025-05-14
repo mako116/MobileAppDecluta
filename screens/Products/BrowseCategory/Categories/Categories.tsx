@@ -7,9 +7,6 @@ import { router } from 'expo-router';
 export default function Categories() {
   return (
     <View style={{ backgroundColor: "#f9f9f9", paddingHorizontal: 15 }}>
-      {/* Header Section */}
-   
-      
       {/* Products Slider Section */}
       <View>
         <ProductsSlider2 />

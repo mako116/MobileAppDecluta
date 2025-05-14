@@ -1,7 +1,8 @@
-import { View, Text, TextInput, FlatList, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, FlatList, Image, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import { categoryStyles } from '@/styles/Homes/Category.styles';
 
 export default function ProductsCategories() {
   // Use Expo Router instead of React Navigation
@@ -10,32 +11,32 @@ export default function ProductsCategories() {
   const categories = [
     {
       id: '1',
-      imageUrl: require('../../../../assets/images/newimages/com.png'),
+      imageUrl: require('../../../../assets/images/categories/Electronics.png'),
       name: 'Electronics',
     },
     {
       id: '2',
-      imageUrl: require('../../../../assets/images/newimages/ph.png'),
+      imageUrl: require('../../../../assets/images/categories/SmartPhones.png'),
       name: 'Smartphones',
     },
     {
       id: '3',
-      imageUrl: require('../../../../assets/images/newimages/hp.png'),
+      imageUrl: require('../../../../assets/images/categories/Laptop.png'),
       name: 'Laptops',
     },
     {
       id: '4',
-      imageUrl: require('../../../../assets/images/newimages/fun.png'),
+      imageUrl: require('../../../../assets/images/categories/Furniture.png'),
       name: 'Furniture',
     },
     {
       id: '5',
-      imageUrl: require('../../../../assets/images/newimages/appl.png'),
+      imageUrl: require('../../../../assets/images/categories/Appliances.png'),
       name: 'Appliances',
     },
     {
       id: '6',
-      imageUrl: require('../../../../assets/images/newimages/fash.png'),
+      imageUrl: require('../../../../assets/images/categories/Fashion.png'),
       name: 'Fashion',
     },
   ];
@@ -47,24 +48,24 @@ export default function ProductsCategories() {
   };
  
   const renderCategoryItem = ({ item }) => (
-    <TouchableOpacity style={styles.categoryItem}>
-      <View style={styles.cardContainer}>
-        <View style={styles.imageContainer}>
-          <Image source={item.imageUrl} style={styles.categoryImage} resizeMode="cover"  />
+    <TouchableOpacity style={categoryStyles.categoryItem}>
+      <View style={categoryStyles.cardContainer}>
+        <View style={categoryStyles.imageContainer}>
+          <Image source={item.imageUrl} style={categoryStyles.categoryImage} resizeMode="contain" />
         </View>
-        <Text style={styles.categoryName}>{item.name}</Text>
+        <Text style={categoryStyles.categoryName}>{item.name}</Text>
       </View>
     </TouchableOpacity>
   );
 
   return (
-    <View style={styles.container}>
-      <View style={styles.searchContainer}>
-        <Text style={styles.searchTitle}>Search for anything!</Text>
-        <TouchableOpacity style={styles.searchBar} onPress={handleSearchPress}>
-          <Ionicons name="search-outline" size={20} color="#999" style={styles.searchIcon} />
+    <View style={categoryStyles.container}>
+      <View style={categoryStyles.searchContainer}>
+        <Text style={categoryStyles.searchTitle}>Search for anything!</Text>
+        <TouchableOpacity style={categoryStyles.searchBar} onPress={handleSearchPress}>
+          <Ionicons name="search-outline" size={20} color="#999" style={categoryStyles.searchIcon} />
           <TextInput
-            style={styles.searchInput}
+            style={categoryStyles.searchInput}
             placeholder="Search phones, laptops, furniture & more..."
             placeholderTextColor="#999"
        
@@ -75,12 +76,12 @@ export default function ProductsCategories() {
       </View>
 
       {/* Category Header */}
-      <View style={styles.categoryHeader}>
-        <Text style={styles.categoryTitle}>Browse our category</Text>
+      <View style={categoryStyles.categoryHeader}>
+        <Text style={categoryStyles.categoryTitle}>Browse our category</Text>
         <TouchableOpacity>
-          <View style={styles.viewAllContainer}>
-            <Text style={styles.viewAllText}>View all</Text>
-            <Text style={styles.viewAllArrow}>›</Text>
+          <View style={categoryStyles.viewAllContainer}>
+            <Text style={categoryStyles.viewAllText}>View all</Text>
+            <Text style={categoryStyles.viewAllArrow}>›</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -92,115 +93,8 @@ export default function ProductsCategories() {
         numColumns={3}
         showsVerticalScrollIndicator={false}
         renderItem={renderCategoryItem}
-        contentContainerStyle={styles.categoryGrid}
+        contentContainerStyle={categoryStyles.categoryGrid}
       />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-
-  container: {
-    marginTop: 1,
-  },
-  searchContainer: {
-    // marginBottom: 20,
-    marginVertical: 10,
-  },
-  searchTitle: {
-    fontSize: 15,
-  //  fontWeight: "700", 
-   fontFamily:"HelveticaNeueBold",
-    marginBottom: 14,
-  },
-  searchBar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#e0e0e0',
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    paddingVertical: 13,
-    backgroundColor: '#fff',
-  },
-  searchIcon: {
-    width: 20,
-    height: 20,
-    marginRight: 8,
-    opacity: 0.5,
-  },
-  searchInput: {
-    flex: 1,
-    fontSize: 14,
-    color: '#333',
-    fontFamily:"ProximaNovaR",
-
-  },
-  categoryHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    // marginBottom: 5,
-  },
-  categoryTitle: {
-    fontSize: 15,
-  
-    fontFamily:"HelveticaNeueBold",  
-  },
-  viewAllContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  viewAllText: {
-    color: '#333',
-    fontSize: 14,
-    fontFamily:"ProximaNovaR",
-  },
-  viewAllArrow: {
-    fontSize: 18,
-    marginLeft: 5,
-  },
-  categoryGrid: {
-    paddingVertical: 5,
-  },
-  categoryItem: {
-    flex: 1/3,
-    padding: 5,
-  },
-  cardContainer: {
-    backgroundColor: '#fff',
-    borderRadius: 4,
-    padding: 8,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 1,
-  
-
-  },
-  imageContainer: {
-    // backgroundColor: 'white',
-    borderRadius: 3,
-    width: '100%',
-  
-    // height: 30,
-    // aspectRatio: 1,
-  
-  },
-  categoryImage: {
-    width: '100%',
-    // objectFit:"contain",
-    
-
-  },
-  categoryName: {
-    fontSize: 12,
-    textAlign: 'center',
-    color: 'gray',
-    fontFamily:"HelveticaNeueBold", 
-    paddingVertical: 6, 
-
-  },
-});
