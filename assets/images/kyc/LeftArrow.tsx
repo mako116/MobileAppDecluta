@@ -8,7 +8,7 @@ function LeftArrow({ width = 24, height = 24, color = "#212121", strokeWidth = 1
         <Svg 
             width={width} 
             height={height} 
-             viewBox="0 0 24 24" 
+             viewBox="0 0 24 24"  
             fill="none"
         >
             <Path 

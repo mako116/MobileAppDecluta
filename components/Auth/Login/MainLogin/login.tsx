@@ -1,25 +1,29 @@
-import { View, Text, ScrollView, Image,  TouchableOpacity, ActivityIndicator, Alert, BackHandler, Modal } from 'react-native';
+import { View, Text, ScrollView, Image, TouchableOpacity, ActivityIndicator, Alert, BackHandler, Modal } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { router } from 'expo-router';
 import { AntDesign } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
-import {SignUpStyles} from '../../../../styles/Signup/signup.style'
+import { SignUpStyles } from '../../../../styles/Signup/signup.style';
 import GoolgSignUp from '../../Signup/GoogleSignup/GoogleSignUpComponent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import TextInputField from '@/UI/InputFields/TextInputField';
 import TermsAndPolicyComponent from '@/components/TermsAndPolicy/TermsAndPolicy';
-import SignUpWithPhone from '../../Signup/PhoneNumberSignUp/SignUpWithPhone';
-import { useAuth } from '@/hooks/useAuth';
+// Import Redux hooks
+import { useAppDispatch, useAppSelector } from '@/redux/Redux/hook/hook';
+import { loginUser } from '@/redux/Redux/slice/authSlice';
+import LoginWithPhone from '../LoginWithPhone/LoginWithPhone';
 
 export default function Login() {
   const [password, setPassword] = useState<string>('');
   const [buttonSpinner, setButtonSpinner] = useState(false);
-  const [userInfo, setUserInfo] = useState({ email: "", password: "" });
   const [showExitModal, setShowExitModal] = useState(false);
-  const [errorMessage, setErrorMessage] = useState({ email: "", password: "" });
+  const [errorMessage, setErrorMessage] = useState({ email: "", password: "" })
   const [successMessage, setSuccessMessage] = useState("");
-  const { loginUser } = useAuth();
   const [email, setEmail] = useState<string>('');
+  
+  // Redux hooks
+  const dispatch = useAppDispatch();
+  const { loading, error } = useAppSelector((state) => state.auth);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -37,10 +41,9 @@ export default function Login() {
   useEffect(() => {
     const fetchEmail = async () => {
       try {
-        const storedEmail = await AsyncStorage.getItem('email');
-        console.log('Stored email:', storedEmail);
+        const storedEmail = await AsyncStorage.getItem('userEmail');
         if (storedEmail) {
-          setEmail(storedEmail); // Set email to the state
+          setEmail(storedEmail);
         }
       } catch (error) {
         console.error('Error fetching email from AsyncStorage:', error);
@@ -50,56 +53,77 @@ export default function Login() {
     fetchEmail();
   }, []);
 
+  // Set error message when Redux error state changes
+  useEffect(() => {
+    if (error) {
+      setErrorMessage({
+        email: error.includes('email') ? error : "",
+        password: error.includes('password') ? error : error
+      });
+    }
+  }, [error]);
+
   const validateInputs = () => {
     let errors = { email: "", password: "" };
     let isValid = true;
 
-    if (!userInfo.email) {
-      errors.email = "The email you entered doesn’t exist. Please check and try again.";
+    if (!email) {
+      errors.email = "The email you entered doesn't exist. Please check and try again.";
       isValid = false;
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userInfo.email)) {
-      errors.email = "The email you entered doesn’t exist. Please check and try again.";
-      isValid = false;
-    }
-
-    if (!userInfo.password) {
-      errors.password = "The password you entered is incorrect please try again or reset password.";
-      isValid = false;
-    } else if (userInfo.password.length < 6) {
-      errors.password = "The password you entered is incorrect please try again or reset password.";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errors.email = "The email you entered doesn't exist. Please check and try again.";
       isValid = false;
     }
 
-    setErrorMessage(errors);
+    if (!password) {
+      errors.password = "The password you entered is incorrect please try again or reset password.";
+      isValid = false;
+    } else if (password.length < 6) {
+      errors.password = "The password you entered is incorrect please try again or reset password.";
+      isValid = false;
+    }
+
+    // setErrorMessage(errors);
     return isValid;
   };
 
   const handleSignIn = async () => {
+    if (!validateInputs()) return;
+    
+    setButtonSpinner(true);
     try {
-      setButtonSpinner(true);
-      if (!email) {
-        alert("Please enter your email and password");
-        setButtonSpinner(false);
-        return;
+      // Dispatch loginUser action
+      const resultAction = await dispatch(loginUser({ email, password }));
+      
+      if (loginUser.fulfilled.match(resultAction)) {
+        setSuccessMessage("Login successful!");
+        
+        // Navigate to home screen after successful login
+        setTimeout(() => {
+          router.push("/(tabs)/home");
+        }, 500);
+      } else {
+        if (resultAction.payload) {
+          Alert.alert('Login Failed', resultAction.payload as string);
+        } else {
+          Alert.alert('Login Failed', 'Please check your credentials and try again');
+        }
       }
-      await loginUser({email, password});
-      console.log("login details", email, password )
-
     } catch (err) {
-      Alert.alert('Login Failed');
-      setSuccessMessage("Login failed!");
+      Alert.alert('Login Failed', 'An unexpected error occurred');
+    } finally {
       setButtonSpinner(false);
-    }   
+    }
   };
+  
   const handleExit = () => {
     setShowExitModal(false);
-    router.back();
+    router.push("/(tabs)/home"); // Always redirect to home on exit
   };
 
   const [showMore, setShowMore] = useState(false);
 
   const handleShowMore = () => {
-    // Set showMore to true when the image is clicked
     setShowMore(prevState => !prevState);
   };
 
@@ -116,13 +140,13 @@ export default function Login() {
             <TextInputField
               placeholder="Enter email"
               value={email}
+              error={errorMessage.email}
               onChangeText={(value) => setEmail(value.toLowerCase())}
               placeholderTextColor='gray'
             />
             {errorMessage.email && (
             <View style={{flexDirection:"row",gap:5, marginHorizontal:14, alignItems:"center"}}>
               <Text style={{ color: "red", fontSize: 12, marginTop: 5 , marginHorizontal:1 }}>{errorMessage.email}</Text>
-
             </View>          
             )}
           </View>
@@ -131,36 +155,25 @@ export default function Login() {
             <Text style={[SignUpStyles.label]}>Password</Text>
             <TextInputField
               placeholder="Enter password"
-              value={userInfo.password}
-              onChangeText={(value) => {setUserInfo({ ...userInfo, password: value });
-              setPassword(value);}}
+              value={password}
+              onChangeText={(value) => setPassword(value)}
               keyboardType="default"
               maxLength={11}
+              error={errorMessage.password}
               secureTextEntry={true}
               icon={<AntDesign name="lock" size={20} color="gray" />}
             />
-            {errorMessage.password && (
-              <View 
-                style={{
-                  flexDirection:"row",
-                  gap:5, 
-                  marginHorizontal:14, 
-                  alignItems:"center"
-                }}
-              >
-                <Text style={{ color: "red", fontSize: 12, marginTop: 5 ,marginHorizontal:1  }}>{errorMessage.password}</Text>
-              </View>          
-            )}
+            
           </View>
           {successMessage && (
             <Text style={{ color: "green", fontSize: 14, marginTop: 10, textAlign: "center" }}>{successMessage}</Text>
-          )}
+           )}
           <TouchableOpacity onPress={() => router.push("/(routes)/forgot-password")}>
             <Text style={SignUpStyles.forgotSection}>Forgot Password?</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={SignUpStyles.loginButton} onPress={handleSignIn}>
-            {buttonSpinner ? (
+            {buttonSpinner || loading ? (
               <ActivityIndicator size="small" color="white" />
             ) : (
               <Text style={SignUpStyles.loginText}>Login</Text>
@@ -181,8 +194,7 @@ export default function Login() {
           </View>
 
           <View style={SignUpStyles.socialButtons}>
-              <SignUpWithPhone />
-            
+              <LoginWithPhone />
               <GoolgSignUp />
 
             {/* Conditionally render the other buttons */}
@@ -192,8 +204,6 @@ export default function Login() {
                   <AntDesign name="apple1" size={22} color="black" />
                   <Text style={{ color: "#000000", lineHeight: 19.6, fontSize: 16, fontWeight: '400' , fontFamily:"ProximaNova"}}>Continue with Apple</Text>
                 </TouchableOpacity>
-
-                
               </>
             )}
 
@@ -203,15 +213,12 @@ export default function Login() {
               <TouchableOpacity onPress={handleShowMore}>
                 <Image
                   style={{ height: 24, width: 24, resizeMode: "contain" }}
-                  source={require("../../../../assets/images/newimages/Down 2.png")} // Image path
+                  source={require("../../../../assets/images/newimages/Down 2.png")}
                 />
               </TouchableOpacity>
             )}
-
-
             </View>
           </View>
-        
         </View>
       </ScrollView>
       {/* Custom Exit Modal */}
@@ -255,7 +262,6 @@ export default function Login() {
         </View>
       </Modal>
       <TermsAndPolicyComponent />
-
     </View>
   );
 }

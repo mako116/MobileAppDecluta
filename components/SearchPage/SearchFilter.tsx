@@ -41,7 +41,7 @@ const SearchFilter: React.FC = () => {
   );
 
   return (
-    <ScrollView  >
+    <ScrollView   >
     <View style={{ paddingHorizontal: 15, paddingVertical:3 }}>
       <View style={SearchCategoryStyles.header}>
         <Image source={require('../../assets/images/noto_fire.png')} style={{ height: 16, width: 16 }} />

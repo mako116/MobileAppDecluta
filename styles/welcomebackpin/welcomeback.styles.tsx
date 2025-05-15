@@ -41,6 +41,13 @@ const welcomePin = StyleSheet.create({
         marginBottom: 15,
         paddingHorizontal:10
     },
+    calculatorRows:{
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        gap:24,
+        marginBottom: 15,
+        paddingHorizontal:10
+    },
     span:{
         fontWeight:"400",
         fontSize:16,

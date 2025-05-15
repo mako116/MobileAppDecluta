@@ -9,34 +9,7 @@ type VerifyOtpResponse = {
     message: string;
   };
 };
-// interface User {
-//   firstName: string;
-//   lastName: string;
-//   email: string;
-//   dateOfBirth: Date;
-//   password: string;
-//   gender: string;
-//   dateCreated?: Date;
-//   // Email verification
-//   isEmailVerified?: boolean;
-//   lastLogin: Date
-//   loginOtp: any
-//   emailVerificationCode?: any;
-//   emailVerificationCodeExpires: Date;
-//   transactionPin: string;
-//   // Reset password
-//   resetPasswordOtp?: number;
-//   resetPasswordToken?: string;
-//   resetPasswordExpires?: Date;
-//   role: string;
-//   // Profile
-//   address: string;
-//   phoneNumber: string;
-//   country: string;
-//   state: string;
-//   city: string,
-//   picture?: string;
-// }
+
 
 interface AuthContextType {
   email: string | null;
@@ -179,7 +152,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const googleLogin = async (token: string) => {
     try {
-      const response = await axios.post(`http://localhost:3000/api/v1/auth/google-register`, {token})
+      const response = await axios.post(`https://decluttakingsever.onrender.com/api/v1/auth/google-register`, {token})
       console.log('Google login response', response);
       if (response.data && response.data.token) {
         console.log('Token received:', response.data.token);
@@ -331,23 +304,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
 
 
-
-//   const forgotPassword = async (email: string) => {
-//     try {
-//       const response = await axios.post(`${API_URL}api/v1/auth/forgot-password`, { email });
-//       console.log('forgotPassword response', response);
-
-//       if (response.data && response.data.success) {
-//         alert('Password reset email sent');
-//       } else {
-//         console.error('Forgot password failed');
-//         alert('Forgot password failed');
-//       }
-//     } catch (error) {
-//       console.error('Forgot password error:', error);
-//       alert('Forgot password error');
-//     }
-//   };
 
   const logout = async () => {
     await AsyncStorage.removeItem('token');

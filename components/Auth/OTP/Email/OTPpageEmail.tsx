@@ -16,7 +16,7 @@ export default function OTPPageEmail() {
   useEffect(() => {
     const fetchEmail = async () => {
       try {
-        const email = await AsyncStorage.getItem('email');
+        const email = await AsyncStorage.getItem('userEmail');
         setStoredEmail(email);
       } catch (error) {
         console.error('Error fetching email from AsyncStorage:', error);
@@ -71,7 +71,7 @@ export default function OTPPageEmail() {
           <Text style={styles.title}>Verify Your Email Address</Text>
           <Text style={styles.subtitle}>
             We sent a 4-digit code to {" "}
-            <Text style={styles.phoneNumber}>{storedEmail}</Text>. Please enter it below to verify your account.
+            <Text style={styles.phoneNumber}>{storedEmail}</Text>. Please enter it below to verify your account...
           </Text>
         </View>
 

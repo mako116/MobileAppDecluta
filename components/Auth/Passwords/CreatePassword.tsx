@@ -4,18 +4,17 @@ import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
-  ScrollView,
-  TextInput,
   TouchableOpacity,
   Alert,
   ActivityIndicator,
 } from 'react-native';
-import { Creating } from '@/styles/createPassword/CreatePassword'; // Ensure this path is correct
+import { Creating } from '@/styles/createPassword/CreatePassword';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { SignUpStyles } from '@/styles/Signup/signup.style';
-import { useAuth } from '@/context/AuthContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import TextInputField from '@/UI/InputFields/TextInputField';
+import { useAppDispatch, useAppSelector } from '@/redux/Redux/hook/hook';
+import { addPassword } from '@/redux/Redux/slice/authSlice';
 
 interface RequirementProps {
   label: string;
@@ -24,21 +23,25 @@ interface RequirementProps {
 
 function RequirementItem({ label, isValid }: RequirementProps) {
   return (
-    <View style={Creating.requirementItem}>
+    <View 
+      style={[
+        Creating.requirementItem, 
+        isValid ? Creating.activeRequirement : Creating.inactiveRequirement
+      ]}
+    >
       <Ionicons
-        name={isValid ? 'checkmark-circle-sharp' : 'square-outline'}
+        name={isValid ? 'checkmark-circle-sharp' : ''}
         size={18}
-        color={isValid ? '#DEBC8E' : 'gray'}
+        color={isValid ? '#333' : '#dc3545'}
       />
       <Text
         style={{
-          color: isValid ? '#212121' : 'gray',
+          color: isValid ? '#212121' : '',
           marginLeft: 8,
           fontWeight: '400',
-          fontSize: 14,
+          fontSize: 10,
           lineHeight: 19.6,
-          width: 230,
-          alignItems: 'center',
+          flex: 1, 
           fontFamily: "ProximaNova",
         }}
       >
@@ -48,10 +51,10 @@ function RequirementItem({ label, isValid }: RequirementProps) {
   );
 }
 
-
-
 export default function CreatePassword(): JSX.Element {
-  const { addPassword } = useAuth(); // Destructure onLogin from useAuth
+  // Replace context hook with Redux hooks
+  const dispatch = useAppDispatch();
+  const { loading, error, userId } = useAppSelector(state => state.auth);
   
   const [buttonSpinner, setButtonSpinner] = useState(false);
   const [password, setPassword] = useState<string>('');
@@ -77,18 +80,25 @@ export default function CreatePassword(): JSX.Element {
       specialChar: /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]+/.test(text),
     });
   };
+
   useEffect(() => {
-    const fetchEmail = async () => {
+    const fetchUserId = async () => {
       try {
         const storedUserId = await AsyncStorage.getItem('userId');
         console.log('Stored User Id:', storedUserId);
       } catch (error) {
-        console.error('Error fetching email from AsyncStorage:', error);
+        console.error('Error fetching userId from AsyncStorage:', error);
       }
     };
   
-    fetchEmail();
+    fetchUserId();
   }, []);
+
+  useEffect(() => {
+    if (error) {
+      Alert.alert('Error', error);
+    }
+  }, [error]);
 
   const handleCreatePassword = async () => {
     try {
@@ -98,17 +108,20 @@ export default function CreatePassword(): JSX.Element {
           'Error',
           'Password does not meet the required criteria or passwords do not match'
         );
+        setButtonSpinner(false);
         return;
       }
-      await addPassword( password, confirmPassword )
-      console.log("passwords", password, confirmPassword )
+      
+      // Use Redux action instead of context method
+      await dispatch(addPassword({ password, confirmPassword })).unwrap();
+      console.log("passwords", password, confirmPassword);
     } catch (err) {
-      setButtonSpinner(false);
       console.error('Error during password creation', err);
     } finally {
       setButtonSpinner(false);
     }
   };
+
   const handleDemoCreatePassword = async () => {
     try {
       setButtonSpinner(true);
@@ -128,14 +141,11 @@ export default function CreatePassword(): JSX.Element {
       setTimeout(() => {
         router.push('/(routes)/Profile-created'); // Navigate to success screen
       }, 1000); // Simulate delay
-    } catch (err) {
-      console.error('Error during password creation', err);
     } finally {
       setButtonSpinner(false);
     }
   };
   
-
   const navigateToTerms = () => router.push('/(routes)/Terms');
   const navigateToPrivacyPolicy = () => router.push('/(routes)/privacyPolicy');
 
@@ -177,7 +187,6 @@ export default function CreatePassword(): JSX.Element {
             fontSize: 23,
             lineHeight: 32.2,
             fontFamily:"Helvetica Neue"
-
           }}
         >
           Create Password
@@ -185,39 +194,19 @@ export default function CreatePassword(): JSX.Element {
       </View>
 
       <View style={[Creating.container, { flex: 1 }]}>
-        <Text style={{ marginVertical: 5 ,marginLeft:2, fontFamily:"ProximaNova"}}>Enter Password</Text>
+        <Text style={{ marginVertical: 5, marginLeft: 2, fontFamily: "ProximaNova" }}>Enter Password</Text>
         <TextInputField
           placeholder="Enter password"
           value={password}
           onChangeText={handlePasswordChange}
           keyboardType="default"
           maxLength={11}
-          secureTextEntry={true}
+          secureTextEntry={!showPassword}
           icon={<AntDesign name="lock" size={20} color="gray" />}
         />
 
-        <Text style={{ marginTop: 15 ,marginLeft:2, fontFamily:"ProximaNova"}}>Confirm Password</Text>
-        <TextInputField
-          placeholder="Confirm password"
-          value={confirmPassword}
-          onChangeText={setConfirmPassword}
-          keyboardType="default"
-          maxLength={11}
-          secureTextEntry={true}
-          icon={<AntDesign name="lock" size={20} color="gray" />}
-        />
-        <Text
-          style={{
-            marginTop: 10,
-            fontSize: 14,
-            fontWeight: '700',
-            lineHeight: 19.6,
-            color: '#212121',
-              fontFamily:"Helvetica Neue"
-          }}
-        >
-          PASSWORD REQUIREMENTS
-        </Text>
+    
+    
 
         <View style={Creating.requirementsContainer}>
           <RequirementItem
@@ -237,10 +226,22 @@ export default function CreatePassword(): JSX.Element {
             isValid={requirements.number}
           />
           <RequirementItem
-            label="1 special character, for example (!@#$%^&*-).+"
+            label="1 special character,  (!@#$%^&*-"
             isValid={requirements.specialChar}
           />
         </View>
+
+
+        <Text style={{ marginTop: 15, marginLeft: 2, fontFamily: "ProximaNova" }}>Confirm Password</Text>
+        <TextInputField
+          placeholder="Confirm password"
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+          keyboardType="default"
+          maxLength={11}
+          secureTextEntry={!showConfirmPassword}
+          icon={<AntDesign name="lock" size={20} color="gray" />}
+        />
       </View>
 
       <View style={{ marginHorizontal: 16 }} >
@@ -248,18 +249,18 @@ export default function CreatePassword(): JSX.Element {
           <TouchableOpacity
             style={[
               Creating.createAccountButton,
-              (!allRequirementsMet || buttonSpinner) && Creating.disabledButton,
+              (!allRequirementsMet || buttonSpinner || loading) && Creating.disabledButton,
             ]}
-            onPress={handleDemoCreatePassword}
-            disabled={!allRequirementsMet || buttonSpinner} // Disable when processing
-            >
-            {buttonSpinner ? (
+            onPress={handleCreatePassword}
+            disabled={!allRequirementsMet || buttonSpinner || loading}
+          >
+            {(buttonSpinner || loading) ? (
               <ActivityIndicator size="small" color="#000" />
             ) : (
               <Text
                 style={[
                   Creating.buttonText,
-                  (!allRequirementsMet || buttonSpinner) && Creating.disabledButton,
+                  (!allRequirementsMet || buttonSpinner || loading) && Creating.disabledButton,
                 ]}
               >
                 Create Profile

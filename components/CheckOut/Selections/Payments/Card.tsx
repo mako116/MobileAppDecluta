@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import YourCart from '@/styles/Cart/YourCart.styles';
 import Addcircle from '@/assets/svg/addcircle';
 import Arrowleft from '@/assets/svg/arrowleft';
@@ -7,6 +7,10 @@ import Arrowleft from '@/assets/svg/arrowleft';
 import { Fontisto } from '@expo/vector-icons';
 import CardModal from '../../AddModal/SelectionPayment/CardModal/CardForm';
 import SuccessModal from '../../AddModal/SelectionPayment/CardModal/CardSuccess';
+import DropdownWithSummary from '../../dropdownSummary/ShowSummary';
+import HeaderWithDesc from '@/UI/Header/HeaderWithDescription';
+import { router } from 'expo-router';
+import Refresh2 from '@/assets/images/New folder/refresh-2';
 
 // Define interface for card details
 interface CardDetails {
@@ -44,9 +48,22 @@ const Card = () => {
   
   
     return (
-      <View>
+      <View style={{height:"100%",}}>
+      <HeaderWithDesc title='Pay with Card' paddingTop={50} />
+    <ScrollView contentContainerStyle={{flexDirection:"column",justifyContent:"space-between",paddingHorizontal:20,marginBottom:"40%" }}>
+        <DropdownWithSummary />
+
+      <View style={{
+      paddingVertical:10,
+      padding:10, 
+      borderWidth: 1,
+      borderColor: '#E9E9E9',
+      marginTop: 15,
+      backgroundColor: '#fff',
+      borderRadius:5
+      }}>
         {/* Main container */}
-        <View style={styles.main}>
+        {/* <View style={styles.main}> */}
           {/* Title */}
           <Text style={YourCart.title}>Select Payment Card</Text>
           <Text style={[YourCart.price, { paddingTop: 0 }]}>
@@ -54,7 +71,7 @@ const Card = () => {
           </Text>
   
           {/* Add card button */}
-          <TouchableOpacity style={YourCart.rowSed} onPress={() => setModalVisible(true)}>
+          <TouchableOpacity style={[YourCart.rowSed,{marginTop:10}]} onPress={() => setModalVisible(true)}>
             <View style={YourCart.rows}>
               <Addcircle />
               <Text style={YourCart.CardText}>Add new card</Text>
@@ -90,15 +107,25 @@ const Card = () => {
               </TouchableOpacity>
             ))
           ) : (
-            <></>
+            <>
+            </>
           )}
-  
-          {/* Action Button */}
-          <TouchableOpacity style={YourCart.bottomButton}>
+ 
+        </View>
+        </ScrollView>
+        
+
+      <View style={{paddingHorizontal:20,paddingBottom:30,gap:10 }}>
+           {/* Action Button */}
+           <TouchableOpacity style={YourCart.bottomButton}>
             <Text style={YourCart.buttonText}>Proceed to Payment</Text>
           </TouchableOpacity>
+          {/* Change payment method */}
+      <TouchableOpacity onPress={() => router.push("/(routes)/checkout")} style={{flexDirection:"row",alignItems:"center",justifyContent:"center",gap:5}}>
+        <Refresh2 />
+        <Text style={YourCart.title}>Change payment method</Text>
+      </TouchableOpacity>
         </View>
-  
         {/* Card Modal */}
         <CardModal visible={modalVisible} onClose={() => setModalVisible(false)} onSave={handleSaveCard} />
   

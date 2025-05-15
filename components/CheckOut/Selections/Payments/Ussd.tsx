@@ -14,6 +14,11 @@ import UssdStyles from "@/styles/UssdStyles/Ussdstyles";
 import YourCart from "@/styles/Cart/YourCart.styles";
 import AddUssdModal from "../../AddModal/SelectionPayment/UssDModal/AddUssdModal";
 import ViewUssdDetail from "../../AddModal/SelectionPayment/UssDModal/ViewUssdDetail";
+import HeaderWithDesc from "@/UI/Header/HeaderWithDescription";
+import DropdownWithSummary from "../../dropdownSummary/ShowSummary";
+import CheckSquares from "@/assets/svg/Check square";
+import { router } from "expo-router";
+import Refresh2 from "@/assets/images/New folder/refresh-2";
 
 type Bank = {
     name: string;
@@ -33,7 +38,7 @@ const Ussd = () => {
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedBank, setSelectedBank] = useState<Bank | null>(null);
     const [searchQuery, setSearchQuery] = useState("");
-    const [dropdownVisible, setDropdownVisible] = useState(false);
+    // const [dropdownVisible, setDropdownVisible] = useState(false);
 
     const [isOpen, setIsOpen] = useState(false);
     const [animation] = useState(new Animated.Value(0));
@@ -98,15 +103,24 @@ const Ussd = () => {
             <Text style={UssdStyles.digitText}>{digit}</Text>
           </View>
         ));
+          const handleBackCheckout = () =>{
+            router.push("/(routes)/checkout")
+          }
     
     return (
-        <View style={UssdStyles.container}>
-      <View style={UssdStyles.header}>
+      <View style={{height:"100%",}}>
+      <HeaderWithDesc title='Pay with Bank Transfer' paddingTop={50} />
+    <ScrollView contentContainerStyle={{flexDirection:"column",justifyContent:"space-between", }}>
+      
+      <View style={[YourCart.main,{paddingHorizontal:20,marginBottom:"40%"}]}>
+      <DropdownWithSummary />
+
+       <View style={UssdStyles.dropdownsd}>
         <Text style={[YourCart.title, UssdStyles.title]}>Select Bank</Text>
         <Text style={YourCart.bonusText}>
           Select your bank to initiate USSD payment. Transfer from your own bank account.
         </Text>
-      </View>
+   
       {/* Dropdown for USSD Payment */}
       <View style={UssdStyles.dropdown}>
       <TouchableOpacity
@@ -123,55 +137,17 @@ const Ussd = () => {
        {isOpen ? <ArrowUpGray /> : <ArrowGrayDown />}
       </TouchableOpacity>
       </View>
+      </View>
       {/* <DropdownUssD /> */}
       <ViewUssdDetail
-       isOpen={isOpen}
+      //  isOpen={isOpen}
       scaleY={scaleY}
       selectedBank={selectedBank}
       minutesArray={minutesArray}
      secondsArray={secondsArray}
       renderDigitBoxes={renderDigitBoxes}
       />
-
-      {/* <Animated.View style={[UssdStyles.dropdowns, { transform: [{ scaleY }] }]}>
-      {isOpen && (
-      <View style={UssdStyles.dropdownContainer}>
-    <ScrollView showsVerticalScrollIndicator={false}>
-      {selectedBank && (
-        <View style={YourCart.UssdModal}>
-          <Text style={YourCart.titles}>
-            Next, dial or tap the USSD code below on your phone to complete the payment.
-          </Text>
-          <View style={YourCart.Rounded}>
-            <Text style={YourCart.textcent}>{selectedBank?.ussd}</Text>
-          </View>
-          <Text style={YourCart.smallTxt}>
-            Dial the code and complete payment within the next
-          </Text>
-          <View style={UssdStyles.timerContainer}>
-            <View style={{ flexDirection: 'column' }}>
-              <View style={{ flexDirection: 'row' }}>
-                {renderDigitBoxes(minutesArray)}
-              </View>
-              <Text>Minutes</Text>
-            </View>
-            <View style={UssdStyles.colon}>
-              <Colon />
-            </View>
-            <View style={{ flexDirection: 'column' }}>
-              <View style={{ flexDirection: 'row' }}>
-                {renderDigitBoxes(secondsArray)}
-              </View>
-              <Text>Seconds</Text>
-            </View>
-          </View>
-        </View>
-      )}
-    </ScrollView>
-     </View>
-     )}
-
-      </Animated.View> */}
+ 
       {/* Modal Component */}
       <AddUssdModal
         visible={modalVisible}
@@ -183,6 +159,22 @@ const Ussd = () => {
         setSearchQuery={setSearchQuery}
       />
     </View>
+    </ScrollView>
+    <View style={{paddingHorizontal:20,paddingBottom:30,gap:10 }}>
+         {/* Action Button */}
+         <TouchableOpacity onPress={handleBackCheckout} style={YourCart.bottomButton}>
+          <CheckSquares />
+          <Text style={YourCart.buttonText}>Click here after transfer</Text>
+        </TouchableOpacity>
+
+ {/* Change payment method */}
+      <TouchableOpacity onPress={() => router.push("/(routes)/checkout")} style={{flexDirection:"row",alignItems:"center",justifyContent:"center",gap:5}}>
+        <Refresh2 />
+        <Text style={YourCart.title}>Change payment method</Text>
+      </TouchableOpacity>
+      </View>
+    </View>
+    
     );
 }
 

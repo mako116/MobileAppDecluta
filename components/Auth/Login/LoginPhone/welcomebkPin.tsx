@@ -9,17 +9,22 @@ import {
   FlatList,
   Modal,
   StatusBar,
+  Alert,
 } from "react-native";
 import React, { useState, useRef } from "react";
 import { SignUpStyles } from "@/styles/Signup/signup.style";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import welcomePin from "@/styles/welcomebackpin/welcomeback.styles";
+import { loginUserWithPin, logoutUser } from "@/redux/Redux/slice/authSlice";
+import { useAppDispatch } from "@/redux/Redux/hook/hook";
 
 export default function WelcomeBkPin() {
-  const inputRefs = useRef<(TextInput | null)[]>([]); // Fixing the type of the ref
+  const inputRefs = useRef<(TextInput | null)[]>([]);
+  const [successMessage, setSuccessMessage] = useState("");
   const [pin, setPin] = useState(["", "", "", ""]);
-  const [isModalVisible, setModalVisible] = useState(false); // State to control the modal visibility
+  const [isModalVisible, setModalVisible] = useState(false); 
+  const dispatch = useAppDispatch();
 
   // Function to show the modal when fingerprint button is pressed
   const handleFingerprint = () => {
@@ -31,24 +36,60 @@ export default function WelcomeBkPin() {
     setModalVisible(false); // Hide the modal
   };
 
-  // Validate the PIN and navigate if correct
-  const validatePin = (updatedPin: string[]) => {
-    const enteredPin = updatedPin.join(""); // Combine PIN array into a string
-    if (enteredPin === "1234") {
-      router.push("/(tabs)/home"); // Navigate to the home page
+  // Validate the PIN only when all 4 digits are entered
+  const validatePin = async (updatedPin: string[]) => {
+    // Only proceed if all PIN digits are filled
+    if (updatedPin.some(digit => digit === "")) {
+      return; // Don't attempt login with incomplete PIN
+    }
+
+    const enteredPin = updatedPin.join("");
+    try {
+      // Dispatch loginUser action with proper payload structure
+      const resultAction = await dispatch(loginUserWithPin({ 
+        pin: enteredPin
+      }));
+      
+      if (loginUserWithPin.fulfilled.match(resultAction)) {
+        setSuccessMessage("Login successful!");
+        
+        // Navigate to home screen after successful login
+        setTimeout(() => {
+          router.push("/(tabs)/home");
+        }, 500);
+      } else {
+        if (resultAction.payload) {
+          Alert.alert('Login Failed', resultAction.payload as string);
+        } else {
+          Alert.alert('Login Failed', 'Please check your credentials and try again');
+        }
+
+        // Clear PIN on failed login
+        setPin(["", "", "", ""]);
+      }
+    } catch (err) {
+      Alert.alert('Login Failed', 'An unexpected error occurred');
+      // Clear PIN on error
+      setPin(["", "", "", ""]);
     }
   };
 
   // Handle input changes for PIN code
   const handlePinChange = (text: string, index: number) => {
+    if (index === -1) return; // No empty position found
+    
     const updatedPin = [...pin];
     updatedPin[index] = text;
     setPin(updatedPin);
-    validatePin(updatedPin);
-
+    
     // Move focus to the next input after entering a digit
     if (text && index < 3) {
-      inputRefs.current[index + 1]?.focus(); // Use optional chaining to avoid accessing undefined
+      inputRefs.current[index + 1]?.focus();
+    }
+    
+    // Only validate when the PIN is complete (all 4 digits entered)
+    if (!updatedPin.includes("")) {
+      validatePin(updatedPin);
     }
   };
 
@@ -58,10 +99,28 @@ export default function WelcomeBkPin() {
     for (let i = pin.length - 1; i >= 0; i--) {
       if (updatedPin[i] !== "") {
         updatedPin[i] = ""; // Remove the value at the rightmost non-empty index
+        
+        // Set focus to the cleared position if it's not the first position
+        if (i > 0) {
+          inputRefs.current[i]?.focus();
+        }
         break;
       }
     }
     setPin(updatedPin);
+  };
+
+  // Handle logout action - clear token and navigate to login screen
+  const handleLogout = async () => {
+    try {
+      // Dispatch logout action to clear authentication token
+      await dispatch(logoutUser());
+      
+      // Navigate to login screen
+      router.replace("/login");
+    } catch (error) {
+      Alert.alert('Logout Failed', 'An error occurred while logging out.');
+    }
   };
 
   return (
@@ -80,7 +139,7 @@ export default function WelcomeBkPin() {
                 { fontSize: 23, lineHeight: 32.2, paddingTop: 30, color: "#212121" },
               ]}
             >
-              Welcome back, Olabode
+              Welcome back, 
             </Text>
 
             {/* Pin Code Input */}
@@ -211,8 +270,8 @@ export default function WelcomeBkPin() {
               </View>
             </Modal>
             <View style={{ alignItems: "center", flexDirection: "row", justifyContent: "center" }}>
-              <Text style={welcomePin.span}>Not your account?</Text>
-              <TouchableOpacity>
+              <Text style={welcomePin.pinText}>Not your account?</Text>
+              <TouchableOpacity onPress={handleLogout}>
                 <Text style={welcomePin.logout}>Log Out</Text>
               </TouchableOpacity>
             </View>

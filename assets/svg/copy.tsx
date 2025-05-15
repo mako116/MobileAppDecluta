@@ -2,9 +2,13 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 
-const Copy = () => {
+type RightarrowProps = {
+   width?: string | number;
+  height?: string | number;
+};
+const Copy: React.FC <RightarrowProps>=({width=12,height=12,}) => {
   return (
-    <Svg width="12" height="12" viewBox="0 0 12 12" fill="none" 
+    <Svg width={width} height={height} viewBox="0 0 12 12" fill="none" 
     >
       <Path
         d="M8.5 6.7V8.2C8.5 10.2 7.7 11 5.7 11H3.8C1.8 11 1 10.2 1 8.2V6.3C1 4.3 1.8 3.5 3.8 3.5H5.3"

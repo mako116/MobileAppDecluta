@@ -7,7 +7,7 @@ interface AuthState {
     email: string;
     token: string | null;
     userData: UserData | null; 
-    phone?: string;
+    phoneNumber?: string;
     lastLogin: number | null; // Store timestamp
 }
 
@@ -25,7 +25,7 @@ interface UserData {
     firstName: string;
     email: string;
     password: string;
-    phone: string;
+    phoneNumber: string;
     name: string;
     profileImage: string;
 }
@@ -62,15 +62,15 @@ const authSlice = createSlice({
         },
         updateUserData: (state, action: PayloadAction<Partial<UserData>>) => {
             if (state.userData) {
-                const { name, email, password, createdAt, phone, firstName, lastName } = action.payload;
+                const { name, email, password, createdAt, phoneNumber, firstName, lastName } = action.payload;
                 if (firstName !== undefined) state.userData.firstName = firstName;
                 if (lastName !== undefined) state.userData.lastName = lastName;
-                if (phone !== undefined) state.userData.phone = phone;
+                if (phoneNumber !== undefined) state.userData.phoneNumber = phoneNumber;
                 if (password !== undefined) state.userData.password = password;
                 if (name !== undefined) state.userData.name = name;
                 if (createdAt !== undefined) state.userData.createdAt = createdAt;
                 if (email !== undefined) state.userData.email = email;
-                if (phone !== undefined) state.userData.phone = phone;
+                if (phoneNumber !== undefined) state.userData.phoneNumber = phoneNumber;
             }
         },
         logout: (state) => {

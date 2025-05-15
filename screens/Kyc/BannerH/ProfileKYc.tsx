@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import { useAuth } from "@/context/AuthContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
@@ -53,7 +52,7 @@ export default function ProfileKYC() {
         <TouchableOpacity
           onPress={() => router.push("/(routes)/kyc/Signup")}
           style={styles.card}
-        >
+        > 
           <Text style={styles.progressText}>
             Your profile is 60% complete
           </Text>
@@ -87,7 +86,7 @@ const styles = StyleSheet.create({
   progressText: {
     fontSize: 12,
     lineHeight: 16.8,
-    fontWeight: "400",
+fontFamily:"ProximaNovaR",
     color: "#474747",
   },
   kycButton: {
@@ -99,7 +98,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     lineHeight: 16.8,
     borderRadius: 4,
-    fontWeight: "400",
+fontFamily:"HelveticaNeueBold",
     color: "#212121",
     padding: 3,
     backgroundColor: "#FDEBD0",

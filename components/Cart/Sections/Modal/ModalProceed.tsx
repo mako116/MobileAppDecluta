@@ -26,6 +26,11 @@ const modalOptions = [
       "An escrow service is a secure payment method where funds are held by a trusted third party (DecluttaKing) until both the buyer and seller have fulfilled their respective obligations. This ensures that the buyer receives the item as described and the seller receives their payment.",
   },
   {
+    label: " 2.  How does the escrow process work on DecluttaKing",
+    description:
+      "When you make a payment for an item on DecluttaKing, the funds are held in escrow. The buyer then coordinates with the seller via in-app chat, audio, or video call to arrange a meeting within 48 hours to pick up the item. Once the buyer has received and inspected the item, they can release the funds to the seller. If the transaction is not completed within 48 hours, the order will be automatically canceled.",
+  },
+  {
     label: "3. Why should I use escrow for my transactions?",
     description:
       "Using escrow provides an additional layer of security for both buyers and sellers. Buyers are assured that their payment won't be released until they receive the item in the expected condition, while sellers are protected from potential non-payment issues.",

@@ -4,8 +4,11 @@ import TextInputField from '@/UI/InputFields/TextInputField'
 import Button from '../Button/button'
 import ArrowDown from '@/assets/svg/arrowDown'
 import SortingIcon from '@/assets/svg/SortingIcon'
+import { RootState } from '@/redux/store'
+import { useSelector } from 'react-redux'
 
 const SearchQuestionAndAnswers = () => {
+    const res = useSelector((state: RootState) => state.auth.userData);
     const handleSearch = async () => {
         try {
             

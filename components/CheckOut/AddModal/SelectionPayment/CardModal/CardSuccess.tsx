@@ -1,3 +1,4 @@
+import Good from '@/assets/images/checkbox/Good';
 import Close from '@/assets/images/kyc/close';
 import Tickcircle from '@/assets/svg/tickcircle';
 import YourCart from '@/styles/Cart/YourCart.styles';
@@ -14,12 +15,11 @@ const SuccessModal = ({ visible, onClose }: SuccessModalProps) => {
     <Modal transparent={true} animationType="fade" visible={visible} onRequestClose={onClose}>
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
-          <View style={{flexDirection:"row", justifyContent:"flex-end", width:"100%",}}>
-          <Text style={[YourCart.modalTitle,{marginHorizontal:"auto", paddingBottom:13}]}>Card Added Successfully!</Text>
-          <TouchableOpacity  onPress={onClose}>
-          <Close />
-          </TouchableOpacity>
          
+          <View style={{ gap:10}}>
+          <Good/>
+          <Text style={[YourCart.modalTitle,{marginHorizontal:"auto", paddingBottom:3}]}>Card Added Successfully!</Text>
+      
           </View>
           <Text style={[YourCart.label,{textAlign:"center"}]}>Your card has been securely added to your account. You're now ready to make payments with ease!</Text>
 
@@ -35,17 +35,18 @@ const SuccessModal = ({ visible, onClose }: SuccessModalProps) => {
 const styles = StyleSheet.create({
   modalContainer: {
      flex: 1,
-    justifyContent: "flex-end",
+    justifyContent: "center",
     alignItems: 'center',
-     backgroundColor: 'rgba(0, 0, 0, 0.84)',  
+    paddingHorizontal:20,
+     backgroundColor: 'rgba(0, 0, 0, 0.7)',  
   },
   modalContent: {
     backgroundColor: 'white',
-    paddingVertical: 35,
-    paddingHorizontal: 10,
-     borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    width: '100%',
+    paddingVertical: 25,
+    paddingHorizontal: 15,
+   
+     borderRadius: 5,
+     width: '100%',
     alignItems: 'center',
   },
  

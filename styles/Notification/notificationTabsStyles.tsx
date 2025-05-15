@@ -2,9 +2,32 @@ import {  StyleSheet } from 'react-native';
 
 const NotificationTabsStyles = StyleSheet.create({
     container: {
-      paddingVertical: 10,
+      // paddingVertical: 10,
       // paddingHorizontal: 15,
     },
+    listItem: {
+      paddingVertical: 6,
+      paddingHorizontal:16,
+      borderBottomWidth: 1,
+      borderColor: "#eee",
+      borderTopEndRadius:10,
+      borderTopStartRadius:10,
+      backgroundColor:"#DEBC8E",
+      flexDirection: "row",
+      alignItems: "center",
+    },
+    containBox:{
+      borderWidth: 1,
+      borderColor: "#E9E9E9",
+      paddingBottom: 16,
+      marginBottom:20
+    },
+    iconLabelContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 10,
+    },
+    
     containers: {
       // height:"100%",
       // flexDirection:"column",
@@ -35,7 +58,7 @@ const NotificationTabsStyles = StyleSheet.create({
       position: "relative",
     },
     tabContainers: {
-      flexDirection: "row",
+      flexDirection: "column",
       // paddingVertical:10,
       // justifyContent:"space-between",
       // height:"100%",

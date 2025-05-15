@@ -5,15 +5,17 @@ import CountrySelectionModal from './CountryModal/CountrySelect';
 import StateSelectionModal from './StateModal/StateModal';
 import CitySelectionModal from './CityModal/Citymodal';
 import KycSignup from '@/styles/Kyc/signup.styles';
-import { useAuth } from '@/context/AuthContext';
+import { useAppDispatch } from '@/redux/Redux/hook/hook';
+import { addResidentInfo } from '@/redux/Redux/slice/authSlice';
   
 const SignUpRegister = () => {
   const router = useRouter();
-  const { addResidentInfo } = useAuth()
   const [buttonSpinner, setButtonSpinner] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isState, setisState] = useState(false);
   const [iscity, setiscity] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const dispatch = useAppDispatch();
 
   
   const [Kyc, setKyc] = useState({
@@ -37,10 +39,24 @@ const SignUpRegister = () => {
   const handleRegister = async () => {
     try {
       setButtonSpinner(true);
-      await addResidentInfo(Kyc.Country, Kyc.State,Kyc.City, Kyc.Address);
+      const resultAction = await dispatch(addResidentInfo({ 
+        country: Kyc.Country, 
+        state: Kyc.State, 
+        city: Kyc.City, 
+        address: Kyc.Address 
+      }));
       console.log("KYC details", Kyc.Country, Kyc.State,Kyc.City, Kyc.Address)
+      if (addResidentInfo.fulfilled.match(resultAction)) {
+        setSuccessMessage("Address added successful!");
+      } else {
+        if (resultAction.payload) {
+          Alert.alert('Address update Failed', resultAction.payload as string);
+        } else {
+          Alert.alert('Address update Failed', 'Please check your credentials and try again');
+        }
+      }
     } catch (error) {
-      Alert.alert('Login Failed');
+      Alert.alert('Address update Failed');
     } finally {
       setButtonSpinner(false);
     }
@@ -123,7 +139,7 @@ const SignUpRegister = () => {
         <View style={{marginTop:15,marginBottom:4}}>
           <Text style={KycSignup.label}>Street Address</Text>
           <TextInput
-            style={[ KycSignup.input, { paddingHorizontal: 40 } ]}
+            style={[ KycSignup.input, { paddingHorizontal: 40, color: "black" } ]}
             keyboardType="default"
             value={Kyc.Address}
             placeholder="Enter your street address"
@@ -131,6 +147,9 @@ const SignUpRegister = () => {
             onChangeText={(value) => setKyc({ ...Kyc, Address: value })}
           />
         </View>
+        {successMessage && (
+          <Text style={{ color: "green", fontSize: 14, marginTop: 10, textAlign: "center" }}>{successMessage}</Text>
+        )}
 
         
  

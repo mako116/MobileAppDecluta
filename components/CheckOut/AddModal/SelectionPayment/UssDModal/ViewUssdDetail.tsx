@@ -5,7 +5,7 @@ import YourCart from "@/styles/Cart/YourCart.styles";
 import Colon from "@/assets/svg/colon";
 
 type ViewUssdDetailProps = {
-  isOpen: boolean;
+  // isOpen: boolean;
   scaleY: any;
   selectedBank: { name: string; ussd: string } | null;
   minutesArray: string[];
@@ -14,7 +14,7 @@ type ViewUssdDetailProps = {
 };
 
 const ViewUssdDetail: React.FC<ViewUssdDetailProps> = ({
-  isOpen,
+  // isOpen,
   scaleY,
   selectedBank,
   minutesArray,
@@ -22,9 +22,8 @@ const ViewUssdDetail: React.FC<ViewUssdDetailProps> = ({
   renderDigitBoxes,
 }) => {
   return (
-    <Animated.View style={[UssdStyles.dropdowns, { transform: [{ scaleY }] }]}>
-      {isOpen && (
-        <View style={UssdStyles.dropdownContainer}>
+    <Animated.View >
+         <View style={UssdStyles.dropdownContainer}>
           <ScrollView showsVerticalScrollIndicator={false}>
             {selectedBank && (
               <View style={YourCart.UssdModal}>
@@ -58,8 +57,7 @@ const ViewUssdDetail: React.FC<ViewUssdDetailProps> = ({
             )}
           </ScrollView>
         </View>
-      )}
-    </Animated.View>
+     </Animated.View>
   );
 };
 

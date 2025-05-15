@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingTop: 60,
         paddingBottom: 10,
+        gap: 10
      },
     centerContainer: {
         display: "flex",

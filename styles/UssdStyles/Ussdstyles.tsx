@@ -53,6 +53,16 @@ const UssdStyles = StyleSheet.create({
         borderRadius: 6,
         backgroundColor: "#FFFFFF",
       },
+      dropdownsd: {
+        marginTop:12,
+        // alignItems: "center",
+        paddingHorizontal: 15,
+        paddingVertical:15,
+        gap:10,
+        
+        borderRadius: 6,
+        backgroundColor: "#FFFFFF",
+      },
       dropdowned: {
         flexDirection: "row",
         justifyContent: "space-between",
@@ -79,7 +89,16 @@ const UssdStyles = StyleSheet.create({
         width: "100%",
         backgroundColor: "white",
         borderRadius: 10,
-        padding: 20,
+        paddingHorizontal: 20,
+        paddingVertical:14,
+        elevation: 5,
+      },
+      modalContents: {
+        width: "100%",
+        backgroundColor: "white",
+        borderRadius: 30,
+        paddingHorizontal: 20,
+        paddingVertical:14,
         elevation: 5,
       },
       searchInput: {
@@ -94,6 +113,16 @@ const UssdStyles = StyleSheet.create({
         justifyContent: "space-between",
         paddingVertical: 20,
         paddingHorizontal:10
+       
+      },
+      CategoryItem: {
+        flexDirection: "row",
+        // justifyContent: "space-between",
+        paddingVertical: 15,
+        paddingHorizontal:0,
+        gap:0,
+        borderBottomWidth:1,
+        borderColor:"#E9E9E9"
        
       },
       bankName: {
@@ -140,12 +169,7 @@ const UssdStyles = StyleSheet.create({
       dropdownContainer: {
         backgroundColor: '#fff',
         width: '100%',
-        borderBottomLeftRadius: 4,
-        borderBottomRightRadius: 4,
-        borderLeftWidth: 1,
-        borderRightWidth: 1,
-        borderBottomWidth: 1,
-        borderColor: '#E9E9E9',
+      
       },
       row: {
         flexDirection: 'row',

@@ -19,7 +19,7 @@ const CheckoutFoot = () => {
   const [isRewardDropdownVisible, setIsRewardDropdownVisible] = useState<boolean>(false);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [modalProceed, setModalProceed] = useState(false);
-
+ 
   const formatPrice = (price: number): string => {
     return price > 900
       ? price.toLocaleString('en-NG', { style: 'currency', currency: 'NGN' })
