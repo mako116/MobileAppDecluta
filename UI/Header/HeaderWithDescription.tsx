@@ -6,48 +6,65 @@ interface HeaderWithDescProps {
   title: string;
   subTile?: string;
   headerSave?: string;
-  paddingTop?:   number;
-  ordersBars?: string | Boolean;
-  Actions?: string | Boolean;
-  Receipt?: string | Boolean;
-
+  paddingTop?: number;
+  ordersBars?: string | boolean;
+  Actions?: string | boolean;
+  Receipt?: string | boolean;
+  columnLayout?: boolean; // ✅ New prop
 }
 
-const HeaderWithDesc: React.FC<HeaderWithDescProps> = ({Receipt,ordersBars, paddingTop = 10, title, subTile, headerSave,Actions }) => {
+const HeaderWithDesc: React.FC<HeaderWithDescProps> = ({
+  Receipt,
+  ordersBars,
+  paddingTop = 10,
+  title,
+  subTile,
+  headerSave,
+  Actions,
+  columnLayout = false, // default to false
+}) => {
   return (
     <View style={[styles.iconRow, { paddingTop }]}>
       <View style={styles.flexRow}>
         <ArrowBkOutline />
-        <View style={styles.centerContainer}>
+        <View
+          style={[
+            styles.centerContainer,
+            columnLayout && styles.centerContainerColumn, // ✅ Conditional style
+          ]}
+        >
           <Text style={styles.label}>{title}</Text>
           {subTile && <Text style={styles.subLabel}>{subTile}</Text>}
         </View>
       </View>
-      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 10 }}>
-      {Actions && (
-          <TouchableOpacity onPress={()=> router.push("/(routes)/Notifications")}>
-          <Image source={require("../../assets/images/New folder/Group 490.png")} style={{width:17,height:17}}/>
+
+      <View style={styles.rightIcons}>
+        {Actions && (
+          <TouchableOpacity onPress={() => router.push("/(routes)/Notifications")}>
+            <Image source={require("../../assets/images/New folder/Group 490.png")} style={{ width: 17, height: 17 }} />
           </TouchableOpacity>
         )}
 
         {Receipt && (
-          <View style={{flexDirection:"row",alignItems:"center",gap:7}}>
-          <Image source={require("../../assets/images/New folder/document-text.png")} style={{width:19,height:19}}/>
-          <Text>Receipt</Text>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 7 }}>
+            <Image source={require("../../assets/images/New folder/document-text.png")} style={{ width: 19, height: 19 }} />
+            <Text>Receipt</Text>
           </View>
         )}
-      {ordersBars && (
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 10 }}>
-          <TouchableOpacity onPress={()=> router.push("/(routes)/Notifications")}>
-          <Image source={require("../../assets/images/New folder/notification-bing.png")} style={{width:17,height:17}}/>
-          </TouchableOpacity>
-         
-          <TouchableOpacity onPress={()=>router.push("/(routes)/cart")}>
-          <Image source={require("../../assets/images/New folder/Group 489.png")} style={{width:17,height:17}} />
-          </TouchableOpacity>
-       </View>
-      )}
+
+        {ordersBars && (
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+            <TouchableOpacity onPress={() => router.push("/(routes)/Notifications")}>
+              <Image source={require("../../assets/images/New folder/notification-bing.png")} style={{ width: 17, height: 17 }} />
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => router.push("/(routes)/cart")}>
+              <Image source={require("../../assets/images/New folder/Group 489.png")} style={{ width: 17, height: 17 }} />
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
+
       {headerSave && (
         <TouchableOpacity>
           <Text style={styles.save}>{headerSave}</Text>
@@ -92,7 +109,20 @@ const styles = StyleSheet.create({
   },
   centerContainer: {
     flexDirection: "column",
+    alignItems: "center",
+    gap: 10,
+  },
+  centerContainerColumn: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
     justifyContent: "center",
+  },
+  rightIcons: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 10,
   },
 });
 

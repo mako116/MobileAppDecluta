@@ -8,11 +8,12 @@ interface HeaderWithNoArrowProps {
   title: string;
   subTile?: string;
   headerSave?:string;
+  paddingTop?:number;
 } 
 
-const HeaderWithNoArrow: React.FC<HeaderWithNoArrowProps> = ({ title, subTile ,headerSave}) => {
+const HeaderWithNoArrow: React.FC<HeaderWithNoArrowProps> = ({ title, paddingTop,headerSave}) => {
   return (
-    <View style={styles.iconRow}>
+    <View style={[styles.iconRow, { paddingTop }]}>
       <View style={[styles.centerContainer]}>
         <Text style={[styles.label]}>{title}</Text>       
       </View>

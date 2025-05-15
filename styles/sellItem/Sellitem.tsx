@@ -11,10 +11,24 @@ const SellItems = StyleSheet.create({
         height:"100%",
        
     },
+    overlayContainer: {
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: 'rgba(0,0,0,0.6)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10,
+      },
+      
+      overlayText: {
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: 16,
+      },
+      
     Box:{
         borderWidth:1,
         paddingHorizontal:15,
-        paddingVertical: 40,
+        paddingVertical: 20,
         marginVertical:10,
         borderRadius:10,
         borderColor:"#E9E9E9",
@@ -58,11 +72,15 @@ const SellItems = StyleSheet.create({
         width: '100%',
         paddingHorizontal: 20,
         backgroundColor:"#fff",
+        paddingTop:10,
+        paddingBottom:'10%'
     },
     scrollViewContent: {
         paddingHorizontal: 20,
-        backgroundColor:"#F9F9F9",
-        flex: 1,
+        // backgroundColor:"#F9F9F9",
+        // flex: 1,
+        // height:'130%',
+         width:'100%'
     },
 
     label:{
@@ -113,6 +131,7 @@ const SellItems = StyleSheet.create({
         right: -10,
         backgroundColor: '#DEBC8E',
         width: 20,
+        zIndex:10000,
         height: 20,
         borderRadius: 10,
         justifyContent: 'center',
@@ -120,7 +139,7 @@ const SellItems = StyleSheet.create({
     },
     removeButtonText: {
         color: 'black',
-        fontSize: 12,
+        fontSize: 10,
         fontWeight: 'bold',
     },
     // These styles should be in your SellItems style object
@@ -128,11 +147,11 @@ const SellItems = StyleSheet.create({
         marginTop: 10,
     },
     videoWrapper: {
-        width: '48%',  // Adjust as needed
+        width: '48%',  
         aspectRatio: 16/9,
         position: 'relative',
         borderRadius: 8,
-        overflow: 'hidden',
+        // overflow: 'hidden',
         marginBottom: 10,
     },
     videoThumbnail: {

@@ -83,12 +83,12 @@ const ItemUnderReview = () => {
     <SafeAreaView
       style={
         {
-            backgroundColor: '#fff',
+            backgroundColor: '#F9F9F9',
             height: '100%',
         }
       }
     >
-      <HeaderWithNoArrow title="Item Under Review" headerSave="Done" />
+      <HeaderWithNoArrow title="Item Under Review"  paddingTop={50} headerSave="Done" />
 
       <ScrollView contentContainerStyle={[SellItems.scrollViewContent]}>
         <View style={SellItems.contains}>
@@ -109,7 +109,7 @@ const ItemUnderReview = () => {
           <Text style={[SellItems.optionSubText]}>
           Have more items to declutter or swap? List another one and discover new ones while making more space in your life.
           </Text>
-          <Button padding={1} fontSize={15} title="Upload Another item" onPress={()=> router.push("/(routes)/sellanItem/itemApproved")} backgroundColor="#DEBC8E" borderWidth={0} />
+          <Button padding={12} fontSize={15} title="Upload Another item" onPress={()=> router.push("/(routes)/sellanItem/FirstStep")} backgroundColor="#DEBC8E" borderWidth={0} />
           
           </View>
          </View>
@@ -121,7 +121,7 @@ const ItemUnderReview = () => {
           <Text style={[SellItems.optionSubText]}>
           Please take a moment to rate the platform and the seller to help us improve our service.
           </Text>
-          <Button padding={1} fontSize={15} title="Rate Decluttaking" onPress={() =>{}} backgroundColor="#fff" borderWidth={1}  />
+          <Button padding={12} fontSize={15} title="Rate Decluttaking" onPress={() =>{}} backgroundColor="#fff" borderWidth={1}  />
           
           </View>
          </View>

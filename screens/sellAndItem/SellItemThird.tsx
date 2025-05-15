@@ -49,16 +49,16 @@ const SellItemThird = () => {
         <SafeAreaView
             style={
                 {
-                    backgroundColor: '#fff',
+                    backgroundColor: '#F9F9F9',
                     height: '100%',
                 }
             }
         >
-            <HeaderWithDesc title={'Sell an item'} subTile='(Step 3/5)' headerSave={isButtonEnabled ? 'Save' : ''} />
+            <HeaderWithDesc title={'Sell an item'} columnLayout={true} paddingTop={50} subTile='(Step 3/5)' headerSave={isButtonEnabled ? 'Save' : ''} />
             <ScrollView contentContainerStyle={SellItems.scrollViewContent}>
                 <View style={SellItems.contains}>
                     <Text style={[SellItems.label, { marginTop: 5 }]}>Item Condition</Text>
-                    {errors.condition && <Text style={{ color: 'red' }}>{errors.condition}</Text>}
+                    {/* {errors.condition && <Text style={{ color: 'red' }}>{errors.condition}</Text>} */}
                     
                     {conditions.map((item) => (
                         <View key={item.id} style={SellItems.Box}>
@@ -81,7 +81,7 @@ const SellItemThird = () => {
                     ))}
                 </View>
             </ScrollView>
-            <View style={SellItems.flexDifAbs}>
+            <View style={[SellItems.flexDifAbs, SellItems.flexDifAb]}>
                 <TouchableOpacity 
                     onPress={handleBack}
                     style={[SignUpStyles.loginButtoned, { backgroundColor: '#fff', borderWidth: 1, borderColor: "#463E31", width: "100%" }]}

@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
         marginVertical: 10,
     },
     textArea: {
-        // flex: 1,
+        flex: 1,
         paddingVertical: 10,
         paddingHorizontal: 5,
         fontSize: 14,

@@ -93,12 +93,12 @@ const SellItemFourth = () => {
     <SafeAreaView
       style={
           {
-              backgroundColor: '#fff',
+              backgroundColor: '#F9F9F9',
               height: '100%',
           }
       }
     >
-      <HeaderWithDesc title="Sell an item" subTile="(Step 4/5)" headerSave={isButtonEnabled ? 'Save' : ''} />
+      <HeaderWithDesc title="Sell an item" columnLayout={true} paddingTop={50} subTile="(Step 4/5)" headerSave={isButtonEnabled ? 'Save' : ''} />
 
       {/* Form ScrollView */}
       <ScrollView contentContainerStyle={SellItems.scrollViewContent}>
@@ -144,8 +144,8 @@ const SellItemFourth = () => {
       </ScrollView>
 
       {/* Buttons at the Bottom */}
-      <View style={SellItems.flexDifAbs}>
-        <TouchableOpacity
+      <View style={[SellItems.flexDifAbs, SellItems.flexDifAb]}>
+      <TouchableOpacity
           onPress={handleBack}
           style={[SignUpStyles.loginButtoned, { backgroundColor: '#fff', borderWidth: 1, borderColor: "#463E31", width: "100%" }]}>
           <Text style={SignUpStyles.loginText}>Back</Text>

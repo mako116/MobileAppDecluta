@@ -75,9 +75,9 @@ const SellItemMain = () => {
                 mediaTypes: ImagePicker.MediaTypeOptions.Videos,
                 allowsMultipleSelection: false,
                 quality: 1,
-                videoMaxDuration: 60, // 60 seconds max
+                videoMaxDuration: 160, // 60 seconds max
             });
-            
+             
             if (!result.canceled && result.assets && result.assets.length > 0) {
                 const asset = result.assets[0];
                 
@@ -90,10 +90,10 @@ const SellItemMain = () => {
                 
                 // Check duration (if available)
                 const duration = asset.duration;
-                if (duration && duration > 60) {
-                    Alert.alert("Video Too Long", "Video must be under 60 seconds.");
-                    return;
-                }
+                // if (duration && duration > 160) {
+                //     Alert.alert("Video Too Long", "Video must be under 60 seconds.");
+                //     return;
+                // }
                 
                 updateFormData('selectedVideo', asset.uri);
             }
@@ -126,7 +126,7 @@ const SellItemMain = () => {
                 }
             }
         >
-            <HeaderWithDesc title={'Sell an item'} subTile='(Step 1/5)' headerSave={headerSave} paddingTop={40} />
+            <HeaderWithDesc columnLayout={true}  title={'Sell an item'} subTile='(Step 1/5)' headerSave={headerSave} paddingTop={50} />
             <ScrollView contentContainerStyle={SellItems.scrollViewContent}>
                 <View
                 style={
@@ -157,25 +157,55 @@ const SellItemMain = () => {
                         )}
                         
                         {/* Selected Images */}
-                        {selectedImages.map((uri, index) => (
-                            <View key={index} style={SellItems.imageWrapper}>
-                                <Image source={{ uri }} style={SellItems.imageItem} />
-                                <TouchableOpacity 
-                                    style={SellItems.removeButton}
-                                    onPress={() => removeImage(index)}
-                                >
-                                    <Text style={SellItems.removeButtonText}>✕</Text>
-                                </TouchableOpacity>
-                            </View>
-                        ))}
-                    </View>
+                        {selectedImages.length <= 4
+                      ? selectedImages.map((uri, index) => (
+                   <View key={index} style={SellItems.imageWrapper}>
+                      <Image source={{ uri }} style={SellItems.imageItem} />
+                      <TouchableOpacity 
+                      style={SellItems.removeButton}
+                      onPress={() => removeImage(index)} >
+                  <Text style={SellItems.removeButtonText}>✕</Text>
+                 </TouchableOpacity>
+                 </View>   
+                 ))
+                 : selectedImages
+                 .slice(-3)
+                 .map((uri, index, arr) => {
+                 const globalIndex = selectedImages.length - 3 + index;
+                 const isOverlay = index === arr.length - 1; // Last image (right side)
+                 const hiddenCount = selectedImages.length - 3;
+                  return (
+                 <View key={globalIndex} style={SellItems.imageWrapper}>
+                <Image source={{ uri }} style={SellItems.imageItem} />
+
+                {isOverlay && hiddenCount > 0 && (
+                <View style={SellItems.overlayContainer}>
+                   <Text style={SellItems.overlayText}>+{hiddenCount}</Text>
+                 </View> 
+                 )}
+
+                <TouchableOpacity 
+                style={SellItems.removeButton}
+                 onPress={() => removeImage(globalIndex)}  >
+                 <Text style={SellItems.removeButtonText}>✕</Text>
+               </TouchableOpacity>
                 </View>
+                  );
+                   })}
+                </View>
+              </View>
 
                 {/* Video Upload Section */}
                 <View style={SellItems.contains}>
                     <Text style={SellItems.label}>Add a video showcasing your item (optional)</Text>
                     <Text style={SellItems.subLabal}>
-                        Video uploaded: {selectedVideo ? '1/1' : '0/1'}
+                        Video uploaded:
+                        <Text 
+                        style={{
+                            fontWeight:'700'
+                        }}>
+                            {selectedVideo ? '1/1' : '0/1'}
+                        </Text> 
                     </Text>
                     <Text style={SellItems.subLabal}>
                         Grab buyer's attention with a video showcasing your item. You can upload only one video up to 60 seconds long and under 50MB
@@ -185,6 +215,13 @@ const SellItemMain = () => {
                         {/* Show video if selected, otherwise show add button */}
                         {selectedVideo ? (
                             <View style={SellItems.videoWrapper}>
+                                 {/* Remove button */}
+                                 <TouchableOpacity 
+                                    style={SellItems.removeButton}
+                                    onPress={removeVideo}
+                                >
+                                    <Text style={SellItems.removeButtonText}>✕</Text>
+                                </TouchableOpacity>
                                 {/* Video thumbnail */}
                                 <Image 
                                     source={{ uri: selectedVideo }} 
@@ -196,13 +233,6 @@ const SellItemMain = () => {
                                     <Text style={SellItems.playIcon}>▶</Text>
                                 </View>
                                 
-                                {/* Remove button */}
-                                <TouchableOpacity 
-                                    style={SellItems.removeButton}
-                                    onPress={removeVideo}
-                                >
-                                    <Text style={SellItems.removeButtonText}>✕</Text>
-                                </TouchableOpacity>
                             </View>
                         ) : (
                             <TouchableOpacity 
@@ -214,6 +244,8 @@ const SellItemMain = () => {
                                 <Text style={[SellItems.optionSubText]}>Add video</Text>
                             </TouchableOpacity>
                         )}
+                        
+                               
                     </View>
                 </View>
                 </View>
@@ -244,7 +276,7 @@ const SellItemMain = () => {
                         style={[SignUpStyles.loginButtons, !isButtonEnabled && { backgroundColor: "#E9E9E9" }]}
                         disabled={!isButtonEnabled}
                     >
-                        <Text style={[!isButtonEnabled && { color: "#A0A0A0" }, SignUpStyles.loginText]}>
+                        <Text style={[SignUpStyles.loginText,!isButtonEnabled && { color: "#A4A4A4" }]}>
                             Next
                         </Text>
                     </TouchableOpacity>

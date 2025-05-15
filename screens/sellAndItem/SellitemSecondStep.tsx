@@ -32,12 +32,12 @@ const SellItemSecond = () => {
         <SafeAreaView
             style={
                 {
-                    backgroundColor: '#fff',
+                    backgroundColor: '#F9F9F9',
                     height: '100%',
                 }
             }
         >
-            <HeaderWithDesc title={'Sell an item'} subTile='(Step 2/5)' headerSave={isButtonEnabled ? 'Save' : ''} />
+            <HeaderWithDesc columnLayout={true} paddingTop={50} title={'Sell an item'} subTile='(Step 2/5)' headerSave={isButtonEnabled ? 'Save' : ''} />
 
             {/* Form ScrollView */}
             <ScrollView contentContainerStyle={SellItems.scrollViewContent}>
@@ -47,10 +47,11 @@ const SellItemSecond = () => {
                     <TextAreaField
                         placeholder="Add a title or name for your item"
                         value={title}
+                        keyboardType='default'
                         onChangeText={(text) => updateFormData('title', text)}
                         placeholderTextColor="gray"
                     />
-                    {errors.title && <Text style={{ color: 'red' }}>{errors.title}</Text>}
+                    {/* {errors.title && <Text style={{ color: 'red' }}>{errors.title}</Text>} */}
                     <Text style={SellItems.number}>{title.length}/100</Text>
                 </View>
 
@@ -63,7 +64,7 @@ const SellItemSecond = () => {
                         onChangeText={(text) => updateFormData('description', text)}
                         placeholderTextColor="gray"
                     />
-                    {errors.description && <Text style={{ color: 'red' }}>{errors.description}</Text>}
+                    {/* {errors.description && <Text style={{ color: 'red' }}>{errors.description}</Text>} */}
                     <Text style={SellItems.number}>{description.length}/100</Text>
                 </View>
 
@@ -77,7 +78,7 @@ const SellItemSecond = () => {
                         ]}
                         onSelect={(selectedOption) => updateFormData('availability', selectedOption.text)}
                     />
-                    {errors.availability && <Text style={{ color: 'red' }}>{errors.availability}</Text>}
+                    {/* {errors.availability && <Text style={{ color: 'red' }}>{errors.availability}</Text>} */}
                 </View>
 
                 {/* Quantity Section */}
@@ -95,11 +96,11 @@ const SellItemSecond = () => {
             </ScrollView>
 
             {/* Buttons at the Bottom */}
-            <View style={SellItems.flexDifAbs}>
+            <View style={[SellItems.flexDifAbs, SellItems.flexDifAb]}>
                 <TouchableOpacity
                     onPress={handleBack}
                     style={[SignUpStyles.loginButtoned, { backgroundColor: '#fff', borderWidth: 1, borderColor: "#463E31", width: "48%" }]}
-                >
+                > 
                     <Text style={SignUpStyles.loginText}>Back</Text>
                 </TouchableOpacity>
 

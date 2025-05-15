@@ -187,12 +187,12 @@ const ReviewItem = () => {
     <SafeAreaView
       style={
           {
-            backgroundColor: '#fff',
+            backgroundColor: '#F9F9F9',
             height: '100%',
           }
       }
     >
-      <HeaderWithDesc title="Sell an item" headerSave="Save" />
+      <HeaderWithDesc title="Sell an item" columnLayout={true} paddingTop={50} headerSave="Save" />
 
       <ScrollView style={[SellItems.scrollViewContent]}>
         <View style={SellItems.contains}>
@@ -285,8 +285,8 @@ const ReviewItem = () => {
 
 
       {/* Bottom Buttons */}
-      <View style={SellItems.flexDifAbs}>
-        <TouchableOpacity
+      <View style={[SellItems.flexDifAbs, SellItems.flexDifAb]}>
+      <TouchableOpacity
           onPress={handleBack}
           style={[SignUpStyles.loginButtoned, { backgroundColor: '#fff', borderWidth: 1, borderColor: "#463E31", width: "100%" }]}>
           <Text style={SignUpStyles.loginText}>Back</Text>
