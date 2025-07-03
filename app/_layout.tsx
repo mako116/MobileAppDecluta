@@ -76,7 +76,7 @@ export const Layout = () => {
     return null;
   }
   
-  return (
+  return ( 
     <Stack initialRouteName="(routes)/splashscren/index" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="index"/>
       <Stack.Screen name="(routes)/splashscren/index" />

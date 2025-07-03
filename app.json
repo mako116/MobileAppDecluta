@@ -30,7 +30,7 @@
       "package": "com.decluttaking.app",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#483A2D"
       },
       "permissions": [
         "INTERNET"
